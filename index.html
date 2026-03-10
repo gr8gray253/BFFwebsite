@@ -36,19 +36,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green-deep: #1a3a2a;
-    --green-mid: #2d5c40;
-    --green-water: #2d6b5e;
-    --amber: #c8793a;
-    --amber-light: #e8974a;
-    --gold: #d4a855;
-    --brown: #6b3d1e;
-    --cream: #f7edd8;
-    --cream-dark: #ede0c8;
-    --orange: #d4623a;
-    --white: #fdf8f0;
-    --text-dark: #1e2a1e;
-    --text-mid: #3d4f3a;
+    --green-deep: #0d2b3e;
+    --green-mid: #1a4a6b;
+    --green-water: #2980b9;
+    --amber: #e8923a;
+    --amber-light: #f0a84a;
+    --gold: #f0c040;
+    --brown: #5a6e7f;
+    --cream: #eef6fb;
+    --cream-dark: #d0e8f5;
+    --orange: #e07040;
+    --white: #f5fbff;
+    --text-dark: #0d1f2d;
+    --text-mid: #2c5364;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -1120,6 +1120,34 @@
   .impact-item:last-child { border: none; }
   .impact-item strong { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.1rem; min-width: 50px; }
 
+  /* ── GUIDES GRID ─── */
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.1rem;
+  }
+  .guide-card {
+    background: var(--cream-dark);
+    border-radius: 12px;
+    padding: 1.1rem 1.3rem;
+    border: 1px solid var(--green-water);
+  }
+  .guide-card h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--green-deep);
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+  }
+  .guide-captain {
+    font-style: italic;
+    color: var(--amber);
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+  }
+  .guide-card p { font-size: 0.82rem; margin-bottom: 0.2rem; color: var(--text-mid); }
+  .guide-card a { color: var(--green-water); text-decoration: none; }
+  .guide-card a:hover { text-decoration: underline; }
+
   /* ══════════════════════════════════════
      ABOUT SECTION
   ══════════════════════════════════════ */
@@ -2186,18 +2214,18 @@
      DARK MODE OVERRIDES
   ══════════════════════════════════════ */
   [data-theme="dark"] {
-    --white: #0f1a14;
-    --cream: #192a1f;
-    --cream-dark: #1e3026;
-    --text-dark: #d8cdb5;
-    --text-mid: #a0b095;
+    --white: #0a1520;
+    --cream: #0f2233;
+    --cream-dark: #152840;
+    --text-dark: #d4e8f5;
+    --text-mid: #7aaec8;
     /* NOTE: --green-deep intentionally NOT overridden.
        It is used as a dark background in dozens of components
        AND as text color on light backgrounds. In dark mode,
        text that used --green-deep gets overridden explicitly below. */
   }
-  [data-theme="dark"] body { background: #0f1a14; color: #d8cdb5; }
-  [data-theme="dark"] nav { background: rgba(10, 21, 16, 0.94); }
+  [data-theme="dark"] body { background: #0a1520; color: #d4e8f5; }
+  [data-theme="dark"] nav { background: rgba(8, 18, 28, 0.94); }
 
   /* ── DARK MODE: TEXT READABILITY FIXES ──
      Any element that uses color:var(--green-deep) for text becomes
@@ -2312,7 +2340,92 @@
     vertical-align: middle;
   }
   @keyframes btnSpin { to { transform: rotate(360deg); } }
+
+  /* ── MEMBER PORTAL ─────────────────────────────────── */
+  .members-auth-view, .members-pending-view {
+    max-width: 480px;
+    margin: 80px auto;
+    text-align: center;
+  }
+  .auth-buttons { margin: 2rem 0 1rem; display:flex; flex-direction:column; align-items:center; gap:0.8rem; }
+  .auth-note { font-size: 0.85rem; color: var(--text-mid); font-style: italic; margin-top:0.5rem; }
+  .pending-card {
+    background: var(--cream);
+    border: 2px solid var(--amber);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    max-width: 440px;
+    margin: 80px auto;
+  }
+  .pending-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .members-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--cream-dark);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .member-tab {
+    background: var(--cream-dark);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+    color: var(--text-dark);
+    transition: background 0.2s;
+  }
+  .member-tab.active { background: var(--green-deep); color: var(--white); }
+  .member-user-info { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
+  .member-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+  .btn-sm { padding: 0.3rem 0.8rem !important; font-size: 0.8rem !important; }
+  .pin-post-form {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border: 1px solid var(--cream-dark);
+  }
+  .pin-post-form h4 { font-family: 'Playfair Display', serif; color: var(--green-deep); margin-bottom: 1rem; }
+  .pin-coords-display { font-size: 0.8rem; color: var(--text-mid); font-style: italic; margin:0.4rem 0; }
+  .pin-form-actions { display: flex; gap: 0.8rem; margin-top: 1rem; }
+  #memberMap { height: 450px; border-radius: 12px; overflow: hidden; margin-bottom:1rem; }
+  .feed-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .feed-card { background: var(--cream); border-radius: 12px; overflow: hidden; border: 1px solid var(--cream-dark); }
+  .feed-card-photo { width: 100%; max-height: 320px; object-fit: cover; }
+  .feed-card-body { padding: 1rem 1.2rem; }
+  .feed-card-meta { font-size: 0.8rem; color: var(--text-mid); margin-bottom: 0.4rem; }
+  .feed-card-caption { margin-bottom: 0.8rem; }
+  .comments-section { border-top: 1px solid var(--cream-dark); padding-top: 0.8rem; margin-top:0.6rem; }
+  .comment-item { font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .comment-author { font-weight: 600; color: var(--green-deep); }
+  .comment-input-row { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
+  .comment-input-row input { flex: 1; }
+  .admin-list { display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0; }
+  .admin-card {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--cream-dark);
+  }
+  .admin-card-info { flex: 1; font-size:0.9rem; }
+  .admin-card-actions { display: flex; gap: 0.5rem; flex-shrink:0; }
+  .btn-approve { background: var(--green-water); color: white; border: none; border-radius: 6px; padding: 0.35rem 0.9rem; cursor: pointer; font-size:0.85rem; }
+  .btn-reject  { background: var(--orange); color: white; border: none; border-radius: 6px; padding: 0.35rem 0.9rem; cursor: pointer; font-size:0.85rem; }
+  .feed-empty, .admin-empty { color: var(--text-mid); font-style: italic; text-align: center; padding: 2rem; }
+  .member-tab-content { min-height: 300px; }
+  [data-theme="dark"] .feed-card,
+  [data-theme="dark"] .pin-post-form,
+  [data-theme="dark"] .admin-card,
+  [data-theme="dark"] .pending-card { background: #152840; border-color: #1e3c58; }
 </style>
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -2326,17 +2439,17 @@
 <nav>
   <div class="nav-logo" onclick="return showSection('home')">
     Bayou Charity
-    <span>Bayou Family Fishing Club</span>
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#" onclick="return showSection('home')" class="active" id="nav-home">Home</a></li>
-    <li><a href="#" onclick="return showSection('club')" id="nav-club">Club / Join</a></li>
+    <li><a href="#" onclick="return showSection('club')" id="nav-club">Join</a></li>
     <li><a href="#" onclick="return showSection('volunteer')" id="nav-volunteer">Volunteer</a></li>
     <li><a href="#" onclick="return showSection('boats')" id="nav-boats">Boats</a></li>
     <li><a href="#" onclick="return showSection('innisfree')" id="nav-innisfree">INNISFREE</a></li>
     <li><a href="#" onclick="return showSection('gallery')" id="nav-gallery">Gallery</a></li>
     <li><a href="#" onclick="return showSection('donate')" id="nav-donate">Donate</a></li>
     <li><a href="#" onclick="return showSection('about')" id="nav-about">About</a></li>
+    <li><a href="#" onclick="return showSection('members')" id="nav-members">Members</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:0.3rem;">
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" onclick="toggleTheme()">🌙</button>
@@ -2361,15 +2474,10 @@
       <button class="btn btn-outline" style="color:var(--cream);border-color:rgba(247,237,216,0.5);" onclick="showSection('volunteer')">Get Involved</button>
       <button class="btn btn-primary" onclick="showSection('donate')">Donate</button>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><strong>5</strong><span>Boats</span></div>
-      <div class="hero-stat"><strong>🌿</strong><span>INNISFREE Land</span></div>
-      <div class="hero-stat"><strong>100%</strong><span>Community Built</span></div>
-    </div>
   </div>
 
   <div class="mission-strip">
-    <p class="mission-quote" data-scroll="fade-up">Fishing is how we connect — with the water, with each other, and with the culture that makes Louisiana home. This isn't just a club. It's a family.</p>
+    <p class="mission-quote" data-scroll="fade-up">Coastal living is hard work, but the rewards are plenty. Our mission is to share our way of life with those who serve our nation and our communities. We're military families—we've been there, stretched thin, missing birthdays, missing dinner; and we see you. We are here for our military heroes, our cops and fire fighters, our first responders, educators, and caregivers. You're the ones who show up because others can't. We are all in this together—now let get out on the water!</p>
     <p class="mission-attr" data-scroll="fade-up">— Kyle Rockefeller, Founder</p>
   </div>
 
@@ -2565,6 +2673,7 @@
 
           <div style="background:rgba(200,121,58,0.12);border:1px solid rgba(200,121,58,0.3);border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0 1rem;font-size:0.82rem;color:rgba(247,237,216,0.85);line-height:1.55;">
             🎣 <strong style="color:var(--gold);">Fishing License Required</strong> — All attendees are responsible for purchasing their own valid Louisiana fishing license before the event.
+            <a href="https://louisianaoutdoors.com/licenses-and-permits?utm_source=Rec_Fishing_Licensing_Page&utm_medium=Web&utm_campaign=LDWF_Website" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;display:inline-block;margin-top:0.3rem;">Buy your license here →</a>
           </div>
 
           <div id="rsvpSuccess" class="rsvp-success">✅ You're registered! See you at sunrise on April 25th.</div>
@@ -2617,7 +2726,7 @@
             <!-- Photo & Video Consent -->
             <div class="rsvp-consent-block">
               <h6>📸 Photo &amp; Video Consent</h6>
-              <p>I give Bayou Charity permission to take photos and videos of me and my children during today's event. These may be used on social media, our website, and future event promotions to share the fun and inspire other families.</p>
+              <p>I give Bayou Charity permission to take photos and videos of my family and me during today's event. These may be used on social media, our website, and future event promotions to share the fun and inspire other families.</p>
               <div class="rsvp-radio-row">
                 <label><input type="radio" name="photo_consent" id="photoYes" value="Yes, I consent"> ✅ Yes, I consent</label>
                 <label><input type="radio" name="photo_consent" id="photoNo" value="No, do not use photos"> 🚫 No, please do not use our photos</label>
@@ -2628,11 +2737,17 @@
             <div class="rsvp-consent-block liability">
               <h6>⚖️ Liability Release — Read &amp; Sign Before Joining</h6>
               <p>I release Bayou Charity and Slowdown Park LLC from any claims over injury, loss, or damage from fishing, boating, or camp activities. I am participating at my own risk.</p>
-              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.4rem;">
-                <input type="checkbox" id="liabilityAgree" name="liability_agreed" value="Agreed" style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;">
+              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.6rem;">
+                <input type="checkbox" id="ageConfirm" name="age_confirm" value="Confirmed 18+"
+                  style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;"
+                  onchange="document.getElementById('liabilityAgree').disabled=!this.checked; document.getElementById('liabilityAgree').closest('label').style.opacity=this.checked?'1':'0.45';">
+                I confirm that I am 18 years of age or older.
+              </label>
+              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.4rem;opacity:0.45;" id="liabilityLabel">
+                <input type="checkbox" id="liabilityAgree" name="liability_agreed" value="Agreed" disabled style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;">
                 I have read and agree to the liability release above.
               </label>
-              <p class="liability-required-note">* Required to complete registration.</p>
+              <p class="liability-required-note">* Both confirmations required to complete registration.</p>
             </div>
 
             <!-- Contact Preference & Updates -->
@@ -3036,7 +3151,7 @@
     <p class="section-eyebrow">Give Back</p>
     <h2 class="section-title">Support the <em>Mission</em></h2>
     <div class="divider"></div>
-    <p class="section-lead">Your donation directly funds boat maintenance, INNISFREE construction, youth fishing programs, and support for local Louisiana businesses.</p>
+    <p class="section-lead">Your donation directly funds our fishing programs for military and other community service families. Your generosity also helps us build the charity's offshore hub, Innisfree, where members have access to the full Louisiana experience.</p>
 
     <div class="donate-layout" data-scroll="fade-up">
       <form id="donateForm" onsubmit="submitForm(event, this, 'Thank you!', 'Your donation interest has been received. We\'ll follow up with next steps.')">
@@ -3061,10 +3176,10 @@
           <label for="donateDestination">Dedicate this donation to</label>
           <select id="donateDestination" name="donate_to">
             <option>General Fund</option>
-            <option>INNISFREE Land & Construction</option>
-            <option>Boat Maintenance</option>
+            <option>Innisfree construction</option>
+            <option>Boating for Vets</option>
             <option>Youth Fishing Programs</option>
-            <option>Local Business Support</option>
+            <option>Community support</option>
           </select>
         </div>
         <div class="form-row">
@@ -3086,39 +3201,70 @@
       </form>
 
       <div>
-        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1.5rem;">Support Local Businesses</h3>
-        <p style="font-size:0.9rem;line-height:1.7;color:var(--text-mid);margin-bottom:1.5rem;">We channel a portion of all donations to support local Louisiana businesses that share our values. You can also donate directly to one of our partners:</p>
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1.5rem;">Support Mom &amp; Pops</h3>
+        <p style="font-size:0.9rem;line-height:1.7;color:var(--text-mid);margin-bottom:1.5rem;">We channel a portion of all donations to support local Louisiana businesses that share our values. You can also support one of our partners directly:</p>
         <div class="local-biz-grid">
+          <div class="local-biz">
+            <div class="local-biz-icon">🎣</div>
+            <div>
+              <h4>Operation Healing Waters / Reel O-Fishal Charters</h4>
+              <p>TikTok: <a href="https://tiktok.com/@reelofishal" target="_blank" rel="noopener" style="color:var(--amber);">@reelofishal</a></p>
+              <p>Capt. Derrious Austin &nbsp;·&nbsp; <a href="tel:8503198909" style="color:var(--amber);">850-319-8909</a></p>
+            </div>
+          </div>
           <div class="local-biz">
             <div class="local-biz-icon">🦐</div>
             <div>
-              <h4>Thibodaux Seafood Co.</h4>
-              <p>Family-owned seafood market supporting local fishermen since 1978.</p>
+              <h4>Sam's Bait by You &amp; Alligator Hunts</h4>
+              <p>Capt. Sam Ronquille &nbsp;·&nbsp; <a href="tel:5049065812" style="color:var(--amber);">504-906-5812</a></p>
             </div>
           </div>
           <div class="local-biz">
-            <div class="local-biz-icon">⚓</div>
+            <div class="local-biz-icon">⛺</div>
             <div>
-              <h4>Bayou Bait & Tackle</h4>
-              <p>The best bait shop in the parish — keeps our boats stocked and our members ready.</p>
-            </div>
-          </div>
-          <div class="local-biz">
-            <div class="local-biz-icon">🍳</div>
-            <div>
-              <h4>Mawmaw's Kitchen</h4>
-              <p>Real Cajun cooking. Feeds our volunteers at every build day, every time.</p>
+              <h4>Slow Down Park: Fishing Camp &amp; RV Park</h4>
+              <p>Airbnb &amp; VRBO</p>
+              <p>Kyle Rockefeller &nbsp;·&nbsp; <a href="tel:5045411838" style="color:var(--amber);">504-541-1838</a></p>
             </div>
           </div>
         </div>
 
         <div class="donate-impact">
           <h3>Your Impact</h3>
-          <div class="impact-item"><strong>$25</strong> Covers one day of bait & tackle for a youth fishing trip</div>
-          <div class="impact-item"><strong>$50</strong> Funds dock materials for one volunteer build day</div>
-          <div class="impact-item"><strong>$100</strong> Helps cover a boat maintenance service</div>
-          <div class="impact-item"><strong>$250</strong> Sponsors a family membership for one year</div>
-          <div class="impact-item"><strong>$500</strong> Funds a weekend youth fishing camp</div>
+          <div class="impact-item"><strong>$50</strong> Covers fuel for member-supported fishing trips</div>
+          <div class="impact-item"><strong>$100</strong> Covers a beginner's class and a day of dock fishing for a BFF family</div>
+          <div class="impact-item"><strong>$250</strong> Covers a parent and child fishing trip with a licensed guide</div>
+          <div class="impact-item"><strong>$500</strong> Covers a family of 4 fishing trip with a licensed guide</div>
+        </div>
+
+        <div class="donate-guides" data-scroll="fade-up">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Our Guides</h3>
+          <p style="font-size:0.9rem;line-height:1.7;color:var(--text-mid);margin-bottom:1.2rem;">These trusted guides support BFF's mission and offer exceptional Louisiana fishing experiences.</p>
+          <div class="guides-grid">
+            <div class="guide-card">
+              <h4>Reel O-Fishal Charters</h4>
+              <p class="guide-captain">Capt. Derrious Austin</p>
+              <p>TikTok: <a href="https://tiktok.com/@reelofishal" target="_blank" rel="noopener">@reelofishal</a></p>
+              <p><a href="tel:8503198909">850-319-8909</a></p>
+            </div>
+            <div class="guide-card">
+              <h4>Down South Fishing Charters</h4>
+              <p class="guide-captain">Capt. Kevin Hezeau</p>
+              <p><a href="https://www.downsouthfishingchartersnola.com/" target="_blank" rel="noopener">downsouthfishingchartersnola.com</a></p>
+              <p><a href="tel:9857681656">985-768-1656</a></p>
+            </div>
+            <div class="guide-card">
+              <h4>Bayou Paradise Fish Charters</h4>
+              <p class="guide-captain">Capt. Mitchel Haydel</p>
+              <p><a href="https://www.geauxfishneworleans.com/" target="_blank" rel="noopener">geauxfishneworleans.com</a></p>
+              <p><a href="tel:5043450865">504-345-0865</a></p>
+            </div>
+            <div class="guide-card">
+              <h4>Marsh Assassins BowFishing</h4>
+              <p class="guide-captain">Capt. Kenny Bergman</p>
+              <p><a href="https://www.marshassassinsbowfishing.com/" target="_blank" rel="noopener">marshassassinsbowfishing.com</a></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3201,7 +3347,7 @@
           <div class="team-card-body">
             <h3>Max Juge</h3>
             <p class="team-title">Vice President</p>
-            <p class="team-bio">Born on the Bayou! Third Generation Juge man on Deer Range Canal. Ducks and Fish beware! Future Commercial real estate kingpin.</p>
+            <p class="team-bio">A full-time commercial real estate professional with a deep-rooted passion for the outdoors and the unique culture of South Louisiana. Having grown up fishing and hunting the salt marshes of Plaquemines Parish, Max brings a local's perspective and appreciation for the region to his work and life.</p>
           </div>
         </div>
         <div class="team-card">
@@ -3217,6 +3363,101 @@
   </div>
 </section>
 
+<!-- ═══════════════════════ MEMBERS ════════════════════════ -->
+<section id="members" class="site-section" style="display:none;">
+  <div class="container">
+    <p class="section-eyebrow">Community</p>
+    <h2 class="section-title">Member <em>Portal</em></h2>
+    <div class="divider"></div>
+
+    <!-- AUTH VIEW -->
+    <div id="membersAuth" class="members-auth-view">
+      <p class="section-tagline">Sign in to access the BFF member map and community.</p>
+      <div class="auth-buttons">
+        <button class="btn btn-primary" id="btnGoogleSignIn" style="min-width:240px;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="margin-right:8px;vertical-align:middle;"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+          Sign in with Google
+        </button>
+        <button class="btn btn-primary" id="btnFacebookSignIn" style="background:#1877f2;min-width:240px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="margin-right:8px;vertical-align:middle;"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+          Sign in with Facebook
+        </button>
+      </div>
+      <p class="auth-note">New members are reviewed before gaining access. You'll receive an email once approved.</p>
+    </div>
+
+    <!-- PENDING VIEW -->
+    <div id="membersPending" class="members-pending-view" style="display:none;">
+      <div class="pending-card">
+        <div class="pending-icon">🎣</div>
+        <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">You're on the list!</h3>
+        <p style="color:var(--text-mid);margin-bottom:1.5rem;">Your account is awaiting approval. Kyle will review your signup and you'll receive an email once you're in.</p>
+        <button class="btn btn-outline" id="btnSignOut">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- MAIN MEMBER VIEW -->
+    <div id="membersMain" class="members-main-view" style="display:none;">
+      <div class="members-nav">
+        <button class="member-tab active" onclick="switchMemberTab('Map',this)">🗺 Map</button>
+        <button class="member-tab" onclick="switchMemberTab('Feed',this)">📸 Feed</button>
+        <button class="member-tab" id="adminTabBtn" onclick="switchMemberTab('Admin',this)" style="display:none;">⚙️ Admin</button>
+        <div class="member-user-info">
+          <img id="memberAvatar" src="" alt="avatar" class="member-avatar" style="display:none;">
+          <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
+          <button class="btn btn-outline btn-sm" id="btnMemberSignOut">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- MAP TAB -->
+      <div id="memberTabMap" class="member-tab-content">
+        <div id="memberMap"></div>
+        <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>
+        <div class="pin-post-form" id="pinPostForm" style="display:none;">
+          <h4>📍 Post Your Catch</h4>
+          <div class="form-group">
+            <label>Photo <span style="color:var(--orange);">*</span></label>
+            <input type="file" id="pinPhoto" accept="image/*" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Species caught</label>
+            <input type="text" id="pinSpecies" placeholder="e.g. Redfish, Speckled Trout" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Caption</label>
+            <input type="text" id="pinCaption" placeholder="Tell us about this catch…" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Location name <span style="font-weight:400;font-style:italic;">(optional)</span></label>
+            <input type="text" id="pinLocationName" placeholder="e.g. Empire Canal" class="form-input">
+          </div>
+          <p class="pin-coords-display" id="pinLatLngDisplay">Click the map above to place your pin.</p>
+          <div class="pin-form-actions">
+            <button class="btn btn-primary" id="btnSubmitPin">Post Pin</button>
+            <button class="btn btn-outline" id="btnCancelPin">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEED TAB -->
+      <div id="memberTabFeed" class="member-tab-content" style="display:none;">
+        <div id="feedList" class="feed-list">
+          <p class="feed-empty">Loading catches…</p>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB -->
+      <div id="memberTabAdmin" class="member-tab-content" style="display:none;">
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1rem;">Pending Accounts</h3>
+        <div id="adminPendingList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Flagged Posts</h3>
+        <div id="adminFlaggedList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Bayou Family Fishing</div>
@@ -3227,13 +3468,13 @@
   </div>
   <div class="footer-links">
     <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('club')">Club / Join</a>
-    <a href="#" onclick="showSection('volunteer')">Volunteer</a>
-    <a href="#" onclick="showSection('boats')">Boats</a>
-    <a href="#" onclick="showSection('innisfree')">INNISFREE</a>
-    <a href="#" onclick="showSection('gallery')">Gallery</a>
-    <a href="#" onclick="showSection('donate')">Donate</a>
-    <a href="#" onclick="showSection('about')">About</a>
+    <a href="#" onclick="showSection('home')">Join</a>
+    <a href="#" onclick="showSection('home')">Volunteer</a>
+    <a href="#" onclick="showSection('home')">Boats</a>
+    <a href="#" onclick="showSection('home')">INNISFREE</a>
+    <a href="#" onclick="showSection('home')">Gallery</a>
+    <a href="#" onclick="showSection('home')">Donate</a>
+    <a href="#" onclick="showSection('home')">About</a>
   </div>
   <div class="footer-bottom">
     © <span id="footerYear">2026</span> Bayou Family Fishing & Charity. A registered nonprofit organization. All rights reserved.<br>
@@ -3309,9 +3550,9 @@
 
     _leafletMap = L.map('innisfreeMap', { zoomControl: true }).setView([29.575, -89.930], 12);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 18,
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
     }).addTo(_leafletMap);
 
     const mkHome = L.divIcon({
@@ -3848,6 +4089,431 @@
         }, 2500);
       }
     };
+  })();
+
+  // ══════════════════════════════════════════════════════════════
+  // MEMBER PORTAL — Supabase auth, map, feed, comments, admin
+  // ══════════════════════════════════════════════════════════════
+  (function () {
+    'use strict';
+
+    var SUPABASE_URL = 'https://osiramhnynhwmlfyuqcp.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_yS9pPiw1F7QuxGcWVAyLXw_oZMI9HCI';
+    var _sb          = null;
+    var _memberMap   = null;
+    var _pendingMarker = null;
+    var _pendingLatLng = null;
+
+    // ── Lazy Supabase client ──────────────────────────────────
+    function getSB() {
+      if (!_sb) _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      return _sb;
+    }
+
+    // ── Show one members view, hide others ────────────────────
+    function showMembersView(view) {
+      var auth    = document.getElementById('membersAuth');
+      var pending = document.getElementById('membersPending');
+      var main    = document.getElementById('membersMain');
+      if (auth)    auth.style.display    = view === 'auth'    ? '' : 'none';
+      if (pending) pending.style.display = view === 'pending' ? '' : 'none';
+      if (main)    main.style.display    = view === 'main'    ? '' : 'none';
+    }
+
+    // ── Load profile and route to correct view ────────────────
+    function loadProfile(user) {
+      getSB()
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single()
+        .then(function (res) {
+          if (res.error || !res.data) { showMembersView('auth'); return; }
+          var profile = res.data;
+          if (profile.status === 'approved') {
+            showMembersView('main');
+            loadMemberMain(user, profile);
+          } else {
+            showMembersView('pending');
+          }
+        });
+    }
+
+    // ── Auth state listener ───────────────────────────────────
+    function initMemberAuth() {
+      getSB().auth.onAuthStateChange(function (event, session) {
+        if (session && session.user) {
+          loadProfile(session.user);
+        } else {
+          showMembersView('auth');
+        }
+      });
+    }
+
+    // ── Sign-in / sign-out button bindings ────────────────────
+    function bindSignInButtons() {
+      var gBtn  = document.getElementById('btnGoogleSignIn');
+      var fBtn  = document.getElementById('btnFacebookSignIn');
+      var soBtn = document.getElementById('btnSignOut');
+      var soBtn2 = document.getElementById('btnMemberSignOut');
+
+      if (gBtn) {
+        gBtn.addEventListener('click', function () {
+          getSB().auth.signInWithOAuth({ provider: 'google',   options: { redirectTo: window.location.origin } });
+        });
+      }
+      if (fBtn) {
+        fBtn.addEventListener('click', function () {
+          getSB().auth.signInWithOAuth({ provider: 'facebook', options: { redirectTo: window.location.origin } });
+        });
+      }
+      if (soBtn) {
+        soBtn.addEventListener('click', function () {
+          getSB().auth.signOut().then(function () { showMembersView('auth'); });
+        });
+      }
+      if (soBtn2) {
+        soBtn2.addEventListener('click', function () {
+          getSB().auth.signOut().then(function () {
+            showMembersView('auth');
+            if (_memberMap) { _memberMap.remove(); _memberMap = null; }
+          });
+        });
+      }
+    }
+
+    // ── Load main portal after approval ──────────────────────
+    function loadMemberMain(user, profile) {
+      var avatar = document.getElementById('memberAvatar');
+      var nameEl = document.getElementById('memberName');
+      if (avatar && profile.avatar_url) { avatar.src = profile.avatar_url; avatar.style.display = 'block'; }
+      if (nameEl) nameEl.textContent = profile.display_name || user.email;
+
+      if (profile.role === 'admin') {
+        var adminBtn = document.getElementById('adminTabBtn');
+        if (adminBtn) adminBtn.style.display = '';
+      }
+      initMemberMap();
+      loadFeed();
+    }
+
+    // ── Member satellite map ──────────────────────────────────
+    function initMemberMap() {
+      var container = document.getElementById('memberMap');
+      if (!container || _memberMap) return;
+
+      _memberMap = L.map('memberMap', { center: [29.35, -89.8], zoom: 10 });
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 18,
+        attribution: 'Tiles &copy; Esri &mdash; Earthstar Geographics'
+      }).addTo(_memberMap);
+
+      loadMapPins();
+
+      var dropBtn  = document.getElementById('btnDropPin');
+      var form     = document.getElementById('pinPostForm');
+      var cancelBtn = document.getElementById('btnCancelPin');
+      var submitBtn = document.getElementById('btnSubmitPin');
+      var coordsEl  = document.getElementById('pinLatLngDisplay');
+
+      if (dropBtn) {
+        dropBtn.addEventListener('click', function () {
+          form.style.display = 'block';
+          dropBtn.style.display = 'none';
+          coordsEl.textContent = 'Click the map to place your pin.';
+          _pendingLatLng = null;
+          if (_pendingMarker) { _memberMap.removeLayer(_pendingMarker); _pendingMarker = null; }
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (pos) {
+              placePendingMarker(pos.coords.latitude, pos.coords.longitude, coordsEl);
+            }, function () {
+              coordsEl.textContent = 'GPS unavailable — click the map to place your pin.';
+            }, { timeout: 8000 });
+          }
+        });
+      }
+
+      _memberMap.on('click', function (e) {
+        if (form && form.style.display !== 'none') {
+          placePendingMarker(e.latlng.lat, e.latlng.lng, coordsEl);
+        }
+      });
+
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', function () {
+          form.style.display = 'none';
+          dropBtn.style.display = '';
+          if (_pendingMarker) { _memberMap.removeLayer(_pendingMarker); _pendingMarker = null; }
+          _pendingLatLng = null;
+        });
+      }
+
+      if (submitBtn) submitBtn.addEventListener('click', submitPin);
+    }
+
+    function placePendingMarker(lat, lng, coordsEl) {
+      if (_pendingMarker) _memberMap.removeLayer(_pendingMarker);
+      _pendingLatLng = { lat: lat, lng: lng };
+      _pendingMarker = L.marker([lat, lng], { draggable: true }).addTo(_memberMap);
+      _memberMap.setView([lat, lng], 13);
+      coordsEl.textContent = '\uD83D\uDCCD ' + lat.toFixed(5) + ', ' + lng.toFixed(5) + ' (drag to adjust)';
+      _pendingMarker.on('dragend', function (e) {
+        var p = e.target.getLatLng();
+        _pendingLatLng = { lat: p.lat, lng: p.lng };
+        coordsEl.textContent = '\uD83D\uDCCD ' + p.lat.toFixed(5) + ', ' + p.lng.toFixed(5);
+      });
+    }
+
+    function loadMapPins() {
+      getSB()
+        .from('pins')
+        .select('id, lat, lng, caption, species, photo_url')
+        .eq('flagged', false)
+        .then(function (res) {
+          if (res.error || !res.data) return;
+          res.data.forEach(function (pin) { addPinMarker(pin); });
+        });
+    }
+
+    function addPinMarker(pin) {
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="width:28px;height:28px;border-radius:50%;background:#f0c040;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:16px;">\uD83C\uDFA3</div>',
+        iconSize: [28, 28], iconAnchor: [14, 14]
+      });
+      var marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(_memberMap);
+      var img  = pin.photo_url ? '<img src="' + pin.photo_url + '" style="width:100%;border-radius:6px;margin-bottom:6px;">' : '';
+      var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + pin.species + '</em>' : '';
+      var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + pin.caption + '</p>' : '';
+      marker.bindPopup('<div style="font-family:Lora,serif;max-width:200px;">' + img + sp + cap + '</div>');
+    }
+
+    // ── Submit new pin ────────────────────────────────────────
+    function submitPin() {
+      if (!_pendingLatLng) { showToast('Oops', 'Click the map to place your pin first.'); return; }
+      var photoFile    = document.getElementById('pinPhoto').files[0];
+      var species      = document.getElementById('pinSpecies').value.trim();
+      var caption      = document.getElementById('pinCaption').value.trim();
+      var locationName = document.getElementById('pinLocationName').value.trim();
+      if (!photoFile) { showToast('Photo required', 'Please select a photo to post.'); return; }
+
+      var btn = document.getElementById('btnSubmitPin');
+      btn.disabled = true; btn.textContent = 'Uploading\u2026';
+
+      getSB().auth.getUser().then(function (res) {
+        if (res.error || !res.data.user) { btn.disabled = false; btn.textContent = 'Post Pin'; return; }
+        var userId = res.data.user.id;
+        var ext    = photoFile.name.split('.').pop();
+        var path   = userId + '/' + Date.now() + '.' + ext;
+
+        getSB().storage.from('pin-photos').upload(path, photoFile, { cacheControl: '3600', upsert: false })
+          .then(function (upRes) {
+            if (upRes.error) { showToast('Upload error', upRes.error.message); btn.disabled = false; btn.textContent = 'Post Pin'; return; }
+            var photoUrl = getSB().storage.from('pin-photos').getPublicUrl(path).data.publicUrl;
+            return getSB().from('pins').insert({
+              user_id: userId, photo_url: photoUrl,
+              lat: _pendingLatLng.lat, lng: _pendingLatLng.lng,
+              location_name: locationName || null,
+              caption: caption || null, species: species || null
+            });
+          })
+          .then(function (insRes) {
+            if (!insRes || insRes.error) {
+              showToast('Error', insRes ? insRes.error.message : 'Unknown error');
+              btn.disabled = false; btn.textContent = 'Post Pin'; return;
+            }
+            showToast('Posted! \uD83C\uDFA3', 'Your catch is on the map.');
+            document.getElementById('pinPostForm').style.display = 'none';
+            document.getElementById('btnDropPin').style.display = '';
+            ['pinPhoto','pinSpecies','pinCaption','pinLocationName'].forEach(function (id) {
+              var el = document.getElementById(id); if (el) el.value = '';
+            });
+            btn.disabled = false; btn.textContent = 'Post Pin';
+            if (_pendingMarker) { _memberMap.removeLayer(_pendingMarker); _pendingMarker = null; }
+            loadMapPins(); loadFeed();
+          })
+          .catch(function (err) {
+            showToast('Error', err.message || 'Unknown error');
+            btn.disabled = false; btn.textContent = 'Post Pin';
+          });
+      });
+    }
+
+    // ── Feed ──────────────────────────────────────────────────
+    function loadFeed() {
+      var container = document.getElementById('feedList');
+      if (!container) return;
+      container.innerHTML = '<p class="feed-empty">Loading\u2026</p>';
+      getSB()
+        .from('pins')
+        .select('id, lat, lng, caption, species, location_name, photo_url, created_at, user_id, profiles(display_name, avatar_url)')
+        .eq('flagged', false)
+        .order('created_at', { ascending: false })
+        .limit(50)
+        .then(function (res) {
+          if (res.error || !res.data || !res.data.length) {
+            container.innerHTML = '<p class="feed-empty">No catches posted yet \u2014 be the first! \uD83C\uDFA3</p>';
+            return;
+          }
+          container.innerHTML = '';
+          res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+        });
+    }
+
+    function buildFeedCard(pin) {
+      var card = document.createElement('div');
+      card.className = 'feed-card';
+      var avatarUrl   = (pin.profiles && pin.profiles.avatar_url)   ? pin.profiles.avatar_url   : '';
+      var displayName = (pin.profiles && pin.profiles.display_name) ? pin.profiles.display_name : 'Member';
+      var date = new Date(pin.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      card.innerHTML =
+        '<div class="feed-card-header">' +
+          (avatarUrl ? '<img src="' + avatarUrl + '" class="feed-avatar">' :
+            '<div class="feed-avatar" style="background:var(--green-mid);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;">\uD83C\uDFA3</div>') +
+          '<div>' +
+            '<div style="font-weight:600;font-family:\'Lora\',serif;">' + displayName + '</div>' +
+            '<div style="font-size:0.8rem;color:var(--text-mid);">' + date + (pin.location_name ? ' \u00B7 ' + pin.location_name : '') + '</div>' +
+          '</div>' +
+        '</div>' +
+        (pin.photo_url ? '<img src="' + pin.photo_url + '" class="feed-photo">' : '') +
+        '<div class="feed-card-body">' +
+          (pin.species ? '<span class="feed-species">' + pin.species + '</span>' : '') +
+          (pin.caption ? '<p class="feed-caption">' + pin.caption + '</p>' : '') +
+        '</div>' +
+        '<div class="feed-card-comments">' +
+          '<div class="comment-list" id="comments-' + pin.id + '"></div>' +
+          '<div class="comment-input-row">' +
+            '<input type="text" class="form-input comment-input" placeholder="Add a comment\u2026" id="commentInput-' + pin.id + '">' +
+            '<button class="btn btn-primary btn-sm" onclick="window._bffPostComment(\'' + pin.id + '\')">Post</button>' +
+          '</div>' +
+        '</div>';
+      loadComments(pin.id, card.querySelector('.comment-list'));
+      return card;
+    }
+
+    // ── Comments ──────────────────────────────────────────────
+    function loadComments(pinId, container) {
+      getSB()
+        .from('comments')
+        .select('id, body, created_at, profiles(display_name)')
+        .eq('pin_id', pinId)
+        .order('created_at', { ascending: true })
+        .then(function (res) {
+          if (res.error || !res.data || !res.data.length) { container.innerHTML = ''; return; }
+          container.innerHTML = '';
+          res.data.forEach(function (c) {
+            var row = document.createElement('div');
+            row.className = 'comment-row';
+            var name = (c.profiles && c.profiles.display_name) ? c.profiles.display_name : 'Member';
+            row.innerHTML = '<strong class="comment-author">' + name + '</strong> ' + c.body;
+            container.appendChild(row);
+          });
+        });
+    }
+
+    window._bffPostComment = function (pinId) {
+      var input = document.getElementById('commentInput-' + pinId);
+      if (!input || !input.value.trim()) return;
+      var body = input.value.trim();
+      var container = document.getElementById('comments-' + pinId);
+      getSB().auth.getUser().then(function (res) {
+        if (res.error || !res.data.user) return;
+        getSB().from('comments').insert({ pin_id: pinId, user_id: res.data.user.id, body: body })
+          .then(function (ins) {
+            if (ins.error) { showToast('Error', ins.error.message); return; }
+            input.value = '';
+            loadComments(pinId, container);
+          });
+      });
+    };
+
+    // ── Admin ─────────────────────────────────────────────────
+    function loadAdminQueues() {
+      var pendingList = document.getElementById('adminPendingList');
+      var flaggedList = document.getElementById('adminFlaggedList');
+
+      if (pendingList) {
+        pendingList.innerHTML = '<p class="admin-empty">Loading\u2026</p>';
+        getSB()
+          .from('profiles').select('id, display_name, joined_at').eq('status', 'pending').order('joined_at', { ascending: true })
+          .then(function (res) {
+            if (res.error || !res.data || !res.data.length) { pendingList.innerHTML = '<p class="admin-empty">No pending accounts.</p>'; return; }
+            pendingList.innerHTML = '';
+            res.data.forEach(function (p) {
+              var row = document.createElement('div'); row.className = 'admin-row';
+              var date = new Date(p.joined_at).toLocaleDateString();
+              row.innerHTML =
+                '<span><strong>' + (p.display_name || 'Unknown') + '</strong> <span style="font-size:0.8rem;color:var(--text-mid);">joined ' + date + '</span></span>' +
+                '<div style="display:flex;gap:0.5rem;">' +
+                  '<button class="btn btn-primary btn-sm" onclick="window._bffApproveUser(\'' + p.id + '\',this.closest(\'.admin-row\'))">Approve</button>' +
+                  '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRejectUser(\'' + p.id + '\',this.closest(\'.admin-row\'))">Reject</button>' +
+                '</div>';
+              pendingList.appendChild(row);
+            });
+          });
+      }
+
+      if (flaggedList) {
+        flaggedList.innerHTML = '<p class="admin-empty">Loading\u2026</p>';
+        getSB()
+          .from('pins').select('id, caption, species, photo_url, created_at').eq('flagged', true).order('created_at', { ascending: false })
+          .then(function (res) {
+            if (res.error || !res.data || !res.data.length) { flaggedList.innerHTML = '<p class="admin-empty">No flagged posts.</p>'; return; }
+            flaggedList.innerHTML = '';
+            res.data.forEach(function (pin) {
+              var row = document.createElement('div'); row.className = 'admin-row';
+              var img = pin.photo_url ? '<img src="' + pin.photo_url + '" style="width:48px;height:48px;object-fit:cover;border-radius:6px;">' : '';
+              row.innerHTML =
+                '<span style="display:flex;align-items:center;gap:0.75rem;">' + img +
+                  '<span>' + (pin.species || 'Unknown species') + (pin.caption ? ' \u2014 ' + pin.caption : '') + '</span>' +
+                '</span>' +
+                '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRemovePin(\'' + pin.id + '\',this.closest(\'.admin-row\'))">Remove</button>';
+              flaggedList.appendChild(row);
+            });
+          });
+      }
+    }
+
+    window._bffApproveUser = function (userId, row) {
+      getSB().from('profiles').update({ status: 'approved' }).eq('id', userId).then(function (res) {
+        if (res.error) { showToast('Error', res.error.message); return; }
+        showToast('Approved \u2713', 'Member now has access.');
+        if (row) row.remove();
+      });
+    };
+    window._bffRejectUser = function (userId, row) {
+      getSB().from('profiles').update({ status: 'rejected' }).eq('id', userId).then(function (res) {
+        if (res.error) { showToast('Error', res.error.message); return; }
+        showToast('Rejected', 'Account has been declined.');
+        if (row) row.remove();
+      });
+    };
+    window._bffRemovePin = function (pinId, row) {
+      getSB().from('pins').delete().eq('id', pinId).then(function (res) {
+        if (res.error) { showToast('Error', res.error.message); return; }
+        showToast('Removed', 'Post removed from the map and feed.');
+        if (row) row.remove();
+      });
+    };
+
+    // ── Tab switcher ──────────────────────────────────────────
+    window.switchMemberTab = function (tab, btn) {
+      ['Map', 'Feed', 'Admin'].forEach(function (t) {
+        var panel = document.getElementById('memberTab' + t);
+        if (panel) panel.style.display = t === tab ? '' : 'none';
+      });
+      document.querySelectorAll('.member-tab').forEach(function (b) { b.classList.remove('active'); });
+      if (btn) btn.classList.add('active');
+      if (tab === 'Admin') loadAdminQueues();
+      if (tab === 'Map' && _memberMap) { setTimeout(function () { _memberMap.invalidateSize(); }, 50); }
+    };
+
+    // ── Init ──────────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', function () {
+      bindSignInButtons();
+      initMemberAuth();
+    });
+
   })();
 </script>
 </body>

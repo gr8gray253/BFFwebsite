@@ -2340,7 +2340,92 @@
     vertical-align: middle;
   }
   @keyframes btnSpin { to { transform: rotate(360deg); } }
+
+  /* ── MEMBER PORTAL ─────────────────────────────────── */
+  .members-auth-view, .members-pending-view {
+    max-width: 480px;
+    margin: 80px auto;
+    text-align: center;
+  }
+  .auth-buttons { margin: 2rem 0 1rem; display:flex; flex-direction:column; align-items:center; gap:0.8rem; }
+  .auth-note { font-size: 0.85rem; color: var(--text-mid); font-style: italic; margin-top:0.5rem; }
+  .pending-card {
+    background: var(--cream);
+    border: 2px solid var(--amber);
+    border-radius: 16px;
+    padding: 3rem 2rem;
+    max-width: 440px;
+    margin: 80px auto;
+  }
+  .pending-icon { font-size: 3rem; margin-bottom: 1rem; }
+  .members-nav {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 1rem 0;
+    border-bottom: 2px solid var(--cream-dark);
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .member-tab {
+    background: var(--cream-dark);
+    border: none;
+    border-radius: 8px;
+    padding: 0.5rem 1.2rem;
+    cursor: pointer;
+    font-family: 'Lora', serif;
+    color: var(--text-dark);
+    transition: background 0.2s;
+  }
+  .member-tab.active { background: var(--green-deep); color: var(--white); }
+  .member-user-info { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
+  .member-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+  .btn-sm { padding: 0.3rem 0.8rem !important; font-size: 0.8rem !important; }
+  .pin-post-form {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-top: 1rem;
+    border: 1px solid var(--cream-dark);
+  }
+  .pin-post-form h4 { font-family: 'Playfair Display', serif; color: var(--green-deep); margin-bottom: 1rem; }
+  .pin-coords-display { font-size: 0.8rem; color: var(--text-mid); font-style: italic; margin:0.4rem 0; }
+  .pin-form-actions { display: flex; gap: 0.8rem; margin-top: 1rem; }
+  #memberMap { height: 450px; border-radius: 12px; overflow: hidden; margin-bottom:1rem; }
+  .feed-list { display: flex; flex-direction: column; gap: 1.5rem; }
+  .feed-card { background: var(--cream); border-radius: 12px; overflow: hidden; border: 1px solid var(--cream-dark); }
+  .feed-card-photo { width: 100%; max-height: 320px; object-fit: cover; }
+  .feed-card-body { padding: 1rem 1.2rem; }
+  .feed-card-meta { font-size: 0.8rem; color: var(--text-mid); margin-bottom: 0.4rem; }
+  .feed-card-caption { margin-bottom: 0.8rem; }
+  .comments-section { border-top: 1px solid var(--cream-dark); padding-top: 0.8rem; margin-top:0.6rem; }
+  .comment-item { font-size: 0.85rem; margin-bottom: 0.4rem; }
+  .comment-author { font-weight: 600; color: var(--green-deep); }
+  .comment-input-row { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
+  .comment-input-row input { flex: 1; }
+  .admin-list { display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0; }
+  .admin-card {
+    background: var(--cream);
+    border-radius: 10px;
+    padding: 1rem 1.2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border: 1px solid var(--cream-dark);
+  }
+  .admin-card-info { flex: 1; font-size:0.9rem; }
+  .admin-card-actions { display: flex; gap: 0.5rem; flex-shrink:0; }
+  .btn-approve { background: var(--green-water); color: white; border: none; border-radius: 6px; padding: 0.35rem 0.9rem; cursor: pointer; font-size:0.85rem; }
+  .btn-reject  { background: var(--orange); color: white; border: none; border-radius: 6px; padding: 0.35rem 0.9rem; cursor: pointer; font-size:0.85rem; }
+  .feed-empty, .admin-empty { color: var(--text-mid); font-style: italic; text-align: center; padding: 2rem; }
+  .member-tab-content { min-height: 300px; }
+  [data-theme="dark"] .feed-card,
+  [data-theme="dark"] .pin-post-form,
+  [data-theme="dark"] .admin-card,
+  [data-theme="dark"] .pending-card { background: #152840; border-color: #1e3c58; }
 </style>
+<!-- Supabase JS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
 
@@ -2364,6 +2449,7 @@
     <li><a href="#" onclick="return showSection('gallery')" id="nav-gallery">Gallery</a></li>
     <li><a href="#" onclick="return showSection('donate')" id="nav-donate">Donate</a></li>
     <li><a href="#" onclick="return showSection('about')" id="nav-about">About</a></li>
+    <li><a href="#" onclick="return showSection('members')" id="nav-members">Members</a></li>
   </ul>
   <div style="display:flex;align-items:center;gap:0.3rem;">
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" onclick="toggleTheme()">🌙</button>
@@ -3277,6 +3363,101 @@
   </div>
 </section>
 
+<!-- ═══════════════════════ MEMBERS ════════════════════════ -->
+<section id="members" class="site-section" style="display:none;">
+  <div class="container">
+    <p class="section-eyebrow">Community</p>
+    <h2 class="section-title">Member <em>Portal</em></h2>
+    <div class="divider"></div>
+
+    <!-- AUTH VIEW -->
+    <div id="membersAuth" class="members-auth-view">
+      <p class="section-tagline">Sign in to access the BFF member map and community.</p>
+      <div class="auth-buttons">
+        <button class="btn btn-primary" id="btnGoogleSignIn" style="min-width:240px;">
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="margin-right:8px;vertical-align:middle;"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
+          Sign in with Google
+        </button>
+        <button class="btn btn-primary" id="btnFacebookSignIn" style="background:#1877f2;min-width:240px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="margin-right:8px;vertical-align:middle;"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+          Sign in with Facebook
+        </button>
+      </div>
+      <p class="auth-note">New members are reviewed before gaining access. You'll receive an email once approved.</p>
+    </div>
+
+    <!-- PENDING VIEW -->
+    <div id="membersPending" class="members-pending-view" style="display:none;">
+      <div class="pending-card">
+        <div class="pending-icon">🎣</div>
+        <h3 style="font-family:'Playfair Display',serif;margin-bottom:1rem;">You're on the list!</h3>
+        <p style="color:var(--text-mid);margin-bottom:1.5rem;">Your account is awaiting approval. Kyle will review your signup and you'll receive an email once you're in.</p>
+        <button class="btn btn-outline" id="btnSignOut">Sign Out</button>
+      </div>
+    </div>
+
+    <!-- MAIN MEMBER VIEW -->
+    <div id="membersMain" class="members-main-view" style="display:none;">
+      <div class="members-nav">
+        <button class="member-tab active" onclick="switchMemberTab('Map',this)">🗺 Map</button>
+        <button class="member-tab" onclick="switchMemberTab('Feed',this)">📸 Feed</button>
+        <button class="member-tab" id="adminTabBtn" onclick="switchMemberTab('Admin',this)" style="display:none;">⚙️ Admin</button>
+        <div class="member-user-info">
+          <img id="memberAvatar" src="" alt="avatar" class="member-avatar" style="display:none;">
+          <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
+          <button class="btn btn-outline btn-sm" id="btnMemberSignOut">Sign Out</button>
+        </div>
+      </div>
+
+      <!-- MAP TAB -->
+      <div id="memberTabMap" class="member-tab-content">
+        <div id="memberMap"></div>
+        <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>
+        <div class="pin-post-form" id="pinPostForm" style="display:none;">
+          <h4>📍 Post Your Catch</h4>
+          <div class="form-group">
+            <label>Photo <span style="color:var(--orange);">*</span></label>
+            <input type="file" id="pinPhoto" accept="image/*" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Species caught</label>
+            <input type="text" id="pinSpecies" placeholder="e.g. Redfish, Speckled Trout" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Caption</label>
+            <input type="text" id="pinCaption" placeholder="Tell us about this catch…" class="form-input">
+          </div>
+          <div class="form-group">
+            <label>Location name <span style="font-weight:400;font-style:italic;">(optional)</span></label>
+            <input type="text" id="pinLocationName" placeholder="e.g. Empire Canal" class="form-input">
+          </div>
+          <p class="pin-coords-display" id="pinLatLngDisplay">Click the map above to place your pin.</p>
+          <div class="pin-form-actions">
+            <button class="btn btn-primary" id="btnSubmitPin">Post Pin</button>
+            <button class="btn btn-outline" id="btnCancelPin">Cancel</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- FEED TAB -->
+      <div id="memberTabFeed" class="member-tab-content" style="display:none;">
+        <div id="feedList" class="feed-list">
+          <p class="feed-empty">Loading catches…</p>
+        </div>
+      </div>
+
+      <!-- ADMIN TAB -->
+      <div id="memberTabAdmin" class="member-tab-content" style="display:none;">
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1rem;">Pending Accounts</h3>
+        <div id="adminPendingList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Flagged Posts</h3>
+        <div id="adminFlaggedList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">Bayou Family Fishing</div>
@@ -3908,6 +4089,431 @@
         }, 2500);
       }
     };
+  })();
+
+  // ══════════════════════════════════════════════════════════════
+  // MEMBER PORTAL — Supabase auth, map, feed, comments, admin
+  // ══════════════════════════════════════════════════════════════
+  (function () {
+    'use strict';
+
+    var SUPABASE_URL = 'https://osiramhnynhwmlfyuqcp.supabase.co';
+    var SUPABASE_KEY = 'sb_publishable_yS9pPiw1F7QuxGcWVAyLXw_oZMI9HCI';
+    var _sb          = null;
+    var _memberMap   = null;
+    var _pendingMarker = null;
+    var _pendingLatLng = null;
+
+    // ── Lazy Supabase client ──────────────────────────────────
+    function getSB() {
+      if (!_sb) _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+      return _sb;
+    }
+
+    // ── Show one members view, hide others ────────────────────
+    function showMembersView(view) {
+      var auth    = document.getElementById('membersAuth');
+      var pending = document.getElementById('membersPending');
+      var main    = document.getElementById('membersMain');
+      if (auth)    auth.style.display    = view === 'auth'    ? '' : 'none';
+      if (pending) pending.style.display = view === 'pending' ? '' : 'none';
+      if (main)    main.style.display    = view === 'main'    ? '' : 'none';
+    }
+
+    // ── Load profile and route to correct view ────────────────
+    function loadProfile(user) {
+      getSB()
+        .from('profiles')
+        .select('*')
+        .eq('id', user.id)
+        .single()
+        .then(function (res) {
+          if (res.error || !res.data) { showMembersView('auth'); return; }
+          var profile = res.data;
+          if (profile.status === 'approved') {
+            showMembersView('main');
+            loadMemberMain(user, profile);
+          } else {
+            showMembersView('pending');
+          }
+        });
+    }
+
+    // ── Auth state listener ───────────────────────────────────
+    function initMemberAuth() {
+      getSB().auth.onAuthStateChange(function (event, session) {
+        if (session && session.user) {
+          loadProfile(session.user);
+        } else {
+          showMembersView('auth');
+        }
+      });
+    }
+
+    // ── Sign-in / sign-out button bindings ────────────────────
+    function bindSignInButtons() {
+      var gBtn  = document.getElementById('btnGoogleSignIn');
+      var fBtn  = document.getElementById('btnFacebookSignIn');
+      var soBtn = document.getElementById('btnSignOut');
+      var soBtn2 = document.getElementById('btnMemberSignOut');
+
+      if (gBtn) {
+        gBtn.addEventListener('click', function () {
+          getSB().auth.signInWithOAuth({ provider: 'google',   options: { redirectTo: window.location.origin } });
+        });
+      }
+      if (fBtn) {
+        fBtn.addEventListener('click', function () {
+          getSB().auth.signInWithOAuth({ provider: 'facebook', options: { redirectTo: window.location.origin } });
+        });
+      }
+      if (soBtn) {
+        soBtn.addEventListener('click', function () {
+          getSB().auth.signOut().then(function () { showMembersView('auth'); });
+        });
+      }
+      if (soBtn2) {
+        soBtn2.addEventListener('click', function () {
+          getSB().auth.signOut().then(function () {
+            showMembersView('auth');
+            if (_memberMap) { _memberMap.remove(); _memberMap = null; }
+          });
+        });
+      }
+    }
+
+    // ── Load main portal after approval ──────────────────────
+    function loadMemberMain(user, profile) {
+      var avatar = document.getElementById('memberAvatar');
+      var nameEl = document.getElementById('memberName');
+      if (avatar && profile.avatar_url) { avatar.src = profile.avatar_url; avatar.style.display = 'block'; }
+      if (nameEl) nameEl.textContent = profile.display_name || user.email;
+
+      if (profile.role === 'admin') {
+        var adminBtn = document.getElementById('adminTabBtn');
+        if (adminBtn) adminBtn.style.display = '';
+      }
+      initMemberMap();
+      loadFeed();
+    }
+
+    // ── Member satellite map ──────────────────────────────────
+    function initMemberMap() {
+      var container = document.getElementById('memberMap');
+      if (!container || _memberMap) return;
+
+      _memberMap = L.map('memberMap', { center: [29.35, -89.8], zoom: 10 });
+      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 18,
+        attribution: 'Tiles &copy; Esri &mdash; Earthstar Geographics'
+      }).addTo(_memberMap);
+
+      loadMapPins();
+
+      var dropBtn  = document.getElementById('btnDropPin');
+      var form     = document.getElementById('pinPostForm');
+      var cancelBtn = document.getElementById('btnCancelPin');
+      var submitBtn = document.getElementById('btnSubmitPin');
+      var coordsEl  = document.getElementById('pinLatLngDisplay');
+
+      if (dropBtn) {
+        dropBtn.addEventListener('click', function () {
+          form.style.display = 'block';
+          dropBtn.style.display = 'none';
+          coordsEl.textContent = 'Click the map to place your pin.';
+          _pendingLatLng = null;
+          if (_pendingMarker) { _memberMap.removeLayer(_pendingMarker); _pendingMarker = null; }
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function (pos) {
+              placePendingMarker(pos.coords.latitude, pos.coords.longitude, coordsEl);
+            }, function () {
+              coordsEl.textContent = 'GPS unavailable — click the map to place your pin.';
+            }, { timeout: 8000 });
+          }
+        });
+      }
+
+      _memberMap.on('click', function (e) {
+        if (form && form.style.display !== 'none') {
+          placePendingMarker(e.latlng.lat, e.latlng.lng, coordsEl);
+        }
+      });
+
+      if (cancelBtn) {
+        cancelBtn.addEventListener('click', function () {
+          form.style.display = 'none';
+          dropBtn.style.display = '';
+          if (_pendingMarker) { _memberMap.removeLayer(_pendingMarker); _pendingMarker = null; }
+          _pendingLatLng = null;
+        });
+      }
+
+      if (submitBtn) submitBtn.addEventListener('click', submitPin);
+    }
+
+    function placePendingMarker(lat, lng, coordsEl) {
+      if (_pendingMarker) _memberMap.removeLayer(_pendingMarker);
+      _pendingLatLng = { lat: lat, lng: lng };
+      _pendingMarker = L.marker([lat, lng], { draggable: true }).addTo(_memberMap);
+      _memberMap.setView([lat, lng], 13);
+      coordsEl.textContent = '\uD83D\uDCCD ' + lat.toFixed(5) + ', ' + lng.toFixed(5) + ' (drag to adjust)';
+      _pendingMarker.on('dragend', function (e) {
+        var p = e.target.getLatLng();
+        _pendingLatLng = { lat: p.lat, lng: p.lng };
+        coordsEl.textContent = '\uD83D\uDCCD ' + p.lat.toFixed(5) + ', ' + p.lng.toFixed(5);
+      });
+    }
+
+    function loadMapPins() {
+      getSB()
+        .from('pins')
+        .select('id, lat, lng, caption, species, photo_url')
+        .eq('flagged', false)
+        .then(function (res) {
+          if (res.error || !res.data) return;
+          res.data.forEach(function (pin) { addPinMarker(pin); });
+        });
+    }
+
+    function addPinMarker(pin) {
+      var icon = L.divIcon({
+        className: '',
+        html: '<div style="width:28px;height:28px;border-radius:50%;background:#f0c040;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:16px;">\uD83C\uDFA3</div>',
+        iconSize: [28, 28], iconAnchor: [14, 14]
+      });
+      var marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(_memberMap);
+      var img  = pin.photo_url ? '<img src="' + pin.photo_url + '" style="width:100%;border-radius:6px;margin-bottom:6px;">' : '';
+      var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + pin.species + '</em>' : '';
+      var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + pin.caption + '</p>' : '';
+      marker.bindPopup('<div style="font-family:Lora,serif;max-width:200px;">' + img + sp + cap + '</div>');
+    }
+
+    // ── Submit new pin ────────────────────────────────────────
+    function submitPin() {
+      if (!_pendingLatLng) { showToast('Oops', 'Click the map to place your pin first.'); return; }
+      var photoFile    = document.getElementById('pinPhoto').files[0];
+      var species      = document.getElementById('pinSpecies').value.trim();
+      var caption      = document.getElementById('pinCaption').value.trim();
+      var locationName = document.getElementById('pinLocationName').value.trim();
+      if (!photoFile) { showToast('Photo required', 'Please select a photo to post.'); return; }
+
+      var btn = document.getElementById('btnSubmitPin');
+      btn.disabled = true; btn.textContent = 'Uploading\u2026';
+
+      getSB().auth.getUser().then(function (res) {
+        if (res.error || !res.data.user) { btn.disabled = false; btn.textContent = 'Post Pin'; return; }
+        var userId = res.data.user.id;
+        var ext    = photoFile.name.split('.').pop();
+        var path   = userId + '/' + Date.now() + '.' + ext;
+
+        getSB().storage.from('pin-photos').upload(path, photoFile, { cacheControl: '3600', upsert: false })
+          .then(function (upRes) {
+            if (upRes.error) { showToast('Upload error', upRes.error.message); btn.disabled = false; btn.textContent = 'Post Pin'; return; }
+            var photoUrl = getSB().storage.from('pin-photos').getPublicUrl(path).data.publicUrl;
+            return getSB().from('pins').insert({
+              user_id: userId, photo_url: photoUrl,
+              lat: _pendingLatLng.lat, lng: _pendingLatLng.lng,
+              location_name: locationName || null,
+              caption: caption || null, species: species || null
+            });
+          })
+          .then(function (insRes) {
+            if (!insRes || insRes.error) {
+              showToast('Error', insRes ? insRes.error.message : 'Unknown error');
+              btn.disabled = false; btn.textContent = 'Post Pin'; return;
+            }
+            showToast('Posted! \uD83C\uDFA3', 'Your catch is on the map.');
+            document.getElementById('pinPostForm').style.display = 'none';
+            document.getElementById('btnDropPin').style.display = '';
+            ['pinPhoto','pinSpecies','pinCaption','pinLocationName'].forEach(function (id) {
+              var el = document.getElementById(id); if (el) el.value = '';
+            });
+            btn.disabled = false; btn.textContent = 'Post Pin';
+            if (_pendingMarker) { _memberMap.removeLayer(_pendingMarker); _pendingMarker = null; }
+            loadMapPins(); loadFeed();
+          })
+          .catch(function (err) {
+            showToast('Error', err.message || 'Unknown error');
+            btn.disabled = false; btn.textContent = 'Post Pin';
+          });
+      });
+    }
+
+    // ── Feed ──────────────────────────────────────────────────
+    function loadFeed() {
+      var container = document.getElementById('feedList');
+      if (!container) return;
+      container.innerHTML = '<p class="feed-empty">Loading\u2026</p>';
+      getSB()
+        .from('pins')
+        .select('id, lat, lng, caption, species, location_name, photo_url, created_at, user_id, profiles(display_name, avatar_url)')
+        .eq('flagged', false)
+        .order('created_at', { ascending: false })
+        .limit(50)
+        .then(function (res) {
+          if (res.error || !res.data || !res.data.length) {
+            container.innerHTML = '<p class="feed-empty">No catches posted yet \u2014 be the first! \uD83C\uDFA3</p>';
+            return;
+          }
+          container.innerHTML = '';
+          res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+        });
+    }
+
+    function buildFeedCard(pin) {
+      var card = document.createElement('div');
+      card.className = 'feed-card';
+      var avatarUrl   = (pin.profiles && pin.profiles.avatar_url)   ? pin.profiles.avatar_url   : '';
+      var displayName = (pin.profiles && pin.profiles.display_name) ? pin.profiles.display_name : 'Member';
+      var date = new Date(pin.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      card.innerHTML =
+        '<div class="feed-card-header">' +
+          (avatarUrl ? '<img src="' + avatarUrl + '" class="feed-avatar">' :
+            '<div class="feed-avatar" style="background:var(--green-mid);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;">\uD83C\uDFA3</div>') +
+          '<div>' +
+            '<div style="font-weight:600;font-family:\'Lora\',serif;">' + displayName + '</div>' +
+            '<div style="font-size:0.8rem;color:var(--text-mid);">' + date + (pin.location_name ? ' \u00B7 ' + pin.location_name : '') + '</div>' +
+          '</div>' +
+        '</div>' +
+        (pin.photo_url ? '<img src="' + pin.photo_url + '" class="feed-photo">' : '') +
+        '<div class="feed-card-body">' +
+          (pin.species ? '<span class="feed-species">' + pin.species + '</span>' : '') +
+          (pin.caption ? '<p class="feed-caption">' + pin.caption + '</p>' : '') +
+        '</div>' +
+        '<div class="feed-card-comments">' +
+          '<div class="comment-list" id="comments-' + pin.id + '"></div>' +
+          '<div class="comment-input-row">' +
+            '<input type="text" class="form-input comment-input" placeholder="Add a comment\u2026" id="commentInput-' + pin.id + '">' +
+            '<button class="btn btn-primary btn-sm" onclick="window._bffPostComment(\'' + pin.id + '\')">Post</button>' +
+          '</div>' +
+        '</div>';
+      loadComments(pin.id, card.querySelector('.comment-list'));
+      return card;
+    }
+
+    // ── Comments ──────────────────────────────────────────────
+    function loadComments(pinId, container) {
+      getSB()
+        .from('comments')
+        .select('id, body, created_at, profiles(display_name)')
+        .eq('pin_id', pinId)
+        .order('created_at', { ascending: true })
+        .then(function (res) {
+          if (res.error || !res.data || !res.data.length) { container.innerHTML = ''; return; }
+          container.innerHTML = '';
+          res.data.forEach(function (c) {
+            var row = document.createElement('div');
+            row.className = 'comment-row';
+            var name = (c.profiles && c.profiles.display_name) ? c.profiles.display_name : 'Member';
+            row.innerHTML = '<strong class="comment-author">' + name + '</strong> ' + c.body;
+            container.appendChild(row);
+          });
+        });
+    }
+
+    window._bffPostComment = function (pinId) {
+      var input = document.getElementById('commentInput-' + pinId);
+      if (!input || !input.value.trim()) return;
+      var body = input.value.trim();
+      var container = document.getElementById('comments-' + pinId);
+      getSB().auth.getUser().then(function (res) {
+        if (res.error || !res.data.user) return;
+        getSB().from('comments').insert({ pin_id: pinId, user_id: res.data.user.id, body: body })
+          .then(function (ins) {
+            if (ins.error) { showToast('Error', ins.error.message); return; }
+            input.value = '';
+            loadComments(pinId, container);
+          });
+      });
+    };
+
+    // ── Admin ─────────────────────────────────────────────────
+    function loadAdminQueues() {
+      var pendingList = document.getElementById('adminPendingList');
+      var flaggedList = document.getElementById('adminFlaggedList');
+
+      if (pendingList) {
+        pendingList.innerHTML = '<p class="admin-empty">Loading\u2026</p>';
+        getSB()
+          .from('profiles').select('id, display_name, joined_at').eq('status', 'pending').order('joined_at', { ascending: true })
+          .then(function (res) {
+            if (res.error || !res.data || !res.data.length) { pendingList.innerHTML = '<p class="admin-empty">No pending accounts.</p>'; return; }
+            pendingList.innerHTML = '';
+            res.data.forEach(function (p) {
+              var row = document.createElement('div'); row.className = 'admin-row';
+              var date = new Date(p.joined_at).toLocaleDateString();
+              row.innerHTML =
+                '<span><strong>' + (p.display_name || 'Unknown') + '</strong> <span style="font-size:0.8rem;color:var(--text-mid);">joined ' + date + '</span></span>' +
+                '<div style="display:flex;gap:0.5rem;">' +
+                  '<button class="btn btn-primary btn-sm" onclick="window._bffApproveUser(\'' + p.id + '\',this.closest(\'.admin-row\'))">Approve</button>' +
+                  '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRejectUser(\'' + p.id + '\',this.closest(\'.admin-row\'))">Reject</button>' +
+                '</div>';
+              pendingList.appendChild(row);
+            });
+          });
+      }
+
+      if (flaggedList) {
+        flaggedList.innerHTML = '<p class="admin-empty">Loading\u2026</p>';
+        getSB()
+          .from('pins').select('id, caption, species, photo_url, created_at').eq('flagged', true).order('created_at', { ascending: false })
+          .then(function (res) {
+            if (res.error || !res.data || !res.data.length) { flaggedList.innerHTML = '<p class="admin-empty">No flagged posts.</p>'; return; }
+            flaggedList.innerHTML = '';
+            res.data.forEach(function (pin) {
+              var row = document.createElement('div'); row.className = 'admin-row';
+              var img = pin.photo_url ? '<img src="' + pin.photo_url + '" style="width:48px;height:48px;object-fit:cover;border-radius:6px;">' : '';
+              row.innerHTML =
+                '<span style="display:flex;align-items:center;gap:0.75rem;">' + img +
+                  '<span>' + (pin.species || 'Unknown species') + (pin.caption ? ' \u2014 ' + pin.caption : '') + '</span>' +
+                '</span>' +
+                '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRemovePin(\'' + pin.id + '\',this.closest(\'.admin-row\'))">Remove</button>';
+              flaggedList.appendChild(row);
+            });
+          });
+      }
+    }
+
+    window._bffApproveUser = function (userId, row) {
+      getSB().from('profiles').update({ status: 'approved' }).eq('id', userId).then(function (res) {
+        if (res.error) { showToast('Error', res.error.message); return; }
+        showToast('Approved \u2713', 'Member now has access.');
+        if (row) row.remove();
+      });
+    };
+    window._bffRejectUser = function (userId, row) {
+      getSB().from('profiles').update({ status: 'rejected' }).eq('id', userId).then(function (res) {
+        if (res.error) { showToast('Error', res.error.message); return; }
+        showToast('Rejected', 'Account has been declined.');
+        if (row) row.remove();
+      });
+    };
+    window._bffRemovePin = function (pinId, row) {
+      getSB().from('pins').delete().eq('id', pinId).then(function (res) {
+        if (res.error) { showToast('Error', res.error.message); return; }
+        showToast('Removed', 'Post removed from the map and feed.');
+        if (row) row.remove();
+      });
+    };
+
+    // ── Tab switcher ──────────────────────────────────────────
+    window.switchMemberTab = function (tab, btn) {
+      ['Map', 'Feed', 'Admin'].forEach(function (t) {
+        var panel = document.getElementById('memberTab' + t);
+        if (panel) panel.style.display = t === tab ? '' : 'none';
+      });
+      document.querySelectorAll('.member-tab').forEach(function (b) { b.classList.remove('active'); });
+      if (btn) btn.classList.add('active');
+      if (tab === 'Admin') loadAdminQueues();
+      if (tab === 'Map' && _memberMap) { setTimeout(function () { _memberMap.invalidateSize(); }, 50); }
+    };
+
+    // ── Init ──────────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', function () {
+      bindSignInButtons();
+      initMemberAuth();
+    });
+
   })();
 </script>
 </body>
