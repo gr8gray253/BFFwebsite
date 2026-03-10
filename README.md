@@ -9,13 +9,16 @@
 
 | File | Description |
 |------|-------------|
-| `index.html` | Full website — Netlify entry point (all pages, styles, and logic in one file) |
+| `index.html` | Full website — Cloudflare Pages entry point (all pages, styles, and logic in one file) |
 | `bayou-family-fishing.html` | Working copy — edit this, then copy to `index.html` before deploying |
 | `Photos/` | All media assets (photos, videos) |
 | `404.html` | Branded 404 page matching site design |
-| `netlify.toml` | Netlify security headers (CSP, X-Frame-Options, etc.) |
-| `_headers` | Additional Netlify response headers |
-| `_redirects` | Netlify redirect rules |
+| `privacy.html` | Privacy Policy — covers member portal, OAuth data, Supabase storage |
+| `terms.html` | Terms of Service — member accounts, user content, events, liability |
+| `data-deletion.html` | Data Deletion Request page — required for Facebook/Google OAuth compliance |
+| `netlify.toml` | Security headers reference (CSP, X-Frame-Options, etc.) |
+| `_headers` | Cloudflare Pages security headers |
+| `_redirects` | Redirect rules |
 | `README.md` | This file — reflects deployed state |
 | `NEXT_STEPS.md` | Freeform session log — read this to catch up on what was built each session and what's still pending |
 
@@ -43,6 +46,7 @@
 | File | Used In |
 |------|---------|
 | `BFF+Logo.jpg` | Nav logo, favicon, 404 page, page preloader |
+| `BFF-Logo-1024.jpg` | High-resolution logo (1024px) — for OG tags, social sharing, future use |
 | `skyline.jpg` | Hero background (parallax) |
 | `who we are.jpg` | About section — group photo above team grid |
 | `Kyle Rockefeller, President and Secretary.jpg` | About — team card |
@@ -142,6 +146,11 @@ Dark mode swaps these variables via `[data-theme="dark"]` — toggle persists in
 - RSVP panel glassmorphism (`backdrop-filter: blur`)
 - Form submit button states: Sending… / Sent! / Error
 
+### Legal & Compliance Pages
+- Privacy Policy (`/privacy.html`) — data collection, Supabase storage, Google/Facebook OAuth
+- Terms of Service (`/terms.html`) — membership, user content, events, liability, Louisiana governing law
+- Data Deletion Request (`/data-deletion.html`) — required for Facebook/Google OAuth app approval; 30-day deletion SLA via email
+
 ### SEO & Performance
 - Meta description, Open Graph tags, JSON-LD structured data
 - Google Fonts `preconnect` + `display=swap`
@@ -208,4 +217,4 @@ Dark mode swaps these variables via `[data-theme="dark"]` — toggle persists in
 
 ---
 
-*Last updated: March 9, 2026 — deployed to Cloudflare Pages; index.html added as entry point; README updated to reflect all deployed features through Session 6*
+*Last updated: March 10, 2026 — added privacy.html, terms.html, data-deletion.html (OAuth compliance pages), and BFF-Logo-1024.jpg*

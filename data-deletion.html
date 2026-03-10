@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Data Deletion — Bayou Family Fishing & Charity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lora:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Lora', serif;
+      background: #f5fbff;
+      color: #0d1f2d;
+      line-height: 1.8;
+    }
+    header {
+      background: #0d2b3e;
+      padding: 1.2rem 2rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    header img { height: 48px; border-radius: 6px; }
+    header a {
+      color: #f0c040;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      text-decoration: none;
+    }
+    header a:hover { text-decoration: underline; }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      color: #0d2b3e;
+      margin-bottom: 2rem;
+    }
+    h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      color: #0d2b3e;
+      margin: 2rem 0 0.6rem;
+    }
+    p { margin-bottom: 1rem; }
+    ul { padding-left: 1.5rem; margin-bottom: 1rem; }
+    ul li { margin-bottom: 0.5rem; }
+    a { color: #2980b9; }
+    .steps {
+      counter-reset: steps;
+      list-style: none;
+      padding: 0;
+    }
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      margin-bottom: 1.2rem;
+    }
+    .steps li::before {
+      content: counter(steps);
+      background: #0d2b3e;
+      color: #f0c040;
+      font-family: 'Playfair Display', serif;
+      font-weight: 700;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+    .contact-box {
+      background: #eef6fb;
+      border: 1px solid #d0e8f5;
+      border-radius: 10px;
+      padding: 1.4rem 1.6rem;
+      margin-top: 1.5rem;
+    }
+    .contact-box p { margin-bottom: 0.4rem; }
+    .contact-box p:last-child { margin-bottom: 0; }
+    .note {
+      background: #fff8ee;
+      border-left: 4px solid #e8923a;
+      padding: 1rem 1.2rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+      font-size: 0.92rem;
+      color: #2c5364;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background: #0d2b3e;
+      color: #7aaec8;
+      font-size: 0.85rem;
+    }
+    footer a { color: #f0c040; }
+  </style>
+</head>
+<body>
+
+<header>
+  <img src="Photos/BFF+Logo.jpg" alt="BFF Logo">
+  <a href="/">← Back to bayoucharity.org</a>
+</header>
+
+<main>
+  <h1>Data Deletion Request</h1>
+
+  <p>If you have used Facebook or Google to log into the <strong>Bayou Family Fishing &amp; Charity Member Portal</strong> and would like your data removed from our systems, you can request deletion at any time. We will process your request within <strong>30 days</strong>.</p>
+
+  <h2>What Gets Deleted</h2>
+  <p>Upon receiving a deletion request, we will permanently remove:</p>
+  <ul>
+    <li>Your member account and profile information (name, email, profile photo)</li>
+    <li>All fishing pins and photos you have posted to the member map</li>
+    <li>All comments you have posted</li>
+    <li>Any other data associated with your account</li>
+  </ul>
+
+  <div class="note">
+    <strong>Note:</strong> Deleting your BFF account does not delete your Google or Facebook account. To manage or delete those accounts, visit <a href="https://myaccount.google.com" target="_blank" rel="noopener">myaccount.google.com</a> or <a href="https://www.facebook.com/settings" target="_blank" rel="noopener">Facebook Settings</a>.
+  </div>
+
+  <h2>How to Request Deletion</h2>
+  <ol class="steps">
+    <li>Send an email to <a href="mailto:kyle@bayoucharity.org">kyle@bayoucharity.org</a> with the subject line: <strong>"Data Deletion Request"</strong></li>
+    <li>Include the name and email address associated with your BFF account so we can locate your data</li>
+    <li>We will confirm receipt within 5 business days and complete deletion within 30 days</li>
+    <li>You will receive a confirmation email once your data has been fully removed</li>
+  </ol>
+
+  <h2>Contact Us</h2>
+  <div class="contact-box">
+    <p><strong>Bayou Family Fishing &amp; Charity</strong></p>
+    <p>Email: <a href="mailto:kyle@bayoucharity.org">kyle@bayoucharity.org</a></p>
+    <p>Phone: <a href="tel:5045411838">504-541-1838</a></p>
+    <p>Louisiana, USA</p>
+  </div>
+
+  <p style="margin-top:2rem;">For more information on how we handle your data, please see our <a href="/privacy.html">Privacy Policy</a>.</p>
+</main>
+
+<footer>
+  <p>&copy; <script>document.write(new Date().getFullYear())</script> Bayou Family Fishing &amp; Charity &bull;
+  <a href="/">Home</a> &bull;
+  <a href="/privacy.html">Privacy Policy</a></p>
+</footer>
+
+</body>
+</html>
