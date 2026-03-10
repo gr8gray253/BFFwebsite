@@ -11,7 +11,10 @@
 |------|-------------|
 | `bayou-family-fishing.html` | Full website — all pages, styles, and logic in one file |
 | `Photos/` | All media assets (photos, videos) |
-| `README.md` | This file |
+| `README.md` | This file — reflects deployed state |
+| `NEXT_STEPS.md` | Freeform session log — read this to catch up on what was built each session and what's still pending |
+
+> **Workflow note:** `NEXT_STEPS.md` is the living session log. Read it at the start of any new work session to understand where things stand. Updates are appended per session.
 
 ---
 
@@ -19,13 +22,14 @@
 
 | Tab | Section ID | Description |
 |-----|-----------|-------------|
-| Home | `#home` | Hero (skyline photo), mission quote, quick-link cards |
-| Club / Join | `#club` | Membership tiers, paywall notice, application form |
-| Volunteer | `#volunteer` | **Fishing Rodeo spotlight (April 25)**, opportunities grid, general signup form |
-| Boats | `#boats` | 5 real boat stories + photos, maintenance table, availability calendar |
-| INNISFREE | `#innisfree` | Land story, build phases, fishing spot map placeholder |
-| Donate | `#donate` | Donation form, local biz support, impact breakdown |
-| About | `#about` | Team bios + photos, contact info, partner/press cards |
+| Home | `#home` | Hero (skyline photo + parallax), animated stats counter, quick-link cards with 3D tilt |
+| Club / Join | `#club` | Membership tiers, application form, `BFF club page header video.mp4` as section background |
+| Volunteer | `#volunteer` | **Fishing Rodeo spotlight (April 25, 2026)** — countdown timer, RSVP form, opportunities grid |
+| Boats | `#boats` | 5 real boats with photos + full written stories, `bff video 2.mp4` as section background |
+| Gallery | `#gallery` | 21 photos with category filters (All / Cookouts / Fishing / Kids Club / Community), lightbox, masonry grid |
+| INNISFREE | `#innisfree` | Land story, build phases, live Leaflet.js map (3 markers: Home Base, Duck Lease, INNISFREE Property) |
+| Donate | `#donate` | Donation form (Formspree), local biz support, animated impact numbers |
+| About | `#about` | "Who We Are" group photo, team bios + photos, contact info, partner/press cards |
 
 ---
 
@@ -33,23 +37,23 @@
 
 | File | Used In |
 |------|---------|
-| `BFF+Logo.jpg` | Nav logo |
-| `skyline.jpg` | Hero background |
+| `BFF+Logo.jpg` | Nav logo, favicon, 404 page, page preloader |
+| `skyline.jpg` | Hero background (parallax) |
+| `who we are.jpg` | About section — group photo above team grid |
 | `Kyle Rockefeller, President and Secretary.jpg` | About — team card |
 | `Doug Rockefeller, Big Papa.jpg` | About — team card |
 | `Max Juge, Vice President.jpg` | About — team card |
 | `Ashley Toshimitsu Oiterong, Treasurer.jpg` | About — team card |
 | `Gallery5.jpg` | About — large founder photo |
-| `who we are.jpg` | Available, not yet placed |
 | `Uncle Johns Campagna Skiff (boat).jpg` | Boats section |
 | `The Ms Carrol (boat).jpg` | Boats section |
 | `Last Chance (boat).jpg` | Boats section |
 | `The Check Twice (boat).jpg` | Boats section |
 | `Bait By You Hook it or Cook it (boat).jpg` | Boats section |
-| `Uncle Johns Campagna Skiff First Crabbing Trip (boat).jpg` | Available, not yet placed |
-| `Gallery1–21.jpg` | Available, not yet placed (gallery section TBD) |
-| `BFF club page header video.mp4` | Available, not yet placed |
-| `bff video 2.mp4` | Available, not yet placed |
+| `Uncle Johns Campagna Skiff First Crabbing Trip (boat).jpg` | Boats — Campagna Skiff full story expand |
+| `Gallery1–21.jpg` | Gallery section — all 21 placed with descriptive alt text and category tags |
+| `BFF club page header video.mp4` | Club/Join section — video background (30% opacity) |
+| `bff video 2.mp4` | Boats section — video background (30% opacity) |
 
 ---
 
@@ -74,57 +78,91 @@
 | `--text-dark` | `#1e2a1e` | Primary body text |
 | `--text-mid` | `#3d4f3a` | Secondary body text |
 
+Dark mode swaps these variables via `[data-theme="dark"]` — toggle persists in `localStorage`.
+
 ---
 
-## What's Done
+## What's Built & Live
 
-- Real BFF logo in nav
-- Hero background — real bayou skyline photo
-- 5 real boats with photos and stories (Uncle John's Campagna Skiff, The Ms. Carrol, Last Chance, The Check Twice, Bait By You)
-- Maintenance table and booking calendar updated with real boat names
-- About page — real team photos and written bios for all 4 members
-- Tab navigation fixed — instant scroll to top, home section no longer permanently visible
-- Decorative hero wave removed (was blocking content)
-- **Fishing Rodeo spotlight added to Volunteer page** — see detail below
+### Core Site
+- Real BFF logo, favicon, and page preloader (BFF-branded loading screen)
+- Hero — real bayou skyline photo with CSS parallax (0.4x scroll speed)
+- Animated stats counter (5 Boats, 100% Community Built) triggers on scroll
+- Full dark mode toggle (moon/sun in nav) — respects system preference on first visit
+- Scroll-to-top button (appears after 300px)
+- Footer year auto-updates
+- Branded 404 page matching site design tokens
 
-### Fishing Rodeo Feature (added March 2026)
+### Navigation & Transitions
+- Tab navigation — instant scroll to top, sections cross-fade on switch
+- Mobile nav closes on outside click or Escape key
 
-A full event spotlight block now lives at the top of the `#volunteer` section for the **Sunrise Family Fishing Rodeo on April 25, 2026**.
+### Forms (all connected to Formspree)
+- Member application form (`#club`)
+- Volunteer signup form (`#volunteer`)
+- Fishing Rodeo RSVP form with `localStorage` persistence — counter shows live family count
+- Donation form (`#donate`)
+- Honeypot spam protection (`_gotcha`) on all 4 forms
 
-| Component | Status | Notes |
-|-----------|--------|-------|
-| Event headline, subline, synopsis | ✅ Done | Pulled from event brief |
-| Date / time strip | ✅ Done | April 25, begins at Sunrise |
-| Rain or Shine badge | ✅ Done | Prominently displayed in meta strip |
-| Location | ⚠️ Placeholder | Replace `[Location TBD]` with venue name/address |
-| Rodeo features list (Class / Feast / Cost) | ✅ Done | |
-| Family RSVP form | ✅ Done | Name, adults, kids, gear toggle |
-| Live capacity counter + progress bar | ✅ Done | Cap set to 50; turns red and shows waitlist at limit |
-| Backend integration point | ✅ Stubbed | Comment block marks where to plug in API call |
-| Pack Your Tackle checklist | ✅ Done | Interactive — checkboxes cross off items |
-| Support the Captains payment strip | ✅ Done | 6 methods — all handles are placeholders |
-| Mobile responsive | ✅ Done | Collapses to single column on small screens |
+### Fishing Rodeo Spotlight (`#volunteer`)
+- Live countdown timer to April 25, 2026 at 6:15 AM CDT
+- Location: "Meet at Home Base" with Google Maps link to coordinates
+- Fishing license notice for all attendees
+- RSVP counter (no cap — shows total families registered)
+- Pack Your Tackle interactive checklist
+- Payment handles: `$bayoucharity` (CashApp), `@bayoucharity` (Venmo/PayPal), `kyle.rockefeller@icloud.com` (Apple Cash)
+
+### Boats (`#boats`)
+- 5 real boats with photos and full written stories (expandable per boat)
+- `bff video 2.mp4` plays as subtle background behind all boat content
+- Campagna Skiff crabbing trip photo in expanded story
+
+### Gallery (`#gallery`)
+- 21 photos with accurate descriptive alt text
+- Category filter tabs: All, Cookouts, Fishing, Kids Club, Community
+- Masonry-style grid with blur-up lazy loading
+- Lightbox with keyboard navigation (arrow keys + Escape)
+
+### INNISFREE (`#innisfree`)
+- Live Leaflet.js interactive map (3 markers):
+  - Home Base: `29.5955, -89.9067`
+  - Duck Lease: `29.5766, -89.9351`
+  - INNISFREE Property: `29.5534, -89.9539`
+
+### Visual Polish
+- Scroll-triggered entrance animations (fade-up, fade-left, fade-right, scale-in) via Intersection Observer
+- Staggered card animations (100ms offset per card)
+- Ripple click effect on all buttons
+- Card 3D tilt on hover (quick-link cards)
+- RSVP panel glassmorphism (`backdrop-filter: blur`)
+- Form submit button states: Sending… / Sent! / Error
+
+### SEO & Performance
+- Meta description, Open Graph tags, JSON-LD structured data
+- Google Fonts `preconnect` + `display=swap`
+- Image `loading="lazy"` on off-screen images
+- `prefers-reduced-motion` respected throughout
+
+### Infrastructure
+- `netlify.toml` — security headers (CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
+- Leaflet.js loaded from unpkg with SRI integrity hash
+- `_headers`, `_redirects` in place for Netlify
 
 ---
 
 ## Still Needed
 
-| Item | Location | Notes |
+| Item | Priority | Notes |
 |------|----------|-------|
-| Rodeo venue / address | `#volunteer` rodeo spotlight | Replace `[Location TBD]` in the meta strip |
-| Payment handles | `#volunteer` captains strip | Fill in CashApp, Venmo, Zelle, PayPal, Apple Cash handles |
-| Captain / guide names | `#volunteer` rodeo synopsis | Optional — name the 3 Lafayette captains if desired |
-| RSVP backend | `#volunteer` RSVP form | Connect to Supabase or Firebase so counter persists across sessions — integration point is already stubbed in the JS |
-| Photo gallery | New section | 21 gallery photos ready in `Photos/` |
-| Videos | TBD | 2 videos ready in `Photos/` |
-| `who we are.jpg` | Home or About | Good group-on-boat shot |
-| Membership prices | `#club` | Confirm actual dues |
-| Local business partners | `#donate` | Swap in real partners |
-| Fishing spot map | `#innisfree` | Embed Google Maps iframe |
-| General form backend | All other forms | Formspree or Netlify Forms |
-| Payment processing | Club + Donate | Stripe or PayPal |
-| Member paywall | `#club`, `#boats`, `#innisfree` | MemberStack or Outseta |
-| Shop section | TBD | Merch/shop not yet built — add if needed |
+| **Membership pricing tiers** | Medium | CSS grid already written — add HTML cards with real tier names and prices |
+| **Stripe / PayPal** | Medium | Eric handling — nonprofit discount via Stripe |
+| **Deploy to Netlify** | High | Drag entire `first draft website` folder to [app.netlify.com](https://app.netlify.com/drop) |
+| **Point DNS to Netlify** | High | Squarespace DNS → add Netlify nameservers after deploy |
+| **Lock Formspree to domain** | Medium | Formspree dashboard → Settings → Allowed Origins → add `bayoucharity.org` |
+| **Upgrade favicon to .ico** | Low | Better cross-browser support |
+| **Social media links** | Low | Add to footer/About when Facebook or Instagram is ready |
+| **Member paywall** | Optional | MemberStack or Outseta — only if member-only content is needed |
+| **Shop section** | Optional | Merch/branded gear — add if desired |
 
 ---
 
@@ -133,7 +171,7 @@ A full event spotlight block now lives at the top of the `#volunteer` section fo
 - **Domain:** `bayoucharity.org` (Squarespace, paid through Jan 2029)
 - **Host:** Netlify (free) — drag and drop `first draft website` folder to deploy
 - **DNS:** Point Squarespace domain to Netlify after deploy
-- **Owner editing:** Open HTML in any text editor → make changes → re-drag folder to Netlify
+- **Owner editing:** Open `bayou-family-fishing.html` in any text editor → make changes → re-drag folder to Netlify
 
 ---
 
@@ -147,13 +185,23 @@ A full event spotlight block now lives at the top of the `#volunteer` section fo
 
 ---
 
+## Key People
+
+| Name | Role |
+|------|------|
+| Kyle Rockefeller | President & Secretary |
+| Doug "Big Papa" Rockefeller | Co-founder, Kyle's father |
+| Max Juge | Vice President |
+| Ashley Toshimitsu Oiterong | Treasurer |
+
+---
+
 ## Project Notes
 
 - **Pro charter deferrals** — Captains donate boat slots/time to club members
 - **Innislife** — Purchased Louisiana marshland, community hub in development
 - **Confidence Course** — Boat training program; Louisiana license required to rent boats
-- **Doug "Big Papa" Rockefeller** — Co-founder, Kyle's father
 
 ---
 
-*Last updated: March 5, 2026 — Fishing Rodeo spotlight added to Volunteer page*
+*Last updated: March 9, 2026 — README rewritten to reflect all deployed features through Session 6*
