@@ -36,19 +36,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --green-deep: #1a3a2a;
-    --green-mid: #2d5c40;
-    --green-water: #2d6b5e;
-    --amber: #c8793a;
-    --amber-light: #e8974a;
-    --gold: #d4a855;
-    --brown: #6b3d1e;
-    --cream: #f7edd8;
-    --cream-dark: #ede0c8;
-    --orange: #d4623a;
-    --white: #fdf8f0;
-    --text-dark: #1e2a1e;
-    --text-mid: #3d4f3a;
+    --green-deep: #0d2b3e;
+    --green-mid: #1a4a6b;
+    --green-water: #2980b9;
+    --amber: #e8923a;
+    --amber-light: #f0a84a;
+    --gold: #f0c040;
+    --brown: #5a6e7f;
+    --cream: #eef6fb;
+    --cream-dark: #d0e8f5;
+    --orange: #e07040;
+    --white: #f5fbff;
+    --text-dark: #0d1f2d;
+    --text-mid: #2c5364;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -2186,18 +2186,18 @@
      DARK MODE OVERRIDES
   ══════════════════════════════════════ */
   [data-theme="dark"] {
-    --white: #0f1a14;
-    --cream: #192a1f;
-    --cream-dark: #1e3026;
-    --text-dark: #d8cdb5;
-    --text-mid: #a0b095;
+    --white: #0a1520;
+    --cream: #0f2233;
+    --cream-dark: #152840;
+    --text-dark: #d4e8f5;
+    --text-mid: #7aaec8;
     /* NOTE: --green-deep intentionally NOT overridden.
        It is used as a dark background in dozens of components
        AND as text color on light backgrounds. In dark mode,
        text that used --green-deep gets overridden explicitly below. */
   }
-  [data-theme="dark"] body { background: #0f1a14; color: #d8cdb5; }
-  [data-theme="dark"] nav { background: rgba(10, 21, 16, 0.94); }
+  [data-theme="dark"] body { background: #0a1520; color: #d4e8f5; }
+  [data-theme="dark"] nav { background: rgba(8, 18, 28, 0.94); }
 
   /* ── DARK MODE: TEXT READABILITY FIXES ──
      Any element that uses color:var(--green-deep) for text becomes
@@ -2326,11 +2326,10 @@
 <nav>
   <div class="nav-logo" onclick="return showSection('home')">
     Bayou Charity
-    <span>Bayou Family Fishing Club</span>
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#" onclick="return showSection('home')" class="active" id="nav-home">Home</a></li>
-    <li><a href="#" onclick="return showSection('club')" id="nav-club">Club / Join</a></li>
+    <li><a href="#" onclick="return showSection('club')" id="nav-club">Join</a></li>
     <li><a href="#" onclick="return showSection('volunteer')" id="nav-volunteer">Volunteer</a></li>
     <li><a href="#" onclick="return showSection('boats')" id="nav-boats">Boats</a></li>
     <li><a href="#" onclick="return showSection('innisfree')" id="nav-innisfree">INNISFREE</a></li>
@@ -2361,15 +2360,10 @@
       <button class="btn btn-outline" style="color:var(--cream);border-color:rgba(247,237,216,0.5);" onclick="showSection('volunteer')">Get Involved</button>
       <button class="btn btn-primary" onclick="showSection('donate')">Donate</button>
     </div>
-    <div class="hero-stats">
-      <div class="hero-stat"><strong>5</strong><span>Boats</span></div>
-      <div class="hero-stat"><strong>🌿</strong><span>INNISFREE Land</span></div>
-      <div class="hero-stat"><strong>100%</strong><span>Community Built</span></div>
-    </div>
   </div>
 
   <div class="mission-strip">
-    <p class="mission-quote" data-scroll="fade-up">Fishing is how we connect — with the water, with each other, and with the culture that makes Louisiana home. This isn't just a club. It's a family.</p>
+    <p class="mission-quote" data-scroll="fade-up">Coastal living is hard work, but the rewards are plenty. Our mission is to share our way of life with those who serve our nation and our communities. We're military families—we've been there, stretched thin, missing birthdays, missing dinner; and we see you. We are here for our military heroes, our cops and fire fighters, our first responders, educators, and caregivers. You're the ones who show up because others can't. We are all in this together—now let get out on the water!</p>
     <p class="mission-attr" data-scroll="fade-up">— Kyle Rockefeller, Founder</p>
   </div>
 
@@ -3227,13 +3221,13 @@
   </div>
   <div class="footer-links">
     <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('club')">Club / Join</a>
-    <a href="#" onclick="showSection('volunteer')">Volunteer</a>
-    <a href="#" onclick="showSection('boats')">Boats</a>
-    <a href="#" onclick="showSection('innisfree')">INNISFREE</a>
-    <a href="#" onclick="showSection('gallery')">Gallery</a>
-    <a href="#" onclick="showSection('donate')">Donate</a>
-    <a href="#" onclick="showSection('about')">About</a>
+    <a href="#" onclick="showSection('home')">Join</a>
+    <a href="#" onclick="showSection('home')">Volunteer</a>
+    <a href="#" onclick="showSection('home')">Boats</a>
+    <a href="#" onclick="showSection('home')">INNISFREE</a>
+    <a href="#" onclick="showSection('home')">Gallery</a>
+    <a href="#" onclick="showSection('home')">Donate</a>
+    <a href="#" onclick="showSection('home')">About</a>
   </div>
   <div class="footer-bottom">
     © <span id="footerYear">2026</span> Bayou Family Fishing & Charity. A registered nonprofit organization. All rights reserved.<br>
@@ -3309,9 +3303,9 @@
 
     _leafletMap = L.map('innisfreeMap', { zoomControl: true }).setView([29.575, -89.930], 12);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
       maxZoom: 18,
-      attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, Maxar, Earthstar Geographics'
     }).addTo(_leafletMap);
 
     const mkHome = L.divIcon({
