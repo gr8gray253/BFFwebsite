@@ -1,0 +1,11 @@
+# Cloudflare Pages — Redirects
+
+# ── Block internal/dev files from public access ──────────────────────────────
+# These files must not be publicly served.
+/.claude/*        /404.html  404
+/NEXT_STEPS.md    /404.html  404
+/README.md        /404.html  404
+/netlify.toml     /404.html  404
+
+# ── 404 catch-all — must be last ─────────────────────────────────────────────
+/*  /404.html  404

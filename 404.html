@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Bayou Family Fishing &amp; Charity</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="Photos/BFF+Logo.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green-deep: #1a3a2a;
+    --green-mid: #2d5c40;
+    --amber: #c8793a;
+    --amber-light: #e8974a;
+    --gold: #d4a855;
+    --cream: #f7edd8;
+    --cream-dark: #ede0c8;
+    --white: #fdf8f0;
+    --text-dark: #1e2a1e;
+    --text-mid: #3d4f3a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    font-family: 'Lora', serif;
+    background: var(--green-deep);
+    color: var(--cream);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    text-align: center;
+    padding: 2rem;
+  }
+
+  .logo-wrap {
+    margin-bottom: 2rem;
+  }
+
+  .logo-wrap img {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    border: 3px solid var(--amber);
+    object-fit: cover;
+  }
+
+  .error-code {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(5rem, 20vw, 9rem);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--amber);
+    text-shadow: 0 4px 24px rgba(200,121,58,0.3);
+    margin-bottom: 0.25rem;
+  }
+
+  .tagline {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    color: var(--cream);
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: rgba(247,237,216,0.75);
+    max-width: 480px;
+    margin: 0 auto 2.5rem;
+  }
+
+  .btn-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    justify-content: center;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 0.75rem 1.75rem;
+    border-radius: 50px;
+    font-family: 'Lora', serif;
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: var(--amber);
+    color: var(--white);
+    border: 2px solid var(--amber);
+  }
+
+  .btn-primary:hover {
+    background: var(--amber-light);
+    border-color: var(--amber-light);
+    transform: translateY(-2px);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--cream);
+    border: 2px solid rgba(247,237,216,0.4);
+  }
+
+  .btn-outline:hover {
+    border-color: var(--cream);
+    transform: translateY(-2px);
+  }
+
+  .divider {
+    width: 60px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--amber), transparent);
+    margin: 2rem auto;
+  }
+
+  .footer-note {
+    margin-top: 3rem;
+    font-size: 0.8rem;
+    color: rgba(247,237,216,0.35);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .btn { transition: none; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="logo-wrap">
+    <img src="Photos/BFF+Logo.jpg" alt="Bayou Family Fishing &amp; Charity logo">
+  </div>
+
+  <div class="error-code">404</div>
+  <div class="tagline">Lost on the bayou?</div>
+
+  <h1>This page doesn't exist — yet.</h1>
+
+  <p>The water's still out there, but this particular dock seems to have drifted off. Head back home and find your way from there.</p>
+
+  <div class="btn-group">
+    <a href="/" class="btn btn-primary">Back to Home</a>
+    <a href="/#gallery" class="btn btn-outline">View Gallery</a>
+    <a href="/#volunteer" class="btn btn-outline">Fishing Rodeo</a>
+  </div>
+
+  <div class="divider"></div>
+
+  <p style="font-size:0.85rem;">Questions? Reach us at <a href="mailto:kyle.rockefeller@bayoucharity.org" style="color:var(--gold);text-decoration:none;">kyle.rockefeller@bayoucharity.org</a></p>
+
+  <div class="footer-note">© <span id="yr"></span> Bayou Family Fishing &amp; Charity · Louisiana Nonprofit</div>
+
+  <script>document.getElementById('yr').textContent = new Date().getFullYear();</script>
+
+</body>
+</html>
