@@ -33,8 +33,8 @@
 ### Priority 5 — Infrastructure
 - ✅ Favicon added (BFF logo). Upgrade to .ico before launch for best support.
 - ✅ Honeypot `_gotcha` spam protection on all 4 forms.
-- ⏳ Deploy to Netlify — Eric handling.
-- ⏳ DNS → Netlify — Eric handling.
+- ✅ Deployed to Cloudflare Pages — connected to Git repo (auto-deploys on push to main).
+- ⏳ DNS → Cloudflare Pages — Eric handling.
 - ⏳ Member paywall — Optional / skipped.
 
 ---
@@ -142,8 +142,8 @@
 |------|----------|-------|
 | **Membership pricing tiers** | Medium | CSS grid already written. Add HTML cards with real tier names and prices. |
 | **Stripe Checkout / PayPal** | Medium | Eric handling. Nonprofit discount via Stripe. |
-| **Deploy to Netlify** | High — before launch | Eric handling. Drag folder to [app.netlify.com](https://app.netlify.com). |
-| **Point DNS to Netlify** | High — before launch | In Squarespace DNS, add Netlify nameservers. Domain paid through Jan 2029. |
+| ~~Deploy to Cloudflare Pages~~ | ~~High~~ | ✅ Done — connected to Git repo, auto-deploys on push to `main` |
+| **Point DNS to Cloudflare Pages** | High — before launch | In Squarespace DNS, point to Cloudflare Pages domain. Domain paid through Jan 2029. |
 | **Upgrade favicon to .ico** | Low | Better cross-browser support. |
 | **Social media links** | Low | Add to footer/About when BFF Facebook or Instagram is ready. |
 | **Print styles** | Optional | `@media print` for clean event info printouts. |
@@ -156,7 +156,7 @@
 
 | Issue | Severity | Status |
 |-------|----------|--------|
-| **Netlify security headers** | High | ✅ `netlify.toml` created — X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-XSS-Protection, full CSP |
+| **Security headers** | High | ✅ `netlify.toml` + `_headers` created — X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, X-XSS-Protection, full CSP (works on Cloudflare Pages via `_headers`) |
 | **Leaflet CDN — SRI hashes** | Medium | ✅ Switched from cdnjs → unpkg with official `integrity=` + `crossorigin=` attributes from leafletjs.com |
 | **`og:image` absolute URL** | Medium | ✅ Fixed to `https://bayoucharity.org/Photos/skyline.jpg` |
 | **`og:url` meta tag** | Low | ✅ Already present from Session 3 |
@@ -164,23 +164,24 @@
 
 ---
 
-## 🚀 Deployment Checklist (Do In Order)
+## 🚀 Deployment Checklist
 
-### Before you drag-drop to Netlify
-- [x] `netlify.toml` is in the site root folder ✅
-- [x] `404.html` is in the site root folder ✅
+### Pre-deploy (✅ Done)
+- [x] `index.html` is in the site root (Cloudflare Pages entry point) ✅
+- [x] `404.html` is in the site root ✅
+- [x] `_headers` file in root (security headers for Cloudflare Pages) ✅
+- [x] `_redirects` file in root ✅
+- [x] `netlify.toml` in root (kept for reference / fallback) ✅
 - [x] All security fixes applied ✅
-- [ ] **Verify no broken image or video file references** — open the site locally in a browser first
+- [x] Deployed to Cloudflare Pages — connected to Git repo, auto-deploys on push to `main` ✅
 
-### In Netlify (during / after deploy)
-- [ ] Drag the **entire "first draft website" folder** to [app.netlify.com](https://app.netlify.com/drop)
-- [ ] Once live, go to **Site Settings → Domain management** and add `bayoucharity.org`
-- [ ] Enable **Netlify HTTPS** (free Let's Encrypt cert — automatic)
-- [ ] In **Site Settings → Build & deploy → Asset optimization** — enable asset minification if desired
+### In Cloudflare Pages (after deploy)
+- [ ] Go to **Custom Domains** → add `bayoucharity.org`
+- [ ] Enable **HTTPS** (automatic with Cloudflare)
 
-### In Squarespace DNS (after domain is connected to Netlify)
+### In Squarespace DNS (after domain is connected to Cloudflare Pages)
 - [ ] Remove any existing A records / CNAME for `bayoucharity.org`
-- [ ] Add Netlify DNS records per their dashboard instructions (usually 2 nameserver records OR an A + CNAME)
+- [ ] Add Cloudflare Pages DNS records per their dashboard instructions
 
 ### In Formspree (after site is live on bayoucharity.org)
 - [ ] Go to Formspree dashboard → your form → Settings → **Allowed Origins**
@@ -231,3 +232,14 @@ Updates every second. Tabular-nums font variant for stable digit width. Countdow
 ---
 
 *Last updated: March 9, 2026 — Session 6: Visual & Functional Overhaul*
+
+---
+
+## ✅ Completed (Session 7 — March 9, 2026, Deployment Prep)
+
+- ✅ **`index.html` created** — Copied `bayou-family-fishing.html` → `index.html` so Cloudflare Pages serves the site at the root URL. Both files are identical; `index.html` is the live entry point.
+- ✅ **Deployed to Cloudflare Pages** — Git repo connected; site auto-deploys on every push to `main`.
+- ✅ **`.gitignore` added** — Excludes `.claude/` workspace settings from version control.
+- ✅ **README.md rewritten** — Now reflects full deployed state: all media placed, all sections documented, all features listed through Session 6.
+- ✅ **NEXT_STEPS.md** — Updated to match deployed state.
+- ✅ **Git branch fixed** — Renamed `master` → `main`, force-pushed to align remote with correct branch name.

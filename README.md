@@ -9,8 +9,13 @@
 
 | File | Description |
 |------|-------------|
-| `bayou-family-fishing.html` | Full website — all pages, styles, and logic in one file |
+| `index.html` | Full website — Netlify entry point (all pages, styles, and logic in one file) |
+| `bayou-family-fishing.html` | Working copy — edit this, then copy to `index.html` before deploying |
 | `Photos/` | All media assets (photos, videos) |
+| `404.html` | Branded 404 page matching site design |
+| `netlify.toml` | Netlify security headers (CSP, X-Frame-Options, etc.) |
+| `_headers` | Additional Netlify response headers |
+| `_redirects` | Netlify redirect rules |
 | `README.md` | This file — reflects deployed state |
 | `NEXT_STEPS.md` | Freeform session log — read this to catch up on what was built each session and what's still pending |
 
@@ -156,8 +161,7 @@ Dark mode swaps these variables via `[data-theme="dark"]` — toggle persists in
 |------|----------|-------|
 | **Membership pricing tiers** | Medium | CSS grid already written — add HTML cards with real tier names and prices |
 | **Stripe / PayPal** | Medium | Eric handling — nonprofit discount via Stripe |
-| **Deploy to Netlify** | High | Drag entire `first draft website` folder to [app.netlify.com](https://app.netlify.com/drop) |
-| **Point DNS to Netlify** | High | Squarespace DNS → add Netlify nameservers after deploy |
+| **Point DNS to Cloudflare Pages** | High | Squarespace DNS → point to Cloudflare Pages domain after deploy |
 | **Lock Formspree to domain** | Medium | Formspree dashboard → Settings → Allowed Origins → add `bayoucharity.org` |
 | **Upgrade favicon to .ico** | Low | Better cross-browser support |
 | **Social media links** | Low | Add to footer/About when Facebook or Instagram is ready |
@@ -166,12 +170,12 @@ Dark mode swaps these variables via `[data-theme="dark"]` — toggle persists in
 
 ---
 
-## Hosting Plan
+## Hosting
 
 - **Domain:** `bayoucharity.org` (Squarespace, paid through Jan 2029)
-- **Host:** Netlify (free) — drag and drop `first draft website` folder to deploy
-- **DNS:** Point Squarespace domain to Netlify after deploy
-- **Owner editing:** Open `bayou-family-fishing.html` in any text editor → make changes → re-drag folder to Netlify
+- **Host:** Cloudflare Pages (free) — connected to Git repo, deploys automatically on push to `main`
+- **DNS:** Point Squarespace → Cloudflare Pages domain after deploy
+- **Owner editing:** Open `bayou-family-fishing.html` in any text editor → make changes → copy to `index.html` → commit and push to `main` (Cloudflare auto-deploys)
 
 ---
 
@@ -204,4 +208,4 @@ Dark mode swaps these variables via `[data-theme="dark"]` — toggle persists in
 
 ---
 
-*Last updated: March 9, 2026 — README rewritten to reflect all deployed features through Session 6*
+*Last updated: March 9, 2026 — deployed to Cloudflare Pages; index.html added as entry point; README updated to reflect all deployed features through Session 6*
