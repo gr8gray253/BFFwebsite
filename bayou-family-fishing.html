@@ -1120,6 +1120,34 @@
   .impact-item:last-child { border: none; }
   .impact-item strong { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.1rem; min-width: 50px; }
 
+  /* ── GUIDES GRID ─── */
+  .guides-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.1rem;
+  }
+  .guide-card {
+    background: var(--cream-dark);
+    border-radius: 12px;
+    padding: 1.1rem 1.3rem;
+    border: 1px solid var(--green-water);
+  }
+  .guide-card h4 {
+    font-family: 'Playfair Display', serif;
+    color: var(--green-deep);
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+  }
+  .guide-captain {
+    font-style: italic;
+    color: var(--amber);
+    font-size: 0.85rem;
+    margin-bottom: 0.4rem;
+  }
+  .guide-card p { font-size: 0.82rem; margin-bottom: 0.2rem; color: var(--text-mid); }
+  .guide-card a { color: var(--green-water); text-decoration: none; }
+  .guide-card a:hover { text-decoration: underline; }
+
   /* ══════════════════════════════════════
      ABOUT SECTION
   ══════════════════════════════════════ */
@@ -2559,6 +2587,7 @@
 
           <div style="background:rgba(200,121,58,0.12);border:1px solid rgba(200,121,58,0.3);border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0 1rem;font-size:0.82rem;color:rgba(247,237,216,0.85);line-height:1.55;">
             🎣 <strong style="color:var(--gold);">Fishing License Required</strong> — All attendees are responsible for purchasing their own valid Louisiana fishing license before the event.
+            <a href="https://louisianaoutdoors.com/licenses-and-permits?utm_source=Rec_Fishing_Licensing_Page&utm_medium=Web&utm_campaign=LDWF_Website" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;display:inline-block;margin-top:0.3rem;">Buy your license here →</a>
           </div>
 
           <div id="rsvpSuccess" class="rsvp-success">✅ You're registered! See you at sunrise on April 25th.</div>
@@ -2611,7 +2640,7 @@
             <!-- Photo & Video Consent -->
             <div class="rsvp-consent-block">
               <h6>📸 Photo &amp; Video Consent</h6>
-              <p>I give Bayou Charity permission to take photos and videos of me and my children during today's event. These may be used on social media, our website, and future event promotions to share the fun and inspire other families.</p>
+              <p>I give Bayou Charity permission to take photos and videos of my family and me during today's event. These may be used on social media, our website, and future event promotions to share the fun and inspire other families.</p>
               <div class="rsvp-radio-row">
                 <label><input type="radio" name="photo_consent" id="photoYes" value="Yes, I consent"> ✅ Yes, I consent</label>
                 <label><input type="radio" name="photo_consent" id="photoNo" value="No, do not use photos"> 🚫 No, please do not use our photos</label>
@@ -2622,11 +2651,17 @@
             <div class="rsvp-consent-block liability">
               <h6>⚖️ Liability Release — Read &amp; Sign Before Joining</h6>
               <p>I release Bayou Charity and Slowdown Park LLC from any claims over injury, loss, or damage from fishing, boating, or camp activities. I am participating at my own risk.</p>
-              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.4rem;">
-                <input type="checkbox" id="liabilityAgree" name="liability_agreed" value="Agreed" style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;">
+              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.6rem;">
+                <input type="checkbox" id="ageConfirm" name="age_confirm" value="Confirmed 18+"
+                  style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;"
+                  onchange="document.getElementById('liabilityAgree').disabled=!this.checked; document.getElementById('liabilityAgree').closest('label').style.opacity=this.checked?'1':'0.45';">
+                I confirm that I am 18 years of age or older.
+              </label>
+              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.4rem;opacity:0.45;" id="liabilityLabel">
+                <input type="checkbox" id="liabilityAgree" name="liability_agreed" value="Agreed" disabled style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;">
                 I have read and agree to the liability release above.
               </label>
-              <p class="liability-required-note">* Required to complete registration.</p>
+              <p class="liability-required-note">* Both confirmations required to complete registration.</p>
             </div>
 
             <!-- Contact Preference & Updates -->
@@ -3030,7 +3065,7 @@
     <p class="section-eyebrow">Give Back</p>
     <h2 class="section-title">Support the <em>Mission</em></h2>
     <div class="divider"></div>
-    <p class="section-lead">Your donation directly funds boat maintenance, INNISFREE construction, youth fishing programs, and support for local Louisiana businesses.</p>
+    <p class="section-lead">Your donation directly funds our fishing programs for military and other community service families. Your generosity also helps us build the charity's offshore hub, Innisfree, where members have access to the full Louisiana experience.</p>
 
     <div class="donate-layout" data-scroll="fade-up">
       <form id="donateForm" onsubmit="submitForm(event, this, 'Thank you!', 'Your donation interest has been received. We\'ll follow up with next steps.')">
@@ -3055,10 +3090,10 @@
           <label for="donateDestination">Dedicate this donation to</label>
           <select id="donateDestination" name="donate_to">
             <option>General Fund</option>
-            <option>INNISFREE Land & Construction</option>
-            <option>Boat Maintenance</option>
+            <option>Innisfree construction</option>
+            <option>Boating for Vets</option>
             <option>Youth Fishing Programs</option>
-            <option>Local Business Support</option>
+            <option>Community support</option>
           </select>
         </div>
         <div class="form-row">
@@ -3080,39 +3115,70 @@
       </form>
 
       <div>
-        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1.5rem;">Support Local Businesses</h3>
-        <p style="font-size:0.9rem;line-height:1.7;color:var(--text-mid);margin-bottom:1.5rem;">We channel a portion of all donations to support local Louisiana businesses that share our values. You can also donate directly to one of our partners:</p>
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1.5rem;">Support Mom &amp; Pops</h3>
+        <p style="font-size:0.9rem;line-height:1.7;color:var(--text-mid);margin-bottom:1.5rem;">We channel a portion of all donations to support local Louisiana businesses that share our values. You can also support one of our partners directly:</p>
         <div class="local-biz-grid">
+          <div class="local-biz">
+            <div class="local-biz-icon">🎣</div>
+            <div>
+              <h4>Operation Healing Waters / Reel O-Fishal Charters</h4>
+              <p>TikTok: <a href="https://tiktok.com/@reelofishal" target="_blank" rel="noopener" style="color:var(--amber);">@reelofishal</a></p>
+              <p>Capt. Derrious Austin &nbsp;·&nbsp; <a href="tel:8503198909" style="color:var(--amber);">850-319-8909</a></p>
+            </div>
+          </div>
           <div class="local-biz">
             <div class="local-biz-icon">🦐</div>
             <div>
-              <h4>Thibodaux Seafood Co.</h4>
-              <p>Family-owned seafood market supporting local fishermen since 1978.</p>
+              <h4>Sam's Bait by You &amp; Alligator Hunts</h4>
+              <p>Capt. Sam Ronquille &nbsp;·&nbsp; <a href="tel:5049065812" style="color:var(--amber);">504-906-5812</a></p>
             </div>
           </div>
           <div class="local-biz">
-            <div class="local-biz-icon">⚓</div>
+            <div class="local-biz-icon">⛺</div>
             <div>
-              <h4>Bayou Bait & Tackle</h4>
-              <p>The best bait shop in the parish — keeps our boats stocked and our members ready.</p>
-            </div>
-          </div>
-          <div class="local-biz">
-            <div class="local-biz-icon">🍳</div>
-            <div>
-              <h4>Mawmaw's Kitchen</h4>
-              <p>Real Cajun cooking. Feeds our volunteers at every build day, every time.</p>
+              <h4>Slow Down Park: Fishing Camp &amp; RV Park</h4>
+              <p>Airbnb &amp; VRBO</p>
+              <p>Kyle Rockefeller &nbsp;·&nbsp; <a href="tel:5045411838" style="color:var(--amber);">504-541-1838</a></p>
             </div>
           </div>
         </div>
 
         <div class="donate-impact">
           <h3>Your Impact</h3>
-          <div class="impact-item"><strong>$25</strong> Covers one day of bait & tackle for a youth fishing trip</div>
-          <div class="impact-item"><strong>$50</strong> Funds dock materials for one volunteer build day</div>
-          <div class="impact-item"><strong>$100</strong> Helps cover a boat maintenance service</div>
-          <div class="impact-item"><strong>$250</strong> Sponsors a family membership for one year</div>
-          <div class="impact-item"><strong>$500</strong> Funds a weekend youth fishing camp</div>
+          <div class="impact-item"><strong>$50</strong> Covers fuel for member-supported fishing trips</div>
+          <div class="impact-item"><strong>$100</strong> Covers a beginner's class and a day of dock fishing for a BFF family</div>
+          <div class="impact-item"><strong>$250</strong> Covers a parent and child fishing trip with a licensed guide</div>
+          <div class="impact-item"><strong>$500</strong> Covers a family of 4 fishing trip with a licensed guide</div>
+        </div>
+
+        <div class="donate-guides" data-scroll="fade-up">
+          <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Our Guides</h3>
+          <p style="font-size:0.9rem;line-height:1.7;color:var(--text-mid);margin-bottom:1.2rem;">These trusted guides support BFF's mission and offer exceptional Louisiana fishing experiences.</p>
+          <div class="guides-grid">
+            <div class="guide-card">
+              <h4>Reel O-Fishal Charters</h4>
+              <p class="guide-captain">Capt. Derrious Austin</p>
+              <p>TikTok: <a href="https://tiktok.com/@reelofishal" target="_blank" rel="noopener">@reelofishal</a></p>
+              <p><a href="tel:8503198909">850-319-8909</a></p>
+            </div>
+            <div class="guide-card">
+              <h4>Down South Fishing Charters</h4>
+              <p class="guide-captain">Capt. Kevin Hezeau</p>
+              <p><a href="https://www.downsouthfishingchartersnola.com/" target="_blank" rel="noopener">downsouthfishingchartersnola.com</a></p>
+              <p><a href="tel:9857681656">985-768-1656</a></p>
+            </div>
+            <div class="guide-card">
+              <h4>Bayou Paradise Fish Charters</h4>
+              <p class="guide-captain">Capt. Mitchel Haydel</p>
+              <p><a href="https://www.geauxfishneworleans.com/" target="_blank" rel="noopener">geauxfishneworleans.com</a></p>
+              <p><a href="tel:5043450865">504-345-0865</a></p>
+            </div>
+            <div class="guide-card">
+              <h4>Marsh Assassins BowFishing</h4>
+              <p class="guide-captain">Capt. Kenny Bergman</p>
+              <p><a href="https://www.marshassassinsbowfishing.com/" target="_blank" rel="noopener">marshassassinsbowfishing.com</a></p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -3195,7 +3261,7 @@
           <div class="team-card-body">
             <h3>Max Juge</h3>
             <p class="team-title">Vice President</p>
-            <p class="team-bio">Born on the Bayou! Third Generation Juge man on Deer Range Canal. Ducks and Fish beware! Future Commercial real estate kingpin.</p>
+            <p class="team-bio">A full-time commercial real estate professional with a deep-rooted passion for the outdoors and the unique culture of South Louisiana. Having grown up fishing and hunting the salt marshes of Plaquemines Parish, Max brings a local's perspective and appreciation for the region to his work and life.</p>
           </div>
         </div>
         <div class="team-card">
