@@ -237,9 +237,61 @@ Updates every second. Tabular-nums font variant for stable digit width. Countdow
 
 ## ✅ Completed (Session 7 — March 9, 2026, Deployment Prep)
 
+
 - ✅ **`index.html` created** — Copied `bayou-family-fishing.html` → `index.html` so Cloudflare Pages serves the site at the root URL. Both files are identical; `index.html` is the live entry point.
 - ✅ **Deployed to Cloudflare Pages** — Git repo connected; site auto-deploys on every push to `main`.
 - ✅ **`.gitignore` added** — Excludes `.claude/` workspace settings from version control.
 - ✅ **README.md rewritten** — Now reflects full deployed state: all media placed, all sections documented, all features listed through Session 6.
 - ✅ **NEXT_STEPS.md** — Updated to match deployed state.
 - ✅ **Git branch fixed** — Renamed `master` → `main`, force-pushed to align remote with correct branch name.
+
+---
+
+## ✅ Completed (Session 8 — March 10–11, 2026, Overhaul + Member Portal)
+
+### Legal / Compliance Pages
+- ✅ **`privacy.html`** — Privacy Policy covering member portal, OAuth (Google/Facebook), Supabase data storage.
+- ✅ **`terms.html`** — Terms of Service covering membership, user content, events, liability, Louisiana governing law.
+- ✅ **`data-deletion.html`** — Data Deletion Request page required for Facebook/Google OAuth app review. 30-day SLA via email.
+- ✅ **`Photos/BFF-Logo-1024.jpg`** — High-resolution (1024px) BFF logo added for OG tags and social sharing.
+
+### Branding & Copy Edits
+- ✅ **Nav cleanup** — Removed "Bayou Family Fishing Club" subtitle under logo; renamed "Club/Join" tab → "Join".
+- ✅ **Mission statement** — New full community-focused copy (military, first responders, educators, caregivers) replaces old hero stat chips.
+- ✅ **Water / sky / golden hour color palette** — All CSS design tokens rebranded: deep water navy, open water blue, golden hour amber, horizon gold, morning mist cream, open sky white.
+- ✅ **Volunteer page** — Added LDWF fishing license link (louisianaoutdoors.com); age 18+ gate on liability checkbox; updated photo consent copy.
+- ✅ **Donation page** — New description copy; renamed dropdowns (Innisfree construction, Boating for Vets, Community support); "Support Mom & Pops" section with 3 businesses; new Guides section (4 guides with contacts); updated Your Impact amounts ($50/$100/$250/$500).
+- ✅ **Max Juge bio** — Updated to full real bio (commercial real estate, Plaquemines Parish background, salt marsh culture).
+
+### INNISFREE Map
+- ✅ **Esri World Imagery satellite tiles** — Replaced OpenStreetMap base layer with Esri satellite imagery (free, no API key). All 3 existing markers and popups unchanged.
+
+### Member Portal (`#members`) — Phase 1
+- ✅ **9th nav tab added** — "Members" tab in nav bar.
+- ✅ **Supabase Auth** — Google + Facebook OAuth sign-in. Supabase SDK loaded via CDN.
+- ✅ **Account approval flow** — New signups default to `status = 'pending'`; pending users see holding screen; Kyle approves via admin panel.
+- ✅ **Satellite member map** — Esri World Imagery; members place fishing pins by uploading a photo (GPS auto-read from EXIF or manual drag).
+- ✅ **Pin post form** — Photo upload to Supabase Storage bucket (`pin-photos`), species, caption, optional location name.
+- ✅ **Community feed** — Newest pins first; card with photo, member name, date, species, caption, comment count; inline comment thread.
+- ✅ **Admin panel** — Approve/reject pending accounts; remove flagged pins; visible only to `role = admin`.
+- ✅ **Supabase schema applied** — `profiles`, `pins`, `comments` tables with RLS; `handle_new_user()` trigger; `pin-photos` bucket.
+- ✅ **Dark mode overrides** — Member portal CSS respects `[data-theme="dark"]`.
+- ✅ **Design/implementation docs** — Saved to `docs/plans/2026-03-10-bayou-overhaul-design.md` and `docs/plans/2026-03-10-bayou-overhaul-implementation.md`.
+
+---
+
+## 🔲 Still To Do
+
+| Task | Priority | Notes |
+|------|----------|-------|
+| **Membership pricing tiers** | Medium | CSS grid already written. Add HTML cards with real tier names and prices. |
+| **Stripe Checkout / PayPal** | Medium | Eric handling. Nonprofit discount via Stripe. |
+| **Point DNS to Cloudflare Pages** | High — before launch | In Squarespace DNS, point to Cloudflare Pages domain. Domain paid through Jan 2029. |
+| **Formspree recipient email** | Medium | Formspree dashboard → Notifications → set to kyle.rockefeller@bayoucharity.org |
+| **Lock Formspree to domain** | Medium | Formspree dashboard → Settings → Allowed Origins → add `bayoucharity.org` |
+| **Member portal — Phase 2** | Future | Trip planning calendar, guide trip postings, historical fishing record / pin heatmap |
+| **Upgrade favicon to .ico** | Low | Better cross-browser support. |
+| **Social media links** | Low | Add to footer/About when BFF Facebook or Instagram is ready. |
+| **Shop section merch store** | Optional | Add if BFF wants to sell branded gear. |
+
+*Last updated: March 11, 2026 — Session 8: legal pages, overhaul edits, Esri satellite maps, member portal (Supabase auth + map + feed + admin)*
