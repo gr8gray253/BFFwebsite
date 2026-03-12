@@ -7,5 +7,10 @@
 /README.md        /404.html  404
 /cfp.toml         /404.html  404
 
+/CLAUDE.md            /404.html  404
+/CODEBASE-REVIEW.md   /404.html  404
+/donate-preview.html  /404.html  404
+/docs/*               /404.html  404
+
 # ── 404 catch-all — must be last ─────────────────────────────────────────────
 /*  /404.html  404

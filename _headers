@@ -21,6 +21,14 @@
   X-Robots-Tag: noindex, nofollow
 /.claude/*
   X-Robots-Tag: noindex, nofollow
+/CLAUDE.md
+  X-Robots-Tag: noindex, nofollow
+/CODEBASE-REVIEW.md
+  X-Robots-Tag: noindex, nofollow
+/donate-preview.html
+  X-Robots-Tag: noindex, nofollow
+/docs/*
+  X-Robots-Tag: noindex, nofollow
 
 # ── Cache: Photos and videos (1 year — immutable filenames) ──────────────────
 /Photos/*

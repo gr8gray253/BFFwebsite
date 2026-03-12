@@ -10,6 +10,11 @@
 <meta property="og:image" content="https://bayoucharity.org/Photos/skyline.jpg">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://bayoucharity.org">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Bayou Family Fishing &amp; Charity — Louisiana's Nonprofit Fishing Club">
+<meta name="twitter:description" content="We are a nonprofit dedicated to bringing families together through fishing, boat safety, and the preservation of Louisiana's bayou culture.">
+<meta name="twitter:image" content="https://bayoucharity.org/Photos/skyline.jpg">
+<link rel="canonical" href="https://bayoucharity.org">
 <link rel="icon" href="Photos/BFF+Logo.jpg" type="image/jpeg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <!-- Block flash of wrong theme -->
@@ -2916,11 +2921,11 @@
     <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1rem;">Upload a Photo or Video</h3>
     <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:1.5rem;">Your submission will be reviewed by an admin before it appears on the site.</p>
     <div class="form-group">
-      <label>File <span style="color:var(--orange);">*</span></label>
+      <label for="galleryUploadFile">File <span style="color:var(--orange);">*</span></label>
       <input type="file" id="galleryUploadFile" accept="image/*,video/*">
     </div>
     <div class="form-group">
-      <label>Caption <span style="font-weight:400;font-style:italic;">(optional)</span></label>
+      <label for="galleryUploadCaption">Caption <span style="font-weight:400;font-style:italic;">(optional)</span></label>
       <input type="text" id="galleryUploadCaption" placeholder="Tell us about this photo…" class="form-input">
     </div>
     <p id="galleryUploadStatus" style="font-size:0.85rem;color:var(--text-mid);min-height:1.2em;"></p>
@@ -4316,6 +4321,9 @@
     currentLightboxIndex = index;
     const lb = document.getElementById('lightbox');
     document.getElementById('lightboxImg').src = galleryImages[index];
+    var thumbs = document.querySelectorAll('.gallery-thumb img');
+    var lightboxImg = document.getElementById('lightboxImg');
+    lightboxImg.alt = (thumbs[index] && thumbs[index].alt) ? thumbs[index].alt : 'Bayou Family Fishing photo';
     document.getElementById('lightboxCounter').textContent = (index + 1) + ' / ' + galleryImages.length;
     lb.classList.add('open');
     document.body.style.overflow = 'hidden';
