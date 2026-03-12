@@ -1,2 +1,5 @@
 # Claude workspace settings — never commit
 .claude/
+
+# Dev preview files — not for production
+bg-options-preview.html

@@ -42,7 +42,6 @@
     --amber: #e8923a;
     --amber-light: #f0a84a;
     --gold: #f0c040;
-    --brown: #5a6e7f;
     --cream: #eef6fb;
     --cream-dark: #d0e8f5;
     --orange: #e07040;
@@ -279,6 +278,22 @@
     min-height: 100vh;
     position: relative;
     overflow: hidden;
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.62) 0%,
+        rgba(26,74,107,0.42) 55%,
+        rgba(13,43,62,0.56) 100%),
+      url('Photos/skyline.jpg') center/cover no-repeat fixed;
+  }
+  #home > * { position: relative; z-index: 1; }
+  #home .mission-strip { background: transparent; }
+  #home .mission-quote {
+    color: var(--white);
+    text-shadow: 0 2px 8px rgba(13,43,62,0.6);
+  }
+  #home .quick-links .section-title {
+    color: var(--white);
+    text-shadow: 0 2px 8px rgba(13,43,62,0.6);
   }
 
   .hero {
@@ -462,11 +477,30 @@
      CLUB / JOIN SECTION
   ══════════════════════════════════════ */
   #club {
-    background: var(--white);
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.62) 0%,
+        rgba(26,74,107,0.42) 55%,
+        rgba(13,43,62,0.56) 100%),
+      url('Photos/Skyline%20astetic%201.jpg') center/cover no-repeat fixed;
     position: relative;
     overflow: hidden;
   }
-  #club > * { position: relative; z-index: 1; }
+  /* Text visibility — site blue palette, not near-black */
+  #club .section-eyebrow { color: var(--gold); }
+  #club .section-title { color: var(--white); }
+  #club .section-lead { color: rgba(238,246,251,0.92); }
+  #club .divider { background: var(--gold); }
+  /* Forms stay readable — frosted blue glass */
+  #club .signup-form {
+    background: rgba(13,43,62,0.55);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.14);
+    border-radius: 12px;
+  }
+  #club .signup-form h3 { color: var(--gold); }
+  #club .signup-form label { color: rgba(238,246,251,0.90); }
+  #club > *:not(.section-video):not(.section-video-overlay) { position: relative; z-index: 1; }
   .membership-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -600,8 +634,22 @@
      VOLUNTEER SECTION
   ══════════════════════════════════════ */
   #volunteer {
-    background: var(--cream);
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.62) 0%,
+        rgba(26,74,107,0.42) 55%,
+        rgba(13,43,62,0.56) 100%),
+      url('Photos/Skyline%20astetic%201.jpg') center/cover no-repeat fixed;
+    position: relative;
+    overflow: hidden;
   }
+  #volunteer > * { position: relative; z-index: 1; }
+  #volunteer .section-eyebrow { color: var(--gold); }
+  #volunteer .section-title { color: var(--white); text-shadow: 0 2px 8px rgba(13,43,62,0.5); }
+  #volunteer .section-lead { color: rgba(238,246,251,0.92); text-shadow: 0 1px 6px rgba(13,43,62,0.5); }
+  #volunteer .divider { background: var(--gold); }
+  #volunteer h3[style] { color: var(--white) !important; }
+  #volunteer .volunteer-intro > div:first-child > p[style] { color: rgba(238,246,251,0.88) !important; }
   .volunteer-intro {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -640,6 +688,17 @@
     border-radius: 50px;
   }
 
+  .volunteer-event-intro {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto 3rem;
+    padding: 2rem;
+    background: rgba(13,43,62,0.06);
+    border-radius: 12px;
+    border-left: 4px solid var(--amber);
+  }
+  [data-theme="dark"] .volunteer-event-intro { background: rgba(26,74,107,0.18); }
+
   .volunteer-form-wrap {
     background: var(--white);
     border-radius: 12px;
@@ -676,7 +735,12 @@
      BOATS SECTION
   ══════════════════════════════════════ */
   #boats {
-    background: var(--white);
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.62) 0%,
+        rgba(26,74,107,0.42) 55%,
+        rgba(13,43,62,0.56) 100%),
+      url('Photos/Skyline%20golden%202.jpg') center/cover no-repeat fixed;
     position: relative;
     overflow: hidden;
   }
@@ -872,10 +936,36 @@
      INNISLIFE SECTION
   ══════════════════════════════════════ */
   #innisfree {
-    background: var(--white);
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.55) 0%,
+        rgba(26,74,107,0.32) 55%,
+        rgba(13,43,62,0.50) 100%),
+      url('Photos/header%20image%20for%20INNISFREE%20tab.jpg') 75% center / cover no-repeat fixed;
   }
+  #innisfree .section-eyebrow { color: var(--gold); }
+  #innisfree .section-title { color: var(--white); }
+  #innisfree .section-lead { color: rgba(238,246,251,0.92); }
+  #innisfree .divider { background: var(--gold); }
+  /* Phase items — frosted glass (selector was wrong before: .phase → .phase-item) */
+  #innisfree .build-phases .phase-item,
+  #innisfree > .container > div > div:last-child .card {
+    background: rgba(255,255,255,0.13);
+    border-color: rgba(255,255,255,0.20);
+    backdrop-filter: blur(12px);
+    border-radius: 8px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 0.5rem;
+  }
+  /* Fix text colors that use dark CSS vars — invisible on photo bg */
+  #innisfree h3[style] { color: var(--white) !important; text-shadow: 0 1px 6px rgba(13,43,62,0.5); }
+  #innisfree .phase-content h4 { color: var(--gold); }
+  #innisfree .phase-content p { color: rgba(238,246,251,0.90); }
+  #innisfree .phase-item { border-bottom-color: rgba(255,255,255,0.15); }
+  #innisfree p[style*="text-mid"] { color: rgba(238,246,251,0.88) !important; }
+  #innisfree div[style*="text-mid"] { color: rgba(238,246,251,0.85) !important; }
   .innisfree-hero {
-    background: linear-gradient(160deg, var(--green-deep) 0%, var(--green-water) 60%, var(--amber) 100%);
+    background: linear-gradient(160deg, rgba(13,43,62,0.65) 0%, rgba(26,74,107,0.42) 55%, rgba(232,146,58,0.22) 100%);
     border-radius: 16px;
     padding: 4rem;
     color: var(--white);
@@ -1041,14 +1131,58 @@
      DONATE SECTION
   ══════════════════════════════════════ */
   #donate {
-    background: var(--white);
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.58) 0%,
+        rgba(26,74,107,0.36) 55%,
+        rgba(13,43,62,0.52) 100%),
+      url('Photos/Skyline%20Marsh%20golden%20hue.jpg') center/cover no-repeat fixed;
+  }
+  /* Note: Skyline Marsh golden hue.jpg has warm amber tones — the blue overlay
+     harmonizes with it rather than fighting it. The photo's gold reads through
+     the transparent mid-gradient band, reinforcing --amber naturally. */
+  #donate .section-eyebrow { color: var(--gold); }
+  #donate .section-title { color: var(--white); }
+  #donate .section-lead { color: rgba(238,246,251,0.92); }
+  #donate .divider { background: var(--gold); }
+  /* Keep donation cards readable — frosted blue glass (min 0.15 per glassmorphism spec) */
+  #donate .impact-card,
+  #donate .guide-card,
+  #donate .mompop-card {
+    background: rgba(255,255,255,0.15);
+    border-color: rgba(255,255,255,0.20);
+    backdrop-filter: blur(15px);
+  }
+  #donate .donate-layout h3 { color: var(--gold); }
+  #donate { min-height: auto; padding-bottom: 3rem; }
+  #donate .inkind-donations > h3 { color: var(--gold) !important; }
+  #donate .inkind-donations > p { color: rgba(238,246,251,0.85) !important; }
+  #donate .inkind-contact { color: var(--cream); }
+  #donate .inkind-contact strong { color: var(--white); }
+  #donate .inkind-note { color: rgba(238,246,251,0.75) !important; }
+  #donate .donate-guides > h3 { color: var(--gold) !important; }
+  #donate .donate-guides > p { color: rgba(238,246,251,0.85) !important; }
+  /* Accessibility text-shadow — boosts contrast at text level, keeps photo visible */
+  #club .section-title,
+  #innisfree .section-title,
+  #donate .section-title {
+    text-shadow: 0 1px 8px rgba(6,14,26,0.55);
+  }
+  #club .section-lead,
+  #innisfree .section-lead,
+  #donate .section-lead {
+    text-shadow: 0 1px 4px rgba(6,14,26,0.45);
   }
   .donate-layout {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 420px 1fr;
     gap: 3rem;
     margin-top: 2rem;
     align-items: start;
+  }
+  .donate-form-sticky {
+    position: sticky;
+    top: 5rem; /* clears 68px fixed nav + 12px breathing room */
   }
   .donate-amounts {
     display: grid;
@@ -1120,6 +1254,15 @@
   .impact-item:last-child { border: none; }
   .impact-item strong { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.1rem; min-width: 50px; }
 
+  /* ── IN-KIND DONATIONS ─── */
+  .inkind-donations { border-top: 2px solid var(--cream-dark); padding-top: 1.5rem; margin-top: 1.5rem; }
+  .inkind-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr)); gap: 0.75rem; margin-bottom: 1.5rem; }
+  .inkind-item { display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; color: var(--text-mid); background: var(--cream); border-radius: 8px; padding: 0.6rem 0.9rem; border-left: 3px solid var(--amber); }
+  .inkind-contact { background: rgba(232,146,58,0.08); border: 1px solid rgba(232,146,58,0.3); border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 1rem; font-size: 0.9rem; }
+  .inkind-note { font-size: 0.82rem; color: var(--text-mid); font-style: italic; line-height: 1.6; }
+  [data-theme="dark"] .inkind-item { background: #152840; }
+  [data-theme="dark"] .inkind-contact { background: rgba(232,146,58,0.06); }
+
   /* ── GUIDES GRID ─── */
   .guides-grid {
     display: grid;
@@ -1152,8 +1295,22 @@
      ABOUT SECTION
   ══════════════════════════════════════ */
   #about {
-    background: var(--cream);
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.62) 0%,
+        rgba(26,74,107,0.42) 55%,
+        rgba(13,43,62,0.56) 100%),
+      url('Photos/Skyline%20Marsh%20golden%20hue.jpg') center/cover no-repeat fixed;
+    position: relative;
+    overflow: hidden;
   }
+  #about > * { position: relative; z-index: 1; }
+  #about .section-eyebrow { color: var(--gold); }
+  #about .section-title { color: var(--white); text-shadow: 0 2px 8px rgba(13,43,62,0.5); }
+  #about .divider { background: var(--gold); }
+  /* Override inline dark colors for readability on skyline bg */
+  #about h3[style] { color: var(--white) !important; }
+  #about .about-layout > div:not(.about-photo) > p { color: rgba(238,246,251,0.88) !important; }
   .about-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1310,6 +1467,7 @@
     .form-row { grid-template-columns: 1fr; }
     .volunteer-intro { grid-template-columns: 1fr; gap: 2rem; }
     .donate-layout { grid-template-columns: 1fr; }
+    .donate-form-sticky { position: static; }
     .about-layout { grid-template-columns: 1fr; }
     .innisfree-hero { padding: 2.5rem; }
     .innisfree-hero::after { display: none; }
@@ -1759,6 +1917,19 @@
   .section-video { opacity: 0.3; }
   .hero > *:not(.hero-video) { position: relative; z-index: 1; }
 
+  /* ── CHECK TWICE CARD VIDEO BACKGROUND ── */
+  .boat-card-video-bg {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0.10;
+    z-index: 0;
+    pointer-events: none;
+  }
+  .boat-story > *:not(.boat-card-video-bg) { position: relative; z-index: 1; }
+  @media (max-width: 768px) { .boat-card-video-bg { display: none; } }
+
   /* ── VIDEO HERO STRIP ── */
   .video-hero-strip {
     position: relative;
@@ -1886,7 +2057,35 @@
   /* ══════════════════════════════════════
      GALLERY SECTION
   ══════════════════════════════════════ */
-  #gallery { background: var(--cream); }
+  #gallery {
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.62) 0%,
+        rgba(26,74,107,0.42) 55%,
+        rgba(13,43,62,0.56) 100%),
+      url('Photos/Skyline%20astetic%201.jpg') center/cover no-repeat fixed;
+    position: relative;
+    overflow: hidden;
+  }
+  #gallery > * { position: relative; z-index: 1; }
+  #gallery .section-eyebrow { color: var(--gold); }
+  #gallery .section-title { color: var(--white); text-shadow: 0 2px 8px rgba(13,43,62,0.5); }
+  #gallery .section-lead { color: rgba(238,246,251,0.92); text-shadow: 0 1px 6px rgba(13,43,62,0.5); }
+  #gallery .divider { background: var(--gold); }
+  #gallery .gallery-filter-btn {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.25);
+    color: rgba(238,246,251,0.85);
+  }
+  #gallery .gallery-filter-btn.active {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--white);
+  }
+  #gallery .gallery-filter-btn:hover {
+    border-color: var(--amber);
+    color: var(--amber);
+  }
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -1914,6 +2113,58 @@
     transition: background 0.3s;
   }
   .gallery-thumb:hover::after { background: rgba(13,43,62,0.18); }
+  .fish-thumb-caption { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(13,43,62,0.80); color: var(--white); padding: 0.3rem 0.5rem; font-size: 0.75rem; line-height: 1.3; }
+  /* ── GALLERY VIDEO THUMBNAILS ── */
+  .gallery-video-thumb {
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 8px;
+    cursor: pointer;
+    position: relative;
+    background: #000;
+  }
+  .gallery-video-thumb video {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    pointer-events: none;
+  }
+  .gallery-video-badge {
+    position: absolute;
+    top: 8px; left: 8px;
+    background: rgba(232,146,58,0.92);
+    color: #fff;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-size: 0.72rem;
+    font-family: 'Lora', serif;
+    letter-spacing: 0.04em;
+    pointer-events: none;
+    z-index: 2;
+  }
+  .gallery-video-fs-btn {
+    position: absolute;
+    bottom: 8px; right: 8px;
+    background: rgba(13,31,45,0.80);
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 4px 9px;
+    font-size: 0.75rem;
+    font-family: 'Lora', serif;
+    cursor: pointer;
+    z-index: 2;
+    transition: background 0.2s;
+  }
+  .gallery-video-fs-btn:hover { background: var(--amber); }
+  .gallery-video-thumb::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: rgba(13,43,62,0);
+    transition: background 0.3s;
+    pointer-events: none;
+  }
+  .gallery-video-thumb:hover::after { background: rgba(13,43,62,0.14); }
   /* Lightbox */
   .lightbox {
     display: none;
@@ -2012,6 +2263,25 @@
     [data-scroll] { opacity: 1 !important; transform: none !important; }
     .section-enter, .section-exit { animation: none !important; }
     *, *::before, *::after { transition-duration: 0.01ms !important; }
+  }
+
+  /* ── Skip link (keyboard / screen reader) ── */
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    z-index: 9998;
+    padding: 0.5rem 1rem;
+    background: var(--amber);
+    color: var(--white);
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    text-decoration: none;
+    border-radius: 0 0 6px 6px;
+  }
+  .skip-link:focus {
+    left: 50%;
+    transform: translateX(-50%);
   }
 
   /* ══════════════════════════════════════
@@ -2118,31 +2388,19 @@
   /* ══════════════════════════════════════
      GALLERY FILTER TABS
   ══════════════════════════════════════ */
-  .gallery-filters {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
-    margin-top: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .gallery-filter-btn {
-    background: var(--white);
-    border: 1.5px solid var(--cream-dark);
-    border-radius: 50px;
-    padding: 0.4rem 1.1rem;
-    font-family: 'Lora', serif;
-    font-size: 0.8rem;
-    color: var(--text-mid);
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .gallery-filter-btn:hover { border-color: var(--amber); color: var(--amber); }
-  .gallery-filter-btn.active {
-    background: var(--amber);
-    border-color: var(--amber);
-    color: var(--white);
-    font-weight: 600;
-  }
+  .gallery-tab-strip { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.5rem; align-items: center; }
+  .gallery-tab-btn { background: rgba(13,43,62,0.45); color: rgba(238,246,251,0.80); border: 1px solid rgba(201,168,76,0.3); border-radius: 8px; padding: 0.5rem 1.2rem; cursor: pointer; font-family: 'Lora', serif; font-size: 0.9rem; transition: background 0.2s, color 0.2s; }
+  .gallery-tab-btn.active { background: var(--gold); color: var(--green-deep); border-color: var(--gold); font-weight: 600; }
+  .gallery-tab-btn:hover:not(.active) { background: rgba(26,74,107,0.5); color: var(--white); }
+  .gallery-tab-loading { color: rgba(238,246,251,0.5); font-style: italic; font-size: 0.9rem; }
+  .gallery-panel { display: none; }
+  .gallery-panel.active { display: block; }
+  .gallery-dynamic { margin-top: 1rem; }
+  .gallery-upload-bar { margin-bottom: 1rem; }
+  .gallery-upload-hint { font-size: 0.85rem; color: rgba(238,246,251,0.55); font-style: italic; margin-bottom: 1rem; }
+  .gallery-upload-modal { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; padding: 1rem; }
+  .gallery-upload-modal-inner { background: var(--white); border-radius: 16px; padding: 2rem; max-width: 480px; width: 100%; position: relative; max-height: 90vh; overflow-y: auto; }
+  .gallery-upload-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-mid); line-height: 1; }
   .gallery-thumb.filtered-out {
     display: none;
   }
@@ -2283,9 +2541,16 @@
   [data-theme="dark"] .team-card { background: #060e1a; border-color: #0f2438; }
   [data-theme="dark"] .contact-card { background: #060e1a; }
   [data-theme="dark"] footer { background: #060e0a; }
-  [data-theme="dark"] #gallery { background: #060e1a; }
-  [data-theme="dark"] #about { background: #060e1a; }
-  [data-theme="dark"] #volunteer { background: #060e1a; }
+  /* All skyline-bg sections dim in dark mode — never override with solid bg */
+  [data-theme="dark"] #home,
+  [data-theme="dark"] #gallery,
+  [data-theme="dark"] #about,
+  [data-theme="dark"] #volunteer,
+  [data-theme="dark"] #boats,
+  [data-theme="dark"] #members,
+  [data-theme="dark"] #club,
+  [data-theme="dark"] #innisfree,
+  [data-theme="dark"] #donate { filter: brightness(0.82); }
 
   /* ── DARK MODE: FORM INPUTS ── */
   [data-theme="dark"] .form-group input,
@@ -2319,6 +2584,14 @@
     .hero { background-attachment: scroll; }
   }
 
+  /* iOS Safari: background-attachment fixed breaks — use scroll on mobile */
+  @media (max-width: 768px) {
+    #home, #club, #volunteer, #boats, #innisfree, #gallery, #donate, #about, #members,
+    .members-hero {
+      background-attachment: scroll !important;
+    }
+  }
+
   /* ══════════════════════════════════════
      ANIMATED HERO STATS
   ══════════════════════════════════════ */
@@ -2342,13 +2615,29 @@
   @keyframes btnSpin { to { transform: rotate(360deg); } }
 
   /* ── MEMBER PORTAL ─────────────────────────────────── */
+  #members {
+    background:
+      linear-gradient(180deg,
+        rgba(13,43,62,0.62) 0%,
+        rgba(26,74,107,0.42) 55%,
+        rgba(13,43,62,0.56) 100%),
+      url('Photos/skyline.jpg') center/cover no-repeat fixed;
+    position: relative;
+    overflow: hidden;
+  }
+  #members > * { position: relative; z-index: 1; }
+  #members .section-eyebrow { color: var(--gold); }
+  #members .section-title { color: var(--white); text-shadow: 0 2px 8px rgba(13,43,62,0.5); }
+  #members .divider { background: var(--gold); }
+  #members .section-tagline { color: rgba(238,246,251,0.88); }
+
   .members-auth-view, .members-pending-view {
     max-width: 480px;
     margin: 80px auto;
     text-align: center;
   }
   .auth-buttons { margin: 2rem 0 1rem; display:flex; flex-direction:column; align-items:center; gap:0.8rem; }
-  .auth-note { font-size: 0.85rem; color: var(--text-mid); font-style: italic; margin-top:0.5rem; }
+  .auth-note { font-size: 0.85rem; color: rgba(238,246,251,0.80); font-style: italic; margin-top:0.5rem; }
   .pending-card {
     background: var(--cream);
     border: 2px solid var(--amber);
@@ -2425,9 +2714,10 @@
   [data-theme="dark"] .pending-card { background: #152840; border-color: #1e3c58; }
 </style>
 <!-- Supabase JS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.99.0/dist/umd/supabase.js" integrity="sha384-XEXe97+HNh6W7E6opXLb8siV2SnDVO4xnfBIm77tH+Tl6xMs9mY3zBIl5t2QFwf2" crossorigin="anonymous"></script>
 </head>
 <body>
+<a href="#home" class="skip-link">Skip to main content</a>
 
 <!-- PRELOADER -->
 <div class="preloader" id="preloader">
@@ -2489,22 +2779,22 @@
         <div class="quick-card" onclick="showSection('club')">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><rect x="6" y="2" width="12" height="13" rx="2"/></svg></div>
           <h3>Join the Club</h3>
-          <p>Become a member, access boats, attend events, and support Louisiana families.</p>
+          <p>BFF members can access boats, attend events, get discounts on charters, and support our community.</p>
         </div>
         <div class="quick-card" onclick="showSection('volunteer')">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
           <h3>Volunteer</h3>
-          <p>Help build the dock, drive boats, teach fishing, or join a construction crew at INNISFREE.</p>
+          <p>Join the crew. There's a lot of work, but we love doing it together. Help us host events, teach a boating or fishing lesson, or join an offshore construction project.</p>
         </div>
         <div class="quick-card" onclick="showSection('boats')">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10v4"/><path d="M12 2v3"/></svg></div>
-          <h3>Our Boats</h3>
-          <p>View our fleet, check available dates, and book charter deferral appointments.</p>
+          <h3>Boating Experiences</h3>
+          <p>Do you love boats? Learn what it takes to keep these boats available for our members and help us grow the BFF fleet!</p>
         </div>
         <div class="quick-card" onclick="showSection('innisfree')">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
-          <h3>INNISFREE Land</h3>
-          <p>Our newly acquired marshland — a community gathering place in the making.</p>
+          <h3>Innisfree</h3>
+          <p>Innisfree will be the spiritual home at Bayou Charity. Help us build it, and it's yours forever. Ask how you can become a plank owner.</p>
         </div>
         <div class="quick-card" onclick="showSection('donate')">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
@@ -2531,17 +2821,26 @@
     <p class="section-eyebrow">Our Photos</p>
     <h2 class="section-title">Life on the <em>Bayou</em></h2>
     <div class="divider"></div>
-    <p class="section-lead">Twenty-one moments from the water, the docks, and the community that makes Bayou Family Fishing what it is. Click any photo to view full size.</p>
+    <p class="section-lead">Thank you for making memories with Bayou Charity. Select tabs below and upload pictures and videos. Click any photo to view full size.</p>
 
-    <div class="gallery-filters" data-scroll="fade-up">
-      <button class="gallery-filter-btn active" onclick="filterGallery('all', this)">All</button>
-      <button class="gallery-filter-btn" onclick="filterGallery('cookout', this)">Cookouts</button>
-      <button class="gallery-filter-btn" onclick="filterGallery('fishing', this)">Fishing</button>
-      <button class="gallery-filter-btn" onclick="filterGallery('kids', this)">Kids Club</button>
-      <button class="gallery-filter-btn" onclick="filterGallery('community', this)">Community</button>
+    <!-- Gallery Tab Strip — built dynamically by loadGalleryTabs() -->
+    <div id="galleryTabStrip" class="gallery-tab-strip" data-scroll="fade-up">
+      <p class="gallery-tab-loading">Loading albums…</p>
     </div>
 
-    <div class="gallery-grid" id="galleryGrid">
+    <!-- Upload button (shown to logged-in members) -->
+    <div id="galleryUploadBar" class="gallery-upload-bar" style="display:none;">
+      <button class="btn btn-primary btn-sm" id="btnGalleryUpload" onclick="openGalleryUploadModal()">
+        ↑ Upload Photo/Video
+      </button>
+    </div>
+    <div id="galleryUploadSignInHint" class="gallery-upload-hint" style="display:none;">
+      <em>Sign in via the Members tab to upload photos.</em>
+    </div>
+
+    <!-- Tab Panel: BFF 1st Event (static seed content) -->
+    <div id="galleryPanel-seed" class="gallery-panel active">
+      <div class="gallery-grid" id="galleryGrid">
       <div class="gallery-thumb" data-category="cookout" onclick="openLightbox(0)"><img src="Photos/Gallery1.jpg" alt="Club member tending a smoky charcoal grill at a BFF cookout event" loading="lazy"></div>
       <div class="gallery-thumb" data-category="cookout" onclick="openLightbox(1)"><img src="Photos/Gallery2.jpg" alt="Close-up of chicken and vegetables being grilled with tongs at a club gathering" loading="lazy"></div>
       <div class="gallery-thumb" data-category="kids" onclick="openLightbox(2)"><img src="Photos/Gallery3.jpg" alt="Kids gathered at a picnic table with snacks at a Bayou Family Fishing club event" loading="lazy"></div>
@@ -2563,9 +2862,71 @@
       <div class="gallery-thumb" data-category="community" onclick="openLightbox(18)"><img src="Photos/Gallery19.jpg" alt="Families and volunteers practicing fishing knots together at an outdoor workshop table" loading="lazy"></div>
       <div class="gallery-thumb" data-category="kids" onclick="openLightbox(19)"><img src="Photos/Gallery20.jpg" alt="Child in HUK Performance Fishing shirt learning to tie a knot with a crimping tool" loading="lazy"></div>
       <div class="gallery-thumb" data-category="kids" onclick="openLightbox(20)"><img src="Photos/Gallery21.jpg" alt="Teen practicing a fishing knot with green line and guidance from an adult volunteer" loading="lazy"></div>
+      <div class="gallery-video-thumb" data-category="fishing">
+        <video autoplay loop muted playsinline>
+          <source src="Photos/club%20member%20casting%20video%20(gallery).mp4" type="video/mp4">
+        </video>
+        <span class="gallery-video-badge">&#9654; VIDEO</span>
+        <button class="gallery-video-fs-btn" onclick="openGalleryVideoFullscreen(this)" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
+      </div>
+      <div class="gallery-video-thumb" data-category="kids">
+        <video autoplay loop muted playsinline>
+          <source src="Photos/fishing%20knots%20class%20video%20(gallery).mp4" type="video/mp4">
+        </video>
+        <span class="gallery-video-badge">&#9654; VIDEO</span>
+        <button class="gallery-video-fs-btn" onclick="openGalleryVideoFullscreen(this)" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
+      </div>
+      <div class="gallery-thumb" data-category="boats" onclick="openLightbox(21)"><img src="Photos/Gallery22.jpg" alt="Bayou Family Fishing club on the water" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="boats" onclick="openLightbox(22)"><img src="Photos/Gallery23.jpg" alt="Club members out on a bayou boat trip" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="boats" onclick="openLightbox(23)"><img src="Photos/Gallery24.jpg" alt="Boats docked at the bayou during a club event" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(24)"><img src="Photos/Gallery25.jpg" alt="Community gathering at the Bayou Family Fishing club" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(25)"><img src="Photos/Gallery26.jpg" alt="Club members together at a bayou event" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(26)"><img src="Photos/Gallery27.jpg" alt="Club member fishing on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(27)"><img src="Photos/Gallery28.jpg" alt="Fishing activity at a Bayou Family Fishing outing" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(28)"><img src="Photos/Gallery29.jpg" alt="Fishing on the bayou with the club" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="cookout" onclick="openLightbox(29)"><img src="Photos/Gallery30.jpg" alt="Club cookout event on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="cookout" onclick="openLightbox(30)"><img src="Photos/Gallery31.jpg" alt="Food and community at a BFF cookout" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(31)"><img src="Photos/Gallery32.jpg" alt="Families and volunteers at a Bayou Family Fishing event" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(32)"><img src="Photos/Gallery33.jpg" alt="Kids participating in a club fishing activity" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(33)"><img src="Photos/Gallery34.jpg" alt="Young members learning fishing skills at the club" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(34)"><img src="Photos/Gallery35.jpg" alt="Community members at a Bayou Family Fishing gathering" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(35)"><img src="Photos/Gallery36.jpg" alt="BFF community event on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(36)"><img src="Photos/Gallery37.jpg" alt="Club members enjoying a day on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(37)"><img src="Photos/Skyline%20golden%202.jpg" alt="Golden hour over the Louisiana bayou skyline" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(38)"><img src="Photos/Skyline%20golden%20hue%20.jpg" alt="Warm golden hue over the Louisiana marsh at dusk" loading="lazy"></div>
+      </div>
+      <!-- Dynamic approved submissions for this event load below the seed content -->
+      <div id="galleryDynamic-seed" class="gallery-grid gallery-dynamic"></div>
     </div>
+
+    <!-- Tab Panel: Fish Pics (dynamic) -->
+    <div id="galleryPanel-fish" class="gallery-panel" style="display:none;">
+      <div id="galleryFishGrid" class="gallery-grid">
+        <p class="gallery-loading">Loading fish photos…</p>
+      </div>
+    </div>
+    <!-- Additional event panels are created dynamically by loadGalleryTabs() -->
   </div>
 </section>
+
+<!-- ────────────── GALLERY UPLOAD MODAL ────────────── -->
+<div id="galleryUploadModal" class="gallery-upload-modal" style="display:none;" onclick="closeGalleryUploadModal(event)">
+  <div class="gallery-upload-modal-inner" onclick="event.stopPropagation()">
+    <button class="gallery-upload-close" onclick="closeGalleryUploadModal()">&times;</button>
+    <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1rem;">Upload a Photo or Video</h3>
+    <p style="font-size:0.85rem;color:var(--text-mid);margin-bottom:1.5rem;">Your submission will be reviewed by an admin before it appears on the site.</p>
+    <div class="form-group">
+      <label>File <span style="color:var(--orange);">*</span></label>
+      <input type="file" id="galleryUploadFile" accept="image/*,video/*">
+    </div>
+    <div class="form-group">
+      <label>Caption <span style="font-weight:400;font-style:italic;">(optional)</span></label>
+      <input type="text" id="galleryUploadCaption" placeholder="Tell us about this photo…" class="form-input">
+    </div>
+    <p id="galleryUploadStatus" style="font-size:0.85rem;color:var(--text-mid);min-height:1.2em;"></p>
+    <button class="btn btn-primary" onclick="submitGalleryUpload()" style="width:100%;margin-top:0.5rem;">Submit for Review</button>
+  </div>
+</div>
 
 <!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" onclick="handleLightboxClick(event)">
@@ -2634,213 +2995,15 @@
     <h2 class="section-title">Volunteer with <em>Us</em></h2>
     <div class="divider"></div>
 
-    <!-- ─── FISHING RODEO SPOTLIGHT ─── -->
-    <div class="rodeo-spotlight">
-      <span class="rodeo-badge">⭐ Featured Event</span>
-      <h2 class="rodeo-headline">Casting for the Future:<br>The Sunrise Family Fishing Rodeo</h2>
-      <p class="rodeo-subline">"Everything you need to go from Greenhorn to Guide."</p>
-
-      <div class="rodeo-meta-strip">
-        <span class="rodeo-meta-item">📅 <strong>April 25, 2026</strong> &nbsp;·&nbsp; Begins at Sunrise</span>
-        <span class="rodeo-meta-item">📍 <strong>Meet at Home Base</strong> &nbsp;·&nbsp; <a href="https://www.google.com/maps?q=29.595492887216214,-89.90665602961556" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">View on Map ↗</a></span>
-        <span class="rodeo-meta-item"><span class="rain-shine-badge">☀️🌧️ Rain or Shine</span></span>
-      </div>
-
-      <!-- COUNTDOWN TIMER -->
-      <div id="rodeoCountdown"></div>
-
-      <div class="rodeo-body">
-        <!-- Synopsis -->
-        <div class="rodeo-synopsis">
-          <p>Looking for a way to get the kids off the screens and onto the water? Join us at Sunrise for a community fishing rodeo designed for families. This isn't just a day of fishing — it's a masterclass in the basics.</p>
-          <p>We've brought in three licensed captains and expert guides from Lafayette to teach the fundamentals: from tying the perfect knot to casting like a pro. Whether you've never touched a rod or you're looking to sharpen your skills, come enjoy a day of Rain or Shine fun. Just bring your gear, your appetite, and the family.</p>
-          <div class="rodeo-features">
-            <div class="rodeo-feature-item">🎓 <div><strong>The Class:</strong> Hands-on training on knots, tackle basics, and fishing fundamentals from professional Lafayette captains.</div></div>
-            <div class="rodeo-feature-item">🔥 <div><strong>The Feast:</strong> This is a grill event! We provide the grills and space — you bring your favorite grillables.</div></div>
-            <div class="rodeo-feature-item">💸 <div><strong>The Cost:</strong> Donation-only. All contributions go directly toward boat fuel.</div></div>
-          </div>
-        </div>
-
-        <!-- RSVP Panel -->
-        <div class="rsvp-panel">
-          <h4>Family RSVP</h4>
-          <p style="font-size:0.8rem;color:rgba(247,237,216,0.5);margin-bottom:0.75rem;">Reserve your family's spot — free to attend.</p>
-
-          <div class="rsvp-counter-display">
-            <span class="rsvp-count-number" id="rsvpCountNum">0</span>
-            <span class="rsvp-count-label">families registered</span>
-          </div>
-
-          <div style="background:rgba(200,121,58,0.12);border:1px solid rgba(200,121,58,0.3);border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0 1rem;font-size:0.82rem;color:rgba(247,237,216,0.85);line-height:1.55;">
-            🎣 <strong style="color:var(--gold);">Fishing License Required</strong> — All attendees are responsible for purchasing their own valid Louisiana fishing license before the event.
-            <a href="https://louisianaoutdoors.com/licenses-and-permits?utm_source=Rec_Fishing_Licensing_Page&utm_medium=Web&utm_campaign=LDWF_Website" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;display:inline-block;margin-top:0.3rem;">Buy your license here →</a>
-          </div>
-
-          <div id="rsvpSuccess" class="rsvp-success">✅ You're registered! See you at sunrise on April 25th.</div>
-
-          <form id="rsvpForm" onsubmit="submitRSVP(event)">
-            <input type="hidden" name="_subject" value="Fishing Rodeo RSVP — BFF">
-            <input type="hidden" name="gear_status" id="rsvpGear" value="Bringing my own">
-            <!-- Honeypot spam protection — leave empty -->
-            <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
-
-            <div class="rsvp-form-group">
-              <label>Primary Contact Name</label>
-              <input type="text" id="rsvpName" name="contact_name" placeholder="e.g. Jean Thibodaux">
-            </div>
-
-            <div class="rsvp-row">
-              <div class="rsvp-form-group">
-                <label>Adults</label>
-                <select id="rsvpAdults" name="adults">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5+</option>
-                </select>
-              </div>
-              <div class="rsvp-form-group">
-                <label>Kids</label>
-                <select id="rsvpKids" name="kids">
-                  <option value="0">0</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5+</option>
-                </select>
-              </div>
-            </div>
-
-            <div class="rsvp-form-group">
-              <label>Gear Status</label>
-              <div class="gear-toggle-wrap">
-                <button type="button" class="gear-toggle-btn active" id="gearOwn">🎣 Bringing my own</button>
-                <button type="button" class="gear-toggle-btn" id="gearLoaner">🙋 Need loaner gear</button>
-              </div>
-            </div>
-
-            <hr class="rsvp-divider">
-
-            <!-- Photo & Video Consent -->
-            <div class="rsvp-consent-block">
-              <h6>📸 Photo &amp; Video Consent</h6>
-              <p>I give Bayou Charity permission to take photos and videos of my family and me during today's event. These may be used on social media, our website, and future event promotions to share the fun and inspire other families.</p>
-              <div class="rsvp-radio-row">
-                <label><input type="radio" name="photo_consent" id="photoYes" value="Yes, I consent"> ✅ Yes, I consent</label>
-                <label><input type="radio" name="photo_consent" id="photoNo" value="No, do not use photos"> 🚫 No, please do not use our photos</label>
-              </div>
-            </div>
-
-            <!-- Liability Release -->
-            <div class="rsvp-consent-block liability">
-              <h6>⚖️ Liability Release — Read &amp; Sign Before Joining</h6>
-              <p>I release Bayou Charity and Slowdown Park LLC from any claims over injury, loss, or damage from fishing, boating, or camp activities. I am participating at my own risk.</p>
-              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.6rem;">
-                <input type="checkbox" id="ageConfirm" name="age_confirm" value="Confirmed 18+"
-                  style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;"
-                  onchange="document.getElementById('liabilityAgree').disabled=!this.checked; document.getElementById('liabilityAgree').closest('label').style.opacity=this.checked?'1':'0.45';">
-                I confirm that I am 18 years of age or older.
-              </label>
-              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.4rem;opacity:0.45;" id="liabilityLabel">
-                <input type="checkbox" id="liabilityAgree" name="liability_agreed" value="Agreed" disabled style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;">
-                I have read and agree to the liability release above.
-              </label>
-              <p class="liability-required-note">* Both confirmations required to complete registration.</p>
-            </div>
-
-            <!-- Contact Preference & Updates -->
-            <div class="rsvp-form-group">
-              <label>Best way to reach me</label>
-              <div class="rsvp-check-row">
-                <label><input type="checkbox" name="contact_pref" value="Text"> 💬 Text</label>
-                <label><input type="checkbox" name="contact_pref" value="Call"> 📞 Call</label>
-                <label><input type="checkbox" name="contact_pref" value="Email"> ✉️ Email</label>
-                <label><input type="checkbox" name="contact_pref" value="Other" id="contactOtherCheck" onchange="toggleOtherInput(this)"> Other</label>
-              </div>
-              <input type="text" class="rsvp-other-input" id="contactOtherText" name="contact_other" placeholder="Describe preferred contact method…">
-            </div>
-
-            <div class="rsvp-form-group">
-              <label>Want updates on future events?</label>
-              <div class="rsvp-radio-row">
-                <label><input type="radio" name="want_updates" value="Yes"> ✅ Yes</label>
-                <label><input type="radio" name="want_updates" value="No"> No thanks</label>
-              </div>
-            </div>
-
-            <!-- Signature -->
-            <div class="rsvp-form-group">
-              <label>Parent / Guardian Signature</label>
-              <div class="rsvp-sig-row">
-                <input type="text" id="rsvpSignature" name="signature" placeholder="Type full name as signature">
-                <input type="date" id="rsvpSigDate" name="signature_date">
-              </div>
-            </div>
-
-            <button type="submit" class="btn btn-gold" style="width:100%;margin-top:0.75rem;">Reserve My Spot →</button>
-          </form>
-        </div>
-      </div>
-
-      <!-- Pack Your Tackle Checklist -->
-      <div class="tackle-section">
-        <h4>🎒 Pack Your Tackle — The Full Checklist</h4>
-        <div class="checklist-grid">
-          <div class="checklist-category">
-            <h5>🎣 Gear</h5>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Rods &amp; reels</label>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Bait</label>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Cash for fresh shrimp</label>
-          </div>
-          <div class="checklist-category">
-            <h5>🦺 Safety</h5>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Life jackets (adults)</label>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Life jackets for kids</label>
-          </div>
-          <div class="checklist-category">
-            <h5>👕 Wear</h5>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Light, loose-fitting clothes</label>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Hat</label>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Sunglasses</label>
-          </div>
-          <div class="checklist-category">
-            <h5>💧 Vitals</h5>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Sunscreen</label>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Bug spray</label>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Water &amp; drinks</label>
-          </div>
-          <div class="checklist-category">
-            <h5>🍖 Food</h5>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Grill food</label>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Snacks</label>
-          </div>
-          <div class="checklist-category">
-            <h5>💛 Appreciation</h5>
-            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Cash tips for the guides</label>
-          </div>
-        </div>
-      </div>
-
-      <!-- Support the Captains -->
-      <div class="captains-strip">
-        <h5>💛 Support the Captains — Fuel Fund</h5>
-        <div class="payment-handles">
-          <span class="payment-chip">💚 CashApp <span class="handle">$bayoucharity</span></span>
-          <span class="payment-chip">💜 Venmo <span class="handle">@bayoucharity</span></span>
-          <span class="payment-chip">🔵 PayPal <span class="handle">@bayoucharity</span></span>
-          <span class="payment-chip">💵 Cash <span class="handle">Day-of</span></span>
-          <span class="payment-chip">🍎 Apple Cash <span class="handle">kyle.rockefeller@icloud.com</span></span>
-        </div>
-      </div>
+    <!-- ─── FEATURED EVENT INTRO ─── -->
+    <div class="volunteer-event-intro" data-scroll="fade-up">
+      <p class="section-lead">Sign up to participate and volunteer at our featured event — the Bayou Family Fishing Spring Rodeo on April 25, 2026.</p>
+      <a href="/fishing-rodeo.html" class="btn btn-primary" style="display:inline-block;margin-top:1rem;">Sign Up / Learn More →</a>
     </div>
-    <!-- ─── END RODEO SPOTLIGHT ─── -->
 
     <div class="volunteer-intro">
       <div>
         <p class="section-lead">Whether you can swing a hammer, captain a boat, or just show up with enthusiasm — there's a place for you at Bayou Family Fishing. Our community is built by the people in it.</p>
-        <p style="font-size:0.95rem;line-height:1.8;color:var(--text-mid);">From hands-on construction at our INNISFREE marshland to weekend fishing days for youth, every volunteer hour directly supports Louisiana families and helps preserve our bayou heritage.</p>
       </div>
       <div>
         <div class="card" style="border-top:4px solid var(--green-deep);">
@@ -2855,40 +3018,57 @@
     <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--green-deep);margin-bottom:1.5rem;">Volunteer <em>Opportunities</em></h3>
 
     <div class="opportunity-grid">
-      <div class="opp-card">
-        <div class="opp-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
-        <h4>Dock Construction</h4>
-        <p>Help repair and build out the dock at our INNISFREE marshland property. No experience needed — just willingness to work!</p>
+      <div class="opp-card" data-scroll="fade-up">
+        <div class="opp-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>
+        </div>
+        <h4>Maintenance/Construction</h4>
+        <p>Something's always broken out here — boats, docks, camp buildings. If you can swing a hammer or turn a wrench, we need you.</p>
         <span class="opp-tag">Physical · Weekends</span>
       </div>
-      <div class="opp-card">
-        <div class="opp-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg></div>
-        <h4>Fishing Instructor</h4>
-        <p>Teach youth and beginners the basics of bayou fishing — casting, bait, catch-and-release, safety.</p>
-        <span class="opp-tag">Teaching · Flexible</span>
-      </div>
-      <div class="opp-card">
-        <div class="opp-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10v4"/><path d="M12 2v3"/></svg></div>
-        <h4>Boat Driver</h4>
-        <p>Certified captains needed for charter days, youth events, and the Confidence Course training program.</p>
+
+      <div class="opp-card" data-scroll="fade-up">
+        <div class="opp-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="3"/><line x1="12" y1="22" x2="12" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
+        </div>
+        <h4>Licensed Captains</h4>
+        <p>Licensed captain? We're building a network of guides willing to take our members out on short-notice trips. Good folks, good fishing, fair rates.</p>
         <span class="opp-tag">Certified Required</span>
       </div>
-      <div class="opp-card">
-        <div class="opp-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
-        <h4>Land Clearing & Prep</h4>
-        <p>Help clear, prepare, and beautify the INNISFREE marshland for future camps and community use.</p>
-        <span class="opp-tag">Physical · Seasonal</span>
+
+      <div class="opp-card" data-scroll="fade-up">
+        <div class="opp-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 16.98h-5.99c-1.1 0-1.95.94-2.48 1.9A4 4 0 0 1 2 17c.01-.7.2-1.4.57-2"/><path d="m6 17 3.13-5.78c.53-.97.1-2.18-.5-3.1a4 4 0 1 1 6.89-4.06"/><path d="m12 6 3.13 5.73C15.66 12.7 16.9 13 18 13a4 4 0 0 1 0 8"/></svg>
+        </div>
+        <h4>Fishing/Boating Instructors</h4>
+        <p>Teach the basics — casting, knots, catch-and-release — then help us turn BFF into a competitive team on the water.</p>
+        <span class="opp-tag">Teaching · Flexible</span>
       </div>
-      <div class="opp-card">
-        <div class="opp-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg></div>
-        <h4>Media & Storytelling</h4>
-        <p>Photograph events, shoot video, write stories, or help manage our social media presence.</p>
+
+      <div class="opp-card" data-scroll="fade-up">
+        <div class="opp-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <h4>Innisfree</h4>
+        <p>We're building a camp four miles out in the marsh, starting from nothing. Ask about becoming a plank owner.</p>
+        <span class="opp-tag">Physical · Marshland</span>
+      </div>
+
+      <div class="opp-card" data-scroll="fade-up">
+        <div class="opp-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+        </div>
+        <h4>Media &amp; Storytelling</h4>
+        <p>Photograph events, shoot video, write up the stories. Somebody's got to tell this right.</p>
         <span class="opp-tag">Creative · Remote OK</span>
       </div>
-      <div class="opp-card">
-        <div class="opp-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="m8 3 4 8 5-5 5 15H2L8 3z"/></svg></div>
+
+      <div class="opp-card" data-scroll="fade-up">
+        <div class="opp-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="6"/><path d="M12 6 Q12 10 8 14"/><path d="M12 6 Q12 10 16 14"/><line x1="12" y1="14" x2="12" y2="22"/><circle cx="12" cy="14" r="1" fill="currentColor"/></svg>
+        </div>
         <h4>Camp Coordination</h4>
-        <p>Help plan and run future youth fishing camps and community overnight events at INNISFREE.</p>
+        <p>Help us plan and run Bayou Charity and BFF events — cookouts, rodeos, community days.</p>
         <span class="opp-tag">Organizing · Planning</span>
       </div>
     </div>
@@ -2921,12 +3101,12 @@
       <div class="form-group">
         <label>I want to help with… (select all that apply)</label>
         <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Dock construction & repairs"> Dock construction & repairs</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Fishing instruction"> Fishing instruction</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Boat driving (licensed captains)"> Boat driving (licensed captains)</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Land clearing at INNISFREE"> Land clearing at INNISFREE</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Photography / media"> Photography / media</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Camp coordination"> Camp coordination</label>
+          <label class="checkbox-item"><input type="checkbox" name="interests" value="Maintenance/Construction"> Maintenance/Construction (boats &amp; camp buildings)</label>
+          <label class="checkbox-item"><input type="checkbox" name="interests" value="Licensed Captain"> Licensed Captain (guide partnerships)</label>
+          <label class="checkbox-item"><input type="checkbox" name="interests" value="Fishing/Boating Instruction"> Fishing/Boating Instruction</label>
+          <label class="checkbox-item"><input type="checkbox" name="interests" value="Innisfree Camp Building"> Innisfree Camp Building</label>
+          <label class="checkbox-item"><input type="checkbox" name="interests" value="Media/Storytelling"> Photography/Media/Storytelling</label>
+          <label class="checkbox-item"><input type="checkbox" name="interests" value="Camp Coordination"> Camp Coordination &amp; Event Planning</label>
           <label class="checkbox-item"><input type="checkbox" name="interests" value="General day-of support"> General day-of support</label>
         </div>
       </div>
@@ -2967,7 +3147,7 @@
     <div class="strip-content">
       <p class="section-eyebrow">Our Fleet</p>
       <h2 class="section-title">The <em>Boats</em></h2>
-      <p class="section-lead">Our vessels are the heart of Bayou Family Fishing — donated time, long-term care, and plenty of good stories. Pro charter captains donate slots, and members help keep them running.</p>
+      <p class="section-lead">Our vessels are the heart of Bayou Family Fishing — donated time, long-term care, and plenty of good stories. If you love boats as much as we do, ask how you can help us keep 'em running or add your baby to the fleet. Get help with inspection and repair, and connect with other members for fun on the water.</p>
     </div>
   </div>
   <div class="container">
@@ -2976,7 +3156,7 @@
       <img src="Photos/Uncle%20Johns%20Campagna%20Skiff%20(boat).jpg" alt="Uncle John's Campagna Skiff" class="boat-story-img" loading="lazy">
       <h3>Uncle John's Campagna Skiff</h3>
       <p class="boat-meta">Classic Fiberglass Skiff · Shallow-Draft · Family Vessel</p>
-      <p>A true bayou classic. Uncle John's Campagna Skiff is a shallow-draft family vessel built for the tight canals and open marsh alike. She's perfect for beginner fishing days and youth outings — the kind of boat that builds memories and first catches. Named for family, built for community.</p>
+      <p>A true bayou classic. Uncle John's Campagna Skiff is a shallow-draft family vessel built for the tight canals and open marsh alike. She's perfect for beginner fishing days and youth outings — the kind of boat that builds memories and first catches.</p>
       <div class="boat-story-expand">
         <button class="boat-story-toggle" onclick="toggleBoatStory(this)" aria-expanded="false">
           Full Story
@@ -2993,10 +3173,10 @@
     </div>
 
     <div class="boat-story" data-boat="02" data-scroll="fade-up">
-      <img src="Photos/The%20Ms%20Carrol%20(boat).jpg" alt="The Ms. Carrol" class="boat-story-img" loading="lazy">
-      <h3>The Ms. Carrol</h3>
+      <img src="Photos/The%20Ms%20Carrol%20(boat).jpg" alt="The Ms. Carol" class="boat-story-img" loading="lazy">
+      <h3>The Ms. Carol</h3>
       <p class="boat-meta">Louisiana Shrimp Trawler · Working Heritage Vessel</p>
-      <p>The Ms. Carrol is a traditional Louisiana shrimp trawler and one of our most storied boats. She's a living connection to the commercial fishing heritage that defines this coast. We use her for special cultural outings and to remind members where bayou tradition comes from.</p>
+      <p>The Ms. Carol is a traditional Louisiana shrimp trawler and one of our most storied boats. She's a living connection to the commercial fishing heritage that defines this coast. We use her for special cultural outings and to remind members where bayou tradition comes from.</p>
       <div class="boat-story-expand">
         <button class="boat-story-toggle" onclick="toggleBoatStory(this)" aria-expanded="false">
           Full Story
@@ -3008,6 +3188,7 @@
           <p>I rode with them once and have been wanting to try again. It was no big haul, but watching them work — quiet, steady, no complaints — stuck with me. That kind of stubborn pride? That's Louisiana. And yeah, the old days had boat blessings, high spirits, shrimp piled high — but the Gaudets aren't chasing ghosts. They're still out there, still pushing nets, still paying bills.</p>
           <p>That's why Bayou Charity wants in. Not to save them — hell, they don't need saving. But to give them a hand: cover fuel, sort the haul, or whatever keeps the engine turning. And maybe open a door, let folks ride along. Climb off The Check Twice, step onto the Miss Carol, help pull a net, buy shrimp straight off the deck, and hear Jason or Mr. Grant talk shop. It's not a show. It's real: salt, sweat, stories. A taste of what keeps this life alive.</p>
           <p>We're not here to turn them into a museum piece. We're here because they deserve to keep going — on their terms. If you're up for it, come ride. Help us keep the Miss Carol running, help Jason build something new out of the old. No pity, no fanfare — just good people, good water, and one more day on the bayou.</p>
+          <img src="Photos/Ms%20Carol%20pic%202%20(boat).jpg" alt="The Ms. Carol — a second view of this traditional Louisiana shrimp trawler" style="width:100%;border-radius:10px;margin-top:1.25rem;object-fit:cover;max-height:480px;" loading="lazy">
         </div>
       </div>
     </div>
@@ -3015,8 +3196,8 @@
     <div class="boat-story" data-boat="03" data-scroll="fade-up">
       <img src="Photos/Last%20Chance%20(boat).jpg" alt="Last Chance" class="boat-story-img" loading="lazy">
       <h3>Last Chance</h3>
-      <p class="boat-meta">Bay Boat · Open Water & Marsh Runs</p>
-      <p>The Last Chance is our go-to vessel for group trips into the marshes and open bay. Versatile and well-loved, she handles everything from a calm sunrise run to a full afternoon of redfish chasing. A community favorite and a regular on pro charter deferral days.</p>
+      <p class="boat-meta">Homemade Aluminum Skiff — work boat.</p>
+      <p>We've been wanting a boat like this for a long time, and now more crab traps in the Check Twice! She's a head turner — plenty of these boats in Acadiana, but mine is unique and special in Plaquemines.</p>
       <div class="boat-story-expand">
         <button class="boat-story-toggle" onclick="toggleBoatStory(this)" aria-expanded="false">
           Full Story
@@ -3032,10 +3213,13 @@
     </div>
 
     <div class="boat-story" data-boat="04" data-scroll="fade-up">
+      <video class="boat-card-video-bg" autoplay loop muted playsinline>
+        <source src="Photos/check%20twice%20video%20(boat).mp4" type="video/mp4">
+      </video>
       <img src="Photos/The%20Check%20Twice%20(boat).jpg" alt="The Check Twice" class="boat-story-img" loading="lazy">
       <h3>The Check Twice</h3>
-      <p class="boat-meta">Center Console · Open Water · Charter Deferral Days</p>
-      <p>Clean, fast, and dependable — The Check Twice is our modern center console built for open-water runs and charter deferral trips. The name says it all: we check our safety gear twice, because we care about every person who steps aboard. Used for Confidence Course training and member outings.</p>
+      <p class="boat-meta">VIP Baystealth — Suzuki — Minn Kota</p>
+      <p>I'm not sure what's easier on the eyes, this boat or my 2001 Jeep Wrangler. When having a fishing camp was still just a dream, the second dream was picturing this boat sitting in its slip, ready to go.</p>
       <div class="boat-story-expand">
         <button class="boat-story-toggle" onclick="toggleBoatStory(this)" aria-expanded="false">
           Full Story
@@ -3047,6 +3231,7 @@
           <p>VIP peaked as a hometown hero, employing hundreds at one point. But by two thousand eight, they filed bankruptcy—economy hit hard, competition from bigger yards. Assets got scooped up by new folks like Caddo Manufacturing, but the original magic faded. No more new hulls off that line. Today, those old Bay Stealths? Rare survivors—tough, undervalued, still running strong if you treat 'em right.</p>
           <p>Mine's one of 'em: The Check Twice, a 2004 twenty-foot center console on that classic VIP Bay Stealth hull. Repowered with a brand-new 200 hp Suzuki outboard, barely fifty hours on it. Up front, Minn Kota Terrova with i-Pilot Link—GPS spot-lock, auto-pilot, all synced to my Humminbird navigation and fish finder so I can steer from the console without touching a thing. (Honestly, it's smarter than me—I'm still figuring it out.) And aft? Dual Minn Kota Talons—ten-foot shallow water anchors that drop straight into mud, lock us dead-still in current or wind.</p>
           <p>This boat's no toy. It's the backbone of our future—the ride that'll haul us to hidden ponds for reds, or blast out on trout runs and waters unknown still chasing those Louisiana dreams.</p>
+          <img src="Photos/Check%20twice%20Kyle%20(president%20Posing)%20(boat).jpg" alt="Kyle Rockefeller, President of Bayou Family Fishing, posing aboard The Check Twice" style="width:100%;border-radius:10px;margin-top:1.25rem;object-fit:cover;max-height:480px;" loading="lazy">
         </div>
       </div>
     </div>
@@ -3055,7 +3240,7 @@
       <img src="Photos/Bait%20By%20You%20Hook%20it%20or%20Cook%20it%20(boat).jpg" alt="Bait By You Hook it or Cook it" class="boat-story-img" loading="lazy">
       <h3>Bait By You — Hook it or Cook it</h3>
       <p class="boat-meta">Louisiana Trawler · Deep Bayou Roots</p>
-      <p>The name says everything about who we are. "Bait By You — Hook it or Cook it" is a working Louisiana trawler with deep bayou character and community roots. She represents the spirit of self-reliance and celebration that makes fishing culture here unlike anywhere else in the world.</p>
+      <p>The name says everything about who we are. "Bait By You — Hook it or Cook it" is a working Louisiana trawler with deep bayou character and community roots. She represents the spirit of self-reliance and celebration that makes fishing culture here unlike anywhere else in the world. Capt. Sam Ronquille invites you to the tackle box where you can get live shrimp and visit him and his dog Bayou.</p>
       <div class="boat-story-expand">
         <button class="boat-story-toggle" onclick="toggleBoatStory(this)" aria-expanded="false">
           Full Story
@@ -3072,7 +3257,7 @@
 
     <div style="margin-top:2rem;padding:1.5rem;background:var(--cream);border-radius:10px;border-left:4px solid var(--green-water);">
       <strong style="color:var(--green-deep);">🎓 Confidence Course & Licensing Note</strong>
-      <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-mid);line-height:1.7;">A Louisiana boating license is required to participate in the Confidence Course and to be eligible to rent out club boats. We support members in getting licensed — ask about our upcoming licensing assistance workshops.</p>
+      <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-mid);line-height:1.7;">In Louisiana, boat operators born after January 1, 1984 are required to complete an LDWF-approved boater education course to operate a motorboat over 10 HP or any personal watercraft. Free online courses are available at <a href="https://www.boatus.org/free-boater-education-course/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">BoatUS.org</a> and <a href="https://www.boat-ed.com/louisiana/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">Boat-ED.com</a>. See the <a href="https://www.wlf.louisiana.gov/page/boater-education" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">LDWF boater education page</a> for full details. If you are new to boating, we provide hands-on training to members who complete certification.</p>
     </div>
   </div>
 </section>
@@ -3085,9 +3270,8 @@
     <div class="divider"></div>
 
     <div class="innisfree-hero" data-scroll="scale-in">
-      <p class="caveat-note">🌿 We just bought it.</p>
-      <h2>Louisiana Marshland,<br>Louisiana Community</h2>
-      <p>INNISFREE is a piece of Louisiana marshland we now own outright — and it's going to become something extraordinary. A hub for fishing, camping, boat training, cultural preservation, and community gathering. But first, we need to build it. Together.</p>
+      <h2>A place that brings you peace just knowing it exists.</h2>
+      <p>Innisfree is our piece of Louisiana, named by Big Papa after a poem by W.B Yeats (<a href="https://www.poetryfoundation.org/poems/43288/the-lake-isle-of-innisfree" target="_blank" rel="noopener" style="color:var(--gold);">link</a>). The journey is just the beginning. Become a plank owner by joining us early as we repair existing structures and break ground on our future multifamily campsite. This will be the home of Bayou Charity, a hub for fishing, camping, and cultural preservation.</p>
       <button class="btn btn-gold" onclick="showSection('volunteer')">Join a Build Day →</button>
     </div>
 
@@ -3095,35 +3279,63 @@
       <div>
         <p class="section-eyebrow">The Vision</p>
         <h3 style="font-family:'Playfair Display',serif;font-size:1.5rem;color:var(--green-deep);margin-bottom:1rem;">Building Up, <em>Together</em></h3>
-        <p style="font-size:0.95rem;line-height:1.8;color:var(--text-mid);margin-bottom:1.5rem;">INNISFREE isn't just land — it's a canvas for cultural preservation and community investment. We're building it from scratch, and every volunteer, every donation, and every member dues contributes to what it becomes.</p>
+        <p style="font-size:0.95rem;line-height:1.8;color:var(--text-mid);margin-bottom:1.5rem;">It begins with a boat ride and sightseeing trip, but then you stand on the back pier whose steps are washed away and look out on the open, free marshland toward the ponds beyond, you'll feel it stuck between two worlds on the edge of something special.</p>
 
         <div class="build-phases">
           <div class="phase-item">
             <div class="phase-num">1</div>
             <div class="phase-content">
-              <h4>Dock Repair & Construction</h4>
-              <p>Our first priority. We need hands to help repair the existing dock structure and extend it for boat access.</p>
+              <h4>Dock Repair and Debris Clearing</h4>
+              <ul style="margin:0.4rem 0 0 1rem;padding:0;font-size:0.9rem;line-height:1.7;">
+                <li>Repair and extend usable dock space, and clear debris in the water.</li>
+                <li>Install fish cleaning station.</li>
+                <li>Innisfree is ready to host day trips for dock fishing and inspiration.</li>
+              </ul>
             </div>
           </div>
           <div class="phase-item">
             <div class="phase-num">2</div>
             <div class="phase-content">
-              <h4>Land Clearing & Prep</h4>
-              <p>Clearing pathways, establishing safe zones, and preparing the land for structures and camps.</p>
+              <h4>Enclose Quonset Hut</h4>
+              <ul style="margin:0.4rem 0 0 1rem;padding:0;font-size:0.9rem;line-height:1.7;">
+                <li>Replace floor and erect walls on the hut.</li>
+                <li>Wire for generator power and future solar power.</li>
+                <li>Install air conditioning.</li>
+                <li>Innisfree is now an overnight experience.</li>
+              </ul>
             </div>
           </div>
           <div class="phase-item">
             <div class="phase-num">3</div>
             <div class="phase-content">
-              <h4>Fishing Camps</h4>
-              <p>Youth and family overnight fishing camps are the dream. Once the land is ready, this is where it gets special.</p>
+              <h4>Extend Pier to Our Marshland</h4>
+              <ul style="margin:0.4rem 0 0 1rem;padding:0;font-size:0.9rem;line-height:1.7;">
+                <li>Erect stairs to the marshland.</li>
+                <li>Build elevated temporary catwalks on the footprint of our future camp community and to the redfish pond beyond.</li>
+                <li>Begin bulkhead construction at the waterfront.</li>
+              </ul>
             </div>
           </div>
           <div class="phase-item">
             <div class="phase-num">4</div>
             <div class="phase-content">
-              <h4>Cultural Preservation</h4>
-              <p>Protecting and celebrating the traditions, language, food, and heritage of Louisiana's bayou communities.</p>
+              <h4>Permanent Piers and Foundations</h4>
+              <ul style="margin:0.4rem 0 0 1rem;padding:0;font-size:0.9rem;line-height:1.7;">
+                <li>Begin construction of permanent elevated walkways to multiple open decks, which will be foundations for future camps.</li>
+                <li>Complete bulkhead construction.</li>
+                <li>Begin dredging to backfill the bulkhead.</li>
+              </ul>
+            </div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-num">5</div>
+            <div class="phase-content">
+              <h4>Build Camps</h4>
+              <ul style="margin:0.4rem 0 0 1rem;padding:0;font-size:0.9rem;line-height:1.7;">
+                <li>Complete all elevated walkways and foundations for camps and central deck, and the observation tower.</li>
+                <li>Build camps and wire for generators.</li>
+                <li>Host plank owner grand opening of the camps at Innisfree.</li>
+              </ul>
             </div>
           </div>
         </div>
@@ -3154,6 +3366,7 @@
     <p class="section-lead">Your donation directly funds our fishing programs for military and other community service families. Your generosity also helps us build the charity's offshore hub, Innisfree, where members have access to the full Louisiana experience.</p>
 
     <div class="donate-layout" data-scroll="fade-up">
+      <div class="donate-form-sticky">
       <form id="donateForm" onsubmit="submitForm(event, this, 'Thank you!', 'Your donation interest has been received. We\'ll follow up with next steps.')">
         <input type="hidden" name="_subject" value="Donation Interest — BFF">
         <input type="hidden" name="donation_amount" id="donateAmount" value="$25">
@@ -3199,8 +3412,17 @@
         <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Donate Now</button>
         <p style="font-size:0.8rem;color:var(--text-mid);margin-top:0.75rem;text-align:center;">Bayou Family Fishing is a registered nonprofit. All donations are tax-deductible.</p>
       </form>
+      </div>
 
       <div>
+        <div class="donate-impact">
+          <h3>Your Impact</h3>
+          <div class="impact-item"><strong>$50</strong> Covers fuel for member-supported fishing trips</div>
+          <div class="impact-item"><strong>$100</strong> Covers a beginner's class and a day of dock fishing for a BFF family</div>
+          <div class="impact-item"><strong>$250</strong> Covers a parent and child fishing trip with a licensed guide</div>
+          <div class="impact-item"><strong>$500</strong> Covers a family of 4 fishing trip with a licensed guide</div>
+        </div>
+
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1.5rem;">Support Mom &amp; Pops</h3>
         <p style="font-size:0.9rem;line-height:1.7;color:var(--text-mid);margin-bottom:1.5rem;">We channel a portion of all donations to support local Louisiana businesses that share our values. You can also support one of our partners directly:</p>
         <div class="local-biz-grid">
@@ -3229,17 +3451,29 @@
           </div>
         </div>
 
-        <div class="donate-impact">
-          <h3>Your Impact</h3>
-          <div class="impact-item"><strong>$50</strong> Covers fuel for member-supported fishing trips</div>
-          <div class="impact-item"><strong>$100</strong> Covers a beginner's class and a day of dock fishing for a BFF family</div>
-          <div class="impact-item"><strong>$250</strong> Covers a parent and child fishing trip with a licensed guide</div>
-          <div class="impact-item"><strong>$500</strong> Covers a family of 4 fishing trip with a licensed guide</div>
+        <!-- ─── IN-KIND DONATIONS ─── -->
+        <div class="inkind-donations" data-scroll="fade-up">
+          <h3 style="font-family:'Playfair Display',serif;margin:2rem 0 0.75rem;">Got old gear? Put it to work.</h3>
+          <p style="font-size:0.9rem;line-height:1.7;margin-bottom:1.25rem;">If you've got a boat sitting in the yard, leftover tackle, or construction stuff collecting dust — bring it our way. Bayou Charity takes it all. Every donation goes toward keeping the fleet running and the INNISFREE camp moving. You'll get a tax write-off letter from us; we get what we need to stay on the water.</p>
+
+          <div class="inkind-grid">
+            <div class="inkind-item">🚤 <span>Boats &amp; outboard motors</span></div>
+            <div class="inkind-item">🎣 <span>Rods, reels, tackle &amp; fishing gear</span></div>
+            <div class="inkind-item">🪵 <span>Lumber &amp; dock hardware</span></div>
+            <div class="inkind-item">🔧 <span>Tools &amp; construction materials</span></div>
+          </div>
+
+          <div class="inkind-contact">
+            <p>📬 <strong>Reach Kyle to set something up:</strong></p>
+            <p><a href="mailto:kyle.rockefeller@bayoucharity.org" style="color:var(--amber);">kyle.rockefeller@bayoucharity.org</a> &nbsp;·&nbsp; <a href="tel:5045070560" style="color:var(--amber);">504-507-0560</a></p>
+          </div>
+
         </div>
+        <!-- ─── END IN-KIND DONATIONS ─── -->
 
         <div class="donate-guides" data-scroll="fade-up">
-          <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Our Guides</h3>
-          <p style="font-size:0.9rem;line-height:1.7;color:var(--text-mid);margin-bottom:1.2rem;">These trusted guides support BFF's mission and offer exceptional Louisiana fishing experiences.</p>
+          <h3 style="font-family:'Playfair Display',serif;margin:2rem 0 1rem;">Our Guides</h3>
+          <p style="font-size:0.9rem;line-height:1.7;margin-bottom:1.2rem;">These trusted guides support BFF's mission and offer exceptional Louisiana fishing experiences.</p>
           <div class="guides-grid">
             <div class="guide-card">
               <h4>Reel O-Fishal Charters</h4>
@@ -3291,8 +3525,6 @@
         <h3 style="font-family:'Playfair Display',serif;font-size:1.8rem;color:var(--green-deep);margin-bottom:1rem;">Built on <em>Passion,</em><br>Rooted in Culture</h3>
         <p style="font-size:1rem;line-height:1.85;color:var(--text-mid);margin-bottom:1.25rem;">I love being around boats and airplanes! I spent a little time in uniform with the Louisiana Air National Guard, but it was over the many years as a contractor at Belle Chasse Naval Air Station where I feel like I really served.</p>
         <p style="font-size:1rem;line-height:1.85;color:var(--text-mid);margin-bottom:1.25rem;">I finally became a good mechanic and did some work I was really proud of. However, the most important work was making friends and building relationships.</p>
-        <p style="font-size:1rem;line-height:1.85;color:var(--text-mid);margin-bottom:2rem;">Bayou Family Fishing was born from that same belief — that everyone deserves a chance to get out on the water, feel the pull of a line, and connect with the living culture of Louisiana's bayous. The purchase of INNISFREE marks a new chapter: a permanent community home for fishing, culture, and memory-making for generations to come.</p>
-
         <div class="contact-card">
           <h4>📬 Get in Touch</h4>
           <div class="contact-item">
@@ -3314,7 +3546,7 @@
             <div class="card" style="text-align:center;">
               <span class="card-icon">🤝</span>
               <h3>Partner With Us</h3>
-              <p style="font-size:0.88rem;">Businesses, captains, and organizations — reach out to explore partnership and charter deferral opportunities.</p>
+              <p style="font-size:0.88rem;">Captains, businesses, and organizations — reach out and explore partnership and fishing opportunities.</p>
             </div>
             <div class="card" style="text-align:center;">
               <span class="card-icon">📰</span>
@@ -3450,6 +3682,8 @@
       <div id="memberTabAdmin" class="member-tab-content" style="display:none;">
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1rem;">Pending Accounts</h3>
         <div id="adminPendingList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Gallery Submissions</h3>
+        <div id="adminGalleryList" class="admin-list"><p class="admin-empty">Loading…</p></div>
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Flagged Posts</h3>
         <div id="adminFlaggedList" class="admin-list"><p class="admin-empty">Loading…</p></div>
       </div>
@@ -3460,21 +3694,22 @@
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Bayou Family Fishing</div>
-  <div class="footer-tagline">Casting lines, building community — Louisiana's family fishing nonprofit</div>
+  <div class="footer-logo">Bayou Charity</div>
+  <div class="footer-tagline">Casting lines, building community — for those who serve.</div>
   <div class="footer-contact">
     <a href="mailto:kyle.rockefeller@bayoucharity.org">kyle.rockefeller@bayoucharity.org</a> &nbsp;·&nbsp;
     <a href="tel:5045070560">504-507-0560</a>
   </div>
   <div class="footer-links">
     <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('home')">Join</a>
-    <a href="#" onclick="showSection('home')">Volunteer</a>
-    <a href="#" onclick="showSection('home')">Boats</a>
-    <a href="#" onclick="showSection('home')">INNISFREE</a>
-    <a href="#" onclick="showSection('home')">Gallery</a>
-    <a href="#" onclick="showSection('home')">Donate</a>
-    <a href="#" onclick="showSection('home')">About</a>
+    <a href="#" onclick="showSection('club')">Join</a>
+    <a href="#" onclick="showSection('volunteer')">Volunteer</a>
+    <a href="#" onclick="showSection('boats')">Boats</a>
+    <a href="#" onclick="showSection('innisfree')">INNISFREE</a>
+    <a href="#" onclick="showSection('gallery')">Gallery</a>
+    <a href="#" onclick="showSection('donate')">Donate</a>
+    <a href="#" onclick="showSection('about')">About</a>
+    <a href="#" onclick="showSection('members')">Members</a>
   </div>
   <div class="footer-bottom">
     © <span id="footerYear">2026</span> Bayou Family Fishing & Charity. A registered nonprofit organization. All rights reserved.<br>
@@ -3500,7 +3735,17 @@
   let _innisfreeMapReady = false;
   let _leafletMap = null;
 
+  // ─── SUPABASE CLIENT (shared — gallery + members both use this) ───
+  var _SUPABASE_URL = 'https://osiramhnynhwmlfyuqcp.supabase.co';
+  var _SUPABASE_KEY = 'sb_publishable_yS9pPiw1F7QuxGcWVAyLXw_oZMI9HCI';
+  var _sbShared = null;
+  function getSB() {
+    if (!_sbShared) _sbShared = window.supabase.createClient(_SUPABASE_URL, _SUPABASE_KEY);
+    return _sbShared;
+  }
+
   function showSection(id, noPush) {
+    if (!VALID_SECTIONS.includes(id)) { id = 'home'; }
     document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -3529,6 +3774,9 @@
       setTimeout(function() {
         if (typeof _memberMap !== 'undefined' && _memberMap) _memberMap.invalidateSize();
       }, 100);
+    }
+    if (id === 'gallery') {
+      loadGalleryTabs();
     }
     return false;
   }
@@ -3698,9 +3946,13 @@
     document.getElementById('rsvpGear').value = type === 'own' ? 'Bringing my own' : 'Need loaner gear';
   }
 
-  // Wire gear toggle buttons with addEventListener (more reliable than inline onclick)
-  document.getElementById('gearOwn').addEventListener('click', function() { setGear('own'); });
-  document.getElementById('gearLoaner').addEventListener('click', function() { setGear('loaner'); });
+  // Wire gear toggle buttons — only present on fishing-rodeo.html, not the main page
+  (function() {
+    var gearOwnEl    = document.getElementById('gearOwn');
+    var gearLoanerEl = document.getElementById('gearLoaner');
+    if (gearOwnEl)    gearOwnEl.addEventListener('click',    function() { setGear('own'); });
+    if (gearLoanerEl) gearLoanerEl.addEventListener('click', function() { setGear('loaner'); });
+  })();
 
   function toggleOtherInput(cb) {
     document.getElementById('contactOtherText').style.display = cb.checked ? 'block' : 'none';
@@ -3827,6 +4079,219 @@
   }
   initRSVPCounter();
 
+  // ─── GALLERY FUNCTION STUBS (overwritten by Tasks 9 + 10) ───────────────────
+  // Prevent ReferenceError if gallery tab opened before Tasks 9/10 run.
+  // Task 9 replaces updateGalleryUploadButton with the real implementation.
+  // Task 10 replaces loadFishPics with the real implementation.
+
+  function openGalleryUploadModal() {
+    var modal = document.getElementById('galleryUploadModal');
+    if (!modal) return;
+    document.getElementById('galleryUploadFile').value = '';
+    document.getElementById('galleryUploadCaption').value = '';
+    document.getElementById('galleryUploadStatus').textContent = '';
+    modal.style.display = 'flex';
+  }
+
+  function closeGalleryUploadModal(e) {
+    if (!e || e.target === document.getElementById('galleryUploadModal')) {
+      var modal = document.getElementById('galleryUploadModal');
+      if (modal) modal.style.display = 'none';
+    }
+  }
+
+  async function submitGalleryUpload() {
+    var fileInput = document.getElementById('galleryUploadFile');
+    var caption   = document.getElementById('galleryUploadCaption').value.trim();
+    var status    = document.getElementById('galleryUploadStatus');
+
+    if (!fileInput.files || fileInput.files.length === 0) {
+      status.textContent = 'Please select a file.'; status.style.color = 'var(--orange)'; return;
+    }
+    var file = fileInput.files[0];
+    if (file.size > 50 * 1024 * 1024) {
+      status.textContent = 'File too large (max 50MB).'; status.style.color = 'var(--orange)'; return;
+    }
+
+    var user = (await getSB().auth.getUser()).data.user;
+    if (!user) {
+      status.textContent = 'You must be signed in to upload.'; status.style.color = 'var(--orange)'; return;
+    }
+
+    status.textContent = 'Uploading…'; status.style.color = 'var(--text-mid)';
+
+    var ext  = file.name.split('.').pop();
+    var path = user.id + '/' + Date.now() + '.' + ext;
+
+    var eventId = null;
+    if (_galleryActiveTab === 'seed')      eventId = BFF_FIRST_EVENT_ID;
+    else if (_galleryActiveTab === 'fish') eventId = null;
+    else                                   eventId = _galleryActiveTab;
+
+    var { error: uploadErr } = await getSB().storage.from('gallery-pending').upload(path, file);
+    if (uploadErr) {
+      status.textContent = 'Upload failed: ' + uploadErr.message; status.style.color = 'var(--orange)'; return;
+    }
+
+    var { error: dbErr } = await getSB().from('gallery_submissions')
+      .insert({ member_id: user.id, event_id: eventId, storage_path: path, caption: caption });
+    if (dbErr) {
+      status.textContent = 'Saved to storage but DB record failed: ' + dbErr.message; status.style.color = 'var(--orange)'; return;
+    }
+
+    status.textContent = 'Submitted! An admin will review your photo before it appears.';
+    status.style.color = 'green';
+    setTimeout(function() { closeGalleryUploadModal(); }, 2500);
+  }
+
+  // Replaces the stub from Task 8 — shows/hides upload bar based on auth state
+  function updateGalleryUploadButton() {
+    getSB().auth.getUser().then(function(res) {
+      var user = res.data && res.data.user;
+      var bar  = document.getElementById('galleryUploadBar');
+      var hint = document.getElementById('galleryUploadSignInHint');
+      if (!bar || !hint) return;
+      if (user) { bar.style.display = 'block'; hint.style.display = 'none'; }
+      else       { bar.style.display = 'none';  hint.style.display = 'block'; }
+    });
+  }
+
+  // Replaces the stub from Task 8 — loads fish photos from pins + approved fish uploads
+  async function loadFishPics() {
+    var container = document.getElementById('galleryFishGrid');
+    if (!container) return;
+    container.innerHTML = '<p class="gallery-loading">Loading fish photos…</p>';
+
+    var { data: pins } = await getSB()
+      .from('pins')
+      .select('photo_url, species, caption, created_at')
+      .not('photo_url', 'is', null)
+      .order('created_at', { ascending: false })
+      .limit(100);
+
+    var { data: fishUploads } = await getSB()
+      .from('gallery_submissions')
+      .select('storage_path, caption, submitted_at')
+      .is('event_id', null)
+      .eq('status', 'approved')
+      .order('submitted_at', { ascending: false });
+
+    var html = '';
+
+    if (pins && pins.length > 0) {
+      pins.forEach(function(pin) {
+        if (!pin.photo_url) return;
+        var alt = pin.species ? pin.species + ' caught by a BFF member' : 'Fish catch — BFF member';
+        html += '<div class="gallery-thumb">'
+              + '<img src="' + pin.photo_url + '" alt="' + alt + '" loading="lazy">'
+              + (pin.species || pin.caption
+                  ? '<div class="fish-thumb-caption">'
+                    + (pin.species ? '<strong>' + pin.species + '</strong>' : '')
+                    + (pin.caption ? '<br><em>' + pin.caption + '</em>' : '')
+                    + '</div>'
+                  : '')
+              + '</div>';
+      });
+    }
+
+    if (fishUploads && fishUploads.length > 0) {
+      fishUploads.forEach(function(sub) {
+        var url = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
+        html += '<div class="gallery-thumb">'
+              + '<img src="' + url + '" alt="' + (sub.caption || 'Fish photo') + '" loading="lazy">'
+              + (sub.caption ? '<div class="fish-thumb-caption"><em>' + sub.caption + '</em></div>' : '')
+              + '</div>';
+      });
+    }
+
+    container.innerHTML = html || '<p class="gallery-loading">No fish photos yet — drop a pin in the Members tab!</p>';
+  }
+  // ─── END STUBS ───────────────────────────────────────────────────────────────
+
+  // ─── GALLERY CONSTANTS ───
+  var BFF_FIRST_EVENT_ID = 'c9fb742c-6785-41f8-9598-687cb49554de';
+  var _galleryActiveTab  = 'seed'; // 'seed' | 'fish' | event uuid
+
+  async function loadGalleryTabs() {
+    var strip = document.getElementById('galleryTabStrip');
+    if (!strip) return;
+
+    var { data: events, error } = await getSB()
+      .from('gallery_events')
+      .select('id, name')
+      .order('sort_order', { ascending: true });
+
+    if (error || !events || events.length === 0) {
+      strip.innerHTML = '<button class="gallery-tab-btn active" onclick="switchGalleryTab(\'seed\',this)">BFF 1st Event</button>'
+                      + '<button class="gallery-tab-btn" onclick="switchGalleryTab(\'fish\',this)">Fish Pics</button>';
+      return;
+    }
+
+    var html = '';
+    events.forEach(function(ev) {
+      var tabId  = (ev.id === BFF_FIRST_EVENT_ID) ? 'seed' : ev.id;
+      var isFirst = (tabId === 'seed');
+      html += '<button class="gallery-tab-btn' + (isFirst ? ' active' : '') + '" '
+            + 'onclick="switchGalleryTab(\'' + tabId + '\',this)">'
+            + ev.name + '</button>';
+
+      if (!isFirst) {
+        var panel = document.createElement('div');
+        panel.id = 'galleryPanel-' + ev.id;
+        panel.className = 'gallery-panel';
+        panel.innerHTML = '<div class="gallery-grid gallery-dynamic" id="galleryDyn-' + ev.id + '"><p class="gallery-loading">Loading…</p></div>';
+        document.getElementById('galleryPanel-seed').parentNode.appendChild(panel);
+      }
+    });
+
+    // Fish Pics tab always last — hardcoded, not from DB
+    html += '<button class="gallery-tab-btn" onclick="switchGalleryTab(\'fish\',this)">Fish Pics</button>';
+    strip.innerHTML = html;
+
+    updateGalleryUploadButton();
+  }
+
+  function switchGalleryTab(tabId, btn) {
+    document.querySelectorAll('.gallery-tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+
+    document.querySelectorAll('.gallery-panel').forEach(function(p) { p.classList.remove('active'); p.style.display = 'none'; });
+    _galleryActiveTab = tabId;
+
+    if (tabId === 'seed') {
+      var p = document.getElementById('galleryPanel-seed');
+      if (p) { p.classList.add('active'); p.style.display = ''; }
+      loadEventSubmissions(BFF_FIRST_EVENT_ID, 'galleryDynamic-seed');
+    } else if (tabId === 'fish') {
+      var p = document.getElementById('galleryPanel-fish');
+      if (p) { p.classList.add('active'); p.style.display = ''; }
+      loadFishPics();
+    } else {
+      var p = document.getElementById('galleryPanel-' + tabId);
+      if (p) { p.classList.add('active'); p.style.display = ''; }
+      loadEventSubmissions(tabId, 'galleryDyn-' + tabId);
+    }
+  }
+
+  async function loadEventSubmissions(eventId, containerId) {
+    var container = document.getElementById(containerId);
+    if (!container) return;
+
+    var { data, error } = await getSB()
+      .from('gallery_submissions')
+      .select('storage_path, caption, submitted_at')
+      .eq('event_id', eventId)
+      .eq('status', 'approved')
+      .order('submitted_at', { ascending: false });
+
+    if (error || !data || data.length === 0) { container.innerHTML = ''; return; }
+
+    container.innerHTML = data.map(function(sub) {
+      var url = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
+      return '<div class="gallery-thumb"><img src="' + url + '" alt="' + (sub.caption || 'Member upload') + '" loading="lazy"></div>';
+    }).join('');
+  }
+
   // ─── GALLERY LIGHTBOX ───
   const galleryImages = [
     'Photos/Gallery1.jpg','Photos/Gallery2.jpg','Photos/Gallery3.jpg',
@@ -3835,7 +4300,15 @@
     'Photos/Gallery10.jpg','Photos/Gallery11.jpg','Photos/Gallery12.jpg',
     'Photos/Gallery13.jpg','Photos/Gallery14.jpg','Photos/Gallery15.jpg',
     'Photos/Gallery16.jpg','Photos/Gallery17.jpg','Photos/Gallery18.jpg',
-    'Photos/Gallery19.jpg','Photos/Gallery20.jpg','Photos/Gallery21.jpg'
+    'Photos/Gallery19.jpg','Photos/Gallery20.jpg','Photos/Gallery21.jpg',
+    'Photos/Gallery22.jpg','Photos/Gallery23.jpg','Photos/Gallery24.jpg',
+    'Photos/Gallery25.jpg','Photos/Gallery26.jpg','Photos/Gallery27.jpg',
+    'Photos/Gallery28.jpg','Photos/Gallery29.jpg','Photos/Gallery30.jpg',
+    'Photos/Gallery31.jpg','Photos/Gallery32.jpg','Photos/Gallery33.jpg',
+    'Photos/Gallery34.jpg','Photos/Gallery35.jpg','Photos/Gallery36.jpg',
+    'Photos/Gallery37.jpg',
+    'Photos/Skyline%20golden%202.jpg',
+    'Photos/Skyline%20golden%20hue%20.jpg'
   ];
   let currentLightboxIndex = 0;
 
@@ -3997,12 +4470,44 @@
   // ══════════════════════════════════════
   // GALLERY FILTER
   // ══════════════════════════════════════
+  function openGalleryVideoFullscreen(btn) {
+    var videoEl = btn.closest('.gallery-video-thumb').querySelector('video');
+    videoEl.muted = false;
+    videoEl.controls = true;
+    if (videoEl.requestFullscreen) {
+      videoEl.requestFullscreen();
+    } else if (videoEl.webkitEnterFullscreen) {
+      /* iOS Safari — uses video-native fullscreen */
+      videoEl.webkitEnterFullscreen();
+      videoEl.addEventListener('webkitendfullscreen', function onEnd() {
+        videoEl.muted = true;
+        videoEl.controls = false;
+        videoEl.removeEventListener('webkitendfullscreen', onEnd);
+      });
+      return;
+    } else if (videoEl.webkitRequestFullscreen) {
+      videoEl.webkitRequestFullscreen();
+    } else if (videoEl.mozRequestFullScreen) {
+      videoEl.mozRequestFullScreen();
+    }
+    function onFullscreenChange() {
+      if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+        videoEl.muted = true;
+        videoEl.controls = false;
+        document.removeEventListener('fullscreenchange', onFullscreenChange);
+        document.removeEventListener('webkitfullscreenchange', onFullscreenChange);
+      }
+    }
+    document.addEventListener('fullscreenchange', onFullscreenChange);
+    document.addEventListener('webkitfullscreenchange', onFullscreenChange);
+  }
+
   function filterGallery(category, btn) {
     document.querySelectorAll('.gallery-filter-btn').forEach(function(b) {
       b.classList.remove('active');
     });
     btn.classList.add('active');
-    document.querySelectorAll('.gallery-thumb').forEach(function(thumb) {
+    document.querySelectorAll('.gallery-thumb, .gallery-video-thumb').forEach(function(thumb) {
       if (category === 'all' || thumb.dataset.category === category) {
         thumb.classList.remove('filtered-out');
       } else {
@@ -4097,24 +4602,48 @@
     };
   })();
 
+  // ══════════════════════════════════════
+  // VIDEO PERFORMANCE — pause off-screen autoplay videos
+  // ══════════════════════════════════════
+  (function () {
+    if (!('IntersectionObserver' in window)) return; // SSR / old browsers safe
+    var videoObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var v = entry.target;
+        if (entry.isIntersecting) {
+          if (v.paused) v.play().catch(function () {}); // ignore autoplay policy errors
+        } else {
+          if (!v.paused) v.pause();
+        }
+      });
+    }, { threshold: 0.25 });
+
+    // Observe after DOM is ready
+    window.addEventListener('DOMContentLoaded', function () {
+      document.querySelectorAll('video[autoplay]').forEach(function (v) {
+        videoObs.observe(v);
+      });
+    });
+  })();
+
   // ══════════════════════════════════════════════════════════════
   // MEMBER PORTAL — Supabase auth, map, feed, comments, admin
   // ══════════════════════════════════════════════════════════════
   (function () {
     'use strict';
 
-    var SUPABASE_URL = 'https://osiramhnynhwmlfyuqcp.supabase.co';
-    var SUPABASE_KEY = 'sb_publishable_yS9pPiw1F7QuxGcWVAyLXw_oZMI9HCI';
-    var _sb          = null;
+    // ── XSS utility ───────────────────────────────────────────
+    function escapeHTML(str) {
+      if (str == null) return '';
+      var d = document.createElement('div');
+      d.textContent = String(str);
+      return d.innerHTML;
+    }
+
+    // getSB() is defined globally above the members IIFE — shared with gallery functions
     var _memberMap   = null;
     var _pendingMarker = null;
     var _pendingLatLng = null;
-
-    // ── Lazy Supabase client ──────────────────────────────────
-    function getSB() {
-      if (!_sb) _sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
-      return _sb;
-    }
 
     // ── Show one members view, hide others ────────────────────
     function showMembersView(view) {
@@ -4288,9 +4817,9 @@
         iconSize: [28, 28], iconAnchor: [14, 14]
       });
       var marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(_memberMap);
-      var img  = pin.photo_url ? '<img src="' + pin.photo_url + '" style="width:100%;border-radius:6px;margin-bottom:6px;">' : '';
-      var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + pin.species + '</em>' : '';
-      var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + pin.caption + '</p>' : '';
+      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;">' : '';
+      var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + escapeHTML(pin.species) + '</em>' : '';
+      var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + escapeHTML(pin.caption) + '</p>' : '';
       marker.bindPopup('<div style="font-family:Lora,serif;max-width:200px;">' + img + sp + cap + '</div>');
     }
 
@@ -4374,23 +4903,23 @@
       var date = new Date(pin.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       card.innerHTML =
         '<div class="feed-card-header">' +
-          (avatarUrl ? '<img src="' + avatarUrl + '" class="feed-avatar">' :
+          (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" class="feed-avatar">' :
             '<div class="feed-avatar" style="background:var(--green-mid);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;">\uD83C\uDFA3</div>') +
           '<div>' +
-            '<div style="font-weight:600;font-family:\'Lora\',serif;">' + displayName + '</div>' +
-            '<div style="font-size:0.8rem;color:var(--text-mid);">' + date + (pin.location_name ? ' \u00B7 ' + pin.location_name : '') + '</div>' +
+            '<div style="font-weight:600;font-family:\'Lora\',serif;">' + escapeHTML(displayName) + '</div>' +
+            '<div style="font-size:0.8rem;color:var(--text-mid);">' + date + (pin.location_name ? ' \u00B7 ' + escapeHTML(pin.location_name) : '') + '</div>' +
           '</div>' +
         '</div>' +
-        (pin.photo_url ? '<img src="' + pin.photo_url + '" class="feed-photo">' : '') +
+        (pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" class="feed-photo">' : '') +
         '<div class="feed-card-body">' +
-          (pin.species ? '<span class="feed-species">' + pin.species + '</span>' : '') +
-          (pin.caption ? '<p class="feed-caption">' + pin.caption + '</p>' : '') +
+          (pin.species ? '<span class="feed-species">' + escapeHTML(pin.species) + '</span>' : '') +
+          (pin.caption ? '<p class="feed-caption">' + escapeHTML(pin.caption) + '</p>' : '') +
         '</div>' +
         '<div class="feed-card-comments">' +
-          '<div class="comment-list" id="comments-' + pin.id + '"></div>' +
+          '<div class="comment-list" id="comments-' + escapeHTML(pin.id) + '"></div>' +
           '<div class="comment-input-row">' +
-            '<input type="text" class="form-input comment-input" placeholder="Add a comment\u2026" id="commentInput-' + pin.id + '">' +
-            '<button class="btn btn-primary btn-sm" onclick="window._bffPostComment(\'' + pin.id + '\')">Post</button>' +
+            '<input type="text" class="form-input comment-input" placeholder="Add a comment\u2026" id="commentInput-' + escapeHTML(pin.id) + '">' +
+            '<button class="btn btn-primary btn-sm" onclick="window._bffPostComment(' + JSON.stringify(String(pin.id)) + ')">Post</button>' +
           '</div>' +
         '</div>';
       loadComments(pin.id, card.querySelector('.comment-list'));
@@ -4411,7 +4940,7 @@
             var row = document.createElement('div');
             row.className = 'comment-row';
             var name = (c.profiles && c.profiles.display_name) ? c.profiles.display_name : 'Member';
-            row.innerHTML = '<strong class="comment-author">' + name + '</strong> ' + c.body;
+            row.innerHTML = '<strong class="comment-author">' + escapeHTML(name) + '</strong> ' + escapeHTML(c.body);
             container.appendChild(row);
           });
         });
@@ -4449,10 +4978,10 @@
               var row = document.createElement('div'); row.className = 'admin-row';
               var date = new Date(p.joined_at).toLocaleDateString();
               row.innerHTML =
-                '<span><strong>' + (p.display_name || 'Unknown') + '</strong> <span style="font-size:0.8rem;color:var(--text-mid);">joined ' + date + '</span></span>' +
+                '<span><strong>' + escapeHTML(p.display_name || 'Unknown') + '</strong> <span style="font-size:0.8rem;color:var(--text-mid);">joined ' + escapeHTML(date) + '</span></span>' +
                 '<div style="display:flex;gap:0.5rem;">' +
-                  '<button class="btn btn-primary btn-sm" onclick="window._bffApproveUser(\'' + p.id + '\',this.closest(\'.admin-row\'))">Approve</button>' +
-                  '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRejectUser(\'' + p.id + '\',this.closest(\'.admin-row\'))">Reject</button>' +
+                  '<button class="btn btn-primary btn-sm" onclick="window._bffApproveUser(' + JSON.stringify(String(p.id)) + ',this.closest(\'.admin-row\'))">Approve</button>' +
+                  '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRejectUser(' + JSON.stringify(String(p.id)) + ',this.closest(\'.admin-row\'))">Reject</button>' +
                 '</div>';
               pendingList.appendChild(row);
             });
@@ -4468,12 +4997,12 @@
             flaggedList.innerHTML = '';
             res.data.forEach(function (pin) {
               var row = document.createElement('div'); row.className = 'admin-row';
-              var img = pin.photo_url ? '<img src="' + pin.photo_url + '" style="width:48px;height:48px;object-fit:cover;border-radius:6px;">' : '';
+              var img = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:48px;height:48px;object-fit:cover;border-radius:6px;">' : '';
               row.innerHTML =
                 '<span style="display:flex;align-items:center;gap:0.75rem;">' + img +
-                  '<span>' + (pin.species || 'Unknown species') + (pin.caption ? ' \u2014 ' + pin.caption : '') + '</span>' +
+                  '<span>' + escapeHTML(pin.species || 'Unknown species') + (pin.caption ? ' \u2014 ' + escapeHTML(pin.caption) : '') + '</span>' +
                 '</span>' +
-                '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRemovePin(\'' + pin.id + '\',this.closest(\'.admin-row\'))">Remove</button>';
+                '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRemovePin(' + JSON.stringify(String(pin.id)) + ',this.closest(\'.admin-row\'))">Remove</button>';
               flaggedList.appendChild(row);
             });
           });
@@ -4502,6 +5031,110 @@
       });
     };
 
+    async function loadAdminGallery() {
+      var container = document.getElementById('adminGalleryList');
+      if (!container) return;
+
+      var { data, error } = await getSB()
+        .from('gallery_submissions')
+        .select('id, storage_path, caption, status, submitted_at, event_id, member_id, profiles(display_name)')
+        .eq('status', 'pending')
+        .order('submitted_at', { ascending: true });
+
+      if (error || !data || data.length === 0) {
+        container.innerHTML = '<p class="admin-empty">No pending gallery submissions.</p>';
+        return;
+      }
+
+      // Use async for-loop to await signed URLs (getPublicUrl returns 403 on private bucket)
+      var cards = [];
+      for (var i = 0; i < data.length; i++) {
+        var sub = data[i];
+
+        var { data: signedData } = await getSB().storage
+          .from('gallery-pending')
+          .createSignedUrl(sub.storage_path, 300); // 300 seconds = 5 min
+        var previewUrl = signedData ? signedData.signedUrl : '';
+
+        var submitterName = (sub.profiles && sub.profiles.display_name) ? sub.profiles.display_name : 'Unknown member';
+        var tabLabel = sub.event_id ? 'Event upload' : 'Fish Pics';
+
+        cards.push(
+          '<div class="admin-card" id="galSub-' + sub.id + '">'
+          + (previewUrl
+              ? '<img src="' + previewUrl + '" alt="Pending submission" style="width:72px;height:72px;object-fit:cover;border-radius:8px;flex-shrink:0;">'
+              : '<div style="width:72px;height:72px;border-radius:8px;background:rgba(13,43,62,0.2);flex-shrink:0;"></div>')
+          + '<div class="admin-card-info">'
+          + '<strong>' + escapeHTML(submitterName) + '</strong><br>'
+          + '<span style="font-size:0.8rem;color:var(--text-mid);">' + tabLabel + ' · ' + escapeHTML(sub.caption || 'No caption') + '</span>'
+          + '</div>'
+          + '<div class="admin-card-actions">'
+          + '<button class="btn-approve" onclick="approveGallerySubmission(' + JSON.stringify(String(sub.id)) + ',' + JSON.stringify(String(sub.storage_path)) + ')">Approve</button>'
+          + '<button class="btn-reject"  onclick="rejectGallerySubmission(' + JSON.stringify(String(sub.id)) + ',' + JSON.stringify(String(sub.storage_path)) + ')">Reject</button>'
+          + '</div>'
+          + '</div>'
+        );
+      }
+      container.innerHTML = cards.join('');
+    }
+
+    window.approveGallerySubmission = async function(subId, storagePath) {
+      var card = document.getElementById('galSub-' + subId);
+      if (card) card.style.opacity = '0.5';
+
+      // Move from gallery-pending to gallery-public
+      var { error: moveErr } = await getSB().storage
+        .from('gallery-pending')
+        .move(storagePath, storagePath, { destinationBucket: 'gallery-public' });
+
+      // Fallback: download + re-upload if cross-bucket move not supported
+      if (moveErr) {
+        var { data: fileData } = await getSB().storage.from('gallery-pending').download(storagePath);
+        if (fileData) {
+          await getSB().storage.from('gallery-public').upload(storagePath, fileData, { upsert: true });
+          await getSB().storage.from('gallery-pending').remove([storagePath]);
+        }
+      }
+
+      // Null guard: session may have expired
+      var authResult = await getSB().auth.getUser();
+      var user = authResult.data && authResult.data.user;
+      if (!user) {
+        if (card) { card.style.opacity = '1'; }
+        alert('Session expired. Please sign in again.');
+        return;
+      }
+
+      await getSB().from('gallery_submissions')
+        .update({ status: 'approved', reviewed_at: new Date().toISOString(), reviewed_by: user.id, storage_path: storagePath })
+        .eq('id', subId);
+
+      if (card) card.remove();
+    };
+
+    window.rejectGallerySubmission = async function(subId, storagePath) {
+      if (!confirm('Reject and delete this submission?')) return;
+      var card = document.getElementById('galSub-' + subId);
+      if (card) card.style.opacity = '0.5';
+
+      await getSB().storage.from('gallery-pending').remove([storagePath]);
+
+      // Null guard: session may have expired
+      var authResult = await getSB().auth.getUser();
+      var user = authResult.data && authResult.data.user;
+      if (!user) {
+        if (card) { card.style.opacity = '1'; }
+        alert('Session expired. Please sign in again.');
+        return;
+      }
+
+      await getSB().from('gallery_submissions')
+        .update({ status: 'rejected', reviewed_at: new Date().toISOString(), reviewed_by: user.id })
+        .eq('id', subId);
+
+      if (card) card.remove();
+    };
+
     // ── Tab switcher ──────────────────────────────────────────
     window.switchMemberTab = function (tab, btn) {
       ['Map', 'Feed', 'Admin'].forEach(function (t) {
@@ -4510,7 +5143,10 @@
       });
       document.querySelectorAll('.member-tab').forEach(function (b) { b.classList.remove('active'); });
       if (btn) btn.classList.add('active');
-      if (tab === 'Admin') loadAdminQueues();
+      if (tab === 'Admin') {
+        loadAdminQueues();
+        loadAdminGallery();
+      }
       if (tab === 'Map' && _memberMap) { setTimeout(function () { _memberMap.invalidateSize(); }, 50); }
     };
 

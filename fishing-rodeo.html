@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bayou Family Fishing Spring Rodeo — Bayou Charity</title>
+  <meta name="description" content="Join us April 25, 2026 for the Bayou Family Fishing Spring Rodeo. Families, fun, food, and fishing — rain or shine.">
+  <link rel="icon" href="Photos/BFF+Logo.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Playfair+Display:ital,wght@0,700;1,700&family=Caveat:wght@500&display=swap" rel="stylesheet">
+  <style>
+    /* ─── DESIGN TOKENS ─── */
+    :root {
+      --green-deep: #0d2b3e; --green-water: #1a4a6b; --amber: #e8923a;
+      --gold: #c9a84c; --cream: #eef6fb; --cream-dark: #d6e8f2;
+      --white: #ffffff; --text-dark: #0d1f2d; --text-mid: #4a6070; --orange: #e8923a;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Lora', Georgia, serif; background: var(--green-deep); color: var(--white); min-height: 100vh; }
+
+    /* ─── PAGE CHROME ─── */
+    .rodeo-page-header {
+      background: var(--green-deep); padding: 1rem 2rem;
+      display: flex; align-items: center; gap: 1.5rem;
+      border-bottom: 2px solid var(--gold); position: sticky; top: 0; z-index: 100;
+    }
+    .rodeo-page-header img { height: 42px; width: 42px; border-radius: 50%; object-fit: cover; }
+    .rodeo-page-header .back-link { color: rgba(238,246,251,0.80); text-decoration: none; font-size: 0.9rem; display: flex; align-items: center; gap: 0.4rem; transition: color 0.2s; }
+    .rodeo-page-header .back-link:hover { color: var(--gold); }
+    .rodeo-page-header .site-name { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1rem; margin-left: auto; }
+    .rodeo-page-main { max-width: 960px; margin: 0 auto; padding: 2rem 1.5rem 4rem; }
+    .rodeo-page-footer { background: rgba(0,0,0,0.35); text-align: center; padding: 2rem 1rem; font-size: 0.85rem; color: rgba(238,246,251,0.6); border-top: 1px solid rgba(201,168,76,0.3); }
+    .rodeo-page-footer a { color: var(--gold); text-decoration: none; }
+
+    /* ─── SHARED BUTTON + FORM PRIMITIVES ─── */
+    .btn { display: inline-block; padding: 0.75rem 1.75rem; border-radius: 8px; font-family: 'Lora', serif; font-size: 0.95rem; font-weight: 600; cursor: pointer; border: none; transition: opacity 0.2s, transform 0.15s; text-decoration: none; }
+    .btn:hover { opacity: 0.88; transform: translateY(-1px); }
+    .btn-primary { background: var(--amber); color: var(--white); }
+    .btn-gold { background: var(--gold); color: var(--green-deep); }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.85rem; margin-bottom: 0.3rem; color: rgba(247,237,216,0.85); font-weight: 600; }
+    .form-group input, .form-group select, .form-group textarea { width: 100%; padding: 0.65rem 0.9rem; border-radius: 8px; border: 1px solid rgba(201,168,76,0.35); background: rgba(13,43,62,0.55); color: var(--white); font-family: 'Lora', serif; font-size: 0.9rem; }
+
+    /* ─── COUNTDOWN ─── */
+    .countdown-strip {
+      display: flex;
+      gap: 0.75rem;
+      justify-content: center;
+      margin: 1.25rem 0 0.5rem;
+      flex-wrap: wrap;
+    }
+    .countdown-block {
+      background: rgba(13,43,62,0.6);
+      border: 1px solid rgba(212,168,85,0.25);
+      border-radius: 10px;
+      padding: 0.65rem 0.9rem;
+      min-width: 68px;
+      text-align: center;
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .countdown-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .countdown-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(247,237,216,0.5);
+      margin-top: 0.3rem;
+      display: block;
+    }
+    .countdown-done {
+      font-family: 'Caveat', cursive;
+      font-size: 1.4rem;
+      color: var(--gold);
+      text-align: center;
+      margin: 1rem 0;
+    }
+
+    /* ─── RODEO SPOTLIGHT ─── */
+    .rodeo-spotlight {
+      background: var(--green-deep);
+      border-radius: 16px;
+      padding: 3rem;
+      margin-bottom: 4rem;
+      position: relative;
+      overflow: hidden;
+      color: var(--cream);
+    }
+    .rodeo-spotlight::before {
+      content: '🎣';
+      position: absolute;
+      font-size: 13rem;
+      right: -1rem;
+      top: -2rem;
+      opacity: 0.05;
+      pointer-events: none;
+      line-height: 1;
+    }
+    .rodeo-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: var(--amber);
+      color: var(--white);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 50px;
+      margin-bottom: 1.25rem;
+    }
+    .rodeo-headline {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.6rem);
+      font-weight: 900;
+      color: var(--cream);
+      line-height: 1.15;
+      margin-bottom: 0.5rem;
+    }
+    .rodeo-subline {
+      font-family: 'Caveat', cursive;
+      font-size: 1.3rem;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+    }
+    .rodeo-meta-strip {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+      border-top: 1px solid rgba(247,237,216,0.15);
+      border-bottom: 1px solid rgba(247,237,216,0.15);
+      padding: 1rem 0;
+    }
+    .rodeo-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.9rem;
+      color: var(--cream);
+      opacity: 0.9;
+    }
+    .rodeo-meta-item strong { color: var(--gold); }
+    .rain-shine-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(200,121,58,0.25);
+      border: 1px solid var(--amber);
+      color: var(--amber-light);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+    }
+    .rodeo-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 2.5rem;
+    }
+    .rodeo-synopsis p {
+      font-size: 0.97rem;
+      line-height: 1.9;
+      color: rgba(247,237,216,0.85);
+      margin-bottom: 1rem;
+    }
+    .rodeo-features { display: flex; flex-direction: column; gap: 0.85rem; margin-top: 1.25rem; }
+    .rodeo-feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.9rem;
+      color: rgba(247,237,216,0.82);
+      line-height: 1.6;
+    }
+    .rodeo-feature-item strong { color: var(--gold); }
+
+    /* ─── RSVP PANEL ─── */
+    .rsvp-panel {
+      background: rgba(247,237,216,0.06);
+      border: 1px solid rgba(247,237,216,0.15);
+      border-radius: 12px;
+      padding: 2rem;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      background: rgba(247,237,216,0.04);
+    }
+    .rsvp-panel h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      margin-bottom: 0.25rem;
+    }
+    .rsvp-counter-display {
+      display: flex;
+      align-items: baseline;
+      gap: 0.6rem;
+      margin: 1rem 0;
+      padding: 0.75rem 1rem;
+      background: rgba(212,168,85,0.12);
+      border-radius: 8px;
+      border-left: 3px solid var(--gold);
+    }
+    .rsvp-count-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--gold);
+      line-height: 1;
+    }
+    .rsvp-count-label {
+      font-size: 0.8rem;
+      color: rgba(247,237,216,0.7);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .rsvp-capacity-bar-wrap { margin-bottom: 1.25rem; }
+    .rsvp-capacity-bar {
+      height: 5px;
+      background: rgba(247,237,216,0.15);
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 0.3rem;
+    }
+    .rsvp-capacity-fill {
+      height: 100%;
+      background: var(--gold);
+      border-radius: 10px;
+      transition: width 0.5s ease;
+      width: 0%;
+    }
+    .rsvp-capacity-text { font-size: 0.75rem; color: rgba(247,237,216,0.5); }
+    .rsvp-form-group { margin-bottom: 1rem; }
+    .rsvp-form-group label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: rgba(247,237,216,0.55);
+      margin-bottom: 0.35rem;
+    }
+    .rsvp-form-group input,
+    .rsvp-form-group select {
+      width: 100%;
+      background: rgba(247,237,216,0.08);
+      border: 1px solid rgba(247,237,216,0.2);
+      border-radius: 8px;
+      padding: 0.6rem 0.9rem;
+      color: var(--cream);
+      font-family: inherit;
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .rsvp-form-group input::placeholder { color: rgba(247,237,216,0.3); }
+    .rsvp-form-group input:focus,
+    .rsvp-form-group select:focus { border-color: var(--gold); }
+    .rsvp-form-group select option { background: var(--green-deep); color: var(--cream); }
+    .rsvp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+    .gear-toggle-wrap { display: flex; gap: 0.5rem; margin-top: 0.35rem; }
+    .gear-toggle-btn {
+      flex: 1;
+      padding: 0.5rem 0.4rem;
+      border-radius: 8px;
+      border: 1px solid rgba(247,237,216,0.2);
+      background: transparent;
+      color: rgba(247,237,216,0.55);
+      font-size: 0.78rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .gear-toggle-btn.active {
+      background: var(--amber);
+      border-color: var(--amber);
+      color: var(--white);
+      font-weight: 600;
+    }
+    .rsvp-waitlist {
+      display: none;
+      background: rgba(210,60,60,0.2);
+      border: 1px solid rgba(210,60,60,0.4);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: #ffaaaa;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .rsvp-success {
+      display: none;
+      background: rgba(26,74,107,0.5);
+      border: 1px solid rgba(26,74,107,0.8);
+      border-radius: 8px;
+      padding: 0.75rem 1rem;
+      font-size: 0.82rem;
+      color: #7ad4f0;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    /* ─── TACKLE CHECKLIST ─── */
+    .tackle-section {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(247,237,216,0.12);
+    }
+    .tackle-section h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.1rem;
+      color: var(--cream);
+      margin-bottom: 1.25rem;
+    }
+    .checklist-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+      gap: 1rem;
+    }
+    .checklist-category {
+      background: rgba(247,237,216,0.05);
+      border: 1px solid rgba(247,237,216,0.1);
+      border-radius: 10px;
+      padding: 1rem;
+    }
+    .checklist-category h5 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.75rem;
+    }
+    .checklist-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+      margin-bottom: 0.45rem;
+      font-size: 0.82rem;
+      color: rgba(247,237,216,0.72);
+      cursor: pointer;
+      line-height: 1.4;
+      user-select: none;
+    }
+    .checklist-item input[type="checkbox"] { margin-top: 2px; accent-color: var(--gold); flex-shrink: 0; }
+    .checklist-item.checked { text-decoration: line-through; opacity: 0.4; }
+
+    /* ─── CAPTAINS STRIP ─── */
+    .captains-strip {
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid rgba(247,237,216,0.12);
+    }
+    .captains-strip h5 {
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+    .payment-handles { display: flex; flex-wrap: wrap; gap: 0.6rem; justify-content: center; }
+    .payment-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      background: rgba(247,237,216,0.07);
+      border: 1px solid rgba(247,237,216,0.15);
+      border-radius: 50px;
+      padding: 0.4rem 0.9rem;
+      font-size: 0.78rem;
+      color: rgba(247,237,216,0.8);
+    }
+    .payment-chip .handle { color: var(--gold); font-weight: 600; }
+
+    /* ─── PAYMENT PLACEHOLDER ─── */
+    .payment-placeholder {
+      margin-top: 2rem;
+      padding: 1.25rem 1.5rem;
+      background: rgba(247,237,216,0.04);
+      border: 1px dashed rgba(201,168,76,0.3);
+      border-radius: 10px;
+      text-align: center;
+      font-size: 0.85rem;
+      color: rgba(247,237,216,0.55);
+    }
+    .payment-placeholder strong { color: var(--gold); display: block; margin-bottom: 0.35rem; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+    /* ─── CONSENT / WAIVER BLOCKS ─── */
+    .rsvp-divider {
+      border: none;
+      border-top: 1px solid rgba(247,237,216,0.12);
+      margin: 1.25rem 0;
+    }
+    .rsvp-consent-block {
+      background: rgba(247,237,216,0.05);
+      border: 1px solid rgba(247,237,216,0.14);
+      border-radius: 8px;
+      padding: 1rem 1.1rem;
+      margin-bottom: 1rem;
+    }
+    .rsvp-consent-block h6 {
+      font-family: 'Playfair Display', serif;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.04em;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+    }
+    .rsvp-consent-block p {
+      font-size: 0.8rem;
+      color: rgba(247,237,216,0.7);
+      line-height: 1.55;
+      margin-bottom: 0.75rem;
+    }
+    .rsvp-consent-block.liability p {
+      font-size: 0.78rem;
+      font-style: italic;
+      color: rgba(247,237,216,0.6);
+    }
+    .rsvp-radio-row, .rsvp-check-row {
+      display: flex;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .rsvp-radio-row label, .rsvp-check-row label {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.82rem;
+      color: rgba(247,237,216,0.85);
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .rsvp-radio-row input[type="radio"],
+    .rsvp-check-row input[type="checkbox"] {
+      accent-color: var(--gold);
+      width: 15px;
+      height: 15px;
+      cursor: pointer;
+    }
+    .rsvp-other-input {
+      width: 100%;
+      background: rgba(247,237,216,0.08);
+      border: 1px solid rgba(247,237,216,0.2);
+      border-radius: 6px;
+      padding: 0.45rem 0.7rem;
+      color: var(--cream);
+      font-size: 0.82rem;
+      outline: none;
+      margin-top: 0.5rem;
+      display: none;
+      transition: border-color 0.2s;
+    }
+    .rsvp-other-input:focus { border-color: var(--gold); }
+    .rsvp-other-input::placeholder { color: rgba(247,237,216,0.3); }
+    .rsvp-sig-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.75rem;
+      align-items: end;
+      margin-top: 0.75rem;
+    }
+    .rsvp-sig-row input[type="text"] {
+      width: 100%;
+      background: rgba(247,237,216,0.08);
+      border: 1px solid rgba(247,237,216,0.2);
+      border-radius: 8px;
+      padding: 0.6rem 0.85rem;
+      color: var(--cream);
+      font-family: 'Caveat', cursive;
+      font-size: 1.05rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .rsvp-sig-row input[type="text"]:focus { border-color: var(--gold); }
+    .rsvp-sig-row input[type="text"]::placeholder { color: rgba(247,237,216,0.3); font-family: 'Lora', serif; font-size: 0.82rem; }
+    .rsvp-sig-row input[type="date"] {
+      background: rgba(247,237,216,0.08);
+      border: 1px solid rgba(247,237,216,0.2);
+      border-radius: 8px;
+      padding: 0.6rem 0.75rem;
+      color: var(--cream);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+      color-scheme: dark;
+    }
+    .rsvp-sig-row input[type="date"]:focus { border-color: var(--gold); }
+    .liability-required-note {
+      font-size: 0.72rem;
+      color: rgba(247,237,216,0.4);
+      margin-top: 0.5rem;
+      font-style: italic;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .rodeo-spotlight { padding: 2rem 1.5rem; }
+      .rodeo-body { grid-template-columns: 1fr; gap: 2rem; }
+      .rsvp-row { grid-template-columns: 1fr; }
+      .rsvp-sig-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="rodeo-page-header">
+    <img src="Photos/BFF+Logo.jpg" alt="Bayou Family Fishing logo">
+    <a href="/" class="back-link">← Back to Bayou Charity</a>
+    <span class="site-name">bayoucharity.org</span>
+  </header>
+
+  <main class="rodeo-page-main">
+    <div class="rodeo-spotlight">
+      <span class="rodeo-badge">⭐ Featured Event</span>
+      <h3 class="rodeo-headline">Bayou Family Fishing<br>Spring Rodeo</h3>
+      <p class="rodeo-subline">"Let's get as many families on the water as we can"</p>
+
+      <div class="rodeo-meta-strip">
+        <span class="rodeo-meta-item">📅 <strong>April 25, 2026</strong> &nbsp;·&nbsp; Begins at Sunrise</span>
+        <span class="rodeo-meta-item">📍 <strong>Meet at Home Base</strong> &nbsp;·&nbsp; <a href="https://www.google.com/maps?q=29.595492887216214,-89.90665602961556" target="_blank" rel="noopener" style="color:var(--gold);text-decoration:none;">View on Map ↗</a></span>
+        <span class="rodeo-meta-item"><span class="rain-shine-badge">☀️🌧️ Rain or Shine</span></span>
+      </div>
+
+      <!-- COUNTDOWN TIMER -->
+      <div id="rodeoCountdown"></div>
+
+      <div class="rodeo-body">
+        <!-- Synopsis -->
+        <div class="rodeo-synopsis">
+          <p>Join us for our first rodeo and help us make Bayou Charity and Bayou Family Fishing a success. For our first rodeo, we are making this a team event with one prize. Let's prove to ourselves and to our future members that we are here to stay. Next time we'll get competitive and name individual winners, but on April 25th 2026, we all win.</p>
+          <p>We'll have guides waiting at sunrise, so come earlier and get a pro captain. BFF members with boats will be on standby to take participants out on the water. Trips will last about three hours, so we can rotate back and pick up more participants. Dock fishing and shore-side entertainment will take place all day. Join in at the BFF beginners table for fishing basics, or help train our new members by leading small groups from tying their first rig to casting lines in Deer Range Canal.</p>
+          <div class="rodeo-features">
+            <div class="rodeo-feature-item">🔥 <div><strong>The Feast:</strong> This is a grill event! We provide the grills and space — you bring your favorite grillables. We love food, bring all your favorite prepared dishes and desserts.</div></div>
+            <div class="rodeo-feature-item">💸 <div><strong>The Cost:</strong> Donation-only. All contributions go directly toward boat fuel, provide tackle and rods. Bring cash for live shrimp and tips for fishing guides.</div></div>
+          </div>
+        </div>
+
+        <!-- RSVP Panel -->
+        <div class="rsvp-panel">
+          <h4>Family RSVP</h4>
+          <p style="font-size:0.8rem;color:rgba(247,237,216,0.5);margin-bottom:0.75rem;">Reserve your family's spot — free to attend.</p>
+
+          <div class="rsvp-counter-display">
+            <span class="rsvp-count-number" id="rsvpCountNum">0</span>
+            <span class="rsvp-count-label">families registered</span>
+          </div>
+
+          <div style="background:rgba(200,121,58,0.12);border:1px solid rgba(200,121,58,0.3);border-radius:8px;padding:0.75rem 1rem;margin:0.75rem 0 1rem;font-size:0.82rem;color:rgba(247,237,216,0.85);line-height:1.55;">
+            🎣 <strong style="color:var(--gold);">Fishing License Required</strong> — All attendees are responsible for purchasing their own valid Louisiana fishing license before the event.
+            <a href="https://louisianaoutdoors.com/licenses-and-permits?utm_source=Rec_Fishing_Licensing_Page&utm_medium=Web&utm_campaign=LDWF_Website" target="_blank" rel="noopener noreferrer" style="color:var(--gold);text-decoration:underline;display:inline-block;margin-top:0.3rem;">Buy your license here →</a>
+          </div>
+
+          <div id="rsvpSuccess" class="rsvp-success">✅ You're registered! See you at sunrise on April 25th.</div>
+
+          <form id="rsvpForm" action="https://formspree.io/f/mdawanzg" method="POST" onsubmit="submitRSVP(event)">
+            <input type="hidden" name="_subject" value="Fishing Rodeo RSVP — BFF">
+            <input type="hidden" name="gear_status" id="rsvpGear" value="Bringing my own">
+            <!-- Honeypot spam protection — leave empty -->
+            <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
+
+            <div class="rsvp-form-group">
+              <label>Primary Contact Name</label>
+              <input type="text" id="rsvpName" name="contact_name" placeholder="e.g. Jean Thibodaux">
+            </div>
+
+            <div class="rsvp-row">
+              <div class="rsvp-form-group">
+                <label>Adults</label>
+                <select id="rsvpAdults" name="adults">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5+</option>
+                </select>
+              </div>
+              <div class="rsvp-form-group">
+                <label>Kids</label>
+                <select id="rsvpKids" name="kids">
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5+</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="rsvp-form-group">
+              <label>Gear Status</label>
+              <div class="gear-toggle-wrap">
+                <button type="button" class="gear-toggle-btn active" id="gearOwn">🎣 Bringing my own</button>
+                <button type="button" class="gear-toggle-btn" id="gearLoaner">🙋 Need loaner gear</button>
+              </div>
+            </div>
+
+            <hr class="rsvp-divider">
+
+            <!-- Photo & Video Consent -->
+            <div class="rsvp-consent-block">
+              <h6>📸 Photo &amp; Video Consent</h6>
+              <p>I give Bayou Charity permission to take photos and videos of my family and me during today's event. These may be used on social media, our website, and future event promotions to share the fun and inspire other families.</p>
+              <div class="rsvp-radio-row">
+                <label><input type="radio" name="photo_consent" id="photoYes" value="Yes, I consent"> ✅ Yes, I consent</label>
+                <label><input type="radio" name="photo_consent" id="photoNo" value="No, do not use photos"> 🚫 No, please do not use our photos</label>
+              </div>
+            </div>
+
+            <!-- Liability Release -->
+            <div class="rsvp-consent-block liability">
+              <h6>⚖️ Liability Release — Read &amp; Sign Before Joining</h6>
+              <p>I release Bayou Charity and Slowdown Park LLC from any claims over injury, loss, or damage from fishing, boating, or camp activities. I am participating at my own risk.</p>
+              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.6rem;">
+                <input type="checkbox" id="ageConfirm" name="age_confirm" value="Confirmed 18+"
+                  style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;"
+                  onchange="document.getElementById('liabilityAgree').disabled=!this.checked; document.getElementById('liabilityAgree').closest('label').style.opacity=this.checked?'1':'0.45';">
+                I confirm that I am 18 years of age or older.
+              </label>
+              <label style="display:flex;align-items:flex-start;gap:0.5rem;font-size:0.82rem;color:rgba(247,237,216,0.85);cursor:pointer;margin-bottom:0.4rem;opacity:0.45;" id="liabilityLabel">
+                <input type="checkbox" id="liabilityAgree" name="liability_agreed" value="Agreed" disabled style="accent-color:var(--gold);width:15px;height:15px;margin-top:2px;flex-shrink:0;">
+                I have read and agree to the liability release above.
+              </label>
+              <p class="liability-required-note">* Both confirmations required to complete registration.</p>
+            </div>
+
+            <!-- Contact Preference & Updates -->
+            <div class="rsvp-form-group">
+              <label>Best way to reach me</label>
+              <div class="rsvp-check-row">
+                <label><input type="checkbox" name="contact_pref" value="Text"> 💬 Text</label>
+                <label><input type="checkbox" name="contact_pref" value="Call"> 📞 Call</label>
+                <label><input type="checkbox" name="contact_pref" value="Email"> ✉️ Email</label>
+                <label><input type="checkbox" name="contact_pref" value="Other" id="contactOtherCheck" onchange="toggleOtherInput(this)"> Other</label>
+              </div>
+              <input type="text" class="rsvp-other-input" id="contactOtherText" name="contact_other" placeholder="Describe preferred contact method…">
+            </div>
+
+            <div class="rsvp-form-group">
+              <label>Want updates on future events?</label>
+              <div class="rsvp-radio-row">
+                <label><input type="radio" name="want_updates" value="Yes"> ✅ Yes</label>
+                <label><input type="radio" name="want_updates" value="No"> No thanks</label>
+              </div>
+            </div>
+
+            <!-- Signature -->
+            <div class="rsvp-form-group">
+              <label>Parent / Guardian Signature</label>
+              <div class="rsvp-sig-row">
+                <input type="text" id="rsvpSignature" name="signature" placeholder="Type full name as signature">
+                <input type="date" id="rsvpSigDate" name="signature_date">
+              </div>
+            </div>
+
+            <button type="submit" class="btn btn-gold" style="width:100%;margin-top:0.75rem;">Reserve My Spot →</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Pack Your Tackle Checklist -->
+      <div class="tackle-section">
+        <h4>🎒 Pack Your Tackle — The Full Checklist</h4>
+        <div class="checklist-grid">
+          <div class="checklist-category">
+            <h5>🎣 Gear</h5>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Rods &amp; reels</label>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Bait</label>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Cash for fresh shrimp</label>
+          </div>
+          <div class="checklist-category">
+            <h5>🦺 Safety</h5>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Life jackets (adults)</label>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Life jackets for kids</label>
+          </div>
+          <div class="checklist-category">
+            <h5>👕 Wear</h5>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Light, loose-fitting clothes</label>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Hat</label>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Sunglasses</label>
+          </div>
+          <div class="checklist-category">
+            <h5>💧 Vitals</h5>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Sunscreen</label>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Bug spray</label>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Water &amp; drinks</label>
+          </div>
+          <div class="checklist-category">
+            <h5>🍖 Food</h5>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Grill food</label>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Snacks</label>
+          </div>
+          <div class="checklist-category">
+            <h5>💛 Appreciation</h5>
+            <label class="checklist-item"><input type="checkbox" onchange="toggleCheck(this)"> Cash tips for the guides</label>
+          </div>
+        </div>
+      </div>
+
+      <!-- Support the Captains -->
+      <div class="captains-strip">
+        <h5>💛 Support the Captains — Fuel Fund</h5>
+        <div class="payment-handles">
+          <span class="payment-chip">💚 CashApp <span class="handle">$bayoucharity</span></span>
+          <span class="payment-chip">💜 Venmo <span class="handle">@bayoucharity</span></span>
+          <span class="payment-chip">🔵 PayPal <span class="handle">@bayoucharity</span></span>
+          <span class="payment-chip">💵 Cash <span class="handle">Day-of</span></span>
+          <span class="payment-chip">🍎 Apple Cash <span class="handle">kyle.rockefeller@icloud.com</span></span>
+        </div>
+
+        <!-- Payment placeholder — Stripe/PayPal integration pending -->
+        <div class="payment-placeholder">
+          <strong>Online payment</strong>
+          Online payment is in the works. We're getting Stripe and PayPal connected — for now, the handles above or cash day-of both work.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="rodeo-page-footer">
+    <p>Bayou Charity &nbsp;·&nbsp; <a href="mailto:kyle.rockefeller@bayoucharity.org">kyle.rockefeller@bayoucharity.org</a> &nbsp;·&nbsp; <a href="tel:5045070560">504-507-0560</a></p>
+    <p style="margin-top:0.5rem;"><a href="/">← Back to bayoucharity.org</a></p>
+  </footer>
+
+  <script>
+    const FORMSPREE = 'https://formspree.io/f/mdawanzg';
+
+    // ─── FISHING RODEO RSVP ───
+    let gearChoice = 'own';
+
+    // Pre-fill today's date on the signature line
+    (function() {
+      const el = document.getElementById('rsvpSigDate');
+      if (el) el.value = new Date().toISOString().split('T')[0];
+    })();
+
+    function setGear(type) {
+      gearChoice = type;
+      document.getElementById('gearOwn').classList.toggle('active', type === 'own');
+      document.getElementById('gearLoaner').classList.toggle('active', type === 'loaner');
+      document.getElementById('rsvpGear').value = type === 'own' ? 'Bringing my own' : 'Need loaner gear';
+    }
+
+    document.getElementById('gearOwn').addEventListener('click', function() { setGear('own'); });
+    document.getElementById('gearLoaner').addEventListener('click', function() { setGear('loaner'); });
+
+    function toggleOtherInput(cb) {
+      document.getElementById('contactOtherText').style.display = cb.checked ? 'block' : 'none';
+    }
+
+    async function submitRSVP(event) {
+      event.preventDefault();
+      const form = event.target;
+
+      // Validation
+      const nameEl = document.getElementById('rsvpName');
+      if (!nameEl.value.trim()) {
+        nameEl.focus();
+        nameEl.style.borderColor = 'var(--amber)';
+        return;
+      }
+      nameEl.style.borderColor = '';
+
+      if (!document.querySelector('input[name="photo_consent"]:checked')) {
+        alert('Please select your photo & video consent preference.');
+        return;
+      }
+
+      if (!document.getElementById('liabilityAgree').checked) {
+        document.getElementById('liabilityAgree').closest('.rsvp-consent-block').style.outline = '1px solid var(--amber)';
+        alert('Please read and agree to the liability release to continue.');
+        return;
+      }
+      document.getElementById('liabilityAgree').closest('.rsvp-consent-block').style.outline = '';
+
+      const sigEl = document.getElementById('rsvpSignature');
+      if (!sigEl.value.trim()) {
+        sigEl.focus();
+        sigEl.style.borderColor = 'var(--amber)';
+        return;
+      }
+      sigEl.style.borderColor = '';
+
+      // Submit to Formspree
+      const btn = form.querySelector('[type="submit"]');
+      const original = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = 'Sending…';
+
+      try {
+        const res = await fetch(FORMSPREE, {
+          method: 'POST',
+          body: new FormData(form),
+          headers: { 'Accept': 'application/json' }
+        });
+
+        if (res.ok) {
+          form.reset();
+          setGear('own');
+          document.getElementById('contactOtherText').style.display = 'none';
+          document.getElementById('rsvpSigDate').value = new Date().toISOString().split('T')[0];
+          incrementRSVPCounter();
+          const successEl = document.getElementById('rsvpSuccess');
+          successEl.style.display = 'block';
+          setTimeout(() => { successEl.style.display = 'none'; }, 6000);
+        } else {
+          alert('Something went wrong — please email kyle.rockefeller@bayoucharity.org');
+        }
+      } catch (e) {
+        alert('Could not connect — please email kyle.rockefeller@bayoucharity.org');
+      }
+
+      btn.disabled = false;
+      btn.textContent = original;
+    }
+
+    function toggleCheck(el) {
+      el.closest('.checklist-item').classList.toggle('checked', el.checked);
+    }
+
+    // ─── RSVP COUNTER (localStorage persistence) ───
+    function initRSVPCounter() {
+      const count = parseInt(localStorage.getItem('bff_rsvp_count') || '0', 10);
+      updateRSVPDisplay(count);
+    }
+    function updateRSVPDisplay(count) {
+      const numEl = document.getElementById('rsvpCountNum');
+      if (numEl) numEl.textContent = count;
+    }
+    function incrementRSVPCounter() {
+      const count = parseInt(localStorage.getItem('bff_rsvp_count') || '0', 10) + 1;
+      localStorage.setItem('bff_rsvp_count', String(count));
+      updateRSVPDisplay(count);
+    }
+    initRSVPCounter();
+
+    // ─── FISHING RODEO COUNTDOWN TIMER ───
+    (function() {
+      var target = new Date('2026-04-25T06:15:00-05:00').getTime();
+      var container = document.getElementById('rodeoCountdown');
+      if (!container) return;
+
+      function pad(n) { return String(n).padStart(2, '0'); }
+
+      function updateCountdown() {
+        var now = Date.now();
+        var diff = target - now;
+        if (diff <= 0) {
+          container.innerHTML = '<div class="countdown-done">Rodeo Day! See you at sunrise!</div>';
+          return;
+        }
+        var d = Math.floor(diff / 86400000);
+        var h = Math.floor((diff % 86400000) / 3600000);
+        var m = Math.floor((diff % 3600000) / 60000);
+        var s = Math.floor((diff % 60000) / 1000);
+        container.innerHTML =
+          '<div class="countdown-strip">' +
+            '<div class="countdown-block"><span class="countdown-num">' + pad(d) + '</span><span class="countdown-label">Days</span></div>' +
+            '<div class="countdown-block"><span class="countdown-num">' + pad(h) + '</span><span class="countdown-label">Hours</span></div>' +
+            '<div class="countdown-block"><span class="countdown-num">' + pad(m) + '</span><span class="countdown-label">Min</span></div>' +
+            '<div class="countdown-block"><span class="countdown-num">' + pad(s) + '</span><span class="countdown-label">Sec</span></div>' +
+          '</div>';
+      }
+      updateCountdown();
+      setInterval(updateCountdown, 1000);
+    })();
+  </script>
+</body>
+</html>

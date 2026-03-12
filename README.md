@@ -1,7 +1,20 @@
-# Bayou Family Fishing — Website Project
+# Bayou Family Fishing — Website
 
-> Nonprofit website for Bayou Family Fishing & Charity
-> Built with HTML, CSS, and vanilla JavaScript — single file, no dependencies.
+> Public-facing site for Bayou Family Fishing & Charity (`bayoucharity.org`)
+> Single-file · Vanilla HTML/CSS/JS · No build step · No dependencies
+
+---
+
+## Editing Workflow
+
+1. Open `bayou-family-fishing.html` in any text editor and make changes
+2. Copy it to `index.html`:
+   ```bash
+   cp bayou-family-fishing.html index.html
+   ```
+3. Commit and push to `main` — Cloudflare Pages auto-deploys
+
+> **Rule:** Never edit `index.html` directly. It is always a copy of `bayou-family-fishing.html`.
 
 ---
 
@@ -9,213 +22,229 @@
 
 | File | Description |
 |------|-------------|
-| `index.html` | Full website — Cloudflare Pages entry point (all pages, styles, and logic in one file) |
-| `bayou-family-fishing.html` | Working copy — edit this, then copy to `index.html` before deploying |
-| `Photos/` | All media assets (photos, videos) |
-| `docs/plans/` | Session design docs and implementation plans |
-| `404.html` | Branded 404 page matching site design |
-| `privacy.html` | Privacy Policy — covers member portal, OAuth data, Supabase storage |
-| `terms.html` | Terms of Service — member accounts, user content, events, liability |
-| `data-deletion.html` | Data Deletion Request page — required for Facebook/Google OAuth compliance |
-| `netlify.toml` | Security headers reference (CSP, X-Frame-Options, etc.) |
+| `bayou-family-fishing.html` | Source of truth — edit this |
+| `index.html` | Cloudflare Pages entry point — always a copy of the above (**both files required**) |
+| `fishing-rodeo.html` | Standalone Fishing Rodeo event page — linked from Volunteer tab |
+| `404.html` | Branded error page |
+| `privacy.html` | Privacy Policy (OAuth, Supabase, member data) |
+| `terms.html` | Terms of Service |
+| `data-deletion.html` | Data deletion request page (required for Facebook OAuth) |
 | `_headers` | Cloudflare Pages security headers |
 | `_redirects` | Redirect rules |
-| `README.md` | This file — reflects deployed state |
-| `NEXT_STEPS.md` | Freeform session log — read this to catch up on what was built each session and what's still pending |
-
-> **Workflow note:** `NEXT_STEPS.md` is the living session log. Read it at the start of any new work session to understand where things stand. Updates are appended per session.
+| `cfp.toml` | CFP security headers + cache rules |
+| `CLAUDE.md` | AI session instructions — read at the start of every work session |
+| `Photos/` | All media assets (photos + videos) |
 
 ---
 
-## Site Structure
+## Site Sections
+
+All navigation is tab-based (no page reloads). Each section has a full-bleed skyline photo background with a blue gradient overlay.
 
 | Tab | Section ID | Description |
 |-----|-----------|-------------|
-| Home | `#home` | Hero (skyline photo + parallax), mission statement, quick-link cards with 3D tilt |
-| Join | `#club` | Membership tiers, application form, `BFF club page header video.mp4` as section background |
-| Volunteer | `#volunteer` | **Fishing Rodeo spotlight (April 25, 2026)** — countdown timer, RSVP form, LDWF license link |
-| Boats | `#boats` | 5 real boats with photos + full written stories, `bff video 2.mp4` as section background |
-| Gallery | `#gallery` | 21 photos with category filters (All / Cookouts / Fishing / Kids Club / Community), lightbox, masonry grid |
-| INNISFREE | `#innisfree` | Land story, build phases, live Leaflet.js satellite map (Esri World Imagery, 3 markers) |
-| Donate | `#donate` | Donation form (Formspree), Mom & Pops businesses, fishing guides, updated impact amounts |
-| About | `#about` | "Who We Are" group photo, team bios + photos, contact info, partner/press cards |
-| Members | `#members` | Private member portal — Google/Facebook sign-in, pending approval flow, satellite map with fishing pins, community feed, admin panel |
-
----
-
-## Media Assets
-
-| File | Used In |
-|------|---------|
-| `BFF+Logo.jpg` | Nav logo, favicon, 404 page, page preloader |
-| `BFF-Logo-1024.jpg` | High-resolution logo (1024px) — for OG tags, social sharing, future use |
-| `skyline.jpg` | Hero background (parallax) |
-| `who we are.jpg` | About section — group photo above team grid |
-| `Kyle Rockefeller, President and Secretary.jpg` | About — team card |
-| `Doug Rockefeller, Big Papa.jpg` | About — team card |
-| `Max Juge, Vice President.jpg` | About — team card |
-| `Ashley Toshimitsu Oiterong, Treasurer.jpg` | About — team card |
-| `Gallery5.jpg` | About — large founder photo |
-| `Uncle Johns Campagna Skiff (boat).jpg` | Boats section |
-| `The Ms Carrol (boat).jpg` | Boats section |
-| `Last Chance (boat).jpg` | Boats section |
-| `The Check Twice (boat).jpg` | Boats section |
-| `Bait By You Hook it or Cook it (boat).jpg` | Boats section |
-| `Uncle Johns Campagna Skiff First Crabbing Trip (boat).jpg` | Boats — Campagna Skiff full story expand |
-| `Gallery1–21.jpg` | Gallery section — all 21 placed with descriptive alt text and category tags |
-| `BFF club page header video.mp4` | Club/Join section — video background (30% opacity) |
-| `bff video 2.mp4` | Boats section — video background (30% opacity) |
+| Home | `#home` | Hero (skyline parallax + video), mission strip, quick-link cards, INNISFREE land story teaser |
+| Join | `#club` | Membership tiers, application form (Formspree), `BFF club page header video.mp4` background |
+| Volunteer | `#volunteer` | 6 opportunity cards; featured event intro with CTA linking to `/fishing-rodeo.html`; general sign-up form |
+| Boats | `#boats` | 5 real boats with photos and expandable stories; Check Twice has video background |
+| INNISFREE | `#innisfree` | Louisiana marshland story, 4-phase build plan, live satellite map with 3 location markers |
+| Gallery | `#gallery` | 39 static photos + 2 inline videos (filter tabs: All/Cookouts/Fishing/Kids Club/Community/Boats); dynamic event tabs from Supabase `gallery_events`; member photo upload per event |
+| Donate | `#donate` | Donation form (Formspree); Mom & Pops businesses; fishing guides; impact tiers |
+| About | `#about` | Founder bio, board photos, contact card, partner/press cards, team grid |
+| Members | `#members` | Private portal — Google/Facebook sign-in, satellite fishing map, community feed, admin panel |
 
 ---
 
 ## Design System
 
+### Fonts
+
 | Font | Use |
 |------|-----|
-| `Playfair Display` | Headings, titles |
+| `Lora` | Base serif — body text, headings default |
+| `Playfair Display` | Section titles, boat names, display |
 | `Caveat` | Handwritten accents, taglines |
-| `Lora` | Body copy, navigation |
+
+> Note: `Inter` is **not** used in this project. `Lora` is the body font.
+
+### Color Tokens
 
 | Variable | Hex | Use |
 |----------|-----|-----|
-| `--green-deep` | `#0d2b3e` | Nav, primary dark (deep water / midnight gulf) |
-| `--green-mid` | `#1a4a6b` | Hover states (open water blue) |
-| `--green-water` | `#2980b9` | Available dates, success (midday bayou) |
-| `--amber` | `#e8923a` | Primary CTA (golden hour sun) |
-| `--gold` | `#f0c040` | Logo accents, impact numbers (horizon glow) |
-| `--cream` | `#eef6fb` | Section backgrounds (sky haze / morning mist) |
-| `--cream-dark` | `#d0e8f5` | Borders, card backgrounds (light water reflection) |
-| `--white` | `#f5fbff` | Page background (open sky) |
-| `--text-dark` | `#0d1f2d` | Primary body text |
-| `--text-mid` | `#2c5364` | Secondary body text |
+| `--green-deep` | `#0d2b3e` | Nav, darkest bg, overlays |
+| `--green-water` | `#1a4a6b` | Mid blue-green |
+| `--amber` | `#e8923a` | Links, accents, CTAs |
+| `--gold` | `#c9a84c` | Section eyebrows, headings on dark |
+| `--cream` | `#eef6fb` | Light section backgrounds |
+| `--white` | `#ffffff` | Base white |
+| `--text-dark` | `#0d1f2d` | Body text (light bg) |
+| `--text-mid` | `#4a6070` | Secondary text (light bg) |
 
-Dark mode swaps these variables via `[data-theme="dark"]` — toggle persists in `localStorage`.
+Dark mode uses `[data-theme="dark"]` on `<html>`. All skyline-background sections use `filter: brightness(0.82)` in dark mode (not a background override). Toggle persists in `localStorage`.
+
+### Section Backgrounds
+
+Each section uses a layered CSS background — a directional blue gradient (`rgba(13,43,62,…)`) over a skyline photo:
+
+| Section | Photo |
+|---------|-------|
+| Home | `skyline.jpg` |
+| Join | `Skyline astetic 1.jpg` |
+| Volunteer | `Skyline astetic 1.jpg` |
+| Boats | `Skyline golden 2.jpg` |
+| INNISFREE | `header image for INNISFREE tab.jpg` |
+| Gallery | `Skyline astetic 1.jpg` |
+| Donate | `Skyline Marsh golden hue.jpg` |
+| About | `Skyline Marsh golden hue.jpg` |
+| Members | `skyline.jpg` |
 
 ---
 
-## What's Built & Live
+## Media Assets
 
-### Core Site
-- Real BFF logo, favicon, and page preloader (BFF-branded loading screen)
-- Hero — real bayou skyline photo with CSS parallax (0.4x scroll speed)
-- Mission statement (full community-focused copy — military, first responders, educators, caregivers)
-- Full dark mode toggle (moon/sun in nav) — respects system preference on first visit
-- Water / sky / golden hour color palette throughout
-- Scroll-to-top button (appears after 300px)
-- Footer year auto-updates
-- Branded 404 page matching site design tokens
+### Photos (key files)
 
-### Navigation & Transitions
-- Tab navigation — instant scroll to top, sections cross-fade on switch
-- Mobile nav closes on outside click or Escape key
+| File | Used In |
+|------|---------|
+| `BFF+Logo.jpg` | Nav logo, favicon, 404 page, preloader |
+| `BFF-Logo-1024.jpg` | OG tags, social sharing |
+| `skyline.jpg` | Hero bg, Home section bg, Members section bg |
+| `Skyline astetic 1.jpg` | Join / Volunteer / Gallery section bg |
+| `Skyline golden 2.jpg` | Boats section bg |
+| `Skyline Marsh golden hue.jpg` | Donate / About section bg |
+| `Skyline golden hue .jpg` | Gallery (photo + lightbox) |
+| `header image for INNISFREE tab.jpg` | INNISFREE section bg (photo of person on dock) |
+| `who we are.jpg` | About section — group photo |
+| `Kyle Rockefeller, President and Secretary.jpg` | About — team card |
+| `Doug Rockefeller, Big Papa.jpg` | About — team card |
+| `Max Juge, Vice President.jpg` | About — team card |
+| `Ashley Toshimitsu Oiterong, Treasurer.jpg` | About — team card |
+| `Uncle Johns Campagna Skiff (boat).jpg` | Boats — card 01 |
+| `The Ms Carrol (boat).jpg` | Boats — card 02 (display text: "Ms. Carol") |
+| `Ms Carol pic 2 (boat).jpg` | Boats — Ms. Carol expanded story, 2nd photo |
+| `Last Chance (boat).jpg` | Boats — card 03 |
+| `The Check Twice (boat).jpg` | Boats — card 04 |
+| `Check twice Kyle (president Posing) (boat).jpg` | Boats — Check Twice expanded story |
+| `Bait By You Hook it or Cook it (boat).jpg` | Boats — card 05 |
+| `Uncle Johns Campagna Skiff First Crabbing Trip (boat).jpg` | Boats — Campagna Skiff expanded story |
+| `Gallery1.jpg – Gallery37.jpg` | Gallery — 37 photos |
 
-### Forms (all connected to Formspree)
-- Member application form (`#club`)
-- Volunteer signup form (`#volunteer`)
-- Fishing Rodeo RSVP form with `localStorage` persistence — counter shows live family count
+### Videos
+
+| File | Used In |
+|------|---------|
+| `BFF club page header video.mp4` | Join/Club section — hero background |
+| `bff video 2.mp4` | Boats section — full-section background |
+| `check twice video (boat).mp4` | Boats — Check Twice card background |
+| `club member casting video (gallery).mp4` | Gallery — inline video thumbnail |
+| `fishing knots class video (gallery).mp4` | Gallery — inline video thumbnail |
+
+> **Note:** `Skyline golden hue .jpg` has a trailing space before the extension — this is intentional. The filename and all `src` references match.
+
+---
+
+## Features
+
+### Navigation
+- Tab-based routing with `showSection()` — instant scroll-to-top, cross-fade transitions
+- `VALID_SECTIONS` array guards against invalid routes
+- Mobile nav closes on outside click or Escape
+- All footer links navigate to correct sections
+
+### Forms (Formspree)
+- Member application (`#club`)
+- Volunteer signup (`#volunteer`)
 - Donation form (`#donate`)
-- Honeypot spam protection (`_gotcha`) on all 4 forms
+- Fishing Rodeo RSVP — `localStorage` persistence, live family counter
+- Honeypot `_gotcha` spam protection on all forms
 
-### Fishing Rodeo Spotlight (`#volunteer`)
-- Live countdown timer to April 25, 2026 at 6:15 AM CDT
-- Location: "Meet at Home Base" with Google Maps link to coordinates
-- Fishing license notice for all attendees
-- RSVP counter (no cap — shows total families registered)
-- Pack Your Tackle interactive checklist
-- Payment handles: `$bayoucharity` (CashApp), `@bayoucharity` (Venmo/PayPal), `kyle.rockefeller@icloud.com` (Apple Cash)
+### Fishing Rodeo Spotlight
+- Live countdown to April 25, 2026 at sunrise
+- Location with Google Maps link
+- RSVP counter (no cap)
+- Pack Your Tackle checklist
+- Payment handles: CashApp `$bayoucharity`, Apple Cash `kyle.rockefeller@icloud.com`
 
-### Boats (`#boats`)
-- 5 real boats with photos and full written stories (expandable per boat)
-- `bff video 2.mp4` plays as subtle background behind all boat content
-- Campagna Skiff crabbing trip photo in expanded story
+### Gallery
+- 39 photo thumbnails + 2 inline video thumbnails
+- Filter buttons: All · Cookouts · Fishing · Kids Club · Community · Boats
+- Lightbox: arrow key nav, Escape to close, dynamic `1/N` counter
+- Video fullscreen: `requestFullscreen()` + iOS `webkitEnterFullscreen()` fallback
+- `filterGallery()` handles both `.gallery-thumb` and `.gallery-video-thumb`
 
-### Gallery (`#gallery`)
-- 21 photos with accurate descriptive alt text
-- Category filter tabs: All, Cookouts, Fishing, Kids Club, Community
-- Masonry-style grid with blur-up lazy loading
-- Lightbox with keyboard navigation (arrow keys + Escape)
+### INNISFREE Map
+- Leaflet.js with Esri World Imagery satellite tiles (no API key)
+- Markers: Home Base (`29.5955, -89.9067`), Duck Lease (`29.5766, -89.9351`), INNISFREE Property (`29.5534, -89.9539`)
 
-### INNISFREE (`#innisfree`)
-- Live Leaflet.js interactive map — **Esri World Imagery satellite tiles** (no API key required)
-  - Home Base: `29.5955, -89.9067`
-  - Duck Lease: `29.5766, -89.9351`
-  - INNISFREE Property: `29.5534, -89.9539`
+### Member Portal
+- **Auth:** Google + Facebook OAuth via Supabase
+- **Approval flow:** pending → Kyle approves in admin panel → member gets access
+- **Satellite map:** Esri tiles; members drop fishing pins with photo upload
+- **Pin form:** photo (≤5MB), species, caption, optional location name
+- **Community feed:** newest pins first; inline comment threads per pin
+- **Admin panel:** approve/reject pending accounts; remove pins; `role = admin` only
+- **Backend:** Supabase — `profiles`, `pins`, `comments`, `gallery_events`, `gallery_submissions` tables with RLS; buckets: `pin-photos`, `gallery-pending`, `gallery-public`
+- **Roles:** `member` | `guide` | `admin`
+- **Security:** `escapeHTML()` applied at all 18 innerHTML concat points — XSS protection in place
+
+### Dark Mode
+- Toggle in nav (moon/sun icon), persists in `localStorage`
+- All skyline sections: `filter: brightness(0.82)` in dark mode
+- Cards/forms have individual dark overrides
+- System preference respected on first visit
+
+### Performance
+- All skyline photos compressed to 1920px max width, 82% quality
+- Images use `loading="lazy"` (off-screen)
+- Google Fonts with `preconnect` + `display=swap`
+- `prefers-reduced-motion` respected throughout
+- Scroll-triggered entrance animations via IntersectionObserver
 
 ### Visual Polish
-- Scroll-triggered entrance animations (fade-up, fade-left, fade-right, scale-in) via Intersection Observer
-- Staggered card animations (100ms offset per card)
+- Scroll-to-top button (appears after 300px)
+- Footer year auto-updates
 - Ripple click effect on all buttons
 - Card 3D tilt on hover (quick-link cards)
-- RSVP panel glassmorphism (`backdrop-filter: blur`)
-- Form submit button states: Sending… / Sent! / Error
-
-### Member Portal (`#members`)
-- **Authentication:** Google + Facebook OAuth via Supabase Auth
-- **Approval flow:** New signups start as `pending` → Kyle approves via admin panel → user gets access
-- **Pending screen:** "Your account is awaiting approval. We'll email you when you're in."
-- **Satellite member map:** Esri World Imagery tiles; members drop fishing pins by uploading a photo (GPS auto-read or manual drag)
-- **Pin post form:** Photo (up to 5MB), species caught, caption, optional location name
-- **Community feed:** Newest pins first; card with photo, member name, date, species, caption; inline comment thread
-- **Admin panel:** Approve/reject pending accounts; remove flagged pins; tab visible only to `role = admin`
-- **Backend:** Supabase — `profiles`, `pins`, `comments` tables with Row-Level Security; `pin-photos` storage bucket
-- **Roles:** `member` | `guide` | `admin` — set in `profiles.role` column
-
-### Legal & Compliance Pages
-- Privacy Policy (`/privacy.html`) — data collection, Supabase storage, Google/Facebook OAuth
-- Terms of Service (`/terms.html`) — membership, user content, events, liability, Louisiana governing law
-- Data Deletion Request (`/data-deletion.html`) — required for Facebook/Google OAuth app approval; 30-day deletion SLA via email
-
-### Donation Page (`#donate`)
-- Updated copy: funds fishing programs for military and community service families + Innisfree offshore hub
-- **Mom & Pops businesses:** Operation Healing Waters / Reel O-Fishal Charters, Sam's Bait by You, Slow Down Park
-- **Fishing guides:** Reel O-Fishal, Down South Fishing Charters, Bayou Paradise Fish Charters, Marsh Assassins BowFishing
-- **Your Impact:** $50 (fuel for trips) / $100 (beginner class + dock day) / $250 (parent + child with guide) / $500 (family of 4 with guide)
-
-### SEO & Performance
-- Meta description, Open Graph tags, JSON-LD structured data
-- Google Fonts `preconnect` + `display=swap`
-- Image `loading="lazy"` on off-screen images
-- `prefers-reduced-motion` respected throughout
-
-### Infrastructure
-- `netlify.toml` — security headers (CSP, X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy)
-- Leaflet.js loaded from unpkg with SRI integrity hash
-- `_headers`, `_redirects` in place for Netlify
+- Form button states: idle → Sending… → Sent! / Error
+- Staggered card entrance animations (100ms offset per card)
 
 ---
 
-## Still Needed
+## Still To Do
 
 | Item | Priority | Notes |
 |------|----------|-------|
-| **Membership pricing tiers** | Medium | CSS grid already written — add HTML cards with real tier names and prices |
-| **Stripe / PayPal** | Medium | Eric handling — nonprofit discount via Stripe |
-| **Point DNS to Cloudflare Pages** | High | Squarespace DNS → point to Cloudflare Pages domain after deploy |
-| **Formspree recipient email** | Medium | Formspree dashboard → Notifications → set to kyle.rockefeller@bayoucharity.org |
-| **Lock Formspree to domain** | Medium | Formspree dashboard → Settings → Allowed Origins → add `bayoucharity.org` |
-| **Member portal — Phase 2** | Future | Trip planning calendar, guide trip postings, historical fishing record / heatmap |
+| **Gallery22–37 alt text + categories** | High | Need visual review — currently placeholder values |
+| **Commit Session 11 fixes** | High | Stale `.git/index.lock` — user must delete it and run provided git commands |
+| **Formspree recipient email** | Medium | Dashboard → Notifications → `kyle.rockefeller@bayoucharity.org` |
+| **Lock Formspree to domain** | Medium | Dashboard → Settings → Allowed Origins → `bayoucharity.org` |
+| **Stripe / PayPal integration** | Medium | Eric handling — nonprofit discount via Stripe |
+| **Inline onclick → event delegation** | Medium | Admin/comment buttons in portal; needed before adding CSP headers |
+| **Gallery Phase 2** | Future | Admin approval UI for `gallery_submissions` in portal |
+| **Member portal Phase 2** | Future | Trip calendar, guide postings, fishing heatmap |
+| **DNS: Squarespace → Cloudflare Pages** | Low | Confirm `bayoucharity.org` is pointed correctly |
+| **IntersectionObserver for videos** | Low | 6 autoplay videos — add pause-when-offscreen if performance degrades |
 | **Upgrade favicon to .ico** | Low | Better cross-browser support |
-| **Social media links** | Low | Add to footer/About when Facebook or Instagram is ready |
-| **Shop section** | Optional | Merch/branded gear — add if desired |
+| **Social media links** | Low | Footer/About when Facebook or Instagram ready |
+
+### ✅ Completed (Sessions 1–11)
+- iOS `background-attachment: fixed` → scroll fallback added
+- XSS / `escapeHTML()` — 18 usages covering all portal innerHTML points
+- Supabase JS pinned to v2.99.0 with SRI hash
+- `showSection()` VALID_SECTIONS guard added
+- Skip-to-main-content link added (WCAG 2.4.1)
 
 ---
 
-## Hosting
+## Hosting & Infrastructure
 
-- **Domain:** `bayoucharity.org` (Squarespace, paid through Jan 2029)
-- **Host:** Cloudflare Pages (free) — connected to Git repo, deploys automatically on push to `main`
-- **DNS:** Point Squarespace → Cloudflare Pages domain after deploy
-- **Owner editing:** Open `bayou-family-fishing.html` in any text editor → make changes → copy to `index.html` → commit and push to `main` (Cloudflare auto-deploys)
-
----
-
-## Contact Info
-
-| Field | Value |
-|-------|-------|
-| Email | kyle.rockefeller@bayoucharity.org |
-| Phone | 504-507-0560 |
-| Org | Bayou Family Fishing & Charity |
+| | |
+|--|--|
+| **Domain** | `bayoucharity.org` (Squarespace, paid through Jan 2029) |
+| **Host** | Cloudflare Pages (free) — auto-deploys on push to `main` |
+| **Security headers** | `_headers` · `cfp.toml` |
+| **Redirects** | `_redirects` |
+| **Legal pages** | `/privacy.html` · `/terms.html` · `/data-deletion.html` |
 
 ---
 
@@ -224,18 +253,11 @@ Dark mode swaps these variables via `[data-theme="dark"]` — toggle persists in
 | Name | Role |
 |------|------|
 | Kyle Rockefeller | President & Secretary |
-| Doug "Big Papa" Rockefeller | Co-founder, Kyle's father |
+| Doug "Big Papa" Rockefeller | Co-founder |
 | Max Juge | Vice President |
 | Ashley Toshimitsu Oiterong | Treasurer |
+| Eric Gray | Site owner (`ericgray928@live.com`) |
 
 ---
 
-## Project Notes
-
-- **Pro charter deferrals** — Captains donate boat slots/time to club members
-- **Innislife** — Purchased Louisiana marshland, community hub in development
-- **Confidence Course** — Boat training program; Louisiana license required to rent boats
-
----
-
-*Last updated: March 11, 2026 — Session 8: water/sky color rebrand, mission statement, Esri satellite maps, volunteer/donation/bio updates, full member portal (Supabase auth + map + feed + admin)*
+*Last updated: March 11, 2026 — Sessions 1–11*
