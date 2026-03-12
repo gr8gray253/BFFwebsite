@@ -1,7 +1,7 @@
 # ─── Bayou Family Fishing & Charity — CFP Configuration ────────────────────────
 
 [build]
-  publish = "."
+  publish = "public"
 
 # ─── Security Headers (applied to every page) ─────────────────────────────────
 [[headers]]
