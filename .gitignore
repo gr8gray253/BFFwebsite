@@ -4,3 +4,10 @@
 # Dev preview files — not for production
 bg-options-preview.html
 donate-preview.html
+
+# Developer docs — local only, not deployed to Cloudflare Pages
+CLAUDE.md
+CODEBASE-REVIEW.md
+README.md
+NEXT_STEPS.md
+docs/

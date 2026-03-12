@@ -1,7 +1,6 @@
 # ─── Bayou Family Fishing & Charity — CFP Configuration ────────────────────────
 
 [build]
-  command = "rm -f CLAUDE.md CODEBASE-REVIEW.md README.md NEXT_STEPS.md && rm -rf docs/"
   publish = "."
 
 # ─── Security Headers (applied to every page) ─────────────────────────────────
