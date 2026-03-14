@@ -4945,7 +4945,11 @@
         .eq('id', user.id)
         .single()
         .then(function (res) {
-          if (res.error || !res.data) { showMembersView('auth'); return; }
+          if (res.error || !res.data) {
+            console.error('[BFF Auth] loadProfile failed:', res.error);
+            showMembersView('auth');
+            return;
+          }
           var profile = res.data;
           if (profile.status === 'approved') {
             showMembersView('main');
@@ -4959,8 +4963,12 @@
     // ── Auth state listener ───────────────────────────────────
     function initMemberAuth() {
       getSB().auth.onAuthStateChange(function (event, session) {
+        console.log('[BFF Auth] event:', event, '| session user:', session ? session.user.email : 'null');
         if (session && session.user) {
           loadProfile(session.user);
+          if (event === 'SIGNED_IN') {
+            showSection('members');
+          }
         } else {
           showMembersView('auth');
         }
