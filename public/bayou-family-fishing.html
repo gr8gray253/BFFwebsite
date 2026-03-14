@@ -4004,7 +4004,8 @@
       showSection(hash, true);
       history.replaceState({ section: hash }, '', '#' + hash);
     } else {
-      history.replaceState({ section: 'home' }, '', window.location.pathname);
+      // Preserve query string — Supabase PKCE callback lands here with ?code=xxx
+      history.replaceState({ section: 'home' }, '', window.location.pathname + window.location.search);
     }
   })();
 
@@ -4963,20 +4964,11 @@
     // ── Auth state listener ───────────────────────────────────
     function initMemberAuth() {
       getSB().auth.onAuthStateChange(function (event, session) {
-        console.log('[BFF Auth] event:', event, '| session user:', session ? session.user.email : 'null');
         if (session && session.user) {
           loadProfile(session.user);
           if (event === 'SIGNED_IN') { showSection('members'); }
         } else {
           showMembersView('auth');
-        }
-      });
-
-      // Belt-and-suspenders: explicitly check for existing session on load
-      getSB().auth.getSession().then(function (res) {
-        console.log('[BFF Auth] getSession result:', res.data && res.data.session ? res.data.session.user.email : 'null', res.error || '');
-        if (res.data && res.data.session && res.data.session.user) {
-          loadProfile(res.data.session.user);
         }
       });
     }
