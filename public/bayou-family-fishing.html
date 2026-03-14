@@ -4969,8 +4969,18 @@
         if (session && session.user) {
           loadProfile(session.user);
           if (event === 'SIGNED_IN') { showSection('members'); }
-        } else {
+        } else if (event === 'SIGNED_OUT') {
+          // Only reset to auth screen on an explicit sign-out —
+          // NOT on INITIAL_SESSION (fires before async PKCE exchange completes)
           showMembersView('auth');
+        }
+      });
+
+      // Belt-and-suspenders: catch any session the SDK resolved before the
+      // onAuthStateChange listener registered
+      getSB().auth.getSession().then(function (res) {
+        if (res.data && res.data.session && res.data.session.user) {
+          loadProfile(res.data.session.user);
         }
       });
     }
