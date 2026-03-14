@@ -3946,7 +3946,9 @@
   var _SUPABASE_KEY = 'sb_publishable_yS9pPiw1F7QuxGcWVAyLXw_oZMI9HCI';
   var _sbShared = null;
   function getSB() {
-    if (!_sbShared) _sbShared = window.supabase.createClient(_SUPABASE_URL, _SUPABASE_KEY);
+    if (!_sbShared) _sbShared = window.supabase.createClient(_SUPABASE_URL, _SUPABASE_KEY, {
+      auth: { flowType: 'pkce', detectSessionInUrl: true, persistSession: true }
+    });
     return _sbShared;
   }
 
@@ -4004,8 +4006,8 @@
       showSection(hash, true);
       history.replaceState({ section: hash }, '', '#' + hash);
     } else {
-      // Preserve query string — Supabase PKCE callback lands here with ?code=xxx
-      history.replaceState({ section: 'home' }, '', window.location.pathname + window.location.search);
+      // Preserve query string (PKCE ?code=xxx) AND hash (implicit #access_token=xxx)
+      history.replaceState({ section: 'home' }, '', window.location.pathname + window.location.search + window.location.hash);
     }
   })();
 
@@ -4967,8 +4969,18 @@
         if (session && session.user) {
           loadProfile(session.user);
           if (event === 'SIGNED_IN') { showSection('members'); }
-        } else {
+        } else if (event === 'SIGNED_OUT') {
+          // Only reset to auth screen on an explicit sign-out —
+          // NOT on INITIAL_SESSION (fires before async PKCE exchange completes)
           showMembersView('auth');
+        }
+      });
+
+      // Belt-and-suspenders: catch any session the SDK resolved before the
+      // onAuthStateChange listener registered
+      getSB().auth.getSession().then(function (res) {
+        if (res.data && res.data.session && res.data.session.user) {
+          loadProfile(res.data.session.user);
         }
       });
     }
