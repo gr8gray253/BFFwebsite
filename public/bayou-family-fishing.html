@@ -3946,7 +3946,9 @@
   var _SUPABASE_KEY = 'sb_publishable_yS9pPiw1F7QuxGcWVAyLXw_oZMI9HCI';
   var _sbShared = null;
   function getSB() {
-    if (!_sbShared) _sbShared = window.supabase.createClient(_SUPABASE_URL, _SUPABASE_KEY);
+    if (!_sbShared) _sbShared = window.supabase.createClient(_SUPABASE_URL, _SUPABASE_KEY, {
+      auth: { flowType: 'pkce', detectSessionInUrl: true, persistSession: true }
+    });
     return _sbShared;
   }
 
