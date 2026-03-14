@@ -4006,8 +4006,8 @@
       showSection(hash, true);
       history.replaceState({ section: hash }, '', '#' + hash);
     } else {
-      // Preserve query string — Supabase PKCE callback lands here with ?code=xxx
-      history.replaceState({ section: 'home' }, '', window.location.pathname + window.location.search);
+      // Preserve query string (PKCE ?code=xxx) AND hash (implicit #access_token=xxx)
+      history.replaceState({ section: 'home' }, '', window.location.pathname + window.location.search + window.location.hash);
     }
   })();
 
