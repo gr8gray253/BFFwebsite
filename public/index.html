@@ -1254,6 +1254,9 @@
   #donate .inkind-note { color: rgba(238,246,251,0.75) !important; }
   #donate .donate-guides > h3 { color: var(--gold) !important; }
   #donate .donate-guides > p { color: rgba(238,246,251,0.85) !important; }
+  /* ── Donate section: payment handles ─────────────────── */
+  .donate-payment-block { margin-top: 1.25rem; text-align: center; }
+  .donate-payment-block p { font-size: 0.82rem; color: rgba(238,246,251,0.6); margin-bottom: 0.65rem; letter-spacing: 0.04em; }
   /* Accessibility text-shadow — boosts contrast at text level, keeps photo visible */
   #club .section-title,
   #innisfree .section-title,
@@ -3539,6 +3542,15 @@
           <p style="font-size:0.88rem;color:rgba(238,246,251,0.90);margin:0 0 0.5rem;">Prefer to donate with zero platform fees?</p>
           <a href="https://www.zeffy.com/en-US/donation-form/bayou-family-fishing" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.85rem;padding:0.5rem 1.25rem;color:var(--gold);border-color:var(--gold);">Donate via Zeffy — 100% goes to BFF</a>
         </div>
+        <div class="donate-payment-block">
+          <p>Or send directly — zero platform fees:</p>
+          <div class="payment-handles">
+            <span class="payment-chip">💚 CashApp <span class="handle">$bayoucharity</span></span>
+            <span class="payment-chip">💜 Venmo <span class="handle">@bayoucharity</span></span>
+            <span class="payment-chip">🔵 PayPal <span class="handle">@bayoucharity</span></span>
+            <span class="payment-chip">🍎 Apple Cash <span class="handle">kyle.rockefeller@icloud.com</span></span>
+          </div>
+        </div>
       </form>
       </div>
 
@@ -3751,6 +3763,50 @@
           Sign in with Apple
         </button>
       </div>
+
+        <button type="button" id="btnToggleEmailForm" style="background:none;border:none;color:rgba(238,246,251,0.45);font-size:0.82rem;cursor:pointer;margin-top:0.5rem;text-decoration:underline;font-family:'Lora',serif;letter-spacing:0.02em;">Or sign in with email</button>
+
+        <!-- EMAIL / PASSWORD FORM -->
+        <div id="emailAuthForm" style="display:none;width:100%;max-width:360px;margin:0.75rem auto 0;">
+          <!-- Sign In / Sign Up tab strip -->
+          <div style="display:flex;border-radius:8px;overflow:hidden;border:1px solid rgba(201,168,76,0.3);margin-bottom:1.1rem;">
+            <button id="emailTabSignIn" type="button" onclick="switchEmailTab('signin')" style="flex:1;padding:0.55rem;background:var(--amber);color:#fff;border:none;font-family:'Lora',serif;font-size:0.82rem;font-weight:600;cursor:pointer;">Sign In</button>
+            <button id="emailTabSignUp" type="button" onclick="switchEmailTab('signup')" style="flex:1;padding:0.55rem;background:transparent;color:rgba(238,246,251,0.55);border:none;font-family:'Lora',serif;font-size:0.82rem;cursor:pointer;">Create Account</button>
+          </div>
+
+          <!-- Sign In fields -->
+          <div id="emailSignInFields">
+            <div class="form-group">
+              <label for="authEmail" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Email</label>
+              <input type="email" id="authEmail" class="form-input" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="authPassword" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Password</label>
+              <input type="password" id="authPassword" class="form-input" placeholder="Password" autocomplete="current-password">
+            </div>
+            <button type="button" class="btn btn-primary" id="btnEmailSignIn" style="width:100%;">Sign In</button>
+          </div>
+
+          <!-- Sign Up fields -->
+          <div id="emailSignUpFields" style="display:none;">
+            <div class="form-group">
+              <label for="authSignUpName" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Display Name</label>
+              <input type="text" id="authSignUpName" class="form-input" placeholder="Your name" autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label for="authSignUpEmail" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Email</label>
+              <input type="email" id="authSignUpEmail" class="form-input" placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="form-group">
+              <label for="authSignUpPassword" style="font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:rgba(238,246,251,0.55);">Password <span style="font-weight:400;opacity:0.6;">(8+ characters)</span></label>
+              <input type="password" id="authSignUpPassword" class="form-input" placeholder="Choose a password" autocomplete="new-password">
+            </div>
+            <button type="button" class="btn btn-primary" id="btnEmailSignUp" style="width:100%;">Create Account</button>
+          </div>
+
+          <p id="emailAuthMsg" style="font-size:0.8rem;color:var(--amber);margin-top:0.6rem;text-align:center;min-height:1.1em;"></p>
+        </div>
+
       <p class="auth-note">New members are reviewed before gaining access. You'll receive an email once approved.</p>
     </div>
 
@@ -4912,6 +4968,25 @@
     }
 
     // ── Sign-in / sign-out button bindings ────────────────────
+    // ── Email tab toggle helper ────────────────────────────
+    function switchEmailTab(tab) {
+      var signInFields = document.getElementById('emailSignInFields');
+      var signUpFields = document.getElementById('emailSignUpFields');
+      var signInTab    = document.getElementById('emailTabSignIn');
+      var signUpTab    = document.getElementById('emailTabSignUp');
+      if (tab === 'signin') {
+        signInFields.style.display = '';
+        signUpFields.style.display = 'none';
+        signInTab.style.background = 'var(--amber)'; signInTab.style.color = '#fff';
+        signUpTab.style.background = 'transparent';  signUpTab.style.color = 'rgba(238,246,251,0.55)';
+      } else {
+        signInFields.style.display = 'none';
+        signUpFields.style.display = '';
+        signUpTab.style.background = 'var(--amber)'; signUpTab.style.color = '#fff';
+        signInTab.style.background = 'transparent';  signInTab.style.color = 'rgba(238,246,251,0.55)';
+      }
+    }
+
     function bindSignInButtons() {
       var gBtn  = document.getElementById('btnGoogleSignIn');
       var fBtn  = document.getElementById('btnFacebookSignIn');
@@ -4938,6 +5013,60 @@
           getSB().auth.signOut().then(function () {
             showMembersView('auth');
             if (_memberMap) { _memberMap.remove(); _memberMap = null; }
+          });
+        });
+      }
+
+      // ── Email / password auth ──────────────────────────────
+      var toggleBtn   = document.getElementById('btnToggleEmailForm');
+      var emailForm   = document.getElementById('emailAuthForm');
+      var emailMsg    = document.getElementById('emailAuthMsg');
+      var emailSignInBtn = document.getElementById('btnEmailSignIn');
+      var emailSignUpBtn = document.getElementById('btnEmailSignUp');
+
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', function () {
+          var hidden = emailForm.style.display === 'none';
+          emailForm.style.display = hidden ? 'block' : 'none';
+          toggleBtn.textContent   = hidden ? 'Hide email sign in ↑' : 'Or sign in with email';
+        });
+      }
+
+      if (emailSignInBtn) {
+        emailSignInBtn.addEventListener('click', function () {
+          var email    = document.getElementById('authEmail').value.trim();
+          var password = document.getElementById('authPassword').value;
+          if (!email || !password) { emailMsg.textContent = 'Please enter your email and password.'; return; }
+          emailSignInBtn.disabled    = true;
+          emailSignInBtn.textContent = 'Signing in…';
+          getSB().auth.signInWithPassword({ email: email, password: password })
+            .then(function (res) {
+              emailSignInBtn.disabled    = false;
+              emailSignInBtn.textContent = 'Sign In';
+              if (res.error) { emailMsg.textContent = res.error.message; }
+              // onAuthStateChange handles the rest
+            });
+        });
+      }
+
+      if (emailSignUpBtn) {
+        emailSignUpBtn.addEventListener('click', function () {
+          var name     = document.getElementById('authSignUpName').value.trim();
+          var email    = document.getElementById('authSignUpEmail').value.trim();
+          var password = document.getElementById('authSignUpPassword').value;
+          if (!name || !email || !password) { emailMsg.textContent = 'All fields are required.'; return; }
+          if (password.length < 8)          { emailMsg.textContent = 'Password must be at least 8 characters.'; return; }
+          emailSignUpBtn.disabled    = true;
+          emailSignUpBtn.textContent = 'Creating account…';
+          getSB().auth.signUp({
+            email: email,
+            password: password,
+            options: { data: { full_name: name } }
+          }).then(function (res) {
+            emailSignUpBtn.disabled    = false;
+            emailSignUpBtn.textContent = 'Create Account';
+            if (res.error) { emailMsg.textContent = res.error.message; return; }
+            emailMsg.textContent = '✅ Account created! Kyle will review and approve you shortly.';
           });
         });
       }
