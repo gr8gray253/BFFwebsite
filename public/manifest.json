@@ -1,0 +1,24 @@
+{
+  "name": "Bayou Charity",
+  "short_name": "Bayou",
+  "description": "Bayou Family Fishing — Members Portal",
+  "start_url": "/?source=pwa",
+  "display": "standalone",
+  "background_color": "#0d2b3e",
+  "theme_color": "#0d2b3e",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "Photos/BFF+Logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "Photos/BFF-Logo-1024.jpg",
+      "sizes": "1024x1024",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

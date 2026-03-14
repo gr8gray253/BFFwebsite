@@ -16,6 +16,13 @@
 <meta name="twitter:image" content="https://bayoucharity.org/Photos/skyline.jpg">
 <link rel="canonical" href="https://bayoucharity.org">
 <link rel="icon" href="Photos/BFF+Logo.jpg" type="image/jpeg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d2b3e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bayou Charity">
+<link rel="apple-touch-icon" href="Photos/BFF+Logo.jpg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <!-- Block flash of wrong theme -->
 <script>
@@ -2780,6 +2787,172 @@
   .member-tab.active { background: var(--green-deep); color: var(--white); }
   .member-user-info { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
   .member-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+  .member-avatar-initials {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--amber);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: 'Lora', serif;
+    border: 2px solid var(--gold);
+    flex-shrink: 0;
+  }
+  /* ── Profile editor drawer ───────────────────────── */
+  .profile-editor-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 43, 62, 0.6);
+    z-index: 1100;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .profile-editor-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .profile-editor-drawer {
+    background: var(--white);
+    width: 100%;
+    max-width: 520px;
+    border-radius: 1.25rem 1.25rem 0 0;
+    padding: 1.5rem 1.5rem 2rem;
+    max-height: 92vh;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+  }
+  .profile-editor-overlay.open .profile-editor-drawer {
+    transform: translateY(0);
+  }
+  @media (min-width: 600px) {
+    .profile-editor-overlay { align-items: center; }
+    .profile-editor-drawer {
+      border-radius: 1rem;
+      max-height: 85vh;
+    }
+  }
+  .pe-handle {
+    width: 40px; height: 4px;
+    background: var(--border, #ccdde8);
+    border-radius: 2px;
+    margin: 0 auto 1.25rem;
+  }
+  @media (min-width: 600px) { .pe-handle { display: none; } }
+  .pe-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--green-deep);
+    margin-bottom: 1.25rem;
+  }
+  .pe-avatar-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border, #ccdde8);
+  }
+  .pe-avatar-btn {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 3px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: opacity 0.15s;
+  }
+  .pe-avatar-btn:hover { opacity: 0.85; }
+  .pe-avatar-btn img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .pe-avatar-edit-badge {
+    position: absolute; bottom: 0; right: 0;
+    width: 22px; height: 22px;
+    background: var(--green-deep);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; color: #fff;
+    border: 2px solid white;
+  }
+  .pe-avatar-hint {
+    font-size: 0.78rem; color: var(--text-mid);
+    font-family: 'Lora', serif; line-height: 1.5;
+  }
+  .pe-avatar-hint strong {
+    display: block; color: var(--text-dark); margin-bottom: 0.15rem;
+  }
+  .pe-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+  }
+  @media (max-width: 480px) { .pe-form-row { grid-template-columns: 1fr; } }
+  .pe-field { margin-bottom: 0.85rem; }
+  .pe-label {
+    display: block;
+    font-size: 0.67rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--text-dark); font-family: 'Lora', serif;
+    margin-bottom: 0.3rem;
+  }
+  .pe-input {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border, #ccdde8);
+    border-radius: 0.5rem;
+    font-size: 0.82rem; font-family: 'Lora', serif;
+    color: var(--text-dark); background: var(--cream);
+    outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+  }
+  .pe-input:focus {
+    border-color: var(--green-water);
+    box-shadow: 0 0 0 3px rgba(26, 74, 107, 0.12);
+  }
+  .pe-textarea { resize: vertical; min-height: 68px; }
+  .pe-hint {
+    font-size: 0.65rem; color: var(--text-mid);
+    font-family: 'Lora', serif; font-style: italic; margin-top: 0.2rem;
+  }
+  .pe-footer {
+    display: flex; gap: 0.75rem; justify-content: flex-end;
+    margin-top: 1.25rem; padding-top: 1rem;
+    border-top: 1px solid var(--border, #ccdde8);
+  }
+  .pe-cancel-btn {
+    background: transparent;
+    border: 1px solid var(--border, #ccdde8);
+    color: var(--text-mid); padding: 0.52rem 1.1rem;
+    border-radius: 0.5rem; font-size: 0.8rem;
+    cursor: pointer; font-family: 'Lora', serif;
+    transition: background 0.15s;
+  }
+  .pe-cancel-btn:hover { background: var(--cream); }
+  .pe-save-btn {
+    background: var(--green-deep); color: #fff;
+    border: none; padding: 0.52rem 1.4rem;
+    border-radius: 0.5rem; font-size: 0.8rem;
+    cursor: pointer; font-family: 'Lora', serif; font-weight: 600;
+    transition: background 0.15s;
+  }
+  .pe-save-btn:hover { background: var(--green-water); }
+  .pe-save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  /* ── End profile editor ───────────────────────────── */
   .btn-sm { padding: 0.3rem 0.8rem !important; font-size: 0.8rem !important; }
   .pin-post-form {
     background: var(--cream);
@@ -2823,6 +2996,84 @@
   [data-theme="dark"] .pin-post-form,
   [data-theme="dark"] .admin-card,
   [data-theme="dark"] .pending-card { background: #152840; border-color: #1e3c58; }
+
+  /* ── Gallery approval ──────────────────────────── */
+  .gallery-approval-section { margin-bottom: 1rem; }
+  .gallery-approval-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0.65rem 0.85rem;
+    background: var(--cream); border-bottom: 1px solid var(--border, #ccdde8);
+    cursor: pointer; user-select: none;
+    border-radius: 0.5rem 0.5rem 0 0;
+  }
+  .gallery-approval-header:hover { background: #e4eff7; }
+  .gallery-approval-label {
+    font-family: 'Playfair Display', serif; font-size: 0.88rem; color: var(--text-dark);
+    display: flex; align-items: center; gap: 0.5rem;
+  }
+  .gallery-pending-count {
+    background: var(--amber); color: #fff;
+    font-size: 0.6rem; padding: 0.1rem 0.5rem; border-radius: 1rem;
+    font-family: 'Lora', serif; font-weight: 700;
+  }
+  .gallery-pending-list { border: 1px solid var(--border, #ccdde8); border-top: none; border-radius: 0 0 0.5rem 0.5rem; background: var(--white); }
+  .gallery-pending-item {
+    display: flex; gap: 0.65rem; align-items: flex-start;
+    padding: 0.65rem 0.85rem; border-bottom: 1px solid var(--border, #ccdde8);
+    cursor: pointer; transition: background 0.12s;
+  }
+  .gallery-pending-item:last-child { border-bottom: none; }
+  .gallery-pending-item:hover { background: #faf7f2; }
+  .gallery-pending-item.expanded { background: #fff8f0; border-left: 3px solid var(--amber); }
+  .gallery-pending-thumb {
+    width: 52px; height: 52px; border-radius: 0.4rem;
+    background: linear-gradient(135deg, var(--green-water), var(--green-deep));
+    flex-shrink: 0; object-fit: cover;
+  }
+  .gallery-pending-info { flex: 1; min-width: 0; }
+  .gallery-pending-member { font-size: 0.78rem; font-weight: 600; font-family: 'Lora', serif; color: var(--text-dark); }
+  .gallery-pending-meta { font-size: 0.68rem; color: var(--text-mid); font-family: 'Lora', serif; margin-bottom: 0.25rem; }
+  .gallery-pending-caption { font-size: 0.7rem; color: var(--text-mid); font-family: 'Lora', serif; font-style: italic; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .gallery-approve-btn {
+    background: #166534; color: #fff; border: none;
+    padding: 0.28rem 0.65rem; border-radius: 0.35rem;
+    font-size: 0.65rem; cursor: pointer; font-family: 'Lora', serif; font-weight: 600;
+    white-space: nowrap; transition: background 0.15s;
+  }
+  .gallery-approve-btn:hover { background: #14532d; }
+  .gallery-reject-btn {
+    background: transparent; color: #9d174d;
+    border: 1px solid #9d174d; padding: 0.28rem 0.65rem;
+    border-radius: 0.35rem; font-size: 0.65rem;
+    cursor: pointer; font-family: 'Lora', serif;
+    white-space: nowrap; transition: all 0.15s;
+  }
+  .gallery-reject-btn:hover { background: #fce7f3; }
+  .gallery-expand-preview {
+    display: none; padding: 0.85rem;
+    background: #fffaf5; border-bottom: 2px solid var(--amber);
+  }
+  .gallery-expand-preview.visible { display: block; }
+  .gallery-expand-img {
+    width: 100%; max-height: 240px; object-fit: cover;
+    border-radius: 0.6rem; margin-bottom: 0.65rem; display: block;
+  }
+  .gallery-expand-field { font-size: 0.75rem; color: var(--text-dark); font-family: 'Lora', serif; margin-bottom: 0.3rem; }
+  .gallery-expand-caption { font-style: italic; color: var(--text-mid); }
+  .gallery-expand-actions { display: flex; gap: 0.6rem; margin-top: 0.75rem; }
+  .gallery-expand-approve {
+    flex: 1; background: var(--green-deep); color: #fff; border: none;
+    padding: 0.5rem; border-radius: 0.5rem; font-size: 0.78rem;
+    cursor: pointer; font-family: 'Lora', serif; font-weight: 600;
+    transition: background 0.15s;
+  }
+  .gallery-expand-approve:hover { background: var(--green-water); }
+  .gallery-expand-reject {
+    flex: 1; background: transparent; color: #9d174d;
+    border: 1px solid #9d174d; padding: 0.5rem; border-radius: 0.5rem;
+    font-size: 0.78rem; cursor: pointer; font-family: 'Lora', serif;
+  }
+  /* ── End Gallery approval ──────────────────────── */
 </style>
 <!-- Supabase JS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.99.0/dist/umd/supabase.js" integrity="sha384-XEXe97+HNh6W7E6opXLb8siV2SnDVO4xnfBIm77tH+Tl6xMs9mY3zBIl5t2QFwf2" crossorigin="anonymous"></script>
@@ -3827,8 +4078,12 @@
         <button class="member-tab" onclick="switchMemberTab('Feed',this)">📸 Feed</button>
         <button class="member-tab" id="adminTabBtn" onclick="switchMemberTab('Admin',this)" style="display:none;">⚙️ Admin</button>
         <div class="member-user-info">
-          <img id="memberAvatar" src="" alt="avatar" class="member-avatar" style="display:none;">
-          <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
+          <button class="pe-open-btn" id="btnOpenProfileEditor" onclick="openProfileEditor()" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
+            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;">
+            <div id="memberAvatarInitials" class="member-avatar-initials" style="display:none;"></div>
+            <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
+            <span style="font-size:0.65rem;color:var(--gold);font-family:'Lora',serif;">&#9999;</span>
+          </button>
           <button class="btn btn-outline btn-sm" id="btnMemberSignOut">Sign Out</button>
         </div>
       </div>
@@ -3874,14 +4129,78 @@
       <div id="memberTabAdmin" class="member-tab-content" style="display:none;">
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1rem;">Pending Accounts</h3>
         <div id="adminPendingList" class="admin-list"><p class="admin-empty">Loading…</p></div>
-        <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Gallery Submissions</h3>
-        <div id="adminGalleryList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+        <!-- Gallery Submissions (admin only) -->
+        <div class="gallery-approval-section" id="galleryApprovalSection" style="margin-top:2rem;">
+          <div class="gallery-approval-header" onclick="toggleGalleryApprovalList()">
+            <span class="gallery-approval-label">
+              📷 Gallery Submissions
+              <span class="gallery-pending-count" id="galleryPendingCount" style="display:none;">0</span>
+            </span>
+            <span id="galleryApprovalToggle" style="font-size:0.75rem;color:var(--text-mid);font-family:'Lora',serif;">▾</span>
+          </div>
+          <div class="gallery-pending-list" id="galleryPendingList">
+            <div id="galleryPendingLoading" style="padding:1rem;text-align:center;font-size:0.8rem;color:var(--text-mid);font-family:'Lora',serif;">Loading…</div>
+          </div>
+        </div>
+        <!-- End Gallery Submissions -->
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Flagged Posts</h3>
         <div id="adminFlaggedList" class="admin-list"><p class="admin-empty">Loading…</p></div>
       </div>
     </div>
 
   </div>
+
+  <!-- Profile Editor Drawer -->
+  <div id="profileEditorOverlay" class="profile-editor-overlay" onclick="closeProfileEditorOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Edit profile" style="display:none;">
+    <div class="profile-editor-drawer">
+      <div class="pe-handle"></div>
+      <div class="pe-title">Edit Your Profile</div>
+
+      <div class="pe-avatar-row">
+        <button class="pe-avatar-btn" id="peAvatarBtn" onclick="document.getElementById('peAvatarFileInput').click()" aria-label="Upload profile photo">
+          <img id="peAvatarPreview" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          <div id="peAvatarInitials" style="font-size:1.4rem;color:#fff;font-weight:700;font-family:'Lora',serif;"></div>
+          <div class="pe-avatar-edit-badge">&#9999;</div>
+        </button>
+        <input type="file" id="peAvatarFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="previewAvatarUpload(event)">
+        <div class="pe-avatar-hint">
+          <strong>Profile Photo</strong>
+          Tap the circle to upload a photo.<br>
+          <span style="color:var(--amber);font-size:0.68rem;">JPG or PNG &middot; max 5 MB</span>
+        </div>
+      </div>
+
+      <div class="pe-form-row">
+        <div class="pe-field">
+          <label class="pe-label" for="peDisplayName">Display Name</label>
+          <input class="pe-input" id="peDisplayName" type="text" maxlength="60" placeholder="Your name">
+        </div>
+        <div class="pe-field">
+          <label class="pe-label" for="peHomeWaters">Home waters / favorite spot</label>
+          <input class="pe-input" id="peHomeWaters" type="text" maxlength="80" placeholder="Breton Sound, Bayou Perot&hellip;">
+        </div>
+      </div>
+
+      <div class="pe-field">
+        <label class="pe-label" for="peBio">Why I joined Bayou Family Fishing</label>
+        <textarea class="pe-input pe-textarea" id="peBio" maxlength="280" placeholder="Born and raised on the bayou&hellip;"></textarea>
+        <div class="pe-hint">Shows on your profile card. Keep it personal &mdash; write it how you&rsquo;d say it out loud.</div>
+      </div>
+
+      <div class="pe-field">
+        <label class="pe-label" for="peSpecies">Species I target</label>
+        <input class="pe-input" id="peSpecies" type="text" maxlength="120" placeholder="Redfish, speckled trout, flounder&hellip;">
+        <div class="pe-hint">Just write it naturally &mdash; no need for tags or checkboxes.</div>
+      </div>
+
+      <div class="pe-footer">
+        <button class="pe-cancel-btn" onclick="closeProfileEditor()">Cancel</button>
+        <button class="pe-save-btn" id="peSaveBtn" onclick="saveProfile()">Save Profile</button>
+      </div>
+    </div>
+  </div>
+  <!-- End Profile Editor Drawer -->
+
 </section>
 
 <!-- FOOTER -->
@@ -3893,16 +4212,16 @@
     <a href="tel:5045070560">504-507-0560</a>
   </div>
   <div class="footer-social">
-    <a href="https://www.facebook.com/profile.php?id=61586546376080" target="_blank" rel="noopener" aria-label="Bayou Charity on Facebook">
+    <a href="https://www.facebook.com/profile.php?id=61586546376080" target="_blank" rel="noopener noreferrer" aria-label="Bayou Charity on Facebook">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
     </a>
-    <a href="https://x.com/CharityBayou" target="_blank" rel="noopener" aria-label="Bayou Charity on X (Twitter)">
+    <a href="https://x.com/CharityBayou" target="_blank" rel="noopener noreferrer" aria-label="Bayou Charity on X (Twitter)">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
     </a>
-    <a href="https://instagram.com/kyle.rockefeller" target="_blank" rel="noopener" aria-label="Bayou Charity on Instagram">
+    <a href="https://instagram.com/kyle.rockefeller" target="_blank" rel="noopener noreferrer" aria-label="Bayou Charity on Instagram">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
     </a>
-    <a href="https://tiktok.com/@bayoucharity" target="_blank" rel="noopener" aria-label="Bayou Charity on TikTok">
+    <a href="https://tiktok.com/@bayoucharity" target="_blank" rel="noopener noreferrer" aria-label="Bayou Charity on TikTok">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.95a8.26 8.26 0 0 0 4.84 1.56V7.07a4.85 4.85 0 0 1-1.07-.38z"/></svg>
     </a>
   </div>
@@ -4060,6 +4379,14 @@
     L.marker([29.5549, -89.9545], { icon: mkBait })
       .addTo(_leafletMap)
       .bindPopup('<strong style="font-family:Georgia,serif;color:#0d2b3e;">Sam\'s Bait By You</strong><br><span style="font-size:0.8rem;color:#2c5364;">Capt. Sam Ronquille &nbsp;·&nbsp; 504-906-5812</span>');
+
+    // Fit to show all markers on load — no panning required
+    _leafletMap.fitBounds(L.latLngBounds([
+      [29.595492887216214, -89.90665602961556],
+      [29.576607472348563, -89.93509250792445],
+      [29.553418886646913, -89.95388981861294],
+      [29.5549, -89.9545]
+    ]), { padding: [40, 40] });
   }
 
   // ─── HOME PAGE COMPACT MAP ───
@@ -4103,6 +4430,14 @@
       .addTo(_homeMap).bindPopup('INNISFREE Property');
     L.marker([29.5549, -89.9545], { icon: mkBaitSmall })
       .addTo(_homeMap).bindPopup("Sam's Bait By You");
+
+    // Fit to show all markers on load
+    _homeMap.fitBounds(L.latLngBounds([
+      [29.595492887216214, -89.90665602961556],
+      [29.576607472348563, -89.93509250792445],
+      [29.553418886646913, -89.95388981861294],
+      [29.5549, -89.9545]
+    ]), { padding: [20, 20] });
   }
 
   // ─── BOAT STORY TOGGLE ───
@@ -5092,9 +5427,25 @@
 
     // ── Load main portal after approval ──────────────────────
     function loadMemberMain(user, profile) {
+      _peCurrentUser = user;
+      _peCurrentProfile = profile;
       var avatar = document.getElementById('memberAvatar');
+      var initials = document.getElementById('memberAvatarInitials');
       var nameEl = document.getElementById('memberName');
-      if (avatar && profile.avatar_url) { avatar.src = profile.avatar_url; avatar.style.display = 'block'; }
+
+      if (avatar && profile.avatar_url) {
+        avatar.src = profile.avatar_url;
+        avatar.style.display = 'block';
+        if (initials) initials.style.display = 'none';
+      } else if (initials) {
+        var name = profile.display_name || user.email || '';
+        var parts = name.trim().split(' ');
+        initials.textContent = parts.length >= 2
+          ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+          : name.slice(0, 2).toUpperCase();
+        initials.style.display = 'flex';
+        if (avatar) avatar.style.display = 'none';
+      }
       if (nameEl) nameEl.textContent = profile.display_name || user.email;
 
       if (profile.role === 'admin') {
@@ -5404,63 +5755,110 @@
       });
     };
 
-    async function loadAdminGallery() {
-      var container = document.getElementById('adminGalleryList');
-      if (!container) return;
+    // ── Gallery Admin Approval ────────────────────────────────────
+    var _galleryApprovalOpen = true;
+
+    window.toggleGalleryApprovalList = function() {
+      _galleryApprovalOpen = !_galleryApprovalOpen;
+      var list = document.getElementById('galleryPendingList');
+      var toggle = document.getElementById('galleryApprovalToggle');
+      if (list) list.style.display = _galleryApprovalOpen ? 'block' : 'none';
+      if (toggle) toggle.textContent = _galleryApprovalOpen ? '▾' : '▸';
+    };
+
+    window.toggleGalleryItemExpand = function(id) {
+      var item = document.getElementById('gpi-' + id);
+      var preview = document.getElementById('gpe-' + id);
+      if (!item || !preview) return;
+      var isOpen = preview.classList.contains('visible');
+      document.querySelectorAll('.gallery-expand-preview.visible').forEach(function(el) { el.classList.remove('visible'); });
+      document.querySelectorAll('.gallery-pending-item.expanded').forEach(function(el) { el.classList.remove('expanded'); });
+      if (!isOpen) {
+        preview.classList.add('visible');
+        item.classList.add('expanded');
+      }
+    };
+
+    async function loadPendingGallerySubmissions() {
+      var list = document.getElementById('galleryPendingList');
+      var countEl = document.getElementById('galleryPendingCount');
+      if (!list) return;
 
       var { data, error } = await getSB()
         .from('gallery_submissions')
-        .select('id, storage_path, caption, status, submitted_at, event_id, member_id, profiles(display_name)')
+        .select('id, storage_path, caption, status, submitted_at, event_id, member_id, profiles(display_name), gallery_events(name)')
         .eq('status', 'pending')
         .order('submitted_at', { ascending: true });
 
-      if (error || !data || data.length === 0) {
-        container.innerHTML = '<p class="admin-empty">No pending gallery submissions.</p>';
+      if (error) {
+        list.innerHTML = '<div style="padding:1rem;font-size:0.78rem;color:#9d174d;font-family:\'Lora\',serif;">Error loading submissions.</div>';
+        return;
+      }
+      var items = data || [];
+      if (countEl) {
+        countEl.textContent = items.length;
+        countEl.style.display = items.length > 0 ? 'inline-block' : 'none';
+      }
+      if (items.length === 0) {
+        list.innerHTML = '<div style="padding:1rem;text-align:center;font-size:0.8rem;color:var(--text-mid);font-family:\'Lora\',serif;">No pending submissions ✓</div>';
         return;
       }
 
-      // Use async for-loop to await signed URLs (getPublicUrl returns 403 on private bucket)
-      var cards = [];
-      for (var i = 0; i < data.length; i++) {
-        var sub = data[i];
-
+      // Use async loop to build signed URLs (gallery-pending is private)
+      var rows = [];
+      for (var i = 0; i < items.length; i++) {
+        var sub = items[i];
         var { data: signedData } = await getSB().storage
           .from('gallery-pending')
-          .createSignedUrl(sub.storage_path, 300); // 300 seconds = 5 min
-        var previewUrl = signedData ? signedData.signedUrl : '';
+          .createSignedUrl(sub.storage_path, 300);
+        var thumbUrl = signedData ? escapeHTML(signedData.signedUrl) : '';
 
-        var submitterName = (sub.profiles && sub.profiles.display_name) ? sub.profiles.display_name : 'Unknown member';
-        var tabLabel = sub.event_id ? 'Event upload' : 'Fish Pics';
+        var memberName = escapeHTML((sub.profiles && sub.profiles.display_name) || 'Member');
+        var eventName  = escapeHTML((sub.gallery_events && sub.gallery_events.name) || (sub.event_id ? 'Event upload' : 'Fish Pics'));
+        var caption    = escapeHTML(sub.caption || '');
+        var date = new Date(sub.submitted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+        var sid = escapeHTML(String(sub.id));
+        var pathJson = JSON.stringify(String(sub.storage_path));
+        var idJson   = JSON.stringify(String(sub.id));
 
-        cards.push(
-          '<div class="admin-card" id="galSub-' + sub.id + '">'
-          + (previewUrl
-              ? '<img src="' + previewUrl + '" alt="Pending submission" style="width:72px;height:72px;object-fit:cover;border-radius:8px;flex-shrink:0;">'
-              : '<div style="width:72px;height:72px;border-radius:8px;background:rgba(13,43,62,0.2);flex-shrink:0;"></div>')
-          + '<div class="admin-card-info">'
-          + '<strong>' + escapeHTML(submitterName) + '</strong><br>'
-          + '<span style="font-size:0.8rem;color:var(--text-mid);">' + tabLabel + ' · ' + escapeHTML(sub.caption || 'No caption') + '</span>'
-          + '</div>'
-          + '<div class="admin-card-actions">'
-          + '<button class="btn-approve" onclick="approveGallerySubmission(' + JSON.stringify(String(sub.id)) + ',' + JSON.stringify(String(sub.storage_path)) + ')">Approve</button>'
-          + '<button class="btn-reject"  onclick="rejectGallerySubmission(' + JSON.stringify(String(sub.id)) + ',' + JSON.stringify(String(sub.storage_path)) + ')">Reject</button>'
-          + '</div>'
-          + '</div>'
+        rows.push(
+          '<div class="gallery-pending-item" id="gpi-' + sid + '" onclick="toggleGalleryItemExpand(' + idJson + ')">' +
+            (thumbUrl ? '<img class="gallery-pending-thumb" src="' + thumbUrl + '" alt="" loading="lazy">' : '<div class="gallery-pending-thumb"></div>') +
+            '<div class="gallery-pending-info">' +
+              '<div class="gallery-pending-member">' + memberName + '</div>' +
+              '<div class="gallery-pending-meta">' + eventName + ' · ' + date + '</div>' +
+              '<div class="gallery-pending-caption">' + (caption ? '"' + caption + '"' : '(no caption)') + '</div>' +
+            '</div>' +
+            '<div style="display:flex;flex-direction:column;gap:0.3rem;flex-shrink:0;" onclick="event.stopPropagation()">' +
+              '<button class="gallery-approve-btn" onclick="approveGallerySubmission(' + idJson + ',' + pathJson + ')">✓ Approve</button>' +
+              '<button class="gallery-reject-btn" onclick="rejectGallerySubmission(' + idJson + ',' + pathJson + ')">✕ Reject</button>' +
+            '</div>' +
+          '</div>' +
+          '<div class="gallery-expand-preview" id="gpe-' + sid + '">' +
+            (thumbUrl ? '<img class="gallery-expand-img" src="' + thumbUrl + '" alt="">' : '') +
+            '<div class="gallery-expand-field"><strong>' + memberName + '</strong> · ' + eventName + '</div>' +
+            '<div class="gallery-expand-field" style="color:var(--text-mid);font-size:0.7rem;">' + date + '</div>' +
+            (caption ? '<div class="gallery-expand-caption">"' + caption + '"</div>' : '') +
+            '<div class="gallery-expand-actions">' +
+              '<button class="gallery-expand-approve" onclick="approveGallerySubmission(' + idJson + ',' + pathJson + ')">✓ Approve &amp; Publish</button>' +
+              '<button class="gallery-expand-reject" onclick="rejectGallerySubmission(' + idJson + ',' + pathJson + ')">✕ Reject</button>' +
+            '</div>' +
+          '</div>'
         );
       }
-      container.innerHTML = cards.join('');
+      list.innerHTML = rows.join('');
     }
 
     window.approveGallerySubmission = async function(subId, storagePath) {
-      var card = document.getElementById('galSub-' + subId);
-      if (card) card.style.opacity = '0.5';
+      if (!confirm('Approve this photo and publish it to the gallery?')) return;
+      var item = document.getElementById('gpi-' + subId);
+      var preview = document.getElementById('gpe-' + subId);
+      if (item) item.style.opacity = '0.5';
 
-      // Move from gallery-pending to gallery-public
+      // Move from gallery-pending to gallery-public (fallback: download + re-upload)
       var { error: moveErr } = await getSB().storage
         .from('gallery-pending')
         .move(storagePath, storagePath, { destinationBucket: 'gallery-public' });
-
-      // Fallback: download + re-upload if cross-bucket move not supported
       if (moveErr) {
         var { data: fileData } = await getSB().storage.from('gallery-pending').download(storagePath);
         if (fileData) {
@@ -5469,11 +5867,10 @@
         }
       }
 
-      // Null guard: session may have expired
       var authResult = await getSB().auth.getUser();
       var user = authResult.data && authResult.data.user;
       if (!user) {
-        if (card) { card.style.opacity = '1'; }
+        if (item) item.style.opacity = '1';
         alert('Session expired. Please sign in again.');
         return;
       }
@@ -5482,21 +5879,23 @@
         .update({ status: 'approved', reviewed_at: new Date().toISOString(), reviewed_by: user.id, storage_path: storagePath })
         .eq('id', subId);
 
-      if (card) card.remove();
+      if (item) item.remove();
+      if (preview) preview.remove();
+      loadPendingGallerySubmissions();
     };
 
     window.rejectGallerySubmission = async function(subId, storagePath) {
       if (!confirm('Reject and delete this submission?')) return;
-      var card = document.getElementById('galSub-' + subId);
-      if (card) card.style.opacity = '0.5';
+      var item = document.getElementById('gpi-' + subId);
+      var preview = document.getElementById('gpe-' + subId);
+      if (item) item.style.opacity = '0.5';
 
       await getSB().storage.from('gallery-pending').remove([storagePath]);
 
-      // Null guard: session may have expired
       var authResult = await getSB().auth.getUser();
       var user = authResult.data && authResult.data.user;
       if (!user) {
-        if (card) { card.style.opacity = '1'; }
+        if (item) item.style.opacity = '1';
         alert('Session expired. Please sign in again.');
         return;
       }
@@ -5505,8 +5904,11 @@
         .update({ status: 'rejected', reviewed_at: new Date().toISOString(), reviewed_by: user.id })
         .eq('id', subId);
 
-      if (card) card.remove();
+      if (item) item.remove();
+      if (preview) preview.remove();
+      loadPendingGallerySubmissions();
     };
+    // ── End Gallery Admin Approval ────────────────────────────────
 
     // ── Tab switcher ──────────────────────────────────────────
     window.switchMemberTab = function (tab, btn) {
@@ -5518,7 +5920,7 @@
       if (btn) btn.classList.add('active');
       if (tab === 'Admin') {
         loadAdminQueues();
-        loadAdminGallery();
+        loadPendingGallerySubmissions();
       }
       if (tab === 'Map' && _memberMap) { setTimeout(function () { _memberMap.invalidateSize(); }, 50); }
     };
@@ -5530,6 +5932,144 @@
     });
 
   })();
+
+// ── Profile Editor ────────────────────────────────────────────
+var _peCurrentUser = null;
+var _peCurrentProfile = null;
+var _peNewAvatarFile = null;
+
+function openProfileEditor() {
+  if (!_peCurrentProfile) return;
+  var p = _peCurrentProfile;
+  var u = _peCurrentUser;
+
+  var nameEl = document.getElementById('peDisplayName');
+  var bioEl = document.getElementById('peBio');
+  var watersEl = document.getElementById('peHomeWaters');
+  var speciesEl = document.getElementById('peSpecies');
+  if (nameEl) nameEl.value = p.display_name || '';
+  if (bioEl) bioEl.value = p.bio || '';
+  if (watersEl) watersEl.value = p.home_waters || '';
+  if (speciesEl) speciesEl.value = p.species || '';
+
+  var preview = document.getElementById('peAvatarPreview');
+  var initials = document.getElementById('peAvatarInitials');
+  if (p.avatar_url && preview) {
+    preview.src = p.avatar_url;
+    preview.style.display = 'block';
+    if (initials) initials.textContent = '';
+  } else if (initials) {
+    var name = p.display_name || (u && u.email) || '';
+    var parts = name.trim().split(' ');
+    initials.textContent = parts.length >= 2
+      ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+      : name.slice(0, 2).toUpperCase();
+    if (preview) preview.style.display = 'none';
+  }
+
+  _peNewAvatarFile = null;
+  var overlay = document.getElementById('profileEditorOverlay');
+  if (overlay) {
+    overlay.style.display = 'flex';
+    requestAnimationFrame(function() { overlay.classList.add('open'); });
+  }
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProfileEditor() {
+  var overlay = document.getElementById('profileEditorOverlay');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  setTimeout(function() { overlay.style.display = 'none'; }, 280);
+  document.body.style.overflow = '';
+}
+
+function closeProfileEditorOnOverlay(e) {
+  if (e.target === document.getElementById('profileEditorOverlay')) {
+    closeProfileEditor();
+  }
+}
+
+function previewAvatarUpload(e) {
+  var file = e.target.files && e.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    alert('Photo must be under 5 MB.');
+    return;
+  }
+  _peNewAvatarFile = file;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var preview = document.getElementById('peAvatarPreview');
+    var initials = document.getElementById('peAvatarInitials');
+    if (preview) { preview.src = ev.target.result; preview.style.display = 'block'; }
+    if (initials) initials.textContent = '';
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProfile() {
+  if (!_peCurrentUser) return;
+  var saveBtn = document.getElementById('peSaveBtn');
+  if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+
+  var updates = {
+    display_name: (document.getElementById('peDisplayName') || {}).value || '',
+    bio:          (document.getElementById('peBio')         || {}).value || '',
+    home_waters:  (document.getElementById('peHomeWaters')  || {}).value || '',
+    species:      (document.getElementById('peSpecies')     || {}).value || ''
+  };
+
+  function doSave(avatarUrl) {
+    if (avatarUrl) updates.avatar_url = avatarUrl;
+    getSB()
+      .from('profiles')
+      .update(updates)
+      .eq('id', _peCurrentUser.id)
+      .then(function(res) {
+        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Profile'; }
+        if (res.error) { alert('Could not save: ' + res.error.message); return; }
+
+        _peCurrentProfile = Object.assign({}, _peCurrentProfile, updates);
+        var nameEl = document.getElementById('memberName');
+        if (nameEl) nameEl.textContent = updates.display_name || _peCurrentUser.email;
+
+        var headerAvatar = document.getElementById('memberAvatar');
+        var headerInitials = document.getElementById('memberAvatarInitials');
+        if (updates.avatar_url) {
+          if (headerAvatar) { headerAvatar.src = updates.avatar_url; headerAvatar.style.display = 'block'; }
+          if (headerInitials) headerInitials.style.display = 'none';
+        }
+        closeProfileEditor();
+      });
+  }
+
+  if (_peNewAvatarFile) {
+    var ext = _peNewAvatarFile.name.split('.').pop();
+    var path = _peCurrentUser.id + '/avatar.' + ext;
+    getSB()
+      .storage.from('avatars')
+      .upload(path, _peNewAvatarFile, { upsert: true, contentType: _peNewAvatarFile.type })
+      .then(function(res) {
+        if (res.error) { alert('Avatar upload failed: ' + res.error.message); if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Profile'; } return; }
+        var publicUrl = getSB().storage.from('avatars').getPublicUrl(path).data.publicUrl;
+        doSave(publicUrl);
+      });
+  } else {
+    doSave(null);
+  }
+}
+// ── End Profile Editor ────────────────────────────────────────
+
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').catch(function(err) {
+        console.warn('[SW] Registration failed:', err);
+      });
+    });
+  }
 </script>
 </body>
 </html>

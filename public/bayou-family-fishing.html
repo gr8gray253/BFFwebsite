@@ -16,6 +16,13 @@
 <meta name="twitter:image" content="https://bayoucharity.org/Photos/skyline.jpg">
 <link rel="canonical" href="https://bayoucharity.org">
 <link rel="icon" href="Photos/BFF+Logo.jpg" type="image/jpeg">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#0d2b3e">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Bayou Charity">
+<link rel="apple-touch-icon" href="Photos/BFF+Logo.jpg">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
 <!-- Block flash of wrong theme -->
 <script>
@@ -4205,16 +4212,16 @@
     <a href="tel:5045070560">504-507-0560</a>
   </div>
   <div class="footer-social">
-    <a href="https://www.facebook.com/profile.php?id=61586546376080" target="_blank" rel="noopener" aria-label="Bayou Charity on Facebook">
+    <a href="https://www.facebook.com/profile.php?id=61586546376080" target="_blank" rel="noopener noreferrer" aria-label="Bayou Charity on Facebook">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
     </a>
-    <a href="https://x.com/CharityBayou" target="_blank" rel="noopener" aria-label="Bayou Charity on X (Twitter)">
+    <a href="https://x.com/CharityBayou" target="_blank" rel="noopener noreferrer" aria-label="Bayou Charity on X (Twitter)">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
     </a>
-    <a href="https://instagram.com/kyle.rockefeller" target="_blank" rel="noopener" aria-label="Bayou Charity on Instagram">
+    <a href="https://instagram.com/kyle.rockefeller" target="_blank" rel="noopener noreferrer" aria-label="Bayou Charity on Instagram">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
     </a>
-    <a href="https://tiktok.com/@bayoucharity" target="_blank" rel="noopener" aria-label="Bayou Charity on TikTok">
+    <a href="https://tiktok.com/@bayoucharity" target="_blank" rel="noopener noreferrer" aria-label="Bayou Charity on TikTok">
       <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.95a8.26 8.26 0 0 0 4.84 1.56V7.07a4.85 4.85 0 0 1-1.07-.38z"/></svg>
     </a>
   </div>
@@ -4372,6 +4379,14 @@
     L.marker([29.5549, -89.9545], { icon: mkBait })
       .addTo(_leafletMap)
       .bindPopup('<strong style="font-family:Georgia,serif;color:#0d2b3e;">Sam\'s Bait By You</strong><br><span style="font-size:0.8rem;color:#2c5364;">Capt. Sam Ronquille &nbsp;·&nbsp; 504-906-5812</span>');
+
+    // Fit to show all markers on load — no panning required
+    _leafletMap.fitBounds(L.latLngBounds([
+      [29.595492887216214, -89.90665602961556],
+      [29.576607472348563, -89.93509250792445],
+      [29.553418886646913, -89.95388981861294],
+      [29.5549, -89.9545]
+    ]), { padding: [40, 40] });
   }
 
   // ─── HOME PAGE COMPACT MAP ───
@@ -4415,6 +4430,14 @@
       .addTo(_homeMap).bindPopup('INNISFREE Property');
     L.marker([29.5549, -89.9545], { icon: mkBaitSmall })
       .addTo(_homeMap).bindPopup("Sam's Bait By You");
+
+    // Fit to show all markers on load
+    _homeMap.fitBounds(L.latLngBounds([
+      [29.595492887216214, -89.90665602961556],
+      [29.576607472348563, -89.93509250792445],
+      [29.553418886646913, -89.95388981861294],
+      [29.5549, -89.9545]
+    ]), { padding: [20, 20] });
   }
 
   // ─── BOAT STORY TOGGLE ───
@@ -6038,6 +6061,15 @@ function saveProfile() {
 }
 // ── End Profile Editor ────────────────────────────────────────
 
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+      navigator.serviceWorker.register('/sw.js').catch(function(err) {
+        console.warn('[SW] Registration failed:', err);
+      });
+    });
+  }
 </script>
 </body>
 </html>
