@@ -1,7 +1,9 @@
-// Bayou Charity Service Worker — v1
-// Caches shell assets for fast load; all Supabase calls go to network.
+// Bayou Charity Service Worker — v2
+// Caches shell assets for fast load; only intercepts same-origin GET requests.
+// Cross-origin CDN resources (Supabase JS, Leaflet, Google Fonts) are never
+// intercepted — the browser fetches them directly, respecting CSP.
 
-var CACHE_NAME = 'bayou-charity-v1';
+var CACHE_NAME = 'bayou-charity-v2';
 var SHELL_ASSETS = [
   '/',
   '/bayou-family-fishing.html',
@@ -28,8 +30,13 @@ self.addEventListener('activate', function(e) {
 });
 
 self.addEventListener('fetch', function(e) {
-  // Never intercept Supabase or external requests
-  if (e.request.url.includes('supabase.co') || e.request.url.includes('formspree.io')) return;
+  // Only handle same-origin GET requests.
+  // Cross-origin requests (CDN fonts, Leaflet, Supabase JS, etc.) must go
+  // directly to the network — intercepting them via fetch() would violate
+  // the page's connect-src CSP and block those resources from loading.
+  if (e.request.method !== 'GET') return;
+  if (!e.request.url.startsWith(self.location.origin)) return;
+
   e.respondWith(
     caches.match(e.request).then(function(cached) {
       return cached || fetch(e.request);
