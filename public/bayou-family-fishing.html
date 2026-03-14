@@ -2820,6 +2820,7 @@
     pointer-events: auto;
   }
   .profile-editor-drawer {
+    position: relative;
     background: var(--white);
     width: 100%;
     max-width: 520px;
@@ -4154,6 +4155,7 @@
   <div id="profileEditorOverlay" class="profile-editor-overlay" onclick="closeProfileEditorOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Edit profile" style="display:none;">
     <div class="profile-editor-drawer">
       <div class="pe-handle"></div>
+      <button onclick="closeProfileEditor()" aria-label="Close" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-mid);line-height:1;">&times;</button>
       <div class="pe-title">Edit Your Profile</div>
 
       <div class="pe-avatar-row">
@@ -4273,6 +4275,7 @@
 
   function showSection(id, noPush) {
     if (!VALID_SECTIONS.includes(id)) { id = 'home'; }
+    document.body.style.overflow = '';
     document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
     document.getElementById(id).classList.add('active');
@@ -5937,6 +5940,7 @@
 var _peCurrentUser = null;
 var _peCurrentProfile = null;
 var _peNewAvatarFile = null;
+var _peEscHandler = null;
 
 function openProfileEditor() {
   if (!_peCurrentProfile) return;
@@ -5974,6 +5978,8 @@ function openProfileEditor() {
     requestAnimationFrame(function() { overlay.classList.add('open'); });
   }
   document.body.style.overflow = 'hidden';
+  _peEscHandler = function(e) { if (e.key === 'Escape') closeProfileEditor(); };
+  document.addEventListener('keydown', _peEscHandler);
 }
 
 function closeProfileEditor() {
@@ -5982,6 +5988,7 @@ function closeProfileEditor() {
   overlay.classList.remove('open');
   setTimeout(function() { overlay.style.display = 'none'; }, 280);
   document.body.style.overflow = '';
+  if (_peEscHandler) { document.removeEventListener('keydown', _peEscHandler); _peEscHandler = null; }
 }
 
 function closeProfileEditorOnOverlay(e) {
