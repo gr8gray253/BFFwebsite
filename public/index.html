@@ -113,7 +113,11 @@
     display: flex;
     gap: 0.2rem;
     list-style: none;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
   }
+  .nav-links::-webkit-scrollbar { display: none; }
   .nav-links a {
     color: var(--cream);
     text-decoration: none;
@@ -344,6 +348,68 @@
     display: block;
     font-size: 0.75em;
   }
+  /* BFF acronym stacked hero */
+  .hero-title--bff {
+    display: flex;
+    flex-direction: column;
+    font-style: normal;
+    line-height: 1.05;
+    gap: 0;
+  }
+  .bff-row {
+    display: flex;
+    align-items: baseline;
+    line-height: 1.1;
+  }
+  .bff-letter {
+    color: var(--gold);
+    font-weight: 700;
+    font-family: 'Playfair Display', serif;
+    font-size: 1em;
+  }
+  .bff-rest {
+    color: #ffffff;
+    font-weight: 400;
+    font-family: 'Playfair Display', serif;
+  }
+  /* Featured event card — home hero */
+  .hero-event-card {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.3rem;
+    background: rgba(13,43,62,0.65);
+    border: 1px solid rgba(201,168,76,0.50);
+    border-left: 4px solid var(--gold);
+    border-radius: 10px;
+    padding: 0.85rem 1.25rem;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(8px);
+    max-width: 420px;
+  }
+  .hero-event-eyebrow {
+    font-size: 0.75rem;
+    font-family: 'Lora', serif;
+    color: var(--gold);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+  .hero-event-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.15rem;
+    color: var(--white);
+    font-weight: 600;
+  }
+  .hero-event-date {
+    font-size: 0.82rem;
+    color: rgba(238,246,251,0.80);
+    font-family: 'Lora', serif;
+  }
+  .hero-event-btn {
+    margin-top: 0.4rem;
+    font-size: 0.85rem;
+    padding: 0.45rem 1rem;
+  }
   .hero-sub {
     font-family: 'Caveat', cursive;
     font-size: 1.5rem;
@@ -477,6 +543,23 @@
   }
   .home-story .section-title { color: var(--white); }
   .home-story .section-lead { color: rgba(247,237,216,0.85); margin: 0 auto 2rem; }
+  .home-story-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    align-items: center;
+    text-align: left;
+  }
+  #homeMap {
+    height: 280px;
+    border-radius: 10px;
+    border: 1px solid rgba(201,168,76,0.30);
+    overflow: hidden;
+  }
+  @media (max-width: 768px) {
+    .home-story-grid { grid-template-columns: 1fr; }
+    #homeMap { height: 220px; }
+  }
 
   /* ══════════════════════════════════════
      CLUB / JOIN SECTION
@@ -1150,14 +1233,18 @@
   #donate .section-title { color: var(--white); }
   #donate .section-lead { color: rgba(238,246,251,0.92); }
   #donate .divider { background: var(--gold); }
-  /* Keep donation cards readable — frosted blue glass (min 0.15 per glassmorphism spec) */
+  /* Keep donation cards readable — dark frosted glass for legibility on marshland bg */
   #donate .impact-card,
   #donate .guide-card,
   #donate .mompop-card {
-    background: rgba(255,255,255,0.15);
-    border-color: rgba(255,255,255,0.20);
-    backdrop-filter: blur(15px);
+    background: rgba(13,43,62,0.82);
+    border-color: rgba(201,168,76,0.35);
+    backdrop-filter: blur(12px);
   }
+  #donate .guide-card h4 { color: var(--cream); }
+  #donate .guide-card p { color: rgba(238,246,251,0.80); }
+  #donate .guide-captain { color: var(--gold); }
+  #donate .guide-card a { color: var(--amber); }
   #donate .donate-layout h3 { color: var(--gold); }
   #donate { min-height: auto; padding-bottom: 3rem; }
   #donate .inkind-donations > h3 { color: var(--gold) !important; }
@@ -1418,6 +1505,19 @@
     border-top: 1px solid rgba(255,255,255,0.1);
     padding-top: 1.5rem;
   }
+  .footer-social {
+    display: flex;
+    gap: 1.1rem;
+    justify-content: center;
+    margin: 0.75rem 0;
+  }
+  .footer-social a {
+    color: rgba(238,246,251,0.65);
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+  }
+  .footer-social a:hover { color: var(--gold); }
   .footer-contact {
     font-size: 0.85rem;
     color: rgba(247,237,216,0.6);
@@ -2489,6 +2589,9 @@
   }
   [data-theme="dark"] body { background: #0a1520; color: #d4e8f5; }
   [data-theme="dark"] nav { background: rgba(8, 18, 28, 0.94); }
+  [data-theme="dark"] .nav-links a { color: var(--cream); }
+  [data-theme="dark"] .nav-links a:hover,
+  [data-theme="dark"] .nav-links a.active { color: var(--gold); }
 
   /* ── DARK MODE: TEXT READABILITY FIXES ──
      Any element that uses color:var(--green-deep) for text becomes
@@ -2757,13 +2860,17 @@
 <!-- ════════════════════════════ HOME ════════════════════════════ -->
 <section id="home" class="active">
   <div class="hero">
-    <div class="hero-badge">🎣 Louisiana's Community Fishing Club</div>
-    <h1 class="hero-title">
-      Bayou Family
-      <em>Fishing</em>
+    <h1 class="hero-title hero-title--bff">
+      <span class="bff-row"><span class="bff-letter">B</span><span class="bff-rest">ayou</span></span>
+      <span class="bff-row"><span class="bff-letter">F</span><span class="bff-rest">amily</span></span>
+      <span class="bff-row"><span class="bff-letter">F</span><span class="bff-rest">ishing</span></span>
     </h1>
-    <p class="hero-sub">— Casting lines, building community —</p>
-    <p class="hero-desc">We are a nonprofit dedicated to bringing families together through fishing, boat safety, and the preservation of Louisiana's bayou culture. From charter rides to marshland builds, we do it together.</p>
+    <div class="hero-event-card" data-scroll="fade-up">
+      <span class="hero-event-eyebrow">🎣 Featured Event</span>
+      <span class="hero-event-name">BFF Spring Fishing Rodeo</span>
+      <span class="hero-event-date">April 25, 2026 &nbsp;·&nbsp; Plaquemines Parish</span>
+      <a href="/fishing-rodeo.html" class="btn btn-gold hero-event-btn">Sign Up &amp; Learn More →</a>
+    </div>
     <div class="hero-buttons">
       <button class="btn btn-gold" onclick="showSection('club')">Join the Club</button>
       <button class="btn btn-outline" style="color:var(--cream);border-color:rgba(247,237,216,0.5);" onclick="showSection('volunteer')">Get Involved</button>
@@ -2772,7 +2879,7 @@
   </div>
 
   <div class="mission-strip">
-    <p class="mission-quote" data-scroll="fade-up">Coastal living is hard work, but the rewards are plenty. Our mission is to share our way of life with those who serve our nation and our communities. We're military families—we've been there, stretched thin, missing birthdays, missing dinner; and we see you. We are here for our military heroes, our cops and fire fighters, our first responders, educators, and caregivers. You're the ones who show up because others can't. We are all in this together—now let get out on the water!</p>
+    <p class="mission-quote" data-scroll="fade-up">Coastal living is hard work, but the rewards are plenty. Our mission is to share our way of life with those who serve our nation and our communities. We're military families—we've been there, stretched thin, missing birthdays, missing dinner; and we see you. We are here for our military heroes, our cops and fire fighters, our first responders, educators, and caregivers. You're the ones who show up because others can't. We are all in this together—now let's get out on the water!</p>
     <p class="mission-attr" data-scroll="fade-up">— Kyle Rockefeller, Founder</p>
   </div>
 
@@ -2812,10 +2919,18 @@
 
   <div class="home-story">
     <div class="container">
-      <p class="section-eyebrow" style="color:var(--gold);">New Chapter</p>
-      <h2 class="section-title">We just bought <em>land</em></h2>
-      <p class="section-lead" style="color:rgba(247,237,216,0.85);">INNISFREE is our newly acquired piece of Louisiana marshland — and we need your hands to help build it into a community hub for fishing, camping, and cultural preservation.</p>
-      <button class="btn btn-gold" onclick="showSection('innisfree')">See INNISFREE →</button>
+      <div class="home-story-grid">
+        <div class="home-story-text">
+          <p class="section-eyebrow" style="color:var(--gold);">New Chapter</p>
+          <h2 class="section-title">We just bought <em>land</em></h2>
+          <p class="section-lead" style="color:rgba(247,237,216,0.85);">INNISFREE is our newly acquired piece of Louisiana marshland — and we need your hands to help build it into a community hub for fishing, camping, and cultural preservation.</p>
+          <button class="btn btn-gold" onclick="showSection('innisfree')">See INNISFREE →</button>
+        </div>
+        <div class="home-story-map">
+          <div id="homeMap"></div>
+          <p style="font-size:0.72rem;color:rgba(238,246,251,0.55);text-align:center;margin-top:0.4rem;">Tiles © Esri</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
@@ -2963,6 +3078,7 @@
       <input type="hidden" name="_subject" value="New Member Application — BFF">
       <!-- Honeypot spam protection — leave empty -->
       <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="_cc" value="kyle.rockefeller@bayoucharity.org">
       <h3>🎣 New Member Application</h3>
       <div class="form-row">
         <div class="form-group">
@@ -3082,6 +3198,7 @@
       <input type="hidden" name="_subject" value="New Volunteer Signup — BFF">
       <!-- Honeypot spam protection — leave empty -->
       <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
+      <input type="hidden" name="_cc" value="kyle.rockefeller@bayoucharity.org">
       <h3>✋ Sign Up to Volunteer</h3>
       <div class="form-row">
         <div class="form-group">
@@ -3125,12 +3242,12 @@
         </select>
       </div>
       <div class="form-group">
-        <label for="volLicense">Do you hold a boating license or captain's certification?</label>
+        <label for="volLicense">Are you a licensed captain or boat owner interested in BFF?</label>
         <select id="volLicense" name="boating_license">
           <option>No</option>
-          <option>Yes — Louisiana boating license</option>
-          <option>Yes — Captain's certification</option>
-          <option>In progress</option>
+          <option>Yes — Licensed captain</option>
+          <option>Yes — Boat owner</option>
+          <option>License in progress</option>
         </select>
       </div>
       <div class="form-group">
@@ -3351,11 +3468,12 @@
     <!-- MAP — Three locations: Home Base, Duck Lease, INNISFREE Property -->
     <div style="margin-top:2.5rem;">
       <p class="section-eyebrow">Find Us</p>
-      <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--green-deep);margin-bottom:0.75rem;">INNISFREE <em>Locations</em></h3>
+      <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--green-deep);margin-bottom:0.75rem;">Bayou Charity <em>Locations</em></h3>
       <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1rem;font-size:0.85rem;color:var(--text-mid);">
         <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#0d2b3e;border:2px solid #c8793a;vertical-align:middle;margin-right:0.4rem;"></span>Home Base</span>
         <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#1a4a6b;border:2px solid #c8793a;vertical-align:middle;margin-right:0.4rem;"></span>Duck Lease</span>
         <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#c8793a;border:2px solid #0d2b3e;vertical-align:middle;margin-right:0.4rem;"></span>INNISFREE Property</span>
+        <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#e8923a;border:2px solid #0d2b3e;vertical-align:middle;margin-right:0.4rem;"></span>Sam's Bait By You</span>
       </div>
       <div id="innisfreeMap"></div>
     </div>
@@ -3377,6 +3495,7 @@
         <input type="hidden" name="donation_amount" id="donateAmount" value="$25">
         <!-- Honeypot spam protection — leave empty -->
         <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
+        <input type="hidden" name="_cc" value="kyle.rockefeller@bayoucharity.org">
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1.5rem;">Make a Donation</h3>
         <div class="donate-amounts">
           <div class="amt-btn" onclick="selectAmt(this)">$10</div>
@@ -3416,6 +3535,10 @@
         </div>
         <button type="submit" class="btn btn-primary" style="width:100%;margin-top:0.5rem;">Donate Now</button>
         <p style="font-size:0.8rem;color:var(--text-mid);margin-top:0.75rem;text-align:center;">Bayou Family Fishing is a registered nonprofit. All donations are tax-deductible.</p>
+        <div style="margin-top:1.25rem;padding:1rem 1.25rem;background:rgba(201,168,76,0.10);border:1px solid rgba(201,168,76,0.3);border-radius:10px;text-align:center;">
+          <p style="font-size:0.88rem;color:rgba(238,246,251,0.90);margin:0 0 0.5rem;">Prefer to donate with zero platform fees?</p>
+          <a href="https://www.zeffy.com/en-US/donation-form/bayou-family-fishing" target="_blank" rel="noopener" class="btn btn-outline" style="font-size:0.85rem;padding:0.5rem 1.25rem;color:var(--gold);border-color:var(--gold);">Donate via Zeffy — 100% goes to BFF</a>
+        </div>
       </form>
       </div>
 
@@ -3447,10 +3570,14 @@
             </div>
           </div>
           <div class="local-biz">
-            <div class="local-biz-icon">⛺</div>
+            <div class="local-biz-icon">🛖</div>
             <div>
               <h4>Slow Down Park: Fishing Camp &amp; RV Park</h4>
-              <p>Airbnb &amp; VRBO</p>
+              <p>
+  <a href="https://www.airbnb.com/rooms/1207497072384874993?unique_share_id=d4ca4ef1-3aad-420e-91e4-b819b5f49ec8&amp;viralityEntryPoint=1&amp;s=76" target="_blank" rel="noopener" style="color:var(--amber);">Book on Airbnb</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.vrbo.com/5132148?dateless=true" target="_blank" rel="noopener" style="color:var(--amber);">Book on VRBO</a>
+</p>
               <p>Kyle Rockefeller &nbsp;·&nbsp; <a href="tel:5045411838" style="color:var(--amber);">504-541-1838</a></p>
             </div>
           </div>
@@ -3477,7 +3604,7 @@
         <!-- ─── END IN-KIND DONATIONS ─── -->
 
         <div class="donate-guides" data-scroll="fade-up">
-          <h3 style="font-family:'Playfair Display',serif;margin:2rem 0 1rem;">Our Guides</h3>
+          <h3 style="font-family:'Playfair Display',serif;margin:2rem 0 1rem;">Licensed Fishing Guides</h3>
           <p style="font-size:0.9rem;line-height:1.7;margin-bottom:1.2rem;">These trusted guides support BFF's mission and offer exceptional Louisiana fishing experiences.</p>
           <div class="guides-grid">
             <div class="guide-card">
@@ -3619,6 +3746,10 @@
           <svg width="18" height="18" viewBox="0 0 24 24" fill="white" style="margin-right:8px;vertical-align:middle;"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
           Sign in with Facebook
         </button>
+        <button class="auth-btn auth-btn--apple btn btn-primary" disabled title="Apple Sign In coming soon" style="background:#000;min-width:240px;opacity:0.5;cursor:not-allowed;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" style="margin-right:0.5rem;" aria-hidden="true"><path d="M12.152 6.896c-.948 0-2.415-1.078-3.96-1.04-2.04.027-3.91 1.183-4.961 3.014-2.117 3.675-.546 9.103 1.519 12.09 1.013 1.454 2.208 3.09 3.792 3.039 1.52-.065 2.09-.987 3.935-.987 1.831 0 2.35.987 3.96.948 1.637-.026 2.676-1.48 3.676-2.948 1.156-1.688 1.636-3.325 1.662-3.415-.039-.013-3.182-1.221-3.22-4.857-.026-3.04 2.48-4.494 2.597-4.559-1.429-2.09-3.623-2.324-4.39-2.376-2-.156-3.675 1.09-4.61 1.09zM15.53 3.83c.843-1.012 1.4-2.427 1.245-3.83-1.207.052-2.662.805-3.532 1.818-.78.896-1.454 2.338-1.273 3.714 1.338.104 2.715-.688 3.559-1.701z"/></svg>
+          Sign in with Apple
+        </button>
       </div>
       <p class="auth-note">New members are reviewed before gaining access. You'll receive an email once approved.</p>
     </div>
@@ -3705,6 +3836,20 @@
     <a href="mailto:kyle.rockefeller@bayoucharity.org">kyle.rockefeller@bayoucharity.org</a> &nbsp;·&nbsp;
     <a href="tel:5045070560">504-507-0560</a>
   </div>
+  <div class="footer-social">
+    <a href="https://www.facebook.com/profile.php?id=61586546376080" target="_blank" rel="noopener" aria-label="Bayou Charity on Facebook">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+    </a>
+    <a href="https://x.com/CharityBayou" target="_blank" rel="noopener" aria-label="Bayou Charity on X (Twitter)">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://instagram.com/kyle.rockefeller" target="_blank" rel="noopener" aria-label="Bayou Charity on Instagram">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+    </a>
+    <a href="https://tiktok.com/@bayoucharity" target="_blank" rel="noopener" aria-label="Bayou Charity on TikTok">
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.95a8.26 8.26 0 0 0 4.84 1.56V7.07a4.85 4.85 0 0 1-1.07-.38z"/></svg>
+    </a>
+  </div>
   <div class="footer-links">
     <a href="#" onclick="showSection('home')">Home</a>
     <a href="#" onclick="showSection('club')">Join</a>
@@ -3717,7 +3862,7 @@
     <a href="#" onclick="showSection('members')">Members</a>
   </div>
   <div class="footer-bottom">
-    © <span id="footerYear">2026</span> Bayou Family Fishing & Charity. A registered nonprofit organization. All rights reserved.<br>
+    © <span id="footerYear">2026</span> Bayou Charity. A registered nonprofit organization. All rights reserved.<br>
     <span style="font-family:'Caveat',cursive;font-size:1rem;opacity:0.6;">Made with ❤️ in Louisiana</span>
   </div>
 </footer>
@@ -3764,6 +3909,10 @@
     if (!noPush) {
       const url = id === 'home' ? window.location.pathname : '#' + id;
       history.pushState({ section: id }, '', url);
+    }
+    // Refresh home map tiles when home section is shown
+    if (id === 'home') {
+      setTimeout(() => { if (_homeMap) _homeMap.invalidateSize(); }, 50);
     }
     // Init or refresh INNISFREE map
     if (id === 'innisfree') {
@@ -3842,6 +3991,59 @@
     L.marker([29.553418886646913, -89.95388981861294], { icon: mkProp })
       .addTo(_leafletMap)
       .bindPopup('<strong style="font-family:Georgia,serif;color:#0d2b3e;">INNISFREE Property</strong><br><span style="font-size:0.8rem;color:#2c5364;">Our marshland community hub — under development</span>');
+
+    const mkBait = L.divIcon({
+      className: '',
+      html: '<div style="width:14px;height:14px;border-radius:50%;background:#e8923a;border:3px solid #0d2b3e;box-shadow:0 2px 6px rgba(0,0,0,0.4);"></div>',
+      iconSize: [14, 14], iconAnchor: [7, 7], popupAnchor: [0, -10]
+    });
+
+    L.marker([29.5549, -89.9545], { icon: mkBait })
+      .addTo(_leafletMap)
+      .bindPopup('<strong style="font-family:Georgia,serif;color:#0d2b3e;">Sam\'s Bait By You</strong><br><span style="font-size:0.8rem;color:#2c5364;">Capt. Sam Ronquille &nbsp;·&nbsp; 504-906-5812</span>');
+  }
+
+  // ─── HOME PAGE COMPACT MAP ───
+  let _homeMap = null;
+  function initHomeMap() {
+    if (!window.L || !document.getElementById('homeMap') || _homeMap) return;
+
+    _homeMap = L.map('homeMap', {
+      zoomControl: false,
+      scrollWheelZoom: false,
+      doubleClickZoom: false,
+      dragging: true
+    }).setView([29.575, -89.930], 11);
+
+    L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      maxZoom: 18,
+      attribution: ''
+    }).addTo(_homeMap);
+
+    const mkSmall = L.divIcon({
+      className: '',
+      html: '<div style="width:10px;height:10px;border-radius:50%;background:#0d2b3e;border:2px solid #c8793a;box-shadow:0 1px 4px rgba(0,0,0,0.4);"></div>',
+      iconSize: [10, 10], iconAnchor: [5, 5], popupAnchor: [0, -8]
+    });
+    const mkBaitSmall = L.divIcon({
+      className: '',
+      html: '<div style="width:10px;height:10px;border-radius:50%;background:#e8923a;border:2px solid #0d2b3e;box-shadow:0 1px 4px rgba(0,0,0,0.4);"></div>',
+      iconSize: [10, 10], iconAnchor: [5, 5], popupAnchor: [0, -8]
+    });
+    const mkPropSmall = L.divIcon({
+      className: '',
+      html: '<div style="width:12px;height:12px;border-radius:50%;background:#c8793a;border:2px solid #0d2b3e;box-shadow:0 1px 6px rgba(0,0,0,0.5);"></div>',
+      iconSize: [12, 12], iconAnchor: [6, 6], popupAnchor: [0, -10]
+    });
+
+    L.marker([29.595492887216214, -89.90665602961556], { icon: mkSmall })
+      .addTo(_homeMap).bindPopup('Home Base');
+    L.marker([29.576607472348563, -89.93509250792445], { icon: mkSmall })
+      .addTo(_homeMap).bindPopup('Duck Lease');
+    L.marker([29.553418886646913, -89.95388981861294], { icon: mkPropSmall })
+      .addTo(_homeMap).bindPopup('INNISFREE Property');
+    L.marker([29.5549, -89.9545], { icon: mkBaitSmall })
+      .addTo(_homeMap).bindPopup("Sam's Bait By You");
   }
 
   // ─── BOAT STORY TOGGLE ───
@@ -4362,15 +4564,31 @@
   // ══════════════════════════════════════
   // PRELOADER
   // ══════════════════════════════════════
-  window.addEventListener('load', function() {
-    const pl = document.getElementById('preloader');
-    if (pl) {
+  (function() {
+    function dismissPreloader() {
+      const pl = document.getElementById('preloader');
+      if (!pl || pl.classList.contains('done')) return;
       setTimeout(function() {
         pl.classList.add('done');
-        setTimeout(function() { pl.remove(); }, 600);
-      }, 400);
+        setTimeout(function() { if (pl.parentNode) pl.remove(); }, 600);
+      }, 300);
     }
-  });
+    // Dismiss as soon as DOM is ready — don't wait for videos
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', dismissPreloader);
+    } else {
+      dismissPreloader();
+    }
+    // Hard fallback — ensure it's gone by 2.5s regardless
+    setTimeout(dismissPreloader, 2500);
+  })();
+
+  // Init home map immediately — home section is visible by default
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHomeMap);
+  } else {
+    initHomeMap();
+  }
 
   // ══════════════════════════════════════
   // SCROLL-TRIGGERED ANIMATIONS
