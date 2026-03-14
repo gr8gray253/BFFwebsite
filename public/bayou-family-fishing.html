@@ -2780,6 +2780,172 @@
   .member-tab.active { background: var(--green-deep); color: var(--white); }
   .member-user-info { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
   .member-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
+  .member-avatar-initials {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--amber);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.65rem;
+    font-weight: 700;
+    font-family: 'Lora', serif;
+    border: 2px solid var(--gold);
+    flex-shrink: 0;
+  }
+  /* ── Profile editor drawer ───────────────────────── */
+  .profile-editor-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(13, 43, 62, 0.6);
+    z-index: 1100;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+  }
+  .profile-editor-overlay.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .profile-editor-drawer {
+    background: var(--white);
+    width: 100%;
+    max-width: 520px;
+    border-radius: 1.25rem 1.25rem 0 0;
+    padding: 1.5rem 1.5rem 2rem;
+    max-height: 92vh;
+    overflow-y: auto;
+    transform: translateY(100%);
+    transition: transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
+  }
+  .profile-editor-overlay.open .profile-editor-drawer {
+    transform: translateY(0);
+  }
+  @media (min-width: 600px) {
+    .profile-editor-overlay { align-items: center; }
+    .profile-editor-drawer {
+      border-radius: 1rem;
+      max-height: 85vh;
+    }
+  }
+  .pe-handle {
+    width: 40px; height: 4px;
+    background: var(--border, #ccdde8);
+    border-radius: 2px;
+    margin: 0 auto 1.25rem;
+  }
+  @media (min-width: 600px) { .pe-handle { display: none; } }
+  .pe-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--green-deep);
+    margin-bottom: 1.25rem;
+  }
+  .pe-avatar-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--border, #ccdde8);
+  }
+  .pe-avatar-btn {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--amber);
+    border: 3px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+    overflow: hidden;
+    transition: opacity 0.15s;
+  }
+  .pe-avatar-btn:hover { opacity: 0.85; }
+  .pe-avatar-btn img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+  }
+  .pe-avatar-edit-badge {
+    position: absolute; bottom: 0; right: 0;
+    width: 22px; height: 22px;
+    background: var(--green-deep);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.65rem; color: #fff;
+    border: 2px solid white;
+  }
+  .pe-avatar-hint {
+    font-size: 0.78rem; color: var(--text-mid);
+    font-family: 'Lora', serif; line-height: 1.5;
+  }
+  .pe-avatar-hint strong {
+    display: block; color: var(--text-dark); margin-bottom: 0.15rem;
+  }
+  .pe-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    margin-bottom: 0.85rem;
+  }
+  @media (max-width: 480px) { .pe-form-row { grid-template-columns: 1fr; } }
+  .pe-field { margin-bottom: 0.85rem; }
+  .pe-label {
+    display: block;
+    font-size: 0.67rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--text-dark); font-family: 'Lora', serif;
+    margin-bottom: 0.3rem;
+  }
+  .pe-input {
+    width: 100%;
+    padding: 0.55rem 0.75rem;
+    border: 1px solid var(--border, #ccdde8);
+    border-radius: 0.5rem;
+    font-size: 0.82rem; font-family: 'Lora', serif;
+    color: var(--text-dark); background: var(--cream);
+    outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+  }
+  .pe-input:focus {
+    border-color: var(--green-water);
+    box-shadow: 0 0 0 3px rgba(26, 74, 107, 0.12);
+  }
+  .pe-textarea { resize: vertical; min-height: 68px; }
+  .pe-hint {
+    font-size: 0.65rem; color: var(--text-mid);
+    font-family: 'Lora', serif; font-style: italic; margin-top: 0.2rem;
+  }
+  .pe-footer {
+    display: flex; gap: 0.75rem; justify-content: flex-end;
+    margin-top: 1.25rem; padding-top: 1rem;
+    border-top: 1px solid var(--border, #ccdde8);
+  }
+  .pe-cancel-btn {
+    background: transparent;
+    border: 1px solid var(--border, #ccdde8);
+    color: var(--text-mid); padding: 0.52rem 1.1rem;
+    border-radius: 0.5rem; font-size: 0.8rem;
+    cursor: pointer; font-family: 'Lora', serif;
+    transition: background 0.15s;
+  }
+  .pe-cancel-btn:hover { background: var(--cream); }
+  .pe-save-btn {
+    background: var(--green-deep); color: #fff;
+    border: none; padding: 0.52rem 1.4rem;
+    border-radius: 0.5rem; font-size: 0.8rem;
+    cursor: pointer; font-family: 'Lora', serif; font-weight: 600;
+    transition: background 0.15s;
+  }
+  .pe-save-btn:hover { background: var(--green-water); }
+  .pe-save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+  /* ── End profile editor ───────────────────────────── */
   .btn-sm { padding: 0.3rem 0.8rem !important; font-size: 0.8rem !important; }
   .pin-post-form {
     background: var(--cream);
@@ -3827,8 +3993,12 @@
         <button class="member-tab" onclick="switchMemberTab('Feed',this)">📸 Feed</button>
         <button class="member-tab" id="adminTabBtn" onclick="switchMemberTab('Admin',this)" style="display:none;">⚙️ Admin</button>
         <div class="member-user-info">
-          <img id="memberAvatar" src="" alt="avatar" class="member-avatar" style="display:none;">
-          <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
+          <button class="pe-open-btn" id="btnOpenProfileEditor" onclick="openProfileEditor()" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
+            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;">
+            <div id="memberAvatarInitials" class="member-avatar-initials" style="display:none;"></div>
+            <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
+            <span style="font-size:0.65rem;color:var(--gold);font-family:'Lora',serif;">&#9999;</span>
+          </button>
           <button class="btn btn-outline btn-sm" id="btnMemberSignOut">Sign Out</button>
         </div>
       </div>
@@ -3882,6 +4052,58 @@
     </div>
 
   </div>
+
+  <!-- Profile Editor Drawer -->
+  <div id="profileEditorOverlay" class="profile-editor-overlay" onclick="closeProfileEditorOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Edit profile" style="display:none;">
+    <div class="profile-editor-drawer">
+      <div class="pe-handle"></div>
+      <div class="pe-title">Edit Your Profile</div>
+
+      <div class="pe-avatar-row">
+        <button class="pe-avatar-btn" id="peAvatarBtn" onclick="document.getElementById('peAvatarFileInput').click()" aria-label="Upload profile photo">
+          <img id="peAvatarPreview" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+          <div id="peAvatarInitials" style="font-size:1.4rem;color:#fff;font-weight:700;font-family:'Lora',serif;"></div>
+          <div class="pe-avatar-edit-badge">&#9999;</div>
+        </button>
+        <input type="file" id="peAvatarFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="previewAvatarUpload(event)">
+        <div class="pe-avatar-hint">
+          <strong>Profile Photo</strong>
+          Tap the circle to upload a photo.<br>
+          <span style="color:var(--amber);font-size:0.68rem;">JPG or PNG &middot; max 5 MB</span>
+        </div>
+      </div>
+
+      <div class="pe-form-row">
+        <div class="pe-field">
+          <label class="pe-label" for="peDisplayName">Display Name</label>
+          <input class="pe-input" id="peDisplayName" type="text" maxlength="60" placeholder="Your name">
+        </div>
+        <div class="pe-field">
+          <label class="pe-label" for="peHomeWaters">Home waters / favorite spot</label>
+          <input class="pe-input" id="peHomeWaters" type="text" maxlength="80" placeholder="Breton Sound, Bayou Perot&hellip;">
+        </div>
+      </div>
+
+      <div class="pe-field">
+        <label class="pe-label" for="peBio">Why I joined Bayou Family Fishing</label>
+        <textarea class="pe-input pe-textarea" id="peBio" maxlength="280" placeholder="Born and raised on the bayou&hellip;"></textarea>
+        <div class="pe-hint">Shows on your profile card. Keep it personal &mdash; write it how you&rsquo;d say it out loud.</div>
+      </div>
+
+      <div class="pe-field">
+        <label class="pe-label" for="peSpecies">Species I target</label>
+        <input class="pe-input" id="peSpecies" type="text" maxlength="120" placeholder="Redfish, speckled trout, flounder&hellip;">
+        <div class="pe-hint">Just write it naturally &mdash; no need for tags or checkboxes.</div>
+      </div>
+
+      <div class="pe-footer">
+        <button class="pe-cancel-btn" onclick="closeProfileEditor()">Cancel</button>
+        <button class="pe-save-btn" id="peSaveBtn" onclick="saveProfile()">Save Profile</button>
+      </div>
+    </div>
+  </div>
+  <!-- End Profile Editor Drawer -->
+
 </section>
 
 <!-- FOOTER -->
@@ -5092,9 +5314,25 @@
 
     // ── Load main portal after approval ──────────────────────
     function loadMemberMain(user, profile) {
+      _peCurrentUser = user;
+      _peCurrentProfile = profile;
       var avatar = document.getElementById('memberAvatar');
+      var initials = document.getElementById('memberAvatarInitials');
       var nameEl = document.getElementById('memberName');
-      if (avatar && profile.avatar_url) { avatar.src = profile.avatar_url; avatar.style.display = 'block'; }
+
+      if (avatar && profile.avatar_url) {
+        avatar.src = profile.avatar_url;
+        avatar.style.display = 'block';
+        if (initials) initials.style.display = 'none';
+      } else if (initials) {
+        var name = profile.display_name || user.email || '';
+        var parts = name.trim().split(' ');
+        initials.textContent = parts.length >= 2
+          ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+          : name.slice(0, 2).toUpperCase();
+        initials.style.display = 'flex';
+        if (avatar) avatar.style.display = 'none';
+      }
       if (nameEl) nameEl.textContent = profile.display_name || user.email;
 
       if (profile.role === 'admin') {
@@ -5530,6 +5768,135 @@
     });
 
   })();
+
+// ── Profile Editor ────────────────────────────────────────────
+var _peCurrentUser = null;
+var _peCurrentProfile = null;
+var _peNewAvatarFile = null;
+
+function openProfileEditor() {
+  if (!_peCurrentProfile) return;
+  var p = _peCurrentProfile;
+  var u = _peCurrentUser;
+
+  var nameEl = document.getElementById('peDisplayName');
+  var bioEl = document.getElementById('peBio');
+  var watersEl = document.getElementById('peHomeWaters');
+  var speciesEl = document.getElementById('peSpecies');
+  if (nameEl) nameEl.value = p.display_name || '';
+  if (bioEl) bioEl.value = p.bio || '';
+  if (watersEl) watersEl.value = p.home_waters || '';
+  if (speciesEl) speciesEl.value = p.species || '';
+
+  var preview = document.getElementById('peAvatarPreview');
+  var initials = document.getElementById('peAvatarInitials');
+  if (p.avatar_url && preview) {
+    preview.src = p.avatar_url;
+    preview.style.display = 'block';
+    if (initials) initials.textContent = '';
+  } else if (initials) {
+    var name = p.display_name || (u && u.email) || '';
+    var parts = name.trim().split(' ');
+    initials.textContent = parts.length >= 2
+      ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
+      : name.slice(0, 2).toUpperCase();
+    if (preview) preview.style.display = 'none';
+  }
+
+  _peNewAvatarFile = null;
+  var overlay = document.getElementById('profileEditorOverlay');
+  if (overlay) {
+    overlay.style.display = 'flex';
+    requestAnimationFrame(function() { overlay.classList.add('open'); });
+  }
+  document.body.style.overflow = 'hidden';
+}
+
+function closeProfileEditor() {
+  var overlay = document.getElementById('profileEditorOverlay');
+  if (!overlay) return;
+  overlay.classList.remove('open');
+  setTimeout(function() { overlay.style.display = 'none'; }, 280);
+  document.body.style.overflow = '';
+}
+
+function closeProfileEditorOnOverlay(e) {
+  if (e.target === document.getElementById('profileEditorOverlay')) {
+    closeProfileEditor();
+  }
+}
+
+function previewAvatarUpload(e) {
+  var file = e.target.files && e.target.files[0];
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) {
+    alert('Photo must be under 5 MB.');
+    return;
+  }
+  _peNewAvatarFile = file;
+  var reader = new FileReader();
+  reader.onload = function(ev) {
+    var preview = document.getElementById('peAvatarPreview');
+    var initials = document.getElementById('peAvatarInitials');
+    if (preview) { preview.src = ev.target.result; preview.style.display = 'block'; }
+    if (initials) initials.textContent = '';
+  };
+  reader.readAsDataURL(file);
+}
+
+function saveProfile() {
+  if (!_peCurrentUser) return;
+  var saveBtn = document.getElementById('peSaveBtn');
+  if (saveBtn) { saveBtn.disabled = true; saveBtn.textContent = 'Saving\u2026'; }
+
+  var updates = {
+    display_name: (document.getElementById('peDisplayName') || {}).value || '',
+    bio:          (document.getElementById('peBio')         || {}).value || '',
+    home_waters:  (document.getElementById('peHomeWaters')  || {}).value || '',
+    species:      (document.getElementById('peSpecies')     || {}).value || ''
+  };
+
+  function doSave(avatarUrl) {
+    if (avatarUrl) updates.avatar_url = avatarUrl;
+    getSB()
+      .from('profiles')
+      .update(updates)
+      .eq('id', _peCurrentUser.id)
+      .then(function(res) {
+        if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Profile'; }
+        if (res.error) { alert('Could not save: ' + res.error.message); return; }
+
+        _peCurrentProfile = Object.assign({}, _peCurrentProfile, updates);
+        var nameEl = document.getElementById('memberName');
+        if (nameEl) nameEl.textContent = updates.display_name || _peCurrentUser.email;
+
+        var headerAvatar = document.getElementById('memberAvatar');
+        var headerInitials = document.getElementById('memberAvatarInitials');
+        if (updates.avatar_url) {
+          if (headerAvatar) { headerAvatar.src = updates.avatar_url; headerAvatar.style.display = 'block'; }
+          if (headerInitials) headerInitials.style.display = 'none';
+        }
+        closeProfileEditor();
+      });
+  }
+
+  if (_peNewAvatarFile) {
+    var ext = _peNewAvatarFile.name.split('.').pop();
+    var path = _peCurrentUser.id + '/avatar.' + ext;
+    getSB()
+      .storage.from('avatars')
+      .upload(path, _peNewAvatarFile, { upsert: true, contentType: _peNewAvatarFile.type })
+      .then(function(res) {
+        if (res.error) { alert('Avatar upload failed: ' + res.error.message); if (saveBtn) { saveBtn.disabled = false; saveBtn.textContent = 'Save Profile'; } return; }
+        var publicUrl = getSB().storage.from('avatars').getPublicUrl(path).data.publicUrl;
+        doSave(publicUrl);
+      });
+  } else {
+    doSave(null);
+  }
+}
+// ── End Profile Editor ────────────────────────────────────────
+
 </script>
 </body>
 </html>
