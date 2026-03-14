@@ -19,3 +19,7 @@
 # ── Cache: HTML pages (always revalidate) ────────────────────────────────────
 /*.html
   Cache-Control: public, max-age=0, must-revalidate
+
+# ── Cache: Service worker (never cache — must always be fresh) ───────────────
+/sw.js
+  Cache-Control: no-store
