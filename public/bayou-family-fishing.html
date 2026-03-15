@@ -5308,7 +5308,14 @@
       }
       if (soBtn) {
         soBtn.addEventListener('click', function () {
-          getSB().auth.signOut().then(function () { closeProfileEditor(); showMembersView('auth'); });
+          getSB().auth.signOut().then(function () {
+            closeProfileEditor();
+            showMembersView('auth');
+            if (_memberMap) { _memberMap.remove(); _memberMap = null; }
+            _peCurrentUser = null; _peCurrentProfile = null; _peNewAvatarFile = null;
+            var adminBtn = document.getElementById('adminTabBtn');
+            if (adminBtn) adminBtn.style.display = 'none';
+          });
         });
       }
       if (soBtn2) {
@@ -5316,6 +5323,9 @@
           getSB().auth.signOut().then(function () {
             closeProfileEditor(); showMembersView('auth');
             if (_memberMap) { _memberMap.remove(); _memberMap = null; }
+            _peCurrentUser = null; _peCurrentProfile = null; _peNewAvatarFile = null;
+            var adminBtn = document.getElementById('adminTabBtn');
+            if (adminBtn) adminBtn.style.display = 'none';
           });
         });
       }
