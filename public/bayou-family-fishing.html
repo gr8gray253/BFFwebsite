@@ -5570,7 +5570,12 @@
         .order('created_at', { ascending: false })
         .limit(50)
         .then(function (res) {
-          if (res.error || !res.data || !res.data.length) {
+          if (res.error) {
+            container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed \u2014 try refreshing.</p>';
+            console.error('[BFF] loadFeed error:', res.error);
+            return;
+          }
+          if (!res.data || !res.data.length) {
             container.innerHTML = '<p class="feed-empty">No catches posted yet \u2014 be the first! \uD83C\uDFA3</p>';
             return;
           }
