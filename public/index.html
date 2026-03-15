@@ -2809,14 +2809,16 @@
     background: rgba(13, 43, 62, 0.6);
     z-index: 1100;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: center;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.25s ease, visibility 0.25s;
   }
   .profile-editor-overlay.open {
     opacity: 1;
+    visibility: visible;
     pointer-events: auto;
   }
   .profile-editor-drawer {
@@ -2824,9 +2826,9 @@
     background: var(--white);
     width: 100%;
     max-width: 520px;
-    border-radius: 1.25rem 1.25rem 0 0;
+    border-radius: 1rem;
     padding: 1.5rem 1.5rem 2rem;
-    max-height: 92vh;
+    max-height: 85vh;
     overflow-y: auto;
     transform: translateY(100%);
     transition: transform 0.28s cubic-bezier(0.34, 1.2, 0.64, 1);
@@ -2834,12 +2836,9 @@
   .profile-editor-overlay.open .profile-editor-drawer {
     transform: translateY(0);
   }
-  @media (min-width: 600px) {
-    .profile-editor-overlay { align-items: center; }
-    .profile-editor-drawer {
-      border-radius: 1rem;
-      max-height: 85vh;
-    }
+  @media (max-width: 599px) {
+    .profile-editor-overlay { align-items: flex-end; }
+    .profile-editor-drawer { border-radius: 1.25rem 1.25rem 0 0; max-height: 92vh; }
   }
   .pe-handle {
     width: 40px; height: 4px;
@@ -4016,7 +4015,7 @@
         </button>
       </div>
 
-        <button type="button" id="btnToggleEmailForm" style="background:none;border:none;color:rgba(238,246,251,0.45);font-size:0.82rem;cursor:pointer;margin-top:0.5rem;text-decoration:underline;font-family:'Lora',serif;letter-spacing:0.02em;">Or sign in with email</button>
+        <button type="button" id="btnToggleEmailForm" style="background:none;border:none;color:var(--gold);font-size:0.9rem;cursor:pointer;margin-top:0.5rem;text-decoration:underline;font-family:'Lora',serif;letter-spacing:0.02em;">Or sign in with email</button>
 
         <!-- EMAIL / PASSWORD FORM -->
         <div id="emailAuthForm" style="display:none;width:100%;max-width:360px;margin:0.75rem auto 0;">
@@ -4150,58 +4149,6 @@
     </div>
 
   </div>
-
-  <!-- Profile Editor Drawer -->
-  <div id="profileEditorOverlay" class="profile-editor-overlay" onclick="closeProfileEditorOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Edit profile" style="display:none;">
-    <div class="profile-editor-drawer">
-      <div class="pe-handle"></div>
-      <button onclick="closeProfileEditor()" aria-label="Close" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-mid);line-height:1;">&times;</button>
-      <div class="pe-title">Edit Your Profile</div>
-
-      <div class="pe-avatar-row">
-        <button class="pe-avatar-btn" id="peAvatarBtn" onclick="document.getElementById('peAvatarFileInput').click()" aria-label="Upload profile photo">
-          <img id="peAvatarPreview" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
-          <div id="peAvatarInitials" style="font-size:1.4rem;color:#fff;font-weight:700;font-family:'Lora',serif;"></div>
-          <div class="pe-avatar-edit-badge">&#9999;</div>
-        </button>
-        <input type="file" id="peAvatarFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="previewAvatarUpload(event)">
-        <div class="pe-avatar-hint">
-          <strong>Profile Photo</strong>
-          Tap the circle to upload a photo.<br>
-          <span style="color:var(--amber);font-size:0.68rem;">JPG or PNG &middot; max 5 MB</span>
-        </div>
-      </div>
-
-      <div class="pe-form-row">
-        <div class="pe-field">
-          <label class="pe-label" for="peDisplayName">Display Name</label>
-          <input class="pe-input" id="peDisplayName" type="text" maxlength="60" placeholder="Your name">
-        </div>
-        <div class="pe-field">
-          <label class="pe-label" for="peHomeWaters">Home waters / favorite spot</label>
-          <input class="pe-input" id="peHomeWaters" type="text" maxlength="80" placeholder="Breton Sound, Bayou Perot&hellip;">
-        </div>
-      </div>
-
-      <div class="pe-field">
-        <label class="pe-label" for="peBio">Why I joined Bayou Family Fishing</label>
-        <textarea class="pe-input pe-textarea" id="peBio" maxlength="280" placeholder="Born and raised on the bayou&hellip;"></textarea>
-        <div class="pe-hint">Shows on your profile card. Keep it personal &mdash; write it how you&rsquo;d say it out loud.</div>
-      </div>
-
-      <div class="pe-field">
-        <label class="pe-label" for="peSpecies">Species I target</label>
-        <input class="pe-input" id="peSpecies" type="text" maxlength="120" placeholder="Redfish, speckled trout, flounder&hellip;">
-        <div class="pe-hint">Just write it naturally &mdash; no need for tags or checkboxes.</div>
-      </div>
-
-      <div class="pe-footer">
-        <button class="pe-cancel-btn" onclick="closeProfileEditor()">Cancel</button>
-        <button class="pe-save-btn" id="peSaveBtn" onclick="saveProfile()">Save Profile</button>
-      </div>
-    </div>
-  </div>
-  <!-- End Profile Editor Drawer -->
 
 </section>
 
@@ -5361,13 +5308,13 @@
       }
       if (soBtn) {
         soBtn.addEventListener('click', function () {
-          getSB().auth.signOut().then(function () { showMembersView('auth'); });
+          getSB().auth.signOut().then(function () { closeProfileEditor(); showMembersView('auth'); });
         });
       }
       if (soBtn2) {
         soBtn2.addEventListener('click', function () {
           getSB().auth.signOut().then(function () {
-            showMembersView('auth');
+            closeProfileEditor(); showMembersView('auth');
             if (_memberMap) { _memberMap.remove(); _memberMap = null; }
           });
         });
@@ -5974,8 +5921,7 @@ function openProfileEditor() {
   _peNewAvatarFile = null;
   var overlay = document.getElementById('profileEditorOverlay');
   if (overlay) {
-    overlay.style.display = 'flex';
-    requestAnimationFrame(function() { overlay.classList.add('open'); });
+    overlay.classList.add('open');
   }
   document.body.style.overflow = 'hidden';
   _peEscHandler = function(e) { if (e.key === 'Escape') closeProfileEditor(); };
@@ -5986,7 +5932,6 @@ function closeProfileEditor() {
   var overlay = document.getElementById('profileEditorOverlay');
   if (!overlay) return;
   overlay.classList.remove('open');
-  setTimeout(function() { overlay.style.display = 'none'; }, 280);
   document.body.style.overflow = '';
   if (_peEscHandler) { document.removeEventListener('keydown', _peEscHandler); _peEscHandler = null; }
 }
@@ -6078,5 +6023,57 @@ function saveProfile() {
     });
   }
 </script>
+
+<!-- Profile Editor Drawer — lives at body level so position:fixed works regardless of which section is visible -->
+<div id="profileEditorOverlay" class="profile-editor-overlay" onclick="closeProfileEditorOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Edit profile">
+  <div class="profile-editor-drawer">
+    <div class="pe-handle"></div>
+    <button onclick="closeProfileEditor()" aria-label="Close" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-mid);line-height:1;">&times;</button>
+    <div class="pe-title">Edit Your Profile</div>
+
+    <div class="pe-avatar-row">
+      <button class="pe-avatar-btn" id="peAvatarBtn" onclick="document.getElementById('peAvatarFileInput').click()" aria-label="Upload profile photo">
+        <img id="peAvatarPreview" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
+        <div id="peAvatarInitials" style="font-size:1.4rem;color:#fff;font-weight:700;font-family:'Lora',serif;"></div>
+        <div class="pe-avatar-edit-badge">&#9999;</div>
+      </button>
+      <input type="file" id="peAvatarFileInput" accept="image/jpeg,image/png,image/webp" style="display:none;" onchange="previewAvatarUpload(event)">
+      <div class="pe-avatar-hint">
+        <strong>Profile Photo</strong>
+        Tap the circle to upload a photo.<br>
+        <span style="color:var(--amber);font-size:0.68rem;">JPG or PNG &middot; max 5 MB</span>
+      </div>
+    </div>
+
+    <div class="pe-form-row">
+      <div class="pe-field">
+        <label class="pe-label" for="peDisplayName">Display Name</label>
+        <input class="pe-input" id="peDisplayName" type="text" maxlength="60" placeholder="Your name">
+      </div>
+      <div class="pe-field">
+        <label class="pe-label" for="peHomeWaters">Home waters / favorite spot</label>
+        <input class="pe-input" id="peHomeWaters" type="text" maxlength="80" placeholder="Breton Sound, Bayou Perot&hellip;">
+      </div>
+    </div>
+
+    <div class="pe-field">
+      <label class="pe-label" for="peBio">Why I joined Bayou Family Fishing</label>
+      <textarea class="pe-input pe-textarea" id="peBio" maxlength="280" placeholder="Born and raised on the bayou&hellip;"></textarea>
+      <div class="pe-hint">Shows on your profile card. Keep it personal &mdash; write it how you&rsquo;d say it out loud.</div>
+    </div>
+
+    <div class="pe-field">
+      <label class="pe-label" for="peSpecies">Species I target</label>
+      <input class="pe-input" id="peSpecies" type="text" maxlength="120" placeholder="Redfish, speckled trout, flounder&hellip;">
+      <div class="pe-hint">Just write it naturally &mdash; no need for tags or checkboxes.</div>
+    </div>
+
+    <div class="pe-footer">
+      <button class="pe-cancel-btn" onclick="closeProfileEditor()">Cancel</button>
+      <button class="pe-save-btn" id="peSaveBtn" onclick="saveProfile()">Save Profile</button>
+    </div>
+  </div>
+</div>
+<!-- End Profile Editor Drawer -->
 </body>
 </html>
