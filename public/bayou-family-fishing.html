@@ -5489,7 +5489,11 @@
         .select('id, lat, lng, caption, species, photo_url')
         .eq('flagged', false)
         .then(function (res) {
-          if (res.error || !res.data) return;
+          if (res.error) {
+            console.error('[BFF] loadMapPins error:', res.error);
+            return;
+          }
+          if (!res.data) return;
           res.data.forEach(function (pin) { addPinMarker(pin); });
         });
     }
