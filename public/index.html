@@ -5308,7 +5308,14 @@
       }
       if (soBtn) {
         soBtn.addEventListener('click', function () {
-          getSB().auth.signOut().then(function () { closeProfileEditor(); showMembersView('auth'); });
+          getSB().auth.signOut().then(function () {
+            closeProfileEditor();
+            showMembersView('auth');
+            if (_memberMap) { _memberMap.remove(); _memberMap = null; }
+            _peCurrentUser = null; _peCurrentProfile = null; _peNewAvatarFile = null;
+            var adminBtn = document.getElementById('adminTabBtn');
+            if (adminBtn) adminBtn.style.display = 'none';
+          });
         });
       }
       if (soBtn2) {
@@ -5316,6 +5323,9 @@
           getSB().auth.signOut().then(function () {
             closeProfileEditor(); showMembersView('auth');
             if (_memberMap) { _memberMap.remove(); _memberMap = null; }
+            _peCurrentUser = null; _peCurrentProfile = null; _peNewAvatarFile = null;
+            var adminBtn = document.getElementById('adminTabBtn');
+            if (adminBtn) adminBtn.style.display = 'none';
           });
         });
       }
@@ -5479,7 +5489,11 @@
         .select('id, lat, lng, caption, species, photo_url')
         .eq('flagged', false)
         .then(function (res) {
-          if (res.error || !res.data) return;
+          if (res.error) {
+            console.error('[BFF] loadMapPins error:', res.error);
+            return;
+          }
+          if (!res.data) return;
           res.data.forEach(function (pin) { addPinMarker(pin); });
         });
     }
@@ -5560,7 +5574,12 @@
         .order('created_at', { ascending: false })
         .limit(50)
         .then(function (res) {
-          if (res.error || !res.data || !res.data.length) {
+          if (res.error) {
+            container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed \u2014 try refreshing.</p>';
+            console.error('[BFF] loadFeed error:', res.error);
+            return;
+          }
+          if (!res.data || !res.data.length) {
             container.innerHTML = '<p class="feed-empty">No catches posted yet \u2014 be the first! \uD83C\uDFA3</p>';
             return;
           }
@@ -5646,7 +5665,12 @@
         getSB()
           .from('profiles').select('id, display_name, joined_at').eq('status', 'pending').order('joined_at', { ascending: true })
           .then(function (res) {
-            if (res.error || !res.data || !res.data.length) { pendingList.innerHTML = '<p class="admin-empty">No pending accounts.</p>'; return; }
+            if (res.error) {
+              pendingList.innerHTML = '<p class="admin-empty">Error loading accounts \u2014 check console.</p>';
+              console.error('[BFF] loadAdminQueues pending error:', res.error);
+              return;
+            }
+            if (!res.data || !res.data.length) { pendingList.innerHTML = '<p class="admin-empty">No pending accounts.</p>'; return; }
             pendingList.innerHTML = '';
             res.data.forEach(function (p) {
               var row = document.createElement('div'); row.className = 'admin-row';
@@ -5667,7 +5691,12 @@
         getSB()
           .from('pins').select('id, caption, species, photo_url, created_at').eq('flagged', true).order('created_at', { ascending: false })
           .then(function (res) {
-            if (res.error || !res.data || !res.data.length) { flaggedList.innerHTML = '<p class="admin-empty">No flagged posts.</p>'; return; }
+            if (res.error) {
+              flaggedList.innerHTML = '<p class="admin-empty">Error loading flagged posts \u2014 check console.</p>';
+              console.error('[BFF] loadAdminQueues flagged error:', res.error);
+              return;
+            }
+            if (!res.data || !res.data.length) { flaggedList.innerHTML = '<p class="admin-empty">No flagged posts.</p>'; return; }
             flaggedList.innerHTML = '';
             res.data.forEach(function (pin) {
               var row = document.createElement('div'); row.className = 'admin-row';
