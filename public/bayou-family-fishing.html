@@ -5665,7 +5665,12 @@
         getSB()
           .from('profiles').select('id, display_name, joined_at').eq('status', 'pending').order('joined_at', { ascending: true })
           .then(function (res) {
-            if (res.error || !res.data || !res.data.length) { pendingList.innerHTML = '<p class="admin-empty">No pending accounts.</p>'; return; }
+            if (res.error) {
+              pendingList.innerHTML = '<p class="admin-empty">Error loading accounts \u2014 check console.</p>';
+              console.error('[BFF] loadAdminQueues pending error:', res.error);
+              return;
+            }
+            if (!res.data || !res.data.length) { pendingList.innerHTML = '<p class="admin-empty">No pending accounts.</p>'; return; }
             pendingList.innerHTML = '';
             res.data.forEach(function (p) {
               var row = document.createElement('div'); row.className = 'admin-row';
@@ -5686,7 +5691,12 @@
         getSB()
           .from('pins').select('id, caption, species, photo_url, created_at').eq('flagged', true).order('created_at', { ascending: false })
           .then(function (res) {
-            if (res.error || !res.data || !res.data.length) { flaggedList.innerHTML = '<p class="admin-empty">No flagged posts.</p>'; return; }
+            if (res.error) {
+              flaggedList.innerHTML = '<p class="admin-empty">Error loading flagged posts \u2014 check console.</p>';
+              console.error('[BFF] loadAdminQueues flagged error:', res.error);
+              return;
+            }
+            if (!res.data || !res.data.length) { flaggedList.innerHTML = '<p class="admin-empty">No flagged posts.</p>'; return; }
             flaggedList.innerHTML = '';
             res.data.forEach(function (pin) {
               var row = document.createElement('div'); row.className = 'admin-row';
