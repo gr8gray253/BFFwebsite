@@ -6495,8 +6495,49 @@
     };
 
     function loadCurrentCommunityTab() {
-      // Populated in wave-2-community
+      var loaders = {
+        Trips: loadTrips, Guides: loadGuides, Gear: loadClassifieds,
+        Forum: loadForum, Leaderboard: loadCommunityLeaderboard, Recipes: loadRecipes
+      };
+      ['Trips','Guides','Gear','Forum','Leaderboard','Recipes'].forEach(function(t) {
+        var p = document.getElementById('commPanel' + t);
+        if (p) p.style.display = t === _currentCommunityTab ? '' : 'none';
+      });
+      var fn = loaders[_currentCommunityTab];
+      if (typeof fn === 'function') fn();
     }
+
+    // ── Community post modal ──────────────────────────────────
+    function openCommModal(type, config) {
+      var modal = document.getElementById('commPostModal');
+      var title = document.getElementById('commPostModalTitle');
+      var body  = document.getElementById('commPostModalBody');
+      if (!modal || !title || !body) return;
+      title.textContent = config.title;
+      body.innerHTML = config.formHtml;
+      modal.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeCommModal() {
+      var modal = document.getElementById('commPostModal');
+      if (modal) modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }
+
+    function showCommToast(msg) {
+      var t = document.createElement('div');
+      t.textContent = msg;
+      t.style.cssText = 'position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);background:var(--green-deep);color:var(--gold);font-family:Lora,serif;font-size:0.82rem;padding:0.6rem 1.2rem;border-radius:2rem;box-shadow:0 4px 16px rgba(0,0,0,0.25);z-index:300;';
+      document.body.appendChild(t);
+      setTimeout(function() { t.remove(); }, 3000);
+    }
+
+    // Close modal on overlay click
+    document.addEventListener('click', function(e) {
+      var modal = document.getElementById('commPostModal');
+      if (modal && e.target === modal) closeCommModal();
+    });
 
     // ── Init ──────────────────────────────────────────────────
     window.addEventListener('DOMContentLoaded', function () {
