@@ -2767,26 +2767,27 @@
   .pending-icon { font-size: 3rem; margin-bottom: 1rem; }
   .members-nav {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 1rem 0;
-    border-bottom: 2px solid var(--cream-dark);
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0;
+    margin-bottom: 1rem;
   }
   /* ── Primary nav (Approach C) ──────────────────── */
   .member-primary-nav {
-    background: var(--green-deep);
+    background: rgba(13,43,62,0.85);
+    backdrop-filter: blur(6px);
     border-top: 1px solid rgba(255,255,255,0.08);
+    border-bottom: 2px solid var(--amber);
     display: flex;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
     overflow-x: auto;
     scrollbar-width: none;
+    width: 100%;
+    box-sizing: border-box;
   }
   .member-primary-nav::-webkit-scrollbar { display: none; }
   .member-primary-tab {
-    padding: 0.62rem 1rem;
-    font-size: 0.8rem;
+    padding: 0.75rem 1.2rem;
+    font-size: 0.9rem;
     color: rgba(200,220,240,0.68);
     cursor: pointer;
     border-bottom: 2px solid transparent;
@@ -2832,7 +2833,7 @@
     background: rgba(0,0,0,0.12);
   }
   .member-secondary-tab:hover:not(.active) { color: var(--cream); background: rgba(255,255,255,0.06); }
-  .member-user-info { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
+  .member-user-info { display: flex; align-items: center; justify-content: flex-end; gap: 0.6rem; font-size: 0.9rem; padding: 0.5rem 1rem; }
   .member-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
   .member-avatar-initials {
     width: 32px;
@@ -3046,9 +3047,9 @@
     background: var(--amber);
     display: flex; align-items: center; justify-content: center;
     font-size: 0.7rem; color: white; font-weight: 700; flex-shrink: 0;
-    overflow: hidden;
+    overflow: hidden; position: relative;
   }
-  .feed-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .feed-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .feed-name { font-size: 0.82rem; font-weight: 600; color: var(--text-dark); font-family: 'Lora', serif; }
   .feed-byline { font-size: 0.75rem; color: var(--text-mid); }
   .feed-title {
@@ -3145,6 +3146,23 @@
   .quick-post-row { display: flex; gap: 0.5rem; align-items: center; }
   .quick-post-row input { flex: 1; font-size: 0.78rem; }
   .quick-post-row .btn { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
+  .form-input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccdde8;
+    border-radius: 6px;
+    font-family: 'Lora', serif;
+    font-size: 0.85rem;
+    color: var(--text-dark);
+    background: var(--white);
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+  }
+  .form-input:focus {
+    outline: none;
+    border-color: var(--amber);
+    box-shadow: 0 0 0 2px rgba(232,146,58,0.15);
+  }
 
   /* Weather widget */
   .weather-display { display: flex; align-items: center; gap: 1rem; }
@@ -3178,6 +3196,7 @@
   [data-theme="dark"] .lb-row { border-color: #1e3c58; }
   [data-theme="dark"] .widget-title { border-color: #1e3c58; }
   [data-theme="dark"] .quick-post-form textarea { background: #0d2b3e; border-color: #1e3c58; color: var(--cream); }
+  [data-theme="dark"] .form-input { background: #0d2b3e; border-color: #1e3c58; color: var(--cream); }
   [data-theme="dark"] .feed-species { background: rgba(26,74,107,0.3); color: var(--gold); }
 
   /* ── Gallery approval ──────────────────────────── */
@@ -4273,7 +4292,7 @@
         </nav>
         <div class="member-user-info">
           <button class="pe-open-btn" id="btnOpenProfileEditor" onclick="openProfileEditor()" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
-            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;">
+            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;" onerror="handleAvatarError(this, 'memberAvatarInitials')">
             <div id="memberAvatarInitials" class="member-avatar-initials" style="display:none;"></div>
             <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
             <span style="font-size:0.65rem;color:var(--gold);font-family:'Lora',serif;">&#9999;</span>
@@ -5628,16 +5647,19 @@
       var initials = document.getElementById('memberAvatarInitials');
       var nameEl = document.getElementById('memberName');
 
+      // Always compute initials so onerror fallback has text ready
+      if (initials) {
+        var _name = profile.display_name || user.email || '';
+        var _parts = _name.trim().split(' ');
+        initials.textContent = _parts.length >= 2
+          ? (_parts[0][0] + _parts[_parts.length - 1][0]).toUpperCase()
+          : _name.slice(0, 2).toUpperCase();
+      }
       if (avatar && profile.avatar_url) {
         avatar.src = profile.avatar_url;
         avatar.style.display = 'block';
         if (initials) initials.style.display = 'none';
       } else if (initials) {
-        var name = profile.display_name || user.email || '';
-        var parts = name.trim().split(' ');
-        initials.textContent = parts.length >= 2
-          ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-          : name.slice(0, 2).toUpperCase();
         initials.style.display = 'flex';
         if (avatar) avatar.style.display = 'none';
       }
@@ -5799,10 +5821,13 @@
 
     // ── Feed ──────────────────────────────────────────────────
     var _feedReactions = {}; // cache: { pinId: { like: count, same_spot: count, userLiked: bool, userSameSpot: bool } }
+    var _feedLoading = false; // debounce guard — prevents triple-render on portal init
 
     function loadFeed() {
+      if (_feedLoading) return;
+      _feedLoading = true;
       var container = document.getElementById('feedList');
-      if (!container) return;
+      if (!container) { _feedLoading = false; return; }
       container.innerHTML = '<p class="feed-empty">Loading…</p>';
       getSB()
         .from('pins')
@@ -5814,18 +5839,34 @@
           if (res.error) {
             container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed — try refreshing.</p>';
             console.error('[BFF] loadFeed error:', res.error);
+            _feedLoading = false;
             return;
           }
           if (!res.data || !res.data.length) {
             container.innerHTML = '<p class="feed-empty">No catches posted yet — be the first! 🎣</p>';
+            _feedLoading = false;
             return;
           }
           // Load reaction counts for all pins
           var pinIds = res.data.map(function (p) { return p.id; });
-          loadReactionCounts(pinIds).then(function () {
-            container.innerHTML = '';
-            res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
-          });
+          loadReactionCounts(pinIds)
+            .then(function () {
+              container.innerHTML = '';
+              res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+              _feedLoading = false;
+            })
+            .catch(function (err) {
+              console.warn('[BFF] Reaction counts failed, rendering feed without reactions:', err);
+              _feedReactions = {};
+              container.innerHTML = '';
+              res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+              _feedLoading = false;
+            });
+        })
+        .catch(function (err) {
+          container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed — try refreshing.</p>';
+          console.error('[BFF] loadFeed error:', err);
+          _feedLoading = false;
         });
       // Also load sidebar
       loadFeedLeaderboard();
@@ -5855,6 +5896,15 @@
         });
     }
 
+    function handleAvatarError(img, initialsId) {
+      img.onerror = null;
+      img.style.display = 'none';
+      if (initialsId) {
+        var el = document.getElementById(initialsId);
+        if (el) el.style.display = 'flex';
+      }
+    }
+
     function buildFeedCard(pin) {
       var card = document.createElement('div');
       card.className = 'feed-card';
@@ -5868,7 +5918,8 @@
       card.innerHTML =
         '<div class="feed-card-header">' +
           '<div class="feed-avatar">' +
-            (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" alt="">' : escapeHTML(initials)) +
+            escapeHTML(initials) +
+            (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" alt="" onerror="handleAvatarError(this)">' : '') +
           '</div>' +
           '<div>' +
             '<div class="feed-name">' + escapeHTML(displayName) + '</div>' +
@@ -6251,7 +6302,7 @@
 
       var { data, error } = await getSB()
         .from('gallery_submissions')
-        .select('id, storage_path, caption, status, submitted_at, event_id, member_id, profiles(display_name), gallery_events(name)')
+        .select('id, storage_path, caption, status, submitted_at, event_id, member_id(display_name), gallery_events(name)')
         .eq('status', 'pending')
         .order('submitted_at', { ascending: true });
 
@@ -6278,7 +6329,7 @@
           .createSignedUrl(sub.storage_path, 300);
         var thumbUrl = signedData ? escapeHTML(signedData.signedUrl) : '';
 
-        var memberName = escapeHTML((sub.profiles && sub.profiles.display_name) || 'Member');
+        var memberName = escapeHTML((sub.member_id && sub.member_id.display_name) || 'Member');
         var eventName  = escapeHTML((sub.gallery_events && sub.gallery_events.name) || (sub.event_id ? 'Event upload' : 'Fish Pics'));
         var caption    = escapeHTML(sub.caption || '');
         var date = new Date(sub.submitted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
