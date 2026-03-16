@@ -5831,13 +5831,25 @@
           }
           // Load reaction counts for all pins
           var pinIds = res.data.map(function (p) { return p.id; });
-          loadReactionCounts(pinIds).then(function () {
-            container.innerHTML = '';
-            res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
-            _feedLoading = false;
-          }).catch(function () { _feedLoading = false; });
+          loadReactionCounts(pinIds)
+            .then(function () {
+              container.innerHTML = '';
+              res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+              _feedLoading = false;
+            })
+            .catch(function (err) {
+              console.warn('[BFF] Reaction counts failed, rendering feed without reactions:', err);
+              _feedReactions = {};
+              container.innerHTML = '';
+              res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+              _feedLoading = false;
+            });
         })
-        .catch(function () { _feedLoading = false; });
+        .catch(function (err) {
+          container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed — try refreshing.</p>';
+          console.error('[BFF] loadFeed error:', err);
+          _feedLoading = false;
+        });
       // Also load sidebar
       loadFeedLeaderboard();
       loadWeather();
