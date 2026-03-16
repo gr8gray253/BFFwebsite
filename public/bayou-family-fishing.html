@@ -5736,10 +5736,12 @@
     }
 
     // ── Feed ──────────────────────────────────────────────────
+    var _feedReactions = {}; // cache: { pinId: { like: count, same_spot: count, userLiked: bool, userSameSpot: bool } }
+
     function loadFeed() {
       var container = document.getElementById('feedList');
       if (!container) return;
-      container.innerHTML = '<p class="feed-empty">Loading\u2026</p>';
+      container.innerHTML = '<p class="feed-empty">Loading…</p>';
       getSB()
         .from('pins')
         .select('id, lat, lng, caption, species, location_name, photo_url, created_at, user_id, profiles(display_name, avatar_url)')
@@ -5748,46 +5750,85 @@
         .limit(50)
         .then(function (res) {
           if (res.error) {
-            container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed \u2014 try refreshing.</p>';
+            container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed — try refreshing.</p>';
             console.error('[BFF] loadFeed error:', res.error);
             return;
           }
           if (!res.data || !res.data.length) {
-            container.innerHTML = '<p class="feed-empty">No catches posted yet \u2014 be the first! \uD83C\uDFA3</p>';
+            container.innerHTML = '<p class="feed-empty">No catches posted yet — be the first! 🎣</p>';
             return;
           }
-          container.innerHTML = '';
-          res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+          // Load reaction counts for all pins
+          var pinIds = res.data.map(function (p) { return p.id; });
+          loadReactionCounts(pinIds).then(function () {
+            container.innerHTML = '';
+            res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+          });
+        });
+      // Also load sidebar
+      loadLeaderboard();
+      loadWeather();
+    }
+
+    function loadReactionCounts(pinIds) {
+      return getSB()
+        .from('reactions')
+        .select('pin_id, type, user_id')
+        .in('pin_id', pinIds)
+        .then(function (res) {
+          _feedReactions = {};
+          if (res.error || !res.data) return;
+          var uid = _currentUser ? _currentUser.id : null;
+          res.data.forEach(function (r) {
+            if (!_feedReactions[r.pin_id]) _feedReactions[r.pin_id] = { like: 0, same_spot: 0, userLiked: false, userSameSpot: false };
+            var bucket = _feedReactions[r.pin_id];
+            bucket[r.type]++;
+            if (r.user_id === uid) {
+              if (r.type === 'like') bucket.userLiked = true;
+              if (r.type === 'same_spot') bucket.userSameSpot = true;
+            }
+          });
         });
     }
 
     function buildFeedCard(pin) {
       var card = document.createElement('div');
       card.className = 'feed-card';
+      card.setAttribute('data-pin-id', pin.id);
       var avatarUrl   = (pin.profiles && pin.profiles.avatar_url)   ? pin.profiles.avatar_url   : '';
       var displayName = (pin.profiles && pin.profiles.display_name) ? pin.profiles.display_name : 'Member';
+      var initials    = displayName.split(' ').map(function (w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
       var date = new Date(pin.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      var rx = _feedReactions[pin.id] || { like: 0, same_spot: 0, userLiked: false, userSameSpot: false };
+
       card.innerHTML =
         '<div class="feed-card-header">' +
-          (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" class="feed-avatar">' :
-            '<div class="feed-avatar" style="background:var(--green-mid);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;">\uD83C\uDFA3</div>') +
+          '<div class="feed-avatar">' +
+            (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" alt="">' : escapeHTML(initials)) +
+          '</div>' +
           '<div>' +
-            '<div style="font-weight:600;font-family:\'Lora\',serif;">' + escapeHTML(displayName) + '</div>' +
-            '<div style="font-size:0.8rem;color:var(--text-mid);">' + date + (pin.location_name ? ' \u00B7 ' + escapeHTML(pin.location_name) : '') + '</div>' +
+            '<div class="feed-name">' + escapeHTML(displayName) + '</div>' +
+            '<div class="feed-byline">' + date + (pin.location_name ? ' · ' + escapeHTML(pin.location_name) : '') + '</div>' +
           '</div>' +
         '</div>' +
-        (pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" class="feed-photo">' : '') +
-        '<div class="feed-card-body">' +
+        (pin.caption ? '<div class="feed-title">' + escapeHTML(pin.caption) + '</div>' : '') +
+        (pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" class="feed-photo" alt="Catch photo">' : '') +
+        '<div class="feed-body">' +
           (pin.species ? '<span class="feed-species">' + escapeHTML(pin.species) + '</span>' : '') +
-          (pin.caption ? '<p class="feed-caption">' + escapeHTML(pin.caption) + '</p>' : '') +
         '</div>' +
-        '<div class="feed-card-comments">' +
+        '<div class="feed-actions">' +
+          '<button class="feed-action' + (rx.userLiked ? ' active' : '') + '" data-type="like" data-pin="' + escapeHTML(pin.id) + '">👍 <span class="rx-count">' + (rx.like || '') + '</span></button>' +
+          '<button class="feed-action" data-toggle-comments="' + escapeHTML(pin.id) + '">💬 <span class="cmt-count" id="cmtCount-' + escapeHTML(pin.id) + '"></span></button>' +
+          '<button class="feed-action feed-action-spacer' + (rx.userSameSpot ? ' active' : '') + '" data-type="same_spot" data-pin="' + escapeHTML(pin.id) + '" style="margin-left:auto;color:var(--amber);">🎣 Same spot!</button>' +
+        '</div>' +
+        '<div class="feed-card-comments" id="commentsSection-' + escapeHTML(pin.id) + '">' +
           '<div class="comment-list" id="comments-' + escapeHTML(pin.id) + '"></div>' +
           '<div class="comment-input-row">' +
-            '<input type="text" class="form-input comment-input" placeholder="Add a comment\u2026" id="commentInput-' + escapeHTML(pin.id) + '">' +
+            '<input type="text" class="form-input comment-input" placeholder="Add a comment…" id="commentInput-' + escapeHTML(pin.id) + '">' +
             '<button class="btn btn-primary btn-sm" onclick="window._bffPostComment(' + JSON.stringify(String(pin.id)) + ')">Post</button>' +
           '</div>' +
         '</div>';
+
       loadComments(pin.id, card.querySelector('.comment-list'));
       return card;
     }
