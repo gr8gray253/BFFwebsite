@@ -531,6 +531,58 @@
   }
   .quick-card p { font-size: 0.85rem; color: rgba(247,237,216,0.75); line-height: 1.6; }
 
+  /* Vision band — between quick-links and INNISFREE teaser */
+  .home-vision {
+    background: var(--green-deep);
+    padding: 4rem 2rem;
+  }
+  .home-vision .container { max-width: 800px; }
+  .home-vision .section-eyebrow { display: block; text-align: center; margin-bottom: 0.5rem; }
+  .home-vision p {
+    font-size: 0.97rem;
+    line-height: 1.85;
+    color: rgba(238,246,251,0.82);
+    margin-bottom: 1.1rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .home-vision-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 768px) { .home-vision { padding: 2.5rem 1.25rem; } }
+
+  /* Fleet manifesto block — bottom of Boats section */
+  .fleet-manifesto {
+    background: var(--green-deep);
+    border-radius: 14px;
+    padding: 3rem 2.5rem;
+    margin-top: 3rem;
+    color: var(--white);
+  }
+  .fleet-manifesto h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+  .fleet-manifesto p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: rgba(238,246,251,0.85);
+    margin-bottom: 1.1rem;
+  }
+  .fleet-manifesto .fleet-cta { margin-top: 2rem; }
+  @media (max-width: 768px) {
+    .fleet-manifesto { padding: 2rem 1.25rem; }
+    .fleet-manifesto h3 { font-size: 1.4rem; }
+  }
+
   /* News/Story teaser */
   .home-story {
     background: linear-gradient(135deg, var(--green-deep), var(--green-water));
@@ -571,31 +623,6 @@
   /* ══════════════════════════════════════
      CLUB / JOIN SECTION
   ══════════════════════════════════════ */
-  #club {
-    background:
-      linear-gradient(180deg,
-        rgba(13,43,62,0.62) 0%,
-        rgba(26,74,107,0.42) 55%,
-        rgba(13,43,62,0.56) 100%),
-      url('Photos/Skyline%20astetic%201.jpg') center/cover no-repeat fixed;
-    position: relative;
-    overflow: hidden;
-  }
-  /* Text visibility — site blue palette, not near-black */
-  #club .section-eyebrow { color: var(--gold); }
-  #club .section-title { color: var(--white); }
-  #club .section-lead { color: rgba(238,246,251,0.92); }
-  #club .divider { background: var(--gold); }
-  /* Forms stay readable — frosted blue glass */
-  #club .signup-form {
-    background: rgba(13,43,62,0.55);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 12px;
-  }
-  #club .signup-form h3 { color: var(--gold); }
-  #club .signup-form label { color: rgba(238,246,251,0.90); }
-  #club > *:not(.section-video):not(.section-video-overlay) { position: relative; z-index: 1; }
   .membership-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -673,18 +700,6 @@
   }
   .paywall-note strong { color: var(--green-deep); }
 
-  .signup-form {
-    background: var(--cream);
-    border-radius: 12px;
-    padding: 2.5rem;
-    margin-top: 2rem;
-  }
-  .signup-form h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: var(--green-deep);
-    margin-bottom: 1.5rem;
-  }
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -806,6 +821,23 @@
     color: var(--green-deep);
     margin-bottom: 1.5rem;
   }
+  .zeffy-volunteer-placeholder {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    border: 2px dashed rgba(13,43,62,0.15);
+  }
+  .zeffy-volunteer-placeholder p {
+    color: var(--text-mid);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  [data-theme="dark"] .zeffy-volunteer-placeholder {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(201,168,76,0.2);
+  }
+  [data-theme="dark"] .zeffy-volunteer-placeholder p { color: rgba(238,246,251,0.65); }
   .checkbox-group {
     display: flex;
     flex-direction: column;
@@ -1265,12 +1297,10 @@
   .donate-payment-block { margin-top: 1.25rem; text-align: center; }
   .donate-payment-block p { font-size: 0.82rem; color: rgba(238,246,251,0.6); margin-bottom: 0.65rem; letter-spacing: 0.04em; }
   /* Accessibility text-shadow — boosts contrast at text level, keeps photo visible */
-  #club .section-title,
   #innisfree .section-title,
   #donate .section-title {
     text-shadow: 0 1px 8px rgba(6,14,26,0.55);
   }
-  #club .section-lead,
   #innisfree .section-lead,
   #donate .section-lead {
     text-shadow: 0 1px 4px rgba(6,14,26,0.45);
@@ -2025,7 +2055,7 @@
      SECTION VIDEO BACKGROUNDS
   ══════════════════════════════════════ */
   .hero { position: relative; }
-  .hero-video, .section-video {
+  .hero-video {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
@@ -2034,7 +2064,6 @@
     pointer-events: none;
   }
   .hero-video { opacity: 0.3; }
-  .section-video { opacity: 0.3; }
   .hero > *:not(.hero-video) { position: relative; z-index: 1; }
 
   /* ── CHECK TWICE CARD VIDEO BACKGROUND ── */
@@ -2094,21 +2123,9 @@
   .strip-content .section-lead { color: rgba(247,237,216,0.85); }
   .strip-content .section-eyebrow { color: var(--gold); }
 
-  /* ── CLUB SECTION VIDEO OVERLAY ── */
-  #club { position: relative; }
-  .section-video-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(247,237,216,0.55);
-    z-index: 0;
-    pointer-events: none;
-  }
-
   /* ── VIDEO: MOBILE HIDE ── */
   @media (max-width: 768px) {
-    .strip-video,
-    .section-video,
-    .section-video-overlay { display: none; }
+    .strip-video { display: none; }
     .video-hero-strip {
       background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-water) 100%);
     }
@@ -2379,7 +2396,7 @@
     }
     .fade-in { animation: none !important; }
     .map-dot { animation: none !important; }
-    .hero-video, .strip-video, .section-video, .section-video-overlay { display: none; }
+    .hero-video, .strip-video { display: none; }
     [data-scroll] { opacity: 1 !important; transform: none !important; }
     .section-enter, .section-exit { animation: none !important; }
     *, *::before, *::after { transition-duration: 0.01ms !important; }
@@ -2652,7 +2669,6 @@
   [data-theme="dark"] .card { background: #091929; border-color: #0f2438; }
   [data-theme="dark"] .quick-card { background: #060e1a; }
   [data-theme="dark"] .quick-card:hover { background: #091929; }
-  [data-theme="dark"] .signup-form { background: #060e1a; }
   [data-theme="dark"] .volunteer-form-wrap { background: #060e1a; box-shadow: none; }
   [data-theme="dark"] .opp-card { background: #060e1a; }
   [data-theme="dark"] .boat-story { background: #060e1a; }
@@ -2671,7 +2687,6 @@
   [data-theme="dark"] #volunteer,
   [data-theme="dark"] #boats,
   [data-theme="dark"] #members,
-  [data-theme="dark"] #club,
   [data-theme="dark"] #innisfree,
   [data-theme="dark"] #donate { filter: brightness(0.82); }
 
@@ -2709,7 +2724,7 @@
 
   /* iOS Safari: background-attachment fixed breaks — use scroll on mobile */
   @media (max-width: 768px) {
-    #home, #club, #volunteer, #boats, #innisfree, #gallery, #donate, #about, #members,
+    #home, #volunteer, #boats, #innisfree, #gallery, #donate, #about, #members,
     .members-hero {
       background-attachment: scroll !important;
     }
@@ -2754,8 +2769,51 @@
   #members .divider { background: var(--gold); }
   #members .section-tagline { color: rgba(238,246,251,0.88); }
 
+  .members-pitch {
+    max-width: 640px;
+    margin: 0 auto 2rem;
+    text-align: center;
+  }
+  .members-pitch h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    color: var(--gold);
+    margin-bottom: 1rem;
+    line-height: 1.3;
+  }
+  .members-pitch p {
+    font-size: 0.95rem;
+    color: rgba(238,246,251,0.82);
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+  .zeffy-members-wrap {
+    max-width: 640px;
+    margin: 0 auto 1.5rem;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .members-auth-divider {
+    max-width: 640px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--gold);
+    font-family: 'Lora', serif;
+    font-size: 0.82rem;
+    opacity: 0.75;
+  }
+  .members-auth-divider::before,
+  .members-auth-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(201,168,76,0.3);
+  }
+
   .members-auth-view, .members-pending-view {
-    max-width: 480px;
+    max-width: 700px;
     margin: 80px auto;
     text-align: center;
   }
@@ -3353,7 +3411,6 @@
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#" onclick="return showSection('home')" class="active" id="nav-home">Home</a></li>
-    <li><a href="#" onclick="return showSection('club')" id="nav-club">Join</a></li>
     <li><a href="#" onclick="return showSection('volunteer')" id="nav-volunteer">Volunteer</a></li>
     <li><a href="#" onclick="return showSection('boats')" id="nav-boats">Boats</a></li>
     <li><a href="#" onclick="return showSection('innisfree')" id="nav-innisfree">INNISFREE</a></li>
@@ -3385,7 +3442,7 @@
       <a href="/fishing-rodeo.html" class="btn btn-gold hero-event-btn">Sign Up &amp; Learn More →</a>
     </div>
     <div class="hero-buttons">
-      <button class="btn btn-gold" onclick="showSection('club')">Join the Club</button>
+      <button class="btn btn-gold" onclick="showSection('members')">Become a Member</button>
       <button class="btn btn-outline" style="color:var(--cream);border-color:rgba(247,237,216,0.5);" onclick="showSection('volunteer')">Get Involved</button>
       <button class="btn btn-primary" onclick="showSection('donate')">Donate</button>
     </div>
@@ -3401,9 +3458,9 @@
       <p class="section-eyebrow" data-scroll="fade-up">Get Started</p>
       <h2 class="section-title" data-scroll="fade-up">Everything we <em>offer</em></h2>
       <div class="quick-links-grid">
-        <div class="quick-card" onclick="showSection('club')">
+        <div class="quick-card" onclick="showSection('members')">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><rect x="6" y="2" width="12" height="13" rx="2"/></svg></div>
-          <h3>Join the Club</h3>
+          <h3>Become a Member</h3>
           <p>BFF members can access boats, attend events, get discounts on charters, and support our community.</p>
         </div>
         <div class="quick-card" onclick="showSection('volunteer')">
@@ -3426,6 +3483,21 @@
           <h3>Donate</h3>
           <p>Support us or one of our partner local businesses with a direct contribution.</p>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="home-vision">
+    <div class="container" data-scroll="fade-up">
+      <span class="section-eyebrow">Why We Exist</span>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--white);text-align:center;margin:0.5rem 0 2rem;line-height:1.3;">Not About the <em>Biggest Fish</em></h2>
+      <p>Bayou Family Fishing isn't about catching the biggest fish. It's about making sure nobody wastes their one good day off.</p>
+      <p>South Louisiana's waters are huge — tides, weather, spots, all changing every hour. If you're working long shifts, raising kids, or just trying to keep life together, there's no time to study charts or chase rumors. That's where we come in.</p>
+      <p>We're pooling everything we've got — our tips, our spots, our stories — into one easy place. A member portal where you log in, see where folks are headed, share what you're seeing, maybe even hop on someone else's boat. Part of it? Safe boating: file a quick plan — where you're going, when you'll be back — so we're all looking out for each other.</p>
+      <p>We're not pros. We're just people who love the water, who want to give families — especially those who serve — a real shot at joy. Less stress, more time together, more fish and safer days out there.</p>
+      <div class="home-vision-ctas">
+        <button class="btn btn-gold" onclick="showSection('members')">Become a Member →</button>
+        <button class="btn btn-outline" style="color:var(--cream);border-color:rgba(247,237,216,0.4);" onclick="showSection('members')">See the Community →</button>
       </div>
     </div>
   </div>
@@ -3573,54 +3645,6 @@
 </div>
 
 <!-- ════════════════════════════ CLUB / JOIN ════════════════════════════ -->
-<section id="club">
-  <video class="section-video" autoplay muted loop playsinline>
-    <source src="Photos/BFF club page header video.mp4" type="video/mp4">
-  </video>
-  <div class="section-video-overlay"></div>
-  <div class="container" style="position:relative;z-index:1;">
-    <div style="text-align:center;margin-bottom:2rem;">
-      <img src="Photos/BFF+Logo.jpg" alt="BFF Logo" style="height:100px;width:auto;border-radius:8px;">
-    </div>
-    <p class="section-eyebrow">Become a Member</p>
-    <h2 class="section-title">Join the <em>Family</em></h2>
-    <div class="divider"></div>
-    <p class="section-lead">Bayou Family Fishing Club is open to anyone who loves the water, the culture, and the community. Fill out the application below and we'll be in touch.</p>
-
-    <form class="signup-form" id="clubForm" onsubmit="submitForm(event, this, 'Application received!', 'Welcome to Bayou Family Fishing! We\'ll reach out shortly.')">
-      <input type="hidden" name="_subject" value="New Member Application — BFF">
-      <!-- Honeypot spam protection — leave empty -->
-      <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
-      <input type="hidden" name="_cc" value="kyle.rockefeller@bayoucharity.org">
-      <h3>🎣 New Member Application</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="clubFirst">First Name</label>
-          <input type="text" id="clubFirst" name="first_name" placeholder="Mary">
-        </div>
-        <div class="form-group">
-          <label for="clubLast">Last Name</label>
-          <input type="text" id="clubLast" name="last_name" placeholder="Fontenot">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="clubEmail">Email Address</label>
-          <input type="email" id="clubEmail" name="email" placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label for="clubPhone">Phone Number</label>
-          <input type="tel" id="clubPhone" name="phone" placeholder="504-555-0100">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="clubNote">Anything you'd like us to know?</label>
-        <textarea id="clubNote" name="message" placeholder="Tell us about yourself, your family, your fishing experience..."></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Submit Application</button>
-    </form>
-  </div>
-</section>
 
 <!-- ════════════════════════════ VOLUNTEER ════════════════════════════ -->
 <section id="volunteer">
@@ -3707,68 +3731,13 @@
       </div>
     </div>
 
-    <form class="volunteer-form-wrap" id="volForm" onsubmit="submitForm(event, this, 'Volunteer signup received!', 'Thank you for signing up! We\'ll be in touch about upcoming opportunities.')">
-      <input type="hidden" name="_subject" value="New Volunteer Signup — BFF">
-      <!-- Honeypot spam protection — leave empty -->
-      <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
-      <input type="hidden" name="_cc" value="kyle.rockefeller@bayoucharity.org">
-      <h3>✋ Sign Up to Volunteer</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="volFirst">First Name</label>
-          <input type="text" id="volFirst" name="first_name" placeholder="Jean">
-        </div>
-        <div class="form-group">
-          <label for="volLast">Last Name</label>
-          <input type="text" id="volLast" name="last_name" placeholder="Thibodaux">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="volEmail">Email</label>
-          <input type="email" id="volEmail" name="email" placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label for="volPhone">Phone</label>
-          <input type="tel" id="volPhone" name="phone" placeholder="504-555-0100">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>I want to help with… (select all that apply)</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Maintenance/Construction"> Maintenance/Construction (boats &amp; camp buildings)</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Licensed Captain"> Licensed Captain (guide partnerships)</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Fishing/Boating Instruction"> Fishing/Boating Instruction</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Innisfree Camp Building"> Innisfree Camp Building</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Media/Storytelling"> Photography/Media/Storytelling</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Camp Coordination"> Camp Coordination &amp; Event Planning</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="General day-of support"> General day-of support</label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="volAvail">Availability</label>
-        <select id="volAvail" name="availability">
-          <option>Weekends only</option>
-          <option>Weekdays</option>
-          <option>Flexible / Any time</option>
-          <option>Specific events only</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="volLicense">Are you a licensed captain or boat owner interested in BFF?</label>
-        <select id="volLicense" name="boating_license">
-          <option>No</option>
-          <option>Yes — Licensed captain</option>
-          <option>Yes — Boat owner</option>
-          <option>License in progress</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="volNote">Anything else?</label>
-        <textarea id="volNote" name="message" placeholder="Special skills, questions, or comments..."></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Sign Up to Volunteer</button>
-    </form>
+    <!-- Zeffy volunteer signup — drop iframe here when Kyle shares the campaign URL -->
+    <div id="zeffyVolunteerWrap" class="zeffy-volunteer-placeholder">
+      <p>Volunteer signups are moving to our new platform. In the meantime, reach out directly:</p>
+      <a href="mailto:kyle.rockefeller@bayoucharity.org?subject=Volunteer%20Signup%20%E2%80%94%20BFF"
+         class="btn btn-primary">Email Kyle to Volunteer</a>
+      <p style="font-size:0.78rem;margin-top:0.75rem;opacity:0.6;">kyle.rockefeller@bayoucharity.org</p>
+    </div>
   </div>
 </section>
 
@@ -3894,6 +3863,21 @@
       <strong style="color:var(--green-deep);">🎓 Confidence Course & Licensing Note</strong>
       <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-mid);line-height:1.7;">In Louisiana, boat operators born after January 1, 1984 are required to complete an LDWF-approved boater education course to operate a motorboat over 10 HP or any personal watercraft. Free online courses are available at <a href="https://www.boatus.org/free-boater-education-course/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">BoatUS.org</a> and <a href="https://www.boat-ed.com/louisiana/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">Boat-ED.com</a>. See the <a href="https://www.wlf.louisiana.gov/page/boater-education" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">LDWF boater education page</a> for full details. If you are new to boating, we provide hands-on training to members who complete certification.</p>
     </div>
+
+    <!-- ─── FLEET VISION ─── -->
+    <div class="fleet-manifesto container" data-scroll="fade-up">
+      <h3>Come Aboard</h3>
+      <p>Boats are magic—but they don't mean much if they're sitting dry.</p>
+      <p>If you've got one, bring it. If you're saving for one, start here. If you're already out there, come share. We're not building a collection—we're building a crew.</p>
+      <p>Log in, drop your plan: 'I'm heading to the cut at eight, back by two.' Someone sees it, says 'I'm free—want company?' Or 'Need a hand with the trailer?' We share fuel, gear, know-how—everything—so nobody's alone.</p>
+      <p>And we don't stop at 'good enough.' New folks learn the basics: throttle, tides, radio. Then we climb—safety first, drills, charts—until you're running trips like you've done it forever. Some go licensed. Some just get better. Either way, every seat's open.</p>
+      <p>Why? So families—especially the ones who serve—get real time on the water. No charts, no stress. Just sun, laughs, a kid's first bite. We file plans, check in, watch each other's backs... so you go home lighter.</p>
+      <p>This fleet isn't about us. It's about them. And if we all pitch in? We get boats that last, captains who grow, and days that matter.</p>
+      <div class="fleet-cta">
+        <button class="btn btn-primary" onclick="showSection('members')">Join the Crew →</button>
+      </div>
+    </div>
+    <!-- ─── END FLEET VISION ─── -->
   </div>
 </section>
 
@@ -4231,7 +4215,29 @@
 
     <!-- AUTH VIEW -->
     <div id="membersAuth" class="members-auth-view">
-      <p class="section-tagline">Sign in to access the BFF member map and community.</p>
+      <!-- Pitch block -->
+      <div class="members-pitch" data-scroll="fade-up">
+        <p class="section-eyebrow">Private Community</p>
+        <h3>Join Bayou Family Fishing</h3>
+        <p>South Louisiana's waters are huge — tides, weather, spots, all changing every hour. If you're working long shifts, raising kids, or just trying to keep life together, there's no time to study charts or chase rumors. That's where we come in.</p>
+        <p>We're pooling everything we've got — tips, spots, stories — into one easy place. Log in, see where folks are headed, share what you're seeing, maybe even hop on someone else's boat. File a quick trip plan so we're all watching each other's backs.</p>
+        <p>We're not pros. We're just people who love the water, who want to give families — especially those who serve — a real shot at joy. Less stress, more time together, more fish and safer days out there.</p>
+      </div>
+
+      <!-- Zeffy membership + event RSVP iframe -->
+      <div class="zeffy-members-wrap" data-scroll="fade-up">
+        <div style="position:relative;overflow:hidden;height:450px;width:100%;">
+          <iframe title='Membership and RSVP powered by Zeffy'
+            style='position:absolute;border:0;top:0;left:0;bottom:0;right:0;width:100%;height:100%'
+            src='https://www.zeffy.com/embed/ticketing/bayou-family-fishing-memberships'
+            allowpaymentrequest
+            allowTransparency="true">
+          </iframe>
+        </div>
+      </div>
+
+      <!-- Divider for returning members -->
+      <div class="members-auth-divider">Already a member? Sign in below</div>
       <div class="auth-buttons">
         <button class="btn btn-primary" id="btnGoogleSignIn" style="min-width:240px;">
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="margin-right:8px;vertical-align:middle;"><path d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844c-.209 1.125-.843 2.078-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z" fill="#4285F4"/><path d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z" fill="#34A853"/><path d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z" fill="#FBBC05"/><path d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z" fill="#EA4335"/></svg>
@@ -4504,7 +4510,7 @@
   </div>
   <div class="footer-links">
     <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('club')">Join</a>
+    <a href="#" onclick="showSection('members')">Join</a>
     <a href="#" onclick="showSection('volunteer')">Volunteer</a>
     <a href="#" onclick="showSection('boats')">Boats</a>
     <a href="#" onclick="showSection('innisfree')">INNISFREE</a>
@@ -4533,7 +4539,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   // ─── SECTION NAVIGATION ───
-  const VALID_SECTIONS = ['home','gallery','club','volunteer','boats','innisfree','donate','about','members'];
+  const VALID_SECTIONS = ['home','gallery','volunteer','boats','innisfree','donate','about','members'];
   let _innisfreeMapReady = false;
   let _leafletMap = null;
 
@@ -4781,33 +4787,6 @@
     const isOther = el.textContent === 'Other';
     document.getElementById('otherAmt').style.display = isOther ? 'flex' : 'none';
     document.getElementById('donateAmount').value = isOther ? 'Other' : el.textContent;
-  }
-
-  // ─── FORMSPREE SUBMIT ───
-  const FORMSPREE = 'https://formspree.io/f/mdawanzg';
-  async function submitForm(event, form, title, msg) {
-    event.preventDefault();
-    const btn = form.querySelector('[type="submit"]');
-    const original = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-    try {
-      const res = await fetch(FORMSPREE, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        form.reset();
-        showToast(title, msg);
-      } else {
-        showToast('Error', 'Something went wrong — please email kyle.rockefeller@bayoucharity.org');
-      }
-    } catch (e) {
-      showToast('Error', 'Could not connect — please email kyle.rockefeller@bayoucharity.org');
-    }
-    btn.disabled = false;
-    btn.textContent = original;
   }
 
   // ─── FISHING RODEO RSVP ───
@@ -5449,56 +5428,6 @@
       card.style.transform = '';
     });
   });
-
-  // ══════════════════════════════════════
-  // ENHANCED FORM SUBMIT BUTTONS
-  // ══════════════════════════════════════
-  (function() {
-    var _origSubmit = submitForm;
-    submitForm = async function(event, form, title, msg) {
-      event.preventDefault();
-      var btn = form.querySelector('[type="submit"]');
-      var original = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = '<span class="btn-spinner"></span> Sending...';
-      try {
-        var res = await fetch(FORMSPREE, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          form.reset();
-          btn.innerHTML = '✓ Sent!';
-          btn.style.background = 'var(--green-water)';
-          showToast(title, msg);
-          setTimeout(function() {
-            btn.innerHTML = original;
-            btn.style.background = '';
-            btn.disabled = false;
-          }, 2500);
-        } else {
-          btn.innerHTML = '✗ Error';
-          btn.style.background = 'var(--orange)';
-          showToast('Error', 'Something went wrong — please email kyle.rockefeller@bayoucharity.org');
-          setTimeout(function() {
-            btn.innerHTML = original;
-            btn.style.background = '';
-            btn.disabled = false;
-          }, 2500);
-        }
-      } catch (e) {
-        btn.innerHTML = '✗ Error';
-        btn.style.background = 'var(--orange)';
-        showToast('Error', 'Could not connect — please email kyle.rockefeller@bayoucharity.org');
-        setTimeout(function() {
-          btn.innerHTML = original;
-          btn.style.background = '';
-          btn.disabled = false;
-        }, 2500);
-      }
-    };
-  })();
 
   // ══════════════════════════════════════
   // VIDEO PERFORMANCE — pause off-screen autoplay videos

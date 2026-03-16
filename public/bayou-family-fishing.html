@@ -531,6 +531,58 @@
   }
   .quick-card p { font-size: 0.85rem; color: rgba(247,237,216,0.75); line-height: 1.6; }
 
+  /* Vision band — between quick-links and INNISFREE teaser */
+  .home-vision {
+    background: var(--green-deep);
+    padding: 4rem 2rem;
+  }
+  .home-vision .container { max-width: 800px; }
+  .home-vision .section-eyebrow { display: block; text-align: center; margin-bottom: 0.5rem; }
+  .home-vision p {
+    font-size: 0.97rem;
+    line-height: 1.85;
+    color: rgba(238,246,251,0.82);
+    margin-bottom: 1.1rem;
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .home-vision-ctas {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 2.5rem;
+  }
+  @media (max-width: 768px) { .home-vision { padding: 2.5rem 1.25rem; } }
+
+  /* Fleet manifesto block — bottom of Boats section */
+  .fleet-manifesto {
+    background: var(--green-deep);
+    border-radius: 14px;
+    padding: 3rem 2.5rem;
+    margin-top: 3rem;
+    color: var(--white);
+  }
+  .fleet-manifesto h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: var(--gold);
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+  }
+  .fleet-manifesto p {
+    font-size: 0.95rem;
+    line-height: 1.85;
+    color: rgba(238,246,251,0.85);
+    margin-bottom: 1.1rem;
+  }
+  .fleet-manifesto .fleet-cta { margin-top: 2rem; }
+  @media (max-width: 768px) {
+    .fleet-manifesto { padding: 2rem 1.25rem; }
+    .fleet-manifesto h3 { font-size: 1.4rem; }
+  }
+
   /* News/Story teaser */
   .home-story {
     background: linear-gradient(135deg, var(--green-deep), var(--green-water));
@@ -769,6 +821,23 @@
     color: var(--green-deep);
     margin-bottom: 1.5rem;
   }
+  .zeffy-volunteer-placeholder {
+    background: var(--cream);
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    border: 2px dashed rgba(13,43,62,0.15);
+  }
+  .zeffy-volunteer-placeholder p {
+    color: var(--text-mid);
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  [data-theme="dark"] .zeffy-volunteer-placeholder {
+    background: rgba(255,255,255,0.04);
+    border-color: rgba(201,168,76,0.2);
+  }
+  [data-theme="dark"] .zeffy-volunteer-placeholder p { color: rgba(238,246,251,0.65); }
   .checkbox-group {
     display: flex;
     flex-direction: column;
@@ -3418,6 +3487,21 @@
     </div>
   </div>
 
+  <div class="home-vision">
+    <div class="container" data-scroll="fade-up">
+      <span class="section-eyebrow">Why We Exist</span>
+      <h2 style="font-family:'Playfair Display',serif;font-size:2rem;color:var(--white);text-align:center;margin:0.5rem 0 2rem;line-height:1.3;">Not About the <em>Biggest Fish</em></h2>
+      <p>Bayou Family Fishing isn't about catching the biggest fish. It's about making sure nobody wastes their one good day off.</p>
+      <p>South Louisiana's waters are huge — tides, weather, spots, all changing every hour. If you're working long shifts, raising kids, or just trying to keep life together, there's no time to study charts or chase rumors. That's where we come in.</p>
+      <p>We're pooling everything we've got — our tips, our spots, our stories — into one easy place. A member portal where you log in, see where folks are headed, share what you're seeing, maybe even hop on someone else's boat. Part of it? Safe boating: file a quick plan — where you're going, when you'll be back — so we're all looking out for each other.</p>
+      <p>We're not pros. We're just people who love the water, who want to give families — especially those who serve — a real shot at joy. Less stress, more time together, more fish and safer days out there.</p>
+      <div class="home-vision-ctas">
+        <button class="btn btn-gold" onclick="showSection('members')">Become a Member →</button>
+        <button class="btn btn-outline" style="color:var(--cream);border-color:rgba(247,237,216,0.4);" onclick="showSection('members')">See the Community →</button>
+      </div>
+    </div>
+  </div>
+
   <div class="home-story">
     <div class="container">
       <div class="home-story-grid">
@@ -3647,68 +3731,13 @@
       </div>
     </div>
 
-    <form class="volunteer-form-wrap" id="volForm" onsubmit="submitForm(event, this, 'Volunteer signup received!', 'Thank you for signing up! We\'ll be in touch about upcoming opportunities.')">
-      <input type="hidden" name="_subject" value="New Volunteer Signup — BFF">
-      <!-- Honeypot spam protection — leave empty -->
-      <input type="text" name="_gotcha" style="display:none;" tabindex="-1" autocomplete="off">
-      <input type="hidden" name="_cc" value="kyle.rockefeller@bayoucharity.org">
-      <h3>✋ Sign Up to Volunteer</h3>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="volFirst">First Name</label>
-          <input type="text" id="volFirst" name="first_name" placeholder="Jean">
-        </div>
-        <div class="form-group">
-          <label for="volLast">Last Name</label>
-          <input type="text" id="volLast" name="last_name" placeholder="Thibodaux">
-        </div>
-      </div>
-      <div class="form-row">
-        <div class="form-group">
-          <label for="volEmail">Email</label>
-          <input type="email" id="volEmail" name="email" placeholder="you@example.com">
-        </div>
-        <div class="form-group">
-          <label for="volPhone">Phone</label>
-          <input type="tel" id="volPhone" name="phone" placeholder="504-555-0100">
-        </div>
-      </div>
-      <div class="form-group">
-        <label>I want to help with… (select all that apply)</label>
-        <div class="checkbox-group">
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Maintenance/Construction"> Maintenance/Construction (boats &amp; camp buildings)</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Licensed Captain"> Licensed Captain (guide partnerships)</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Fishing/Boating Instruction"> Fishing/Boating Instruction</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Innisfree Camp Building"> Innisfree Camp Building</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Media/Storytelling"> Photography/Media/Storytelling</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="Camp Coordination"> Camp Coordination &amp; Event Planning</label>
-          <label class="checkbox-item"><input type="checkbox" name="interests" value="General day-of support"> General day-of support</label>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="volAvail">Availability</label>
-        <select id="volAvail" name="availability">
-          <option>Weekends only</option>
-          <option>Weekdays</option>
-          <option>Flexible / Any time</option>
-          <option>Specific events only</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="volLicense">Are you a licensed captain or boat owner interested in BFF?</label>
-        <select id="volLicense" name="boating_license">
-          <option>No</option>
-          <option>Yes — Licensed captain</option>
-          <option>Yes — Boat owner</option>
-          <option>License in progress</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label for="volNote">Anything else?</label>
-        <textarea id="volNote" name="message" placeholder="Special skills, questions, or comments..."></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Sign Up to Volunteer</button>
-    </form>
+    <!-- Zeffy volunteer signup — drop iframe here when Kyle shares the campaign URL -->
+    <div id="zeffyVolunteerWrap" class="zeffy-volunteer-placeholder">
+      <p>Volunteer signups are moving to our new platform. In the meantime, reach out directly:</p>
+      <a href="mailto:kyle.rockefeller@bayoucharity.org?subject=Volunteer%20Signup%20%E2%80%94%20BFF"
+         class="btn btn-primary">Email Kyle to Volunteer</a>
+      <p style="font-size:0.78rem;margin-top:0.75rem;opacity:0.6;">kyle.rockefeller@bayoucharity.org</p>
+    </div>
   </div>
 </section>
 
@@ -3834,6 +3863,21 @@
       <strong style="color:var(--green-deep);">🎓 Confidence Course & Licensing Note</strong>
       <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-mid);line-height:1.7;">In Louisiana, boat operators born after January 1, 1984 are required to complete an LDWF-approved boater education course to operate a motorboat over 10 HP or any personal watercraft. Free online courses are available at <a href="https://www.boatus.org/free-boater-education-course/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">BoatUS.org</a> and <a href="https://www.boat-ed.com/louisiana/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">Boat-ED.com</a>. See the <a href="https://www.wlf.louisiana.gov/page/boater-education" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">LDWF boater education page</a> for full details. If you are new to boating, we provide hands-on training to members who complete certification.</p>
     </div>
+
+    <!-- ─── FLEET VISION ─── -->
+    <div class="fleet-manifesto container" data-scroll="fade-up">
+      <h3>Come Aboard</h3>
+      <p>Boats are magic—but they don't mean much if they're sitting dry.</p>
+      <p>If you've got one, bring it. If you're saving for one, start here. If you're already out there, come share. We're not building a collection—we're building a crew.</p>
+      <p>Log in, drop your plan: 'I'm heading to the cut at eight, back by two.' Someone sees it, says 'I'm free—want company?' Or 'Need a hand with the trailer?' We share fuel, gear, know-how—everything—so nobody's alone.</p>
+      <p>And we don't stop at 'good enough.' New folks learn the basics: throttle, tides, radio. Then we climb—safety first, drills, charts—until you're running trips like you've done it forever. Some go licensed. Some just get better. Either way, every seat's open.</p>
+      <p>Why? So families—especially the ones who serve—get real time on the water. No charts, no stress. Just sun, laughs, a kid's first bite. We file plans, check in, watch each other's backs... so you go home lighter.</p>
+      <p>This fleet isn't about us. It's about them. And if we all pitch in? We get boats that last, captains who grow, and days that matter.</p>
+      <div class="fleet-cta">
+        <button class="btn btn-primary" onclick="showSection('members')">Join the Crew →</button>
+      </div>
+    </div>
+    <!-- ─── END FLEET VISION ─── -->
   </div>
 </section>
 
@@ -4745,33 +4789,6 @@
     document.getElementById('donateAmount').value = isOther ? 'Other' : el.textContent;
   }
 
-  // ─── FORMSPREE SUBMIT ───
-  const FORMSPREE = 'https://formspree.io/f/mdawanzg';
-  async function submitForm(event, form, title, msg) {
-    event.preventDefault();
-    const btn = form.querySelector('[type="submit"]');
-    const original = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-    try {
-      const res = await fetch(FORMSPREE, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-      if (res.ok) {
-        form.reset();
-        showToast(title, msg);
-      } else {
-        showToast('Error', 'Something went wrong — please email kyle.rockefeller@bayoucharity.org');
-      }
-    } catch (e) {
-      showToast('Error', 'Could not connect — please email kyle.rockefeller@bayoucharity.org');
-    }
-    btn.disabled = false;
-    btn.textContent = original;
-  }
-
   // ─── FISHING RODEO RSVP ───
   let gearChoice = 'own';
   // Pre-fill today's date on the signature line
@@ -5411,56 +5428,6 @@
       card.style.transform = '';
     });
   });
-
-  // ══════════════════════════════════════
-  // ENHANCED FORM SUBMIT BUTTONS
-  // ══════════════════════════════════════
-  (function() {
-    var _origSubmit = submitForm;
-    submitForm = async function(event, form, title, msg) {
-      event.preventDefault();
-      var btn = form.querySelector('[type="submit"]');
-      var original = btn.innerHTML;
-      btn.disabled = true;
-      btn.innerHTML = '<span class="btn-spinner"></span> Sending...';
-      try {
-        var res = await fetch(FORMSPREE, {
-          method: 'POST',
-          body: new FormData(form),
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
-          form.reset();
-          btn.innerHTML = '✓ Sent!';
-          btn.style.background = 'var(--green-water)';
-          showToast(title, msg);
-          setTimeout(function() {
-            btn.innerHTML = original;
-            btn.style.background = '';
-            btn.disabled = false;
-          }, 2500);
-        } else {
-          btn.innerHTML = '✗ Error';
-          btn.style.background = 'var(--orange)';
-          showToast('Error', 'Something went wrong — please email kyle.rockefeller@bayoucharity.org');
-          setTimeout(function() {
-            btn.innerHTML = original;
-            btn.style.background = '';
-            btn.disabled = false;
-          }, 2500);
-        }
-      } catch (e) {
-        btn.innerHTML = '✗ Error';
-        btn.style.background = 'var(--orange)';
-        showToast('Error', 'Could not connect — please email kyle.rockefeller@bayoucharity.org');
-        setTimeout(function() {
-          btn.innerHTML = original;
-          btn.style.background = '';
-          btn.disabled = false;
-        }, 2500);
-      }
-    };
-  })();
 
   // ══════════════════════════════════════
   // VIDEO PERFORMANCE — pause off-screen autoplay videos
