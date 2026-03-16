@@ -3046,9 +3046,9 @@
     background: var(--amber);
     display: flex; align-items: center; justify-content: center;
     font-size: 0.7rem; color: white; font-weight: 700; flex-shrink: 0;
-    overflow: hidden;
+    overflow: hidden; position: relative;
   }
-  .feed-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .feed-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
   .feed-name { font-size: 0.82rem; font-weight: 600; color: var(--text-dark); font-family: 'Lora', serif; }
   .feed-byline { font-size: 0.75rem; color: var(--text-mid); }
   .feed-title {
@@ -4273,7 +4273,7 @@
         </nav>
         <div class="member-user-info">
           <button class="pe-open-btn" id="btnOpenProfileEditor" onclick="openProfileEditor()" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
-            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;">
+            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;" onerror="handleAvatarError(this, 'memberAvatarInitials')">
             <div id="memberAvatarInitials" class="member-avatar-initials" style="display:none;"></div>
             <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
             <span style="font-size:0.65rem;color:var(--gold);font-family:'Lora',serif;">&#9999;</span>
@@ -5628,16 +5628,19 @@
       var initials = document.getElementById('memberAvatarInitials');
       var nameEl = document.getElementById('memberName');
 
+      // Always compute initials so onerror fallback has text ready
+      if (initials) {
+        var _name = profile.display_name || user.email || '';
+        var _parts = _name.trim().split(' ');
+        initials.textContent = _parts.length >= 2
+          ? (_parts[0][0] + _parts[_parts.length - 1][0]).toUpperCase()
+          : _name.slice(0, 2).toUpperCase();
+      }
       if (avatar && profile.avatar_url) {
         avatar.src = profile.avatar_url;
         avatar.style.display = 'block';
         if (initials) initials.style.display = 'none';
       } else if (initials) {
-        var name = profile.display_name || user.email || '';
-        var parts = name.trim().split(' ');
-        initials.textContent = parts.length >= 2
-          ? (parts[0][0] + parts[parts.length - 1][0]).toUpperCase()
-          : name.slice(0, 2).toUpperCase();
         initials.style.display = 'flex';
         if (avatar) avatar.style.display = 'none';
       }
@@ -5855,6 +5858,15 @@
         });
     }
 
+    function handleAvatarError(img, initialsId) {
+      img.onerror = null;
+      img.style.display = 'none';
+      if (initialsId) {
+        var el = document.getElementById(initialsId);
+        if (el) el.style.display = 'flex';
+      }
+    }
+
     function buildFeedCard(pin) {
       var card = document.createElement('div');
       card.className = 'feed-card';
@@ -5868,7 +5880,8 @@
       card.innerHTML =
         '<div class="feed-card-header">' +
           '<div class="feed-avatar">' +
-            (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" alt="">' : escapeHTML(initials)) +
+            escapeHTML(initials) +
+            (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" alt="" onerror="handleAvatarError(this)">' : '') +
           '</div>' +
           '<div>' +
             '<div class="feed-name">' + escapeHTML(displayName) + '</div>' +
