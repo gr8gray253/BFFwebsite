@@ -2774,17 +2774,64 @@
     margin-bottom: 1.5rem;
     flex-wrap: wrap;
   }
-  .member-tab {
-    background: var(--cream-dark);
-    border: none;
-    border-radius: 8px;
-    padding: 0.5rem 1.2rem;
-    cursor: pointer;
-    font-family: 'Lora', serif;
-    color: var(--text-dark);
-    transition: background 0.2s;
+  /* ── Primary nav (Approach C) ──────────────────── */
+  .member-primary-nav {
+    background: var(--green-deep);
+    border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    padding: 0 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
   }
-  .member-tab.active { background: var(--green-deep); color: var(--white); }
+  .member-primary-nav::-webkit-scrollbar { display: none; }
+  .member-primary-tab {
+    padding: 0.62rem 1rem;
+    font-size: 0.8rem;
+    color: rgba(200,220,240,0.68);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-family: 'Lora', serif;
+    background: none;
+    border-top: none; border-left: none; border-right: none;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .member-primary-tab.active { color: var(--gold); border-bottom-color: var(--amber); }
+  .member-primary-tab:hover:not(.active) { color: var(--cream); }
+  .admin-nav-badge {
+    background: var(--amber); color: #fff;
+    font-size: 0.58rem; padding: 0.05rem 0.4rem;
+    border-radius: 1rem; margin-left: 0.3rem;
+    vertical-align: middle; font-family: 'Lora', serif; font-weight: 700;
+  }
+  /* ── Secondary nav (Community sub-nav) ─────────── */
+  .member-secondary-nav {
+    background: var(--green-water);
+    border-bottom: 2px solid rgba(0,0,0,0.1);
+    display: flex;
+    padding: 0 0.5rem;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .member-secondary-nav::-webkit-scrollbar { display: none; }
+  .member-secondary-tab {
+    padding: 0.47rem 0.9rem;
+    font-size: 0.72rem;
+    color: rgba(200,230,250,0.72);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    font-family: 'Lora', serif;
+    background: none;
+    border-top: none; border-left: none; border-right: none;
+    transition: color 0.15s, background 0.15s, border-color 0.15s;
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .member-secondary-tab.active {
+    color: var(--gold); border-bottom-color: var(--amber);
+    background: rgba(0,0,0,0.12);
+  }
+  .member-secondary-tab:hover:not(.active) { color: var(--cream); background: rgba(255,255,255,0.06); }
   .member-user-info { margin-left: auto; display: flex; align-items: center; gap: 0.6rem; font-size: 0.9rem; }
   .member-avatar { width: 32px; height: 32px; border-radius: 50%; object-fit: cover; }
   .member-avatar-initials {
@@ -4210,9 +4257,20 @@
     <!-- MAIN MEMBER VIEW -->
     <div id="membersMain" class="members-main-view" style="display:none;">
       <div class="members-nav">
-        <button class="member-tab active" onclick="switchMemberTab('Map',this)">🗺 Map</button>
-        <button class="member-tab" onclick="switchMemberTab('Feed',this)">📸 Feed</button>
-        <button class="member-tab" id="adminTabBtn" onclick="switchMemberTab('Admin',this)" style="display:none;">⚙️ Admin</button>
+        <nav class="member-primary-nav" role="navigation" aria-label="Member portal navigation">
+          <button class="member-primary-tab active" id="mptFeed" onclick="switchPrimaryTab('Feed')" aria-selected="true">📸 Feed</button>
+          <button class="member-primary-tab" id="mptCommunity" onclick="switchPrimaryTab('Community')" aria-selected="false">🌊 Community</button>
+          <button class="member-primary-tab" id="mptMap" onclick="switchPrimaryTab('Map')" aria-selected="false">🗺️ Map</button>
+          <button class="member-primary-tab" id="mptAdmin" onclick="switchPrimaryTab('Admin')" aria-selected="false" style="display:none;">⚙️ Admin <span id="adminNavBadge" class="admin-nav-badge" style="display:none;"></span></button>
+        </nav>
+        <nav class="member-secondary-nav" id="memberSecondaryNav" role="navigation" aria-label="Community sections" style="display:none;">
+          <button class="member-secondary-tab active" id="mstTrips"        onclick="switchCommunityTab('Trips')">🎣 Trips</button>
+          <button class="member-secondary-tab"         id="mstGuides"      onclick="switchCommunityTab('Guides')">🧑‍✈️ Guides</button>
+          <button class="member-secondary-tab"         id="mstGear"        onclick="switchCommunityTab('Gear')">🛒 Gear &amp; Classifieds</button>
+          <button class="member-secondary-tab"         id="mstForum"       onclick="switchCommunityTab('Forum')">💬 Forum</button>
+          <button class="member-secondary-tab"         id="mstLeaderboard" onclick="switchCommunityTab('Leaderboard')">🏆 Leaderboard</button>
+          <button class="member-secondary-tab"         id="mstRecipes"     onclick="switchCommunityTab('Recipes')">🍳 Recipes</button>
+        </nav>
         <div class="member-user-info">
           <button class="pe-open-btn" id="btnOpenProfileEditor" onclick="openProfileEditor()" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
             <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;">
@@ -4318,6 +4376,10 @@
         <!-- End Gallery Submissions -->
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Flagged Posts</h3>
         <div id="adminFlaggedList" class="admin-list"><p class="admin-empty">Loading…</p></div>
+      </div>
+      <!-- COMMUNITY HUB PANEL (populated in wave-2-community) -->
+      <div id="memberTabCommunity" class="member-tab-content" style="display:none;">
+        <div class="feed-empty" style="padding:3rem 1rem;text-align:center;">🌊 Community Hub — coming soon</div>
       </div>
     </div>
 
@@ -5486,7 +5548,7 @@
             showMembersView('auth');
             if (_memberMap) { _memberMap.remove(); _memberMap = null; }
             _peCurrentUser = null; _peCurrentProfile = null; _peNewAvatarFile = null;
-            var adminBtn = document.getElementById('adminTabBtn');
+            var adminBtn = document.getElementById('mptAdmin');
             if (adminBtn) adminBtn.style.display = 'none';
           });
         });
@@ -5497,7 +5559,7 @@
             closeProfileEditor(); showMembersView('auth');
             if (_memberMap) { _memberMap.remove(); _memberMap = null; }
             _peCurrentUser = null; _peCurrentProfile = null; _peNewAvatarFile = null;
-            var adminBtn = document.getElementById('adminTabBtn');
+            var adminBtn = document.getElementById('mptAdmin');
             if (adminBtn) adminBtn.style.display = 'none';
           });
         });
@@ -5582,7 +5644,7 @@
       if (nameEl) nameEl.textContent = profile.display_name || user.email;
 
       if (profile.role === 'admin') {
-        var adminBtn = document.getElementById('adminTabBtn');
+        var adminBtn = document.getElementById('mptAdmin');
         if (adminBtn) adminBtn.style.display = '';
       }
       initMemberMap();
@@ -5766,26 +5828,28 @@
           });
         });
       // Also load sidebar
-      loadLeaderboard();
+      loadFeedLeaderboard();
       loadWeather();
     }
 
     function loadReactionCounts(pinIds) {
       return getSB()
         .from('reactions')
-        .select('pin_id, type, user_id')
-        .in('pin_id', pinIds)
+        .select('target_id, emoji, member_id')
+        .eq('target_type', 'pin')
+        .in('target_id', pinIds)
         .then(function (res) {
           _feedReactions = {};
           if (res.error || !res.data) return;
           var uid = _currentUser ? _currentUser.id : null;
           res.data.forEach(function (r) {
-            if (!_feedReactions[r.pin_id]) _feedReactions[r.pin_id] = { like: 0, same_spot: 0, userLiked: false, userSameSpot: false };
-            var bucket = _feedReactions[r.pin_id];
-            bucket[r.type]++;
-            if (r.user_id === uid) {
-              if (r.type === 'like') bucket.userLiked = true;
-              if (r.type === 'same_spot') bucket.userSameSpot = true;
+            var type = r.emoji === '🎣' ? 'same_spot' : 'like';
+            if (!_feedReactions[r.target_id]) _feedReactions[r.target_id] = { like: 0, same_spot: 0, userLiked: false, userSameSpot: false };
+            var bucket = _feedReactions[r.target_id];
+            bucket[type]++;
+            if (r.member_id === uid) {
+              if (type === 'like') bucket.userLiked = true;
+              if (type === 'same_spot') bucket.userSameSpot = true;
             }
           });
         });
@@ -5845,7 +5909,7 @@
       if (isActive) {
         // Remove reaction
         getSB().from('reactions').delete()
-          .eq('pin_id', pinId).eq('user_id', _currentUser.id).eq('type', type)
+          .eq('target_type', 'pin').eq('target_id', pinId).eq('member_id', _currentUser.id)
           .then(function (res) {
             if (!res.error) {
               btn.classList.remove('active');
@@ -5855,7 +5919,7 @@
           });
       } else {
         // Add reaction
-        getSB().from('reactions').insert({ pin_id: pinId, user_id: _currentUser.id, type: type })
+        getSB().from('reactions').insert({ member_id: _currentUser.id, target_type: 'pin', target_id: pinId, emoji: type === 'same_spot' ? '🎣' : '👍' })
           .then(function (res) {
             if (!res.error) {
               btn.classList.add('active');
@@ -5876,7 +5940,7 @@
     });
 
     // ── Leaderboard ──────────────────────────────────────────
-    function loadLeaderboard() {
+    function loadFeedLeaderboard() {
       var container = document.getElementById('leaderboardList');
       if (!container) return;
       getSB().rpc('get_leaderboard').then(function (res) {
@@ -6312,19 +6376,35 @@
     // ── End Gallery Admin Approval ────────────────────────────────
 
     // ── Tab switcher ──────────────────────────────────────────
-    window.switchMemberTab = function (tab, btn) {
-      ['Map', 'Feed', 'Admin'].forEach(function (t) {
+    window.switchPrimaryTab = function (tab) {
+      ['Feed', 'Community', 'Map', 'Admin'].forEach(function (t) {
         var panel = document.getElementById('memberTab' + t);
         if (panel) panel.style.display = t === tab ? '' : 'none';
+        var btn = document.getElementById('mpt' + t);
+        if (btn) { btn.classList.toggle('active', t === tab); btn.setAttribute('aria-selected', t === tab ? 'true' : 'false'); }
       });
-      document.querySelectorAll('.member-tab').forEach(function (b) { b.classList.remove('active'); });
-      if (btn) btn.classList.add('active');
-      if (tab === 'Admin') {
-        loadAdminQueues();
-        loadPendingGallerySubmissions();
-      }
-      if (tab === 'Map' && _memberMap) { setTimeout(function () { _memberMap.invalidateSize(); }, 50); }
+      var secNav = document.getElementById('memberSecondaryNav');
+      if (secNav) secNav.style.display = tab === 'Community' ? 'flex' : 'none';
+      if (tab === 'Feed')      { loadFeed(); }
+      if (tab === 'Community') { if (typeof loadCurrentCommunityTab === 'function') loadCurrentCommunityTab(); }
+      if (tab === 'Map')       { if (_memberMap) setTimeout(function () { _memberMap.invalidateSize(); }, 50); }
+      if (tab === 'Admin')     { loadAdminQueues(); loadPendingGallerySubmissions(); }
     };
+
+    // Community sub-tab switching (stubs — content added in wave-2-community)
+    var _currentCommunityTab = 'Trips';
+    window.switchCommunityTab = function (tab) {
+      _currentCommunityTab = tab;
+      ['Trips','Guides','Gear','Forum','Leaderboard','Recipes'].forEach(function (t) {
+        var btn = document.getElementById('mst' + t);
+        if (btn) btn.classList.toggle('active', t === tab);
+      });
+      if (typeof loadCurrentCommunityTab === 'function') loadCurrentCommunityTab();
+    };
+
+    function loadCurrentCommunityTab() {
+      // Populated in wave-2-community
+    }
 
     // ── Init ──────────────────────────────────────────────────
     window.addEventListener('DOMContentLoaded', function () {
