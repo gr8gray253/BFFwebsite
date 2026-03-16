@@ -5466,6 +5466,7 @@
 
     // getSB() is defined globally above the members IIFE — shared with gallery functions
     var _memberMap   = null;
+    var _currentUser = null;
     var _pendingMarker = null;
     var _pendingLatLng = null;
 
@@ -5642,6 +5643,7 @@
     // ── Load main portal after approval ──────────────────────
     function loadMemberMain(user, profile) {
       _peCurrentUser = user;
+      _currentUser = user;
       _peCurrentProfile = profile;
       var avatar = document.getElementById('memberAvatar');
       var initials = document.getElementById('memberAvatarInitials');
@@ -5896,7 +5898,7 @@
         });
     }
 
-    function handleAvatarError(img, initialsId) {
+    window.handleAvatarError = function(img, initialsId) {
       img.onerror = null;
       img.style.display = 'none';
       if (initialsId) {
@@ -5994,48 +5996,31 @@
     function loadFeedLeaderboard() {
       var container = document.getElementById('leaderboardList');
       if (!container) return;
-      getSB().rpc('get_leaderboard').then(function (res) {
-        // Fallback: if RPC doesn't exist, do client-side grouping
-        if (res.error) {
-          getSB().from('pins').select('user_id, profiles(display_name)')
-            .eq('flagged', false)
-            .then(function (r2) {
-              if (r2.error || !r2.data || !r2.data.length) {
-                container.innerHTML = '<div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">No catches yet</div>';
-                return;
-              }
-              var counts = {};
-              var names = {};
-              r2.data.forEach(function (p) {
-                counts[p.user_id] = (counts[p.user_id] || 0) + 1;
-                if (p.profiles && p.profiles.display_name) names[p.user_id] = p.profiles.display_name;
-              });
-              var sorted = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).slice(0, 5);
-              container.innerHTML = '';
-              sorted.forEach(function (uid, i) {
-                var row = document.createElement('div');
-                row.className = 'lb-row';
-                row.innerHTML =
-                  '<div class="lb-rank">' + (i + 1) + '</div>' +
-                  '<div class="lb-name">' + escapeHTML(names[uid] || 'Member') + '</div>' +
-                  '<div class="lb-catch"' + (i === 0 ? ' style="color:var(--gold);"' : '') + '>' + counts[uid] + ' catches</div>';
-                container.appendChild(row);
-              });
-            });
-          return;
-        }
-        // RPC success path
-        container.innerHTML = '';
-        res.data.slice(0, 5).forEach(function (row, i) {
-          var el = document.createElement('div');
-          el.className = 'lb-row';
-          el.innerHTML =
-            '<div class="lb-rank">' + (i + 1) + '</div>' +
-            '<div class="lb-name">' + escapeHTML(row.display_name || 'Member') + '</div>' +
-            '<div class="lb-catch"' + (i === 0 ? ' style="color:var(--gold);"' : '') + '>' + row.catches + ' catches</div>';
-          container.appendChild(el);
+      getSB().from('pins').select('user_id, profiles(display_name)')
+        .eq('flagged', false)
+        .then(function (r2) {
+          if (r2.error || !r2.data || !r2.data.length) {
+            container.innerHTML = '<div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">No catches yet</div>';
+            return;
+          }
+          var counts = {};
+          var names = {};
+          r2.data.forEach(function (p) {
+            counts[p.user_id] = (counts[p.user_id] || 0) + 1;
+            if (p.profiles && p.profiles.display_name) names[p.user_id] = p.profiles.display_name;
+          });
+          var sorted = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).slice(0, 5);
+          container.innerHTML = '';
+          sorted.forEach(function (uid, i) {
+            var row = document.createElement('div');
+            row.className = 'lb-row';
+            row.innerHTML =
+              '<div class="lb-rank">' + (i + 1) + '</div>' +
+              '<div class="lb-name">' + escapeHTML(names[uid] || 'Member') + '</div>' +
+              '<div class="lb-catch"' + (i === 0 ? ' style="color:var(--gold);"' : '') + '>' + counts[uid] + ' catches</div>';
+            container.appendChild(row);
+          });
         });
-      });
     }
 
     // ── Weather (Open-Meteo) ─────────────────────────────────
