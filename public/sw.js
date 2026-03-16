@@ -1,12 +1,12 @@
-// Bayou Charity Service Worker — v2
-// Caches shell assets for fast load; only intercepts same-origin GET requests.
+// Bayou Charity Service Worker — v3
+// Network-first for HTML (always fresh content), cache-first for images.
 // Cross-origin CDN resources (Supabase JS, Leaflet, Google Fonts) are never
 // intercepted — the browser fetches them directly, respecting CSP.
 
-var CACHE_NAME = 'bayou-charity-v2';
+var CACHE_NAME = 'bayou-charity-v3';
 var SHELL_ASSETS = [
   '/',
-  '/bayou-family-fishing.html',
+  '/index.html',
   '/Photos/BFF+Logo.jpg',
   '/Photos/skyline.jpg'
 ];
@@ -37,6 +37,24 @@ self.addEventListener('fetch', function(e) {
   if (e.request.method !== 'GET') return;
   if (!e.request.url.startsWith(self.location.origin)) return;
 
+  // HTML requests: network-first (always get fresh content, fall back to cache)
+  if (e.request.mode === 'navigate' || e.request.url.endsWith('.html')) {
+    e.respondWith(
+      fetch(e.request).then(function(response) {
+        // Update cache with fresh response
+        var clone = response.clone();
+        caches.open(CACHE_NAME).then(function(cache) {
+          cache.put(e.request, clone);
+        });
+        return response;
+      }).catch(function() {
+        return caches.match(e.request);
+      })
+    );
+    return;
+  }
+
+  // All other assets: cache-first (fast loads for images, etc.)
   e.respondWith(
     caches.match(e.request).then(function(cached) {
       return cached || fetch(e.request);
