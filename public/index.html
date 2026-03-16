@@ -2965,17 +2965,145 @@
   .pin-coords-display { font-size: 0.8rem; color: var(--text-mid); font-style: italic; margin:0.4rem 0; }
   .pin-form-actions { display: flex; gap: 0.8rem; margin-top: 1rem; }
   #memberMap { height: 450px; border-radius: 12px; overflow: hidden; margin-bottom:1rem; }
-  .feed-list { display: flex; flex-direction: column; gap: 1.5rem; }
-  .feed-card { background: var(--cream); border-radius: 12px; overflow: hidden; border: 1px solid var(--cream-dark); }
-  .feed-card-photo { width: 100%; max-height: 320px; object-fit: cover; }
-  .feed-card-body { padding: 1rem 1.2rem; }
-  .feed-card-meta { font-size: 0.8rem; color: var(--text-mid); margin-bottom: 0.4rem; }
-  .feed-card-caption { margin-bottom: 0.8rem; }
-  .comments-section { border-top: 1px solid var(--cream-dark); padding-top: 0.8rem; margin-top:0.6rem; }
+  /* ── Feed layout (two-column) ─────────────────── */
+  .feed-layout {
+    display: grid;
+    grid-template-columns: 1fr 320px;
+    gap: 1.5rem;
+    padding: 1.5rem 2rem;
+    background: var(--cream);
+    min-height: 480px;
+  }
+  @media (max-width: 768px) {
+    .feed-layout { grid-template-columns: 1fr; padding: 1rem; }
+  }
+  .feed-list { display: flex; flex-direction: column; gap: 0.85rem; }
+
+  /* ── Feed cards ───────────────────────────────── */
+  .feed-card {
+    background: var(--white);
+    border: 1px solid #ccdde8;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 1px 6px rgba(13,43,62,0.06);
+  }
+  .feed-card-header {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+  }
+  .feed-avatar {
+    width: 34px; height: 34px;
+    border-radius: 50%;
+    background: var(--amber);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; color: white; font-weight: 700; flex-shrink: 0;
+    overflow: hidden;
+  }
+  .feed-avatar img { width: 100%; height: 100%; object-fit: cover; }
+  .feed-name { font-size: 0.82rem; font-weight: 600; color: var(--text-dark); font-family: 'Lora', serif; }
+  .feed-byline { font-size: 0.75rem; color: var(--text-mid); }
+  .feed-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    color: var(--green-deep);
+    margin-bottom: 0.35rem;
+  }
+  .feed-photo {
+    width: 100%;
+    max-height: 280px;
+    object-fit: cover;
+    border-radius: 0.5rem;
+    margin-bottom: 0.6rem;
+  }
+  .feed-body { font-size: 0.78rem; color: var(--text-mid); line-height: 1.55; margin-bottom: 0.6rem; }
+  .feed-species {
+    display: inline-block;
+    background: rgba(26,74,107,0.1);
+    color: var(--green-water);
+    font-size: 0.72rem;
+    padding: 0.15rem 0.5rem;
+    border-radius: 1rem;
+    margin-bottom: 0.4rem;
+    font-family: 'Lora', serif;
+  }
+  .feed-actions {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    padding-top: 0.5rem;
+    border-top: 1px solid #ccdde8;
+  }
+  .feed-action {
+    font-size: 0.72rem;
+    color: var(--text-mid);
+    cursor: pointer;
+    border: none;
+    background: none;
+    padding: 0.2rem 0.4rem;
+    border-radius: 0.3rem;
+    font-family: 'Lora', serif;
+    transition: all 0.15s;
+  }
+  .feed-action:hover { color: var(--amber); background: rgba(232,146,58,0.08); }
+  .feed-action.active { color: var(--amber); font-weight: 600; }
+  .feed-action-spacer { margin-left: auto; }
+
+  /* ── Comments (collapsed by default) ──────────── */
+  .feed-card-comments {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  .feed-card-comments.expanded { max-height: 600px; }
+  .comment-list { padding-top: 0.6rem; }
   .comment-item { font-size: 0.85rem; margin-bottom: 0.4rem; }
   .comment-author { font-weight: 600; color: var(--green-deep); }
   .comment-input-row { display: flex; gap: 0.5rem; margin-top: 0.6rem; }
   .comment-input-row input { flex: 1; }
+
+  /* ── Sidebar widgets ──────────────────────────── */
+  .feed-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+  .sidebar-widget {
+    background: var(--white);
+    border: 1px solid #ccdde8;
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0 1px 6px rgba(13,43,62,0.06);
+  }
+  .widget-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 0.85rem;
+    color: var(--gold);
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid #ccdde8;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .lb-row { display: flex; align-items: center; gap: 0.6rem; padding: 0.35rem 0; border-bottom: 1px solid #eef2f6; }
+  .lb-row:last-child { border-bottom: none; }
+  .lb-rank { font-family: 'Playfair Display', serif; font-size: 0.85rem; color: var(--gold); width: 18px; text-align: center; }
+  .lb-name { font-size: 0.75rem; color: var(--text-dark); flex: 1; font-family: 'Lora', serif; }
+  .lb-catch { font-size: 0.68rem; color: var(--text-mid); }
+
+  /* Quick post widget */
+  .quick-post-form textarea {
+    width: 100%; border: 1px solid #ccdde8; border-radius: 0.5rem;
+    padding: 0.5rem; font-family: 'Lora', serif; font-size: 0.8rem;
+    resize: vertical; min-height: 60px; margin-bottom: 0.5rem;
+  }
+  .quick-post-row { display: flex; gap: 0.5rem; align-items: center; }
+  .quick-post-row input { flex: 1; font-size: 0.78rem; }
+  .quick-post-row .btn { font-size: 0.75rem; padding: 0.3rem 0.8rem; }
+
+  /* Weather widget */
+  .weather-display { display: flex; align-items: center; gap: 1rem; }
+  .weather-temp { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--green-deep); }
+  .weather-details { font-size: 0.75rem; color: var(--text-mid); line-height: 1.5; }
+  .weather-condition { font-size: 0.8rem; color: var(--text-dark); font-weight: 600; margin-bottom: 0.15rem; }
   .admin-list { display: flex; flex-direction: column; gap: 1rem; margin: 1rem 0; }
   .admin-card {
     background: var(--cream);
@@ -2992,10 +3120,18 @@
   .btn-reject  { background: var(--orange); color: white; border: none; border-radius: 6px; padding: 0.35rem 0.9rem; cursor: pointer; font-size:0.85rem; }
   .feed-empty, .admin-empty { color: var(--text-mid); font-style: italic; text-align: center; padding: 2rem; }
   .member-tab-content { min-height: 300px; }
+  [data-theme="dark"] .feed-layout { background: var(--green-deep); }
   [data-theme="dark"] .feed-card,
+  [data-theme="dark"] .sidebar-widget,
   [data-theme="dark"] .pin-post-form,
   [data-theme="dark"] .admin-card,
   [data-theme="dark"] .pending-card { background: #152840; border-color: #1e3c58; }
+  [data-theme="dark"] .feed-title { color: var(--gold); }
+  [data-theme="dark"] .feed-actions { border-color: #1e3c58; }
+  [data-theme="dark"] .lb-row { border-color: #1e3c58; }
+  [data-theme="dark"] .widget-title { border-color: #1e3c58; }
+  [data-theme="dark"] .quick-post-form textarea { background: #0d2b3e; border-color: #1e3c58; color: var(--cream); }
+  [data-theme="dark"] .feed-species { background: rgba(26,74,107,0.3); color: var(--gold); }
 
   /* ── Gallery approval ──────────────────────────── */
   .gallery-approval-section { margin-bottom: 1rem; }
@@ -4120,8 +4256,45 @@
 
       <!-- FEED TAB -->
       <div id="memberTabFeed" class="member-tab-content" style="display:none;">
-        <div id="feedList" class="feed-list">
-          <p class="feed-empty">Loading catches…</p>
+        <div class="feed-layout">
+          <div id="feedList" class="feed-list">
+            <p class="feed-empty">Loading catches…</p>
+          </div>
+          <div id="feedSidebar" class="feed-sidebar">
+            <!-- Weather widget -->
+            <div class="sidebar-widget" id="weatherWidget">
+              <div class="widget-title">🌤️ Plaquemines Parish</div>
+              <div class="weather-display" id="weatherDisplay">
+                <div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">Loading weather…</div>
+              </div>
+            </div>
+            <!-- Leaderboard widget -->
+            <div class="sidebar-widget">
+              <div class="widget-title">🏆 Top Anglers</div>
+              <div id="leaderboardList">
+                <div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">Loading…</div>
+              </div>
+            </div>
+            <!-- Quick post widget -->
+            <div class="sidebar-widget">
+              <div class="widget-title">🎣 Quick Post</div>
+              <div class="quick-post-form">
+                <textarea id="quickPostCaption" placeholder="What'd you catch today?"></textarea>
+                <div class="quick-post-row">
+                  <input type="text" class="form-input" id="quickPostSpecies" placeholder="Species">
+                  <input type="text" class="form-input" id="quickPostLocation" placeholder="Location">
+                </div>
+                <div class="quick-post-row" style="margin-top:0.5rem;">
+                  <label class="btn btn-outline btn-sm" style="cursor:pointer;font-size:0.75rem;">
+                    📷 Photo
+                    <input type="file" id="quickPostPhoto" accept="image/*" style="display:none;">
+                  </label>
+                  <span id="quickPostFileName" style="font-size:0.7rem;color:var(--text-mid);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+                  <button class="btn btn-primary btn-sm" id="btnQuickPost">Post</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -5563,10 +5736,12 @@
     }
 
     // ── Feed ──────────────────────────────────────────────────
+    var _feedReactions = {}; // cache: { pinId: { like: count, same_spot: count, userLiked: bool, userSameSpot: bool } }
+
     function loadFeed() {
       var container = document.getElementById('feedList');
       if (!container) return;
-      container.innerHTML = '<p class="feed-empty">Loading\u2026</p>';
+      container.innerHTML = '<p class="feed-empty">Loading…</p>';
       getSB()
         .from('pins')
         .select('id, lat, lng, caption, species, location_name, photo_url, created_at, user_id, profiles(display_name, avatar_url)')
@@ -5575,49 +5750,296 @@
         .limit(50)
         .then(function (res) {
           if (res.error) {
-            container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed \u2014 try refreshing.</p>';
+            container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed — try refreshing.</p>';
             console.error('[BFF] loadFeed error:', res.error);
             return;
           }
           if (!res.data || !res.data.length) {
-            container.innerHTML = '<p class="feed-empty">No catches posted yet \u2014 be the first! \uD83C\uDFA3</p>';
+            container.innerHTML = '<p class="feed-empty">No catches posted yet — be the first! 🎣</p>';
             return;
           }
-          container.innerHTML = '';
-          res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+          // Load reaction counts for all pins
+          var pinIds = res.data.map(function (p) { return p.id; });
+          loadReactionCounts(pinIds).then(function () {
+            container.innerHTML = '';
+            res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
+          });
+        });
+      // Also load sidebar
+      loadLeaderboard();
+      loadWeather();
+    }
+
+    function loadReactionCounts(pinIds) {
+      return getSB()
+        .from('reactions')
+        .select('pin_id, type, user_id')
+        .in('pin_id', pinIds)
+        .then(function (res) {
+          _feedReactions = {};
+          if (res.error || !res.data) return;
+          var uid = _currentUser ? _currentUser.id : null;
+          res.data.forEach(function (r) {
+            if (!_feedReactions[r.pin_id]) _feedReactions[r.pin_id] = { like: 0, same_spot: 0, userLiked: false, userSameSpot: false };
+            var bucket = _feedReactions[r.pin_id];
+            bucket[r.type]++;
+            if (r.user_id === uid) {
+              if (r.type === 'like') bucket.userLiked = true;
+              if (r.type === 'same_spot') bucket.userSameSpot = true;
+            }
+          });
         });
     }
 
     function buildFeedCard(pin) {
       var card = document.createElement('div');
       card.className = 'feed-card';
+      card.setAttribute('data-pin-id', pin.id);
       var avatarUrl   = (pin.profiles && pin.profiles.avatar_url)   ? pin.profiles.avatar_url   : '';
       var displayName = (pin.profiles && pin.profiles.display_name) ? pin.profiles.display_name : 'Member';
+      var initials    = displayName.split(' ').map(function (w) { return w[0]; }).join('').substring(0, 2).toUpperCase();
       var date = new Date(pin.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+      var rx = _feedReactions[pin.id] || { like: 0, same_spot: 0, userLiked: false, userSameSpot: false };
+
       card.innerHTML =
         '<div class="feed-card-header">' +
-          (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" class="feed-avatar">' :
-            '<div class="feed-avatar" style="background:var(--green-mid);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;">\uD83C\uDFA3</div>') +
+          '<div class="feed-avatar">' +
+            (avatarUrl ? '<img src="' + escapeHTML(avatarUrl) + '" alt="">' : escapeHTML(initials)) +
+          '</div>' +
           '<div>' +
-            '<div style="font-weight:600;font-family:\'Lora\',serif;">' + escapeHTML(displayName) + '</div>' +
-            '<div style="font-size:0.8rem;color:var(--text-mid);">' + date + (pin.location_name ? ' \u00B7 ' + escapeHTML(pin.location_name) : '') + '</div>' +
+            '<div class="feed-name">' + escapeHTML(displayName) + '</div>' +
+            '<div class="feed-byline">' + date + (pin.location_name ? ' · ' + escapeHTML(pin.location_name) : '') + '</div>' +
           '</div>' +
         '</div>' +
-        (pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" class="feed-photo">' : '') +
-        '<div class="feed-card-body">' +
+        (pin.caption ? '<div class="feed-title">' + escapeHTML(pin.caption) + '</div>' : '') +
+        (pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" class="feed-photo" alt="Catch photo">' : '') +
+        '<div class="feed-body">' +
           (pin.species ? '<span class="feed-species">' + escapeHTML(pin.species) + '</span>' : '') +
-          (pin.caption ? '<p class="feed-caption">' + escapeHTML(pin.caption) + '</p>' : '') +
         '</div>' +
-        '<div class="feed-card-comments">' +
+        '<div class="feed-actions">' +
+          '<button class="feed-action' + (rx.userLiked ? ' active' : '') + '" data-type="like" data-pin="' + escapeHTML(pin.id) + '">👍 <span class="rx-count">' + (rx.like || '') + '</span></button>' +
+          '<button class="feed-action" data-toggle-comments="' + escapeHTML(pin.id) + '">💬 <span class="cmt-count" id="cmtCount-' + escapeHTML(pin.id) + '"></span></button>' +
+          '<button class="feed-action feed-action-spacer' + (rx.userSameSpot ? ' active' : '') + '" data-type="same_spot" data-pin="' + escapeHTML(pin.id) + '" style="margin-left:auto;color:var(--amber);">🎣 Same spot!</button>' +
+        '</div>' +
+        '<div class="feed-card-comments" id="commentsSection-' + escapeHTML(pin.id) + '">' +
           '<div class="comment-list" id="comments-' + escapeHTML(pin.id) + '"></div>' +
           '<div class="comment-input-row">' +
-            '<input type="text" class="form-input comment-input" placeholder="Add a comment\u2026" id="commentInput-' + escapeHTML(pin.id) + '">' +
+            '<input type="text" class="form-input comment-input" placeholder="Add a comment…" id="commentInput-' + escapeHTML(pin.id) + '">' +
             '<button class="btn btn-primary btn-sm" onclick="window._bffPostComment(' + JSON.stringify(String(pin.id)) + ')">Post</button>' +
           '</div>' +
         '</div>';
+
       loadComments(pin.id, card.querySelector('.comment-list'));
       return card;
     }
+
+    // ── Reaction toggle ──────────────────────────────────────
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('.feed-action[data-type]');
+      if (!btn || !_currentUser) return;
+      var pinId = btn.getAttribute('data-pin');
+      var type  = btn.getAttribute('data-type');
+      var isActive = btn.classList.contains('active');
+      var countEl = btn.querySelector('.rx-count');
+
+      if (isActive) {
+        // Remove reaction
+        getSB().from('reactions').delete()
+          .eq('pin_id', pinId).eq('user_id', _currentUser.id).eq('type', type)
+          .then(function (res) {
+            if (!res.error) {
+              btn.classList.remove('active');
+              var cur = parseInt(countEl.textContent) || 0;
+              countEl.textContent = cur > 1 ? (cur - 1) : '';
+            }
+          });
+      } else {
+        // Add reaction
+        getSB().from('reactions').insert({ pin_id: pinId, user_id: _currentUser.id, type: type })
+          .then(function (res) {
+            if (!res.error) {
+              btn.classList.add('active');
+              var cur = parseInt(countEl.textContent) || 0;
+              countEl.textContent = cur + 1;
+            }
+          });
+      }
+    });
+
+    // ── Comment section toggle ───────────────────────────────
+    document.addEventListener('click', function (e) {
+      var btn = e.target.closest('[data-toggle-comments]');
+      if (!btn) return;
+      var pinId = btn.getAttribute('data-toggle-comments');
+      var section = document.getElementById('commentsSection-' + pinId);
+      if (section) section.classList.toggle('expanded');
+    });
+
+    // ── Leaderboard ──────────────────────────────────────────
+    function loadLeaderboard() {
+      var container = document.getElementById('leaderboardList');
+      if (!container) return;
+      getSB().rpc('get_leaderboard').then(function (res) {
+        // Fallback: if RPC doesn't exist, do client-side grouping
+        if (res.error) {
+          getSB().from('pins').select('user_id, profiles(display_name)')
+            .eq('flagged', false)
+            .then(function (r2) {
+              if (r2.error || !r2.data || !r2.data.length) {
+                container.innerHTML = '<div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">No catches yet</div>';
+                return;
+              }
+              var counts = {};
+              var names = {};
+              r2.data.forEach(function (p) {
+                counts[p.user_id] = (counts[p.user_id] || 0) + 1;
+                if (p.profiles && p.profiles.display_name) names[p.user_id] = p.profiles.display_name;
+              });
+              var sorted = Object.keys(counts).sort(function (a, b) { return counts[b] - counts[a]; }).slice(0, 5);
+              container.innerHTML = '';
+              sorted.forEach(function (uid, i) {
+                var row = document.createElement('div');
+                row.className = 'lb-row';
+                row.innerHTML =
+                  '<div class="lb-rank">' + (i + 1) + '</div>' +
+                  '<div class="lb-name">' + escapeHTML(names[uid] || 'Member') + '</div>' +
+                  '<div class="lb-catch"' + (i === 0 ? ' style="color:var(--gold);"' : '') + '>' + counts[uid] + ' catches</div>';
+                container.appendChild(row);
+              });
+            });
+          return;
+        }
+        // RPC success path
+        container.innerHTML = '';
+        res.data.slice(0, 5).forEach(function (row, i) {
+          var el = document.createElement('div');
+          el.className = 'lb-row';
+          el.innerHTML =
+            '<div class="lb-rank">' + (i + 1) + '</div>' +
+            '<div class="lb-name">' + escapeHTML(row.display_name || 'Member') + '</div>' +
+            '<div class="lb-catch"' + (i === 0 ? ' style="color:var(--gold);"' : '') + '>' + row.catches + ' catches</div>';
+          container.appendChild(el);
+        });
+      });
+    }
+
+    // ── Weather (Open-Meteo) ─────────────────────────────────
+    var _weatherCache = { data: null, fetchedAt: 0 };
+
+    function loadWeather() {
+      var container = document.getElementById('weatherDisplay');
+      if (!container) return;
+      var now = Date.now();
+      // Cache for 30 minutes
+      if (_weatherCache.data && (now - _weatherCache.fetchedAt) < 1800000) {
+        renderWeather(container, _weatherCache.data);
+        return;
+      }
+      fetch('https://api.open-meteo.com/v1/forecast?latitude=29.5955&longitude=-89.9067&current=temperature_2m,wind_speed_10m,weather_code&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=America%2FChicago')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          _weatherCache.data = data;
+          _weatherCache.fetchedAt = now;
+          renderWeather(container, data);
+        })
+        .catch(function () {
+          container.innerHTML = '<div style="font-size:0.8rem;color:var(--text-mid);">Weather unavailable</div>';
+        });
+    }
+
+    function renderWeather(container, data) {
+      if (!data || !data.current) return;
+      var c = data.current;
+      var temp = Math.round(c.temperature_2m);
+      var wind = Math.round(c.wind_speed_10m);
+      var code = c.weather_code;
+      var desc = weatherCodeToText(code);
+      var icon = weatherCodeToIcon(code);
+      container.innerHTML =
+        '<div class="weather-temp">' + icon + ' ' + temp + '°F</div>' +
+        '<div class="weather-details">' +
+          '<div class="weather-condition">' + escapeHTML(desc) + '</div>' +
+          '<div>Wind: ' + wind + ' mph</div>' +
+        '</div>';
+    }
+
+    function weatherCodeToText(code) {
+      var map = { 0:'Clear sky', 1:'Mostly clear', 2:'Partly cloudy', 3:'Overcast',
+        45:'Foggy', 48:'Fog', 51:'Light drizzle', 53:'Drizzle', 55:'Heavy drizzle',
+        61:'Light rain', 63:'Rain', 65:'Heavy rain', 71:'Light snow', 73:'Snow', 75:'Heavy snow',
+        80:'Light showers', 81:'Showers', 82:'Heavy showers', 95:'Thunderstorm', 96:'Thunderstorm w/ hail', 99:'Severe storm' };
+      return map[code] || 'Unknown';
+    }
+
+    function weatherCodeToIcon(code) {
+      if (code === 0) return '☀️';
+      if (code <= 2) return '🌤️';
+      if (code === 3) return '☁️';
+      if (code <= 48) return '🌫️';
+      if (code <= 55) return '🌦️';
+      if (code <= 65) return '🌧️';
+      if (code <= 75) return '❄️';
+      if (code <= 82) return '🌧️';
+      return '⛈️';
+    }
+
+    // ── Quick Post ───────────────────────────────────────────
+    (function () {
+      document.addEventListener('click', function (e) {
+        if (e.target.id !== 'btnQuickPost' && !e.target.closest('#btnQuickPost')) return;
+        var caption  = document.getElementById('quickPostCaption');
+        var species  = document.getElementById('quickPostSpecies');
+        var location = document.getElementById('quickPostLocation');
+        var photoInput = document.getElementById('quickPostPhoto');
+        var btn = document.getElementById('btnQuickPost');
+        if (!caption || !caption.value.trim()) { alert('Add a caption for your catch!'); return; }
+        if (!_currentUser) { alert('Please sign in first.'); return; }
+        btn.disabled = true; btn.textContent = 'Posting…';
+
+        var doPost = function (photoUrl) {
+          getSB().from('pins').insert({
+            user_id: _currentUser.id,
+            caption: caption.value.trim(),
+            species: species ? species.value.trim() : '',
+            location_name: location ? location.value.trim() : '',
+            photo_url: photoUrl || '',
+            lat: 29.5955,
+            lng: -89.9067,
+            flagged: false
+          }).then(function (res) {
+            btn.disabled = false; btn.textContent = 'Post';
+            if (res.error) { console.error('[BFF] quickPost error:', res.error); alert('Post failed — try again.'); return; }
+            caption.value = ''; if (species) species.value = ''; if (location) location.value = '';
+            if (photoInput) photoInput.value = '';
+            document.getElementById('quickPostFileName').textContent = '';
+            loadFeed();
+          });
+        };
+
+        // Upload photo if present
+        if (photoInput && photoInput.files && photoInput.files[0]) {
+          var file = photoInput.files[0];
+          var path = _currentUser.id + '/' + Date.now() + '.' + file.name.split('.').pop();
+          getSB().storage.from('pin-photos').upload(path, file)
+            .then(function (upRes) {
+              if (upRes.error) { doPost(''); return; }
+              var url = getSB().storage.from('pin-photos').getPublicUrl(path).data.publicUrl;
+              doPost(url);
+            });
+        } else {
+          doPost('');
+        }
+      });
+
+      // Show filename on photo select
+      document.addEventListener('change', function (e) {
+        if (e.target.id !== 'quickPostPhoto') return;
+        var nameEl = document.getElementById('quickPostFileName');
+        if (nameEl && e.target.files && e.target.files[0]) {
+          nameEl.textContent = e.target.files[0].name;
+        }
+      });
+    })();
 
     // ── Comments ──────────────────────────────────────────────
     function loadComments(pinId, container) {
