@@ -5900,7 +5900,7 @@
     // ── Reaction toggle ──────────────────────────────────────
     document.addEventListener('click', function (e) {
       var btn = e.target.closest('.feed-action[data-type]');
-      if (!btn || !_currentUser) return;
+      if (!btn || typeof _currentUser === 'undefined' || !_currentUser) return;
       var pinId = btn.getAttribute('data-pin');
       var type  = btn.getAttribute('data-type');
       var isActive = btn.classList.contains('active');
