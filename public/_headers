@@ -10,7 +10,7 @@
   X-XSS-Protection: 1; mode=block
   # External dependencies: unpkg (Leaflet+SRI), Google Fonts, OpenStreetMap tiles, Formspree
   # 'unsafe-inline' required — site uses inline <script> and <style> blocks (single-file architecture)
-  Content-Security-Policy: default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://unpkg.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com https://*.supabase.co https://server.arcgisonline.com; connect-src 'self' https://formspree.io https://*.supabase.co; form-action 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'
+  Content-Security-Policy: default-src 'self'; script-src 'self' https://unpkg.com https://cdn.jsdelivr.net 'unsafe-inline'; style-src 'self' https://fonts.googleapis.com https://unpkg.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https://*.tile.openstreetmap.org https://unpkg.com https://*.supabase.co https://server.arcgisonline.com https://lh3.googleusercontent.com https://graph.facebook.com; connect-src 'self' https://formspree.io https://*.supabase.co https://api.open-meteo.com; form-action 'self' https://formspree.io; frame-ancestors 'none'; base-uri 'self'; object-src 'none'
 
 # ── Cache: Photos and videos (1 year — immutable filenames) ──────────────────
 /Photos/*
