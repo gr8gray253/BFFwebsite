@@ -571,31 +571,6 @@
   /* ══════════════════════════════════════
      CLUB / JOIN SECTION
   ══════════════════════════════════════ */
-  #club {
-    background:
-      linear-gradient(180deg,
-        rgba(13,43,62,0.62) 0%,
-        rgba(26,74,107,0.42) 55%,
-        rgba(13,43,62,0.56) 100%),
-      url('Photos/Skyline%20astetic%201.jpg') center/cover no-repeat fixed;
-    position: relative;
-    overflow: hidden;
-  }
-  /* Text visibility — site blue palette, not near-black */
-  #club .section-eyebrow { color: var(--gold); }
-  #club .section-title { color: var(--white); }
-  #club .section-lead { color: rgba(238,246,251,0.92); }
-  #club .divider { background: var(--gold); }
-  /* Forms stay readable — frosted blue glass */
-  #club .signup-form {
-    background: rgba(13,43,62,0.55);
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.14);
-    border-radius: 12px;
-  }
-  #club .signup-form h3 { color: var(--gold); }
-  #club .signup-form label { color: rgba(238,246,251,0.90); }
-  #club > *:not(.section-video):not(.section-video-overlay) { position: relative; z-index: 1; }
   .membership-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -673,18 +648,6 @@
   }
   .paywall-note strong { color: var(--green-deep); }
 
-  .signup-form {
-    background: var(--cream);
-    border-radius: 12px;
-    padding: 2.5rem;
-    margin-top: 2rem;
-  }
-  .signup-form h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    color: var(--green-deep);
-    margin-bottom: 1.5rem;
-  }
   .form-row {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -1265,12 +1228,10 @@
   .donate-payment-block { margin-top: 1.25rem; text-align: center; }
   .donate-payment-block p { font-size: 0.82rem; color: rgba(238,246,251,0.6); margin-bottom: 0.65rem; letter-spacing: 0.04em; }
   /* Accessibility text-shadow — boosts contrast at text level, keeps photo visible */
-  #club .section-title,
   #innisfree .section-title,
   #donate .section-title {
     text-shadow: 0 1px 8px rgba(6,14,26,0.55);
   }
-  #club .section-lead,
   #innisfree .section-lead,
   #donate .section-lead {
     text-shadow: 0 1px 4px rgba(6,14,26,0.45);
@@ -2025,7 +1986,7 @@
      SECTION VIDEO BACKGROUNDS
   ══════════════════════════════════════ */
   .hero { position: relative; }
-  .hero-video, .section-video {
+  .hero-video {
     position: absolute;
     top: 0; left: 0;
     width: 100%; height: 100%;
@@ -2034,7 +1995,6 @@
     pointer-events: none;
   }
   .hero-video { opacity: 0.3; }
-  .section-video { opacity: 0.3; }
   .hero > *:not(.hero-video) { position: relative; z-index: 1; }
 
   /* ── CHECK TWICE CARD VIDEO BACKGROUND ── */
@@ -2094,21 +2054,9 @@
   .strip-content .section-lead { color: rgba(247,237,216,0.85); }
   .strip-content .section-eyebrow { color: var(--gold); }
 
-  /* ── CLUB SECTION VIDEO OVERLAY ── */
-  #club { position: relative; }
-  .section-video-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(247,237,216,0.55);
-    z-index: 0;
-    pointer-events: none;
-  }
-
   /* ── VIDEO: MOBILE HIDE ── */
   @media (max-width: 768px) {
-    .strip-video,
-    .section-video,
-    .section-video-overlay { display: none; }
+    .strip-video { display: none; }
     .video-hero-strip {
       background: linear-gradient(135deg, var(--green-deep) 0%, var(--green-water) 100%);
     }
@@ -2379,7 +2327,7 @@
     }
     .fade-in { animation: none !important; }
     .map-dot { animation: none !important; }
-    .hero-video, .strip-video, .section-video, .section-video-overlay { display: none; }
+    .hero-video, .strip-video { display: none; }
     [data-scroll] { opacity: 1 !important; transform: none !important; }
     .section-enter, .section-exit { animation: none !important; }
     *, *::before, *::after { transition-duration: 0.01ms !important; }
@@ -2652,7 +2600,6 @@
   [data-theme="dark"] .card { background: #091929; border-color: #0f2438; }
   [data-theme="dark"] .quick-card { background: #060e1a; }
   [data-theme="dark"] .quick-card:hover { background: #091929; }
-  [data-theme="dark"] .signup-form { background: #060e1a; }
   [data-theme="dark"] .volunteer-form-wrap { background: #060e1a; box-shadow: none; }
   [data-theme="dark"] .opp-card { background: #060e1a; }
   [data-theme="dark"] .boat-story { background: #060e1a; }
@@ -2671,7 +2618,6 @@
   [data-theme="dark"] #volunteer,
   [data-theme="dark"] #boats,
   [data-theme="dark"] #members,
-  [data-theme="dark"] #club,
   [data-theme="dark"] #innisfree,
   [data-theme="dark"] #donate { filter: brightness(0.82); }
 
@@ -2709,7 +2655,7 @@
 
   /* iOS Safari: background-attachment fixed breaks — use scroll on mobile */
   @media (max-width: 768px) {
-    #home, #club, #volunteer, #boats, #innisfree, #gallery, #donate, #about, #members,
+    #home, #volunteer, #boats, #innisfree, #gallery, #donate, #about, #members,
     .members-hero {
       background-attachment: scroll !important;
     }
