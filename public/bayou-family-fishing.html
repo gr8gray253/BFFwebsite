@@ -3299,7 +3299,6 @@
   </div>
   <ul class="nav-links" id="navLinks">
     <li><a href="#" onclick="return showSection('home')" class="active" id="nav-home">Home</a></li>
-    <li><a href="#" onclick="return showSection('club')" id="nav-club">Join</a></li>
     <li><a href="#" onclick="return showSection('volunteer')" id="nav-volunteer">Volunteer</a></li>
     <li><a href="#" onclick="return showSection('boats')" id="nav-boats">Boats</a></li>
     <li><a href="#" onclick="return showSection('innisfree')" id="nav-innisfree">INNISFREE</a></li>
@@ -3331,7 +3330,7 @@
       <a href="/fishing-rodeo.html" class="btn btn-gold hero-event-btn">Sign Up &amp; Learn More →</a>
     </div>
     <div class="hero-buttons">
-      <button class="btn btn-gold" onclick="showSection('club')">Join the Club</button>
+      <button class="btn btn-gold" onclick="showSection('members')">Become a Member</button>
       <button class="btn btn-outline" style="color:var(--cream);border-color:rgba(247,237,216,0.5);" onclick="showSection('volunteer')">Get Involved</button>
       <button class="btn btn-primary" onclick="showSection('donate')">Donate</button>
     </div>
@@ -3347,9 +3346,9 @@
       <p class="section-eyebrow" data-scroll="fade-up">Get Started</p>
       <h2 class="section-title" data-scroll="fade-up">Everything we <em>offer</em></h2>
       <div class="quick-links-grid">
-        <div class="quick-card" onclick="showSection('club')">
+        <div class="quick-card" onclick="showSection('members')">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><rect x="6" y="2" width="12" height="13" rx="2"/></svg></div>
-          <h3>Join the Club</h3>
+          <h3>Become a Member</h3>
           <p>BFF members can access boats, attend events, get discounts on charters, and support our community.</p>
         </div>
         <div class="quick-card" onclick="showSection('volunteer')">
@@ -4402,7 +4401,7 @@
   </div>
   <div class="footer-links">
     <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('club')">Join</a>
+    <a href="#" onclick="showSection('members')">Join</a>
     <a href="#" onclick="showSection('volunteer')">Volunteer</a>
     <a href="#" onclick="showSection('boats')">Boats</a>
     <a href="#" onclick="showSection('innisfree')">INNISFREE</a>
@@ -4431,7 +4430,7 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
 <script>
   // ─── SECTION NAVIGATION ───
-  const VALID_SECTIONS = ['home','gallery','club','volunteer','boats','innisfree','donate','about','members'];
+  const VALID_SECTIONS = ['home','gallery','volunteer','boats','innisfree','donate','about','members'];
   let _innisfreeMapReady = false;
   let _leafletMap = null;
 
