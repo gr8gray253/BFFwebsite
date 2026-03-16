@@ -2770,6 +2770,8 @@
     flex-direction: column;
     gap: 0;
     margin-bottom: 1rem;
+    position: relative;
+    z-index: 10;
   }
   /* ── Primary nav (Approach C) ──────────────────── */
   .member-primary-nav {
@@ -4316,19 +4318,19 @@
     <!-- MAIN MEMBER VIEW -->
     <div id="membersMain" class="members-main-view" style="display:none;">
       <div class="members-nav">
-        <nav class="member-primary-nav" role="navigation" aria-label="Member portal navigation">
-          <button class="member-primary-tab active" id="mptFeed" onclick="switchPrimaryTab('Feed')" aria-selected="true">📸 Feed</button>
-          <button class="member-primary-tab" id="mptCommunity" onclick="switchPrimaryTab('Community')" aria-selected="false">🌊 Community</button>
-          <button class="member-primary-tab" id="mptMap" onclick="switchPrimaryTab('Map')" aria-selected="false">🗺️ Map</button>
-          <button class="member-primary-tab" id="mptAdmin" onclick="switchPrimaryTab('Admin')" aria-selected="false" style="display:none;">⚙️ Admin <span id="adminNavBadge" class="admin-nav-badge" style="display:none;"></span></button>
+        <nav class="member-primary-nav" role="tablist" aria-label="Member portal navigation">
+          <button class="member-primary-tab active" id="mptFeed" role="tab" aria-selected="true" aria-controls="memberTabFeed" onclick="switchPrimaryTab('Feed')">📸 Feed</button>
+          <button class="member-primary-tab" id="mptCommunity" role="tab" aria-selected="false" aria-controls="memberTabCommunity" onclick="switchPrimaryTab('Community')">🌊 Community</button>
+          <button class="member-primary-tab" id="mptMap" role="tab" aria-selected="false" aria-controls="memberTabMap" onclick="switchPrimaryTab('Map')">🗺️ Map</button>
+          <button class="member-primary-tab" id="mptAdmin" role="tab" aria-selected="false" aria-controls="memberTabAdmin" onclick="switchPrimaryTab('Admin')" style="display:none;">⚙️ Admin <span id="adminNavBadge" class="admin-nav-badge" style="display:none;"></span></button>
         </nav>
-        <nav class="member-secondary-nav" id="memberSecondaryNav" role="navigation" aria-label="Community sections" style="display:none;">
-          <button class="member-secondary-tab active" id="mstTrips"        onclick="switchCommunityTab('Trips')">🎣 Trips</button>
-          <button class="member-secondary-tab"         id="mstGuides"      onclick="switchCommunityTab('Guides')">🧑‍✈️ Guides</button>
-          <button class="member-secondary-tab"         id="mstGear"        onclick="switchCommunityTab('Gear')">🛒 Gear &amp; Classifieds</button>
-          <button class="member-secondary-tab"         id="mstForum"       onclick="switchCommunityTab('Forum')">💬 Forum</button>
-          <button class="member-secondary-tab"         id="mstLeaderboard" onclick="switchCommunityTab('Leaderboard')">🏆 Leaderboard</button>
-          <button class="member-secondary-tab"         id="mstRecipes"     onclick="switchCommunityTab('Recipes')">🍳 Recipes</button>
+        <nav class="member-secondary-nav" id="memberSecondaryNav" role="tablist" aria-label="Community sections" style="display:none;">
+          <button class="member-secondary-tab active" id="mstTrips"        role="tab" aria-selected="true"  aria-controls="commPanelTrips"       onclick="switchCommunityTab('Trips')">🎣 Trips</button>
+          <button class="member-secondary-tab"         id="mstGuides"      role="tab" aria-selected="false" aria-controls="commPanelGuides"      onclick="switchCommunityTab('Guides')">🧑‍✈️ Guides</button>
+          <button class="member-secondary-tab"         id="mstGear"        role="tab" aria-selected="false" aria-controls="commPanelGear"        onclick="switchCommunityTab('Gear')">🛒 Gear &amp; Classifieds</button>
+          <button class="member-secondary-tab"         id="mstForum"       role="tab" aria-selected="false" aria-controls="commPanelForum"       onclick="switchCommunityTab('Forum')">💬 Forum</button>
+          <button class="member-secondary-tab"         id="mstLeaderboard" role="tab" aria-selected="false" aria-controls="commPanelLeaderboard" onclick="switchCommunityTab('Leaderboard')">🏆 Leaderboard</button>
+          <button class="member-secondary-tab"         id="mstRecipes"     role="tab" aria-selected="false" aria-controls="commPanelRecipes"     onclick="switchCommunityTab('Recipes')">🍳 Recipes</button>
         </nav>
         <div class="member-user-info">
           <button class="pe-open-btn" id="btnOpenProfileEditor" onclick="openProfileEditor()" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
@@ -4342,7 +4344,7 @@
       </div>
 
       <!-- MAP TAB -->
-      <div id="memberTabMap" class="member-tab-content" style="display:none;">
+      <div id="memberTabMap" class="member-tab-content" role="tabpanel" aria-labelledby="mptMap" style="display:none;">
         <div id="memberMap"></div>
         <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>
         <div class="pin-post-form" id="pinPostForm" style="display:none;">
@@ -4372,7 +4374,7 @@
       </div>
 
       <!-- FEED TAB -->
-      <div id="memberTabFeed" class="member-tab-content">
+      <div id="memberTabFeed" class="member-tab-content" role="tabpanel" aria-labelledby="mptFeed">
         <div class="feed-layout">
           <div id="feedList" class="feed-list">
             <p class="feed-empty">Loading catches…</p>
@@ -4416,7 +4418,7 @@
       </div>
 
       <!-- ADMIN TAB -->
-      <div id="memberTabAdmin" class="member-tab-content" style="display:none;">
+      <div id="memberTabAdmin" class="member-tab-content" role="tabpanel" aria-labelledby="mptAdmin" style="display:none;">
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin-bottom:1rem;">Pending Accounts</h3>
         <div id="adminPendingList" class="admin-list"><p class="admin-empty">Loading…</p></div>
         <!-- Gallery Submissions (admin only) -->
@@ -4465,7 +4467,7 @@
         <div id="adminFlaggedList" class="admin-list"><p class="admin-empty">Loading…</p></div>
       </div>
       <!-- COMMUNITY HUB PANEL -->
-      <div id="memberTabCommunity" class="member-tab-content" style="display:none;">
+      <div id="memberTabCommunity" class="member-tab-content" role="tabpanel" aria-labelledby="mptCommunity" style="display:none;">
         <div id="commPanelTrips"        class="comm-panel"></div>
         <div id="commPanelGuides"       class="comm-panel" style="display:none;"></div>
         <div id="commPanelGear"         class="comm-panel" style="display:none;"></div>
@@ -6584,6 +6586,24 @@
       if (tab === 'Map')       { if (_memberMap) setTimeout(function () { _memberMap.invalidateSize(); }, 50); }
       if (tab === 'Admin')     { loadAdminQueues(); loadPendingGallerySubmissions(); }
     };
+
+    // ── Keyboard navigation for tab bars ──────────────────────
+    document.addEventListener('keydown', function(e) {
+      var tab = document.activeElement;
+      if (!tab) return;
+      var isPrimary = tab.classList.contains('member-primary-tab');
+      var isSecondary = tab.classList.contains('member-secondary-tab');
+      if (!isPrimary && !isSecondary) return;
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      var tabs = Array.from(tab.parentElement.querySelectorAll(isPrimary ? '.member-primary-tab' : '.member-secondary-tab'));
+      tabs = tabs.filter(function(t) { return t.style.display !== 'none'; });
+      var idx = tabs.indexOf(tab);
+      if (idx === -1) return;
+      var next = e.key === 'ArrowRight' ? (idx + 1) % tabs.length : (idx - 1 + tabs.length) % tabs.length;
+      tabs[next].focus();
+      tabs[next].click();
+    });
 
     // Community sub-tab switching (stubs — content added in wave-2-community)
     var _currentCommunityTab = 'Trips';
