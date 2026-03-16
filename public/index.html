@@ -5802,10 +5802,13 @@
 
     // ── Feed ──────────────────────────────────────────────────
     var _feedReactions = {}; // cache: { pinId: { like: count, same_spot: count, userLiked: bool, userSameSpot: bool } }
+    var _feedLoading = false; // debounce guard — prevents triple-render on portal init
 
     function loadFeed() {
+      if (_feedLoading) return;
+      _feedLoading = true;
       var container = document.getElementById('feedList');
-      if (!container) return;
+      if (!container) { _feedLoading = false; return; }
       container.innerHTML = '<p class="feed-empty">Loading…</p>';
       getSB()
         .from('pins')
@@ -5817,10 +5820,12 @@
           if (res.error) {
             container.innerHTML = '<p class="feed-empty">Couldn\'t load the feed — try refreshing.</p>';
             console.error('[BFF] loadFeed error:', res.error);
+            _feedLoading = false;
             return;
           }
           if (!res.data || !res.data.length) {
             container.innerHTML = '<p class="feed-empty">No catches posted yet — be the first! 🎣</p>';
+            _feedLoading = false;
             return;
           }
           // Load reaction counts for all pins
@@ -5828,8 +5833,10 @@
           loadReactionCounts(pinIds).then(function () {
             container.innerHTML = '';
             res.data.forEach(function (pin) { container.appendChild(buildFeedCard(pin)); });
-          });
-        });
+            _feedLoading = false;
+          }).catch(function () { _feedLoading = false; });
+        })
+        .catch(function () { _feedLoading = false; });
       // Also load sidebar
       loadFeedLeaderboard();
       loadWeather();
