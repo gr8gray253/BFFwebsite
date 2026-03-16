@@ -85,7 +85,7 @@
   }
 
   /* ─── NAV ─── */
-  nav {
+  .site-nav {
     position: fixed;
     top: 0; left: 0; right: 0;
     z-index: 1000;
@@ -2542,7 +2542,7 @@
   /* ══════════════════════════════════════
      ENHANCED NAV GLASSMORPHISM
   ══════════════════════════════════════ */
-  nav {
+  .site-nav {
     backdrop-filter: blur(18px) saturate(1.4);
     -webkit-backdrop-filter: blur(18px) saturate(1.4);
     background: rgba(13, 43, 62, 0.88);
@@ -2598,7 +2598,7 @@
        text that used --green-deep gets overridden explicitly below. */
   }
   [data-theme="dark"] body { background: #0a1520; color: #d4e8f5; }
-  [data-theme="dark"] nav { background: rgba(8, 18, 28, 0.94); }
+  [data-theme="dark"] .site-nav { background: rgba(8, 18, 28, 0.94); }
   [data-theme="dark"] .nav-links a { color: var(--cream); }
   [data-theme="dark"] .nav-links a:hover,
   [data-theme="dark"] .nav-links a.active { color: var(--gold); }
@@ -2775,6 +2775,11 @@
   }
   /* ── Primary nav (Approach C) ──────────────────── */
   .member-primary-nav {
+    position: static;         /* Override bare nav { position: fixed } */
+    top: auto;
+    left: auto;
+    right: auto;
+    z-index: auto;
     background: rgba(13,43,62,0.85);
     backdrop-filter: blur(6px);
     border-top: 1px solid rgba(255,255,255,0.08);
@@ -2810,6 +2815,11 @@
   }
   /* ── Secondary nav (Community sub-nav) ─────────── */
   .member-secondary-nav {
+    position: static;         /* Override bare nav { position: fixed } */
+    top: auto;
+    left: auto;
+    right: auto;
+    z-index: auto;
     background: var(--green-water);
     border-bottom: 2px solid rgba(0,0,0,0.1);
     display: flex;
@@ -3332,7 +3342,7 @@
 </div>
 
 <!-- NAVIGATION -->
-<nav>
+<nav class="site-nav">
   <div class="nav-logo" onclick="return showSection('home')">
     Bayou Charity
   </div>
