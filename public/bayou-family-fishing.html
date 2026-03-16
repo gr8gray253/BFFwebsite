@@ -4256,8 +4256,45 @@
 
       <!-- FEED TAB -->
       <div id="memberTabFeed" class="member-tab-content" style="display:none;">
-        <div id="feedList" class="feed-list">
-          <p class="feed-empty">Loading catches…</p>
+        <div class="feed-layout">
+          <div id="feedList" class="feed-list">
+            <p class="feed-empty">Loading catches…</p>
+          </div>
+          <div id="feedSidebar" class="feed-sidebar">
+            <!-- Weather widget -->
+            <div class="sidebar-widget" id="weatherWidget">
+              <div class="widget-title">🌤️ Plaquemines Parish</div>
+              <div class="weather-display" id="weatherDisplay">
+                <div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">Loading weather…</div>
+              </div>
+            </div>
+            <!-- Leaderboard widget -->
+            <div class="sidebar-widget">
+              <div class="widget-title">🏆 Top Anglers</div>
+              <div id="leaderboardList">
+                <div style="font-size:0.8rem;color:var(--text-mid);font-style:italic;">Loading…</div>
+              </div>
+            </div>
+            <!-- Quick post widget -->
+            <div class="sidebar-widget">
+              <div class="widget-title">🎣 Quick Post</div>
+              <div class="quick-post-form">
+                <textarea id="quickPostCaption" placeholder="What'd you catch today?"></textarea>
+                <div class="quick-post-row">
+                  <input type="text" class="form-input" id="quickPostSpecies" placeholder="Species">
+                  <input type="text" class="form-input" id="quickPostLocation" placeholder="Location">
+                </div>
+                <div class="quick-post-row" style="margin-top:0.5rem;">
+                  <label class="btn btn-outline btn-sm" style="cursor:pointer;font-size:0.75rem;">
+                    📷 Photo
+                    <input type="file" id="quickPostPhoto" accept="image/*" style="display:none;">
+                  </label>
+                  <span id="quickPostFileName" style="font-size:0.7rem;color:var(--text-mid);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></span>
+                  <button class="btn btn-primary btn-sm" id="btnQuickPost">Post</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
