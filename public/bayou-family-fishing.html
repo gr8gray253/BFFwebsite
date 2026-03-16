@@ -4433,6 +4433,34 @@
           </div>
         </div>
         <!-- End Gallery Submissions -->
+
+        <!-- Pending Trips -->
+        <div class="gallery-approval-section" id="tripsApprovalSection" style="margin-top:1.5rem;">
+          <div class="gallery-approval-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+            <span class="gallery-approval-label">🎣 Pending Trips <span id="tripsPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
+            <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
+          </div>
+          <div id="tripsPendingList" class="gallery-pending-list"></div>
+        </div>
+
+        <!-- Pending Guides -->
+        <div class="gallery-approval-section" id="guidesApprovalSection" style="margin-top:1rem;">
+          <div class="gallery-approval-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+            <span class="gallery-approval-label">🧑‍✈️ Pending Guides <span id="guidesPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
+            <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
+          </div>
+          <div id="guidesPendingList" class="gallery-pending-list"></div>
+        </div>
+
+        <!-- Pending Classifieds -->
+        <div class="gallery-approval-section" id="classifiedsApprovalSection" style="margin-top:1rem;">
+          <div class="gallery-approval-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+            <span class="gallery-approval-label">🛒 Pending Classifieds <span id="classifiedsPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
+            <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
+          </div>
+          <div id="classifiedsPendingList" class="gallery-pending-list"></div>
+        </div>
+
         <h3 style="font-family:'Playfair Display',serif;color:var(--green-deep);margin:2rem 0 1rem;">Flagged Posts</h3>
         <div id="adminFlaggedList" class="admin-list"><p class="admin-empty">Loading…</p></div>
       </div>
@@ -6288,6 +6316,9 @@
             });
           });
       }
+      loadPendingTrips();
+      loadPendingGuides();
+      loadPendingClassifieds();
     }
 
     window._bffApproveUser = function (userId, row) {
@@ -6466,6 +6497,77 @@
       loadPendingGallerySubmissions();
     };
     // ── End Gallery Admin Approval ────────────────────────────────
+
+    // ── Community Admin — Pending approvals ───────────────────
+    function loadPendingTrips() {
+      var list = document.getElementById('tripsPendingList');
+      var badge = document.getElementById('tripsPendingCount');
+      if (!list) return;
+      getSB().from('trips').select('*, profiles(display_name)').eq('status','pending')
+        .then(function(res) {
+          if (res.error || !res.data || !res.data.length) { list.innerHTML = '<div class="admin-empty">No pending trips.</div>'; return; }
+          if (badge) { badge.textContent = res.data.length; badge.style.display = ''; }
+          list.innerHTML = res.data.map(function(t) {
+            var name = (t.profiles && t.profiles.display_name) ? escapeHTML(t.profiles.display_name) : 'Member';
+            return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(t.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + ' · ' + escapeHTML(t.trip_date) + '</span></div>' +
+              '<div class="admin-card-actions">' +
+              '<button class="btn-approve" onclick="approveContent(\'trips\',' + JSON.stringify(String(t.id)) + ',\'approved\',this)">Approve</button>' +
+              '<button class="btn-reject"  onclick="approveContent(\'trips\',' + JSON.stringify(String(t.id)) + ',\'cancelled\',this)">Reject</button>' +
+              '</div></div>';
+          }).join('');
+        });
+    }
+
+    function loadPendingGuides() {
+      var list = document.getElementById('guidesPendingList');
+      var badge = document.getElementById('guidesPendingCount');
+      if (!list) return;
+      getSB().from('guide_postings').select('*, profiles(display_name)').eq('status','pending')
+        .then(function(res) {
+          if (res.error || !res.data || !res.data.length) { list.innerHTML = '<div class="admin-empty">No pending guide listings.</div>'; return; }
+          if (badge) { badge.textContent = res.data.length; badge.style.display = ''; }
+          list.innerHTML = res.data.map(function(g) {
+            var name = (g.profiles && g.profiles.display_name) ? escapeHTML(g.profiles.display_name) : 'Member';
+            return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(g.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + '</span></div>' +
+              '<div class="admin-card-actions">' +
+              '<button class="btn-approve" onclick="approveContent(\'guide_postings\',' + JSON.stringify(String(g.id)) + ',\'approved\',this)">Approve</button>' +
+              '<button class="btn-reject"  onclick="approveContent(\'guide_postings\',' + JSON.stringify(String(g.id)) + ',\'removed\',this)">Reject</button>' +
+              '</div></div>';
+          }).join('');
+        });
+    }
+
+    function loadPendingClassifieds() {
+      var list = document.getElementById('classifiedsPendingList');
+      var badge = document.getElementById('classifiedsPendingCount');
+      if (!list) return;
+      getSB().from('classifieds').select('*, profiles(display_name)').eq('status','pending')
+        .then(function(res) {
+          if (res.error || !res.data || !res.data.length) { list.innerHTML = '<div class="admin-empty">No pending listings.</div>'; return; }
+          if (badge) { badge.textContent = res.data.length; badge.style.display = ''; }
+          list.innerHTML = res.data.map(function(c) {
+            var name = (c.profiles && c.profiles.display_name) ? escapeHTML(c.profiles.display_name) : 'Member';
+            return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(c.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + (c.price ? ' · ' + escapeHTML(c.price) : '') + '</span></div>' +
+              '<div class="admin-card-actions">' +
+              '<button class="btn-approve" onclick="approveContent(\'classifieds\',' + JSON.stringify(String(c.id)) + ',\'approved\',this)">Approve</button>' +
+              '<button class="btn-reject"  onclick="approveContent(\'classifieds\',' + JSON.stringify(String(c.id)) + ',\'removed\',this)">Reject</button>' +
+              '</div></div>';
+          }).join('');
+        });
+    }
+
+    function approveContent(table, id, status, btn) {
+      if (!btn) return;
+      btn.disabled = true;
+      getSB().from(table).update({ status: status }).eq('id', id)
+        .then(function(res) {
+          if (res.error) { btn.disabled = false; console.error(res.error); return; }
+          var card = btn.closest('.admin-card');
+          if (card) card.remove();
+          showCommToast(status === 'approved' ? 'Approved ✓' : 'Rejected');
+        });
+    }
+    // ── End Community Admin ───────────────────────────────────
 
     // ── Tab switcher ──────────────────────────────────────────
     window.switchPrimaryTab = function (tab) {
