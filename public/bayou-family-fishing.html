@@ -6539,6 +6539,432 @@
       if (modal && e.target === modal) closeCommModal();
     });
 
+    // ── Trips ─────────────────────────────────────────────────
+    var _tripsLoaded = false;
+
+    function loadTrips() {
+      var panel = document.getElementById('commPanelTrips');
+      if (!panel || _tripsLoaded) return;
+      _tripsLoaded = true;
+      panel.innerHTML = '<div class="comm-empty">Loading trips…</div>';
+      getSB().from('trips').select('*, profiles(display_name)')
+        .eq('status','approved').order('trip_date', { ascending: true })
+        .then(function(res) {
+          if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load trips.</div>'; return; }
+          var club   = res.data.filter(function(t) { return t.type === 'club'; });
+          var member = res.data.filter(function(t) { return t.type === 'member'; });
+          var html = '<button class="comm-post-btn" onclick="openTripForm()">+ Post a Trip</button>' +
+            '<div class="comm-approval-note">Member-posted trips are reviewed by Kyle before appearing here.</div>';
+          if (club.length)   { html += '<div class="comm-section-heading">Club Events</div>'  + club.map(renderTripCard).join(''); }
+          if (member.length) { html += '<div class="comm-section-heading">Member Trips</div>' + member.map(renderTripCard).join(''); }
+          if (!club.length && !member.length) html += '<div class="comm-empty">No upcoming trips — be the first to post one!</div>';
+          panel.innerHTML = html;
+        });
+    }
+
+    function renderTripCard(trip) {
+      var name  = (trip.profiles && trip.profiles.display_name) ? escapeHTML(trip.profiles.display_name) : 'Member';
+      var date  = new Date(trip.trip_date).toLocaleDateString('en-US', { weekday:'short', month:'long', day:'numeric', year:'numeric' });
+      var spots = trip.max_spots ? trip.max_spots + ' spots' : 'Open';
+      return '<div class="comm-card">' +
+        '<span class="comm-card-badge ' + (trip.type === 'club' ? 'badge-club' : 'badge-member') + '">' + (trip.type === 'club' ? 'Club Event' : 'Member Trip') + '</span>' +
+        '<div class="comm-card-title">' + escapeHTML(trip.title) + '</div>' +
+        '<div class="comm-card-meta">' + date + (trip.location ? ' · ' + escapeHTML(trip.location) : '') + '<br>Posted by ' + name + '</div>' +
+        (trip.description ? '<div class="comm-card-meta">' + escapeHTML(trip.description) + '</div>' : '') +
+        '<div class="comm-card-footer">' +
+          '<span style="font-size:0.68rem;color:var(--text-mid);background:var(--cream);padding:0.2rem 0.6rem;border-radius:1rem;border:1px solid #ccdde8;">' + escapeHTML(spots) + '</span>' +
+          '<button class="comm-cta-btn" onclick="rsvpTrip(' + JSON.stringify(String(trip.id)) + ',this)">RSVP</button>' +
+        '</div></div>';
+    }
+
+    function rsvpTrip(tripId, btn) {
+      if (!_currentUser) { alert('Sign in to RSVP.'); return; }
+      btn.disabled = true; btn.textContent = 'Sending…';
+      getSB().from('trip_rsvps').insert({ trip_id: tripId, member_id: _currentUser.id })
+        .then(function(res) {
+          if (res.error && res.error.code === '23505') { btn.textContent = "Already RSVP'd"; return; }
+          if (res.error) { btn.disabled = false; btn.textContent = 'RSVP'; console.error(res.error); return; }
+          btn.textContent = "RSVP'd ✓";
+        });
+    }
+
+    function openTripForm() {
+      openCommModal('trip', {
+        title: '🎣 Post a Trip',
+        formHtml: '<div class="comm-modal-field"><label>Trip Title *</label><input type="text" id="cfTripTitle" placeholder="e.g. Redfish run at Breton Sound"></div>' +
+          '<div class="comm-modal-field"><label>Date *</label><input type="date" id="cfTripDate"></div>' +
+          '<div class="comm-modal-field"><label>Location</label><input type="text" id="cfTripLocation" placeholder="e.g. Breton Sound"></div>' +
+          '<div class="comm-modal-field"><label>Max Spots</label><input type="number" id="cfTripSpots" min="1" placeholder="Leave blank for open"></div>' +
+          '<div class="comm-modal-field"><label>Description</label><textarea id="cfTripDesc" placeholder="Details about the trip…"></textarea></div>' +
+          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitTrip()">Submit for Approval</button></div>'
+      });
+    }
+
+    function submitTrip() {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      var title = document.getElementById('cfTripTitle');
+      var date  = document.getElementById('cfTripDate');
+      if (!title || !title.value.trim()) { alert('Trip title is required.'); return; }
+      if (!date  || !date.value)          { alert('Date is required.'); return; }
+      var spots = document.getElementById('cfTripSpots');
+      var spotsVal = spots && spots.value ? parseInt(spots.value) : null;
+      getSB().from('trips').insert({
+        created_by: _currentUser.id, type: 'member', status: 'pending',
+        title: title.value.trim(),
+        trip_date: date.value,
+        location: (document.getElementById('cfTripLocation') || {}).value || '',
+        description: (document.getElementById('cfTripDesc') || {}).value || '',
+        max_spots: spotsVal
+      }).then(function(res) {
+        if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+        closeCommModal();
+        showCommToast('Trip submitted — Kyle will review it before it goes live.');
+      });
+    }
+    // ── End Trips ─────────────────────────────────────────────
+
+    // ── Guides ────────────────────────────────────────────────
+    var _guidesLoaded = false;
+
+    function loadGuides() {
+      var panel = document.getElementById('commPanelGuides');
+      if (!panel || _guidesLoaded) return;
+      _guidesLoaded = true;
+      panel.innerHTML = '<div class="comm-empty">Loading guides…</div>';
+      getSB().from('guide_postings').select('*, profiles(display_name)')
+        .eq('status','approved').order('created_at', { ascending: false })
+        .then(function(res) {
+          if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load guide listings.</div>'; return; }
+          var html = '<button class="comm-post-btn" onclick="openGuideForm()">+ List Your Guide Services</button>' +
+            '<div class="comm-approval-note">Guide listings are reviewed by Kyle before appearing here.</div>';
+          if (!res.data.length) html += '<div class="comm-empty">No guide listings yet.</div>';
+          else html += res.data.map(renderGuideCard).join('');
+          panel.innerHTML = html;
+        });
+    }
+
+    function renderGuideCard(g) {
+      var name = (g.profiles && g.profiles.display_name) ? escapeHTML(g.profiles.display_name) : 'Member';
+      return '<div class="comm-card">' +
+        '<span class="comm-card-badge badge-guide">Guide</span>' +
+        '<div class="comm-card-title">' + escapeHTML(g.title) + '</div>' +
+        '<div class="comm-card-meta">' +
+          (g.rate ? 'Rate: ' + escapeHTML(g.rate) + '<br>' : '') +
+          (g.available_dates ? 'Available: ' + escapeHTML(g.available_dates) + '<br>' : '') +
+          'Posted by ' + name +
+        '</div>' +
+        (g.description ? '<div class="comm-card-meta">' + escapeHTML(g.description) + '</div>' : '') +
+        '<div class="comm-card-footer"><span></span>' +
+          (g.contact ? '<a href="mailto:' + escapeHTML(g.contact) + '" class="comm-cta-btn" style="text-decoration:none;">Contact</a>' : '') +
+        '</div></div>';
+    }
+
+    function openGuideForm() {
+      openCommModal('guide', {
+        title: '🧑‍✈️ List Your Guide Services',
+        formHtml: '<div class="comm-modal-field"><label>Listing Title *</label><input type="text" id="cfGuideTitle" placeholder="e.g. Half-day inshore trips — Plaquemines Parish"></div>' +
+          '<div class="comm-modal-field"><label>Rate</label><input type="text" id="cfGuideRate" placeholder="e.g. $250 half-day, $400 full-day"></div>' +
+          '<div class="comm-modal-field"><label>Available Dates / Schedule</label><input type="text" id="cfGuideDates" placeholder="e.g. Weekends Apr–Oct"></div>' +
+          '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGuideContact"></div>' +
+          '<div class="comm-modal-field"><label>Description</label><textarea id="cfGuideDesc" placeholder="Tell members about your experience and what you offer…"></textarea></div>' +
+          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitGuide()">Submit for Approval</button></div>'
+      });
+    }
+
+    function submitGuide() {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      var title = document.getElementById('cfGuideTitle');
+      if (!title || !title.value.trim()) { alert('Title is required.'); return; }
+      getSB().from('guide_postings').insert({
+        guide_id: _currentUser.id, status: 'pending',
+        title: title.value.trim(),
+        rate:            (document.getElementById('cfGuideRate')    || {}).value || '',
+        available_dates: (document.getElementById('cfGuideDates')   || {}).value || '',
+        contact:         (document.getElementById('cfGuideContact') || {}).value || '',
+        description:     (document.getElementById('cfGuideDesc')    || {}).value || ''
+      }).then(function(res) {
+        if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+        closeCommModal();
+        showCommToast('Guide listing submitted — Kyle will review it before it goes live.');
+      });
+    }
+    // ── End Guides ────────────────────────────────────────────
+
+    // ── Gear / Classifieds ────────────────────────────────────
+    var _classifiedsLoaded = false;
+
+    function loadClassifieds() {
+      var panel = document.getElementById('commPanelGear');
+      if (!panel || _classifiedsLoaded) return;
+      _classifiedsLoaded = true;
+      panel.innerHTML = '<div class="comm-empty">Loading listings…</div>';
+      getSB().from('classifieds').select('*, profiles(display_name)')
+        .eq('status','approved').order('created_at', { ascending: false })
+        .then(function(res) {
+          if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load listings.</div>'; return; }
+          var html = '<button class="comm-post-btn" onclick="openGearForm()">+ Post a Listing</button>' +
+            '<div class="comm-approval-note">Listings are reviewed by Kyle before appearing here.</div>';
+          if (!res.data.length) html += '<div class="comm-empty">No listings yet.</div>';
+          else html += res.data.map(renderClassifiedCard).join('');
+          panel.innerHTML = html;
+        });
+    }
+
+    function renderClassifiedCard(c) {
+      var name = (c.profiles && c.profiles.display_name) ? escapeHTML(c.profiles.display_name) : 'Member';
+      return '<div class="comm-card">' +
+        '<span class="comm-card-badge badge-gear">Gear</span>' +
+        (c.sold ? '<span class="comm-card-badge" style="background:#e5e7eb;color:#6b7280;margin-left:0.4rem;">SOLD</span>' : '') +
+        '<div class="comm-card-title">' + escapeHTML(c.title) + '</div>' +
+        (c.photo_url ? '<img src="' + escapeHTML(c.photo_url) + '" style="width:100%;max-height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:0.6rem;" alt="">' : '') +
+        '<div class="comm-card-meta">' +
+          (c.price ? '<strong>' + escapeHTML(c.price) + '</strong><br>' : '') +
+          (c.description ? escapeHTML(c.description) + '<br>' : '') +
+          'Posted by ' + name +
+        '</div>' +
+        '<div class="comm-card-footer"><span></span>' +
+          (c.contact && !c.sold ? '<a href="mailto:' + escapeHTML(c.contact) + '" class="comm-cta-btn" style="text-decoration:none;">Contact Seller</a>' : '') +
+        '</div></div>';
+    }
+
+    function openGearForm() {
+      openCommModal('gear', {
+        title: '🛒 Post a Listing',
+        formHtml: '<div class="comm-modal-field"><label>Item Title *</label><input type="text" id="cfGearTitle" placeholder="e.g. Minn Kota Terrova 80 — like new"></div>' +
+          '<div class="comm-modal-field"><label>Price</label><input type="text" id="cfGearPrice" placeholder="e.g. $650 OBO"></div>' +
+          '<div class="comm-modal-field"><label>Description</label><textarea id="cfGearDesc" placeholder="Condition, specs, any defects…"></textarea></div>' +
+          '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGearContact"></div>' +
+          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitGear()">Submit for Approval</button></div>'
+      });
+    }
+
+    function submitGear() {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      var title = document.getElementById('cfGearTitle');
+      if (!title || !title.value.trim()) { alert('Title is required.'); return; }
+      getSB().from('classifieds').insert({
+        seller_id: _currentUser.id, status: 'pending', sold: false,
+        title:       title.value.trim(),
+        price:       (document.getElementById('cfGearPrice')   || {}).value || '',
+        description: (document.getElementById('cfGearDesc')    || {}).value || '',
+        contact:     (document.getElementById('cfGearContact') || {}).value || ''
+      }).then(function(res) {
+        if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+        closeCommModal();
+        showCommToast('Listing submitted — Kyle will review it before it goes live.');
+      });
+    }
+    // ── End Gear / Classifieds ────────────────────────────────
+
+    // ── Forum ─────────────────────────────────────────────────
+    var _forumLoaded = false;
+
+    function loadForum() {
+      var panel = document.getElementById('commPanelForum');
+      if (!panel || _forumLoaded) return;
+      _forumLoaded = true;
+      panel.innerHTML = '<div class="comm-empty">Loading forum…</div>';
+      getSB().from('forum_threads').select('*, profiles(display_name)')
+        .eq('status','approved').order('created_at', { ascending: false })
+        .then(function(res) {
+          if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load forum.</div>'; return; }
+          var categories = ['general','gear','spots','recipes'];
+          var byCategory = {};
+          categories.forEach(function(c) { byCategory[c] = []; });
+          res.data.forEach(function(t) { if (byCategory[t.category]) byCategory[t.category].push(t); });
+          var html = '<button class="comm-post-btn" onclick="openForumForm()">+ Start a Thread</button>';
+          var labels = { general:'General', gear:'Gear Talk', spots:'Fishing Spots', recipes:'Recipes & Cooking' };
+          categories.forEach(function(cat) {
+            if (!byCategory[cat].length) return;
+            html += '<div class="comm-section-heading">' + labels[cat] + '</div>';
+            html += byCategory[cat].map(renderThreadCard).join('');
+          });
+          if (!res.data.length) html += '<div class="comm-empty">No threads yet — start the conversation!</div>';
+          panel.innerHTML = html;
+        });
+    }
+
+    function renderThreadCard(t) {
+      var name = (t.profiles && t.profiles.display_name) ? escapeHTML(t.profiles.display_name) : 'Member';
+      var date = new Date(t.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+      return '<div class="comm-card">' +
+        '<span class="comm-card-badge badge-forum">' + escapeHTML(t.category) + '</span>' +
+        '<div class="comm-card-title">' + escapeHTML(t.title) + '</div>' +
+        '<div class="comm-card-meta">' + name + ' · ' + date + '</div>' +
+        (t.body ? '<div class="comm-card-meta">' + escapeHTML(t.body).substring(0, 200) + (t.body.length > 200 ? '…' : '') + '</div>' : '') +
+        '<div class="comm-card-footer"><span></span>' +
+          '<button class="comm-cta-btn" onclick="toggleReplies(' + JSON.stringify(String(t.id)) + ',this)">💬 Replies</button>' +
+        '</div>' +
+        '<div id="replies-' + escapeHTML(t.id) + '" style="display:none;margin-top:0.75rem;border-top:1px solid #ccdde8;padding-top:0.75rem;"></div>' +
+        '</div>';
+    }
+
+    function toggleReplies(threadId, btn) {
+      var container = document.getElementById('replies-' + threadId);
+      if (!container) return;
+      if (container.style.display !== 'none') { container.style.display = 'none'; return; }
+      container.style.display = '';
+      container.innerHTML = '<div class="comm-empty" style="padding:0.5rem;">Loading replies…</div>';
+      getSB().from('forum_replies').select('*, profiles(display_name)')
+        .eq('thread_id', threadId).order('created_at', { ascending: true })
+        .then(function(res) {
+          var html = '';
+          if (res.data && res.data.length) {
+            html = res.data.map(function(r) {
+              var rName = (r.profiles && r.profiles.display_name) ? escapeHTML(r.profiles.display_name) : 'Member';
+              var rDate = new Date(r.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric' });
+              return '<div style="margin-bottom:0.6rem;"><span style="font-size:0.75rem;font-weight:600;color:var(--green-deep);">' + rName + '</span> <span style="font-size:0.7rem;color:var(--text-mid);">· ' + rDate + '</span><div style="font-size:0.8rem;margin-top:0.2rem;">' + escapeHTML(r.body) + '</div></div>';
+            }).join('');
+          }
+          html += '<div style="display:flex;gap:0.5rem;margin-top:0.5rem;">' +
+            '<input type="text" class="form-input" id="replyInput-' + escapeHTML(threadId) + '" placeholder="Add a reply…" style="flex:1;font-size:0.78rem;">' +
+            '<button class="comm-cta-btn" onclick="postReply(' + JSON.stringify(String(threadId)) + ')">Post</button></div>';
+          container.innerHTML = html;
+        });
+    }
+
+    function postReply(threadId) {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      var input = document.getElementById('replyInput-' + threadId);
+      if (!input || !input.value.trim()) return;
+      getSB().from('forum_replies').insert({ thread_id: threadId, author_id: _currentUser.id, body: input.value.trim() })
+        .then(function(res) {
+          if (res.error) { console.error(res.error); return; }
+          input.value = '';
+          toggleReplies(threadId, null);
+          toggleReplies(threadId, null);
+        });
+    }
+
+    function openForumForm() {
+      openCommModal('forum', {
+        title: '💬 Start a Thread',
+        formHtml: '<div class="comm-modal-field"><label>Title *</label><input type="text" id="cfForumTitle" placeholder="What\'s on your mind?"></div>' +
+          '<div class="comm-modal-field"><label>Category</label><select id="cfForumCat"><option value="general">General</option><option value="gear">Gear Talk</option><option value="spots">Fishing Spots</option><option value="recipes">Recipes & Cooking</option></select></div>' +
+          '<div class="comm-modal-field"><label>Body</label><textarea id="cfForumBody" placeholder="Share details, ask a question…"></textarea></div>' +
+          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitThread()">Post Thread</button></div>'
+      });
+    }
+
+    function submitThread() {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      var title = document.getElementById('cfForumTitle');
+      if (!title || !title.value.trim()) { alert('Title is required.'); return; }
+      getSB().from('forum_threads').insert({
+        author_id: _currentUser.id, status: 'approved',
+        title:    title.value.trim(),
+        category: (document.getElementById('cfForumCat')  || {}).value || 'general',
+        body:     (document.getElementById('cfForumBody') || {}).value || ''
+      }).then(function(res) {
+        if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+        closeCommModal();
+        _forumLoaded = false;
+        loadForum();
+        showCommToast('Thread posted!');
+      });
+    }
+    // ── End Forum ─────────────────────────────────────────────
+
+    // ── Community Leaderboard ─────────────────────────────────
+    function loadCommunityLeaderboard() {
+      var panel = document.getElementById('commPanelLeaderboard');
+      if (!panel) return;
+      panel.innerHTML = '<div class="comm-empty">Loading leaderboard…</div>';
+      var now = new Date();
+      var monthStart = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+      var monthName  = now.toLocaleString('en-US', { month:'long', year:'numeric' });
+      getSB().from('pins').select('user_id, profiles(display_name)')
+        .gte('created_at', monthStart).eq('flagged', false)
+        .then(function(res) {
+          if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load leaderboard.</div>'; return; }
+          var counts = {}, names = {};
+          res.data.forEach(function(p) {
+            counts[p.user_id] = (counts[p.user_id] || 0) + 1;
+            if (p.profiles && p.profiles.display_name) names[p.user_id] = p.profiles.display_name;
+          });
+          var ranked = Object.keys(counts)
+            .map(function(uid) { return { uid: uid, name: names[uid] || 'Member', count: counts[uid] }; })
+            .sort(function(a,b) { return b.count - a.count; }).slice(0, 10);
+          if (!ranked.length) { panel.innerHTML = '<div class="comm-empty">No catches logged this month yet — be the first! 🎣</div>'; return; }
+          var medals = ['🥇','🥈','🥉'];
+          var rows = ranked.map(function(r, i) {
+            return '<div style="display:flex;align-items:center;gap:0.75rem;padding:0.5rem 0;border-bottom:1px solid rgba(255,255,255,0.1);">' +
+              '<span style="font-size:1rem;width:28px;text-align:center;">' + (medals[i] || (i+1)+'.') + '</span>' +
+              '<span style="flex:1;font-family:\'Lora\',serif;font-size:0.85rem;color:var(--cream);">' + escapeHTML(r.name) + '</span>' +
+              '<span style="font-family:\'Lora\',serif;font-size:0.75rem;color:' + (i === 0 ? 'var(--gold)' : 'rgba(200,220,240,0.7)') + ';">' + r.count + ' pin' + (r.count !== 1 ? 's' : '') + '</span>' +
+              '</div>';
+          }).join('');
+          panel.innerHTML = '<div style="background:linear-gradient(135deg,var(--green-deep),var(--green-water));border-radius:0.75rem;padding:1.5rem;margin-bottom:1rem;">' +
+            '<div style="font-family:\'Playfair Display\',serif;font-size:1.1rem;color:var(--gold);margin-bottom:1rem;">🏆 ' + escapeHTML(monthName) + ' Leaderboard</div>' +
+            rows + '</div>' +
+            '<div style="font-size:0.72rem;color:var(--text-mid);font-family:\'Lora\',serif;">Counts pins logged in the Map tab this month. Drops reset on the 1st.</div>';
+        });
+    }
+    // ── End Leaderboard ───────────────────────────────────────
+
+    // ── Recipes ───────────────────────────────────────────────
+    var _recipesLoaded = false;
+
+    function loadRecipes() {
+      var panel = document.getElementById('commPanelRecipes');
+      if (!panel || _recipesLoaded) return;
+      _recipesLoaded = true;
+      panel.innerHTML = '<div class="comm-empty">Loading recipes…</div>';
+      getSB().from('recipes').select('*, profiles(display_name)')
+        .eq('status','approved').order('created_at', { ascending: false })
+        .then(function(res) {
+          if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load recipes.</div>'; return; }
+          var html = '<button class="comm-post-btn" onclick="openRecipeForm()">+ Share a Recipe</button>';
+          if (!res.data.length) html += '<div class="comm-empty">No recipes yet — share your best catch-and-cook!</div>';
+          else html += res.data.map(renderRecipeCard).join('');
+          panel.innerHTML = html;
+        });
+    }
+
+    function renderRecipeCard(r) {
+      var name = (r.profiles && r.profiles.display_name) ? escapeHTML(r.profiles.display_name) : 'Member';
+      var date = new Date(r.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+      return '<div class="comm-card">' +
+        '<span class="comm-card-badge badge-recipe">Recipe</span>' +
+        (r.species ? '<span class="comm-card-badge" style="background:rgba(26,74,107,0.1);color:var(--green-water);margin-left:0.4rem;">' + escapeHTML(r.species) + '</span>' : '') +
+        '<div class="comm-card-title">' + escapeHTML(r.title) + '</div>' +
+        (r.photo_url ? '<img src="' + escapeHTML(r.photo_url) + '" style="width:100%;max-height:220px;object-fit:cover;border-radius:0.5rem;margin-bottom:0.6rem;" alt="">' : '') +
+        '<div class="comm-card-meta">' + name + ' · ' + date + '</div>' +
+        (r.body ? '<div class="comm-card-meta">' + escapeHTML(r.body).substring(0, 300) + (r.body.length > 300 ? '…' : '') + '</div>' : '') +
+        '</div>';
+    }
+
+    function openRecipeForm() {
+      openCommModal('recipe', {
+        title: '🍳 Share a Recipe',
+        formHtml: '<div class="comm-modal-field"><label>Recipe Title *</label><input type="text" id="cfRecipeTitle" placeholder="e.g. Blackened Speckled Trout with Cajun Butter"></div>' +
+          '<div class="comm-modal-field"><label>Species</label><input type="text" id="cfRecipeSpecies" placeholder="e.g. Speckled Trout"></div>' +
+          '<div class="comm-modal-field"><label>Recipe *</label><textarea id="cfRecipeBody" style="min-height:140px;" placeholder="Ingredients and instructions…"></textarea></div>' +
+          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitRecipe()">Post Recipe</button></div>'
+      });
+    }
+
+    function submitRecipe() {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      var title = document.getElementById('cfRecipeTitle');
+      var body  = document.getElementById('cfRecipeBody');
+      if (!title || !title.value.trim()) { alert('Title is required.'); return; }
+      if (!body  || !body.value.trim())  { alert('Recipe body is required.'); return; }
+      getSB().from('recipes').insert({
+        author_id: _currentUser.id, status: 'approved',
+        title:   title.value.trim(),
+        species: (document.getElementById('cfRecipeSpecies') || {}).value || '',
+        body:    body.value.trim()
+      }).then(function(res) {
+        if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+        closeCommModal();
+        _recipesLoaded = false;
+        loadRecipes();
+        showCommToast('Recipe posted! 🍳');
+      });
+    }
+    // ── End Recipes ───────────────────────────────────────────
+
     // ── Init ──────────────────────────────────────────────────
     window.addEventListener('DOMContentLoaded', function () {
       bindSignInButtons();
