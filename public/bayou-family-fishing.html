@@ -5480,6 +5480,7 @@
     var _memberMap   = null;
     var _currentUser = null;
     var _pendingMarker = null;
+    var _pinMarkers  = [];
     var _pendingLatLng = null;
 
     // ── Show one members view, hide others ────────────────────
@@ -5765,6 +5766,8 @@
             return;
           }
           if (!res.data) return;
+          _pinMarkers.forEach(function(m) { if (_memberMap) _memberMap.removeLayer(m); });
+          _pinMarkers = [];
           res.data.forEach(function (pin) { addPinMarker(pin); });
         });
     }
@@ -5776,6 +5779,7 @@
         iconSize: [28, 28], iconAnchor: [14, 14]
       });
       var marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(_memberMap);
+      _pinMarkers.push(marker);
       var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;">' : '';
       var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + escapeHTML(pin.species) + '</em>' : '';
       var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + escapeHTML(pin.caption) + '</p>' : '';
@@ -7018,6 +7022,22 @@
       bindSignInButtons();
       initMemberAuth();
     });
+
+    // ── Expose community functions to global scope for inline onclick handlers ──
+    window.openCommModal  = openCommModal;
+    window.closeCommModal = closeCommModal;
+    window.openTripForm   = openTripForm;
+    window.submitTrip     = submitTrip;
+    window.rsvpTrip       = rsvpTrip;
+    window.openGuideForm  = openGuideForm;
+    window.submitGuide    = submitGuide;
+    window.openGearForm   = openGearForm;
+    window.submitGear     = submitGear;
+    window.openForumForm  = openForumForm;
+    window.submitThread   = submitThread;
+    window.openRecipeForm = openRecipeForm;
+    window.submitRecipe   = submitRecipe;
+    window.approveContent = approveContent;
 
   })();
 
