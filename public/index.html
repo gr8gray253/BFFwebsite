@@ -5048,13 +5048,14 @@
     if (pins && pins.length > 0) {
       pins.forEach(function(pin) {
         if (!pin.photo_url) return;
-        var alt = pin.species ? pin.species + ' caught by a BFF member' : 'Fish catch — BFF member';
-        html += '<div class="gallery-thumb">'
-              + '<img src="' + pin.photo_url + '" alt="' + alt + '" loading="lazy">'
+        var alt    = pin.species ? escapeHTML(pin.species) + ' caught by a BFF member' : 'Fish catch — BFF member';
+        var safeUrl = escapeHTML(pin.photo_url);
+        html += '<div class="gallery-thumb" onclick="window._bffViewPhoto(\'' + safeUrl + '\')">'
+              + '<img src="' + safeUrl + '" alt="' + alt + '" loading="lazy">'
               + (pin.species || pin.caption
                   ? '<div class="fish-thumb-caption">'
-                    + (pin.species ? '<strong>' + pin.species + '</strong>' : '')
-                    + (pin.caption ? '<br><em>' + pin.caption + '</em>' : '')
+                    + (pin.species ? '<strong>' + escapeHTML(pin.species) + '</strong>' : '')
+                    + (pin.caption ? '<br><em>' + escapeHTML(pin.caption) + '</em>' : '')
                     + '</div>'
                   : '')
               + '</div>';
@@ -5063,10 +5064,11 @@
 
     if (fishUploads && fishUploads.length > 0) {
       fishUploads.forEach(function(sub) {
-        var url = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
-        html += '<div class="gallery-thumb">'
-              + '<img src="' + url + '" alt="' + (sub.caption || 'Fish photo') + '" loading="lazy">'
-              + (sub.caption ? '<div class="fish-thumb-caption"><em>' + sub.caption + '</em></div>' : '')
+        var url     = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
+        var safeUrl = escapeHTML(url);
+        html += '<div class="gallery-thumb" onclick="window._bffViewPhoto(\'' + safeUrl + '\')">'
+              + '<img src="' + safeUrl + '" alt="' + escapeHTML(sub.caption || 'Fish photo') + '" loading="lazy">'
+              + (sub.caption ? '<div class="fish-thumb-caption"><em>' + escapeHTML(sub.caption) + '</em></div>' : '')
               + '</div>';
       });
     }
@@ -5780,7 +5782,7 @@
       });
       var marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(_memberMap);
       _pinMarkers.push(marker);
-      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;">' : '';
+      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;cursor:pointer;" onclick="window._bffViewPhoto(\'' + escapeHTML(pin.photo_url) + '\')">' : '';
       var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + escapeHTML(pin.species) + '</em>' : '';
       var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + escapeHTML(pin.caption) + '</p>' : '';
       marker.bindPopup('<div style="font-family:Lora,serif;max-width:200px;">' + img + sp + cap + '</div>');
@@ -6625,7 +6627,7 @@
         (trip.description ? '<div class="comm-card-meta">' + escapeHTML(trip.description) + '</div>' : '') +
         '<div class="comm-card-footer">' +
           '<span style="font-size:0.68rem;color:var(--text-mid);background:var(--cream);padding:0.2rem 0.6rem;border-radius:1rem;border:1px solid #ccdde8;">' + escapeHTML(spots) + '</span>' +
-          '<button class="comm-cta-btn" onclick="rsvpTrip(' + JSON.stringify(String(trip.id)) + ',this)">RSVP</button>' +
+          '<button class="comm-cta-btn" onclick="rsvpTrip(\'' + String(trip.id) + '\',this)">RSVP</button>' +
         '</div></div>';
     }
 
@@ -6870,7 +6872,7 @@
           }
           html += '<div style="display:flex;gap:0.5rem;margin-top:0.5rem;">' +
             '<input type="text" class="form-input" id="replyInput-' + escapeHTML(threadId) + '" placeholder="Add a reply…" style="flex:1;font-size:0.78rem;">' +
-            '<button class="comm-cta-btn" onclick="postReply(' + JSON.stringify(String(threadId)) + ')">Post</button></div>';
+            '<button class="comm-cta-btn" onclick="postReply(\'' + String(threadId) + '\')">Post</button></div>';
           container.innerHTML = html;
         });
     }
@@ -7038,6 +7040,18 @@
     window.openRecipeForm = openRecipeForm;
     window.submitRecipe   = submitRecipe;
     window.approveContent = approveContent;
+
+    // ── Full-screen photo overlay (map popups + fish pics tab) ──
+    window._bffViewPhoto = function (url) {
+      var overlay = document.createElement('div');
+      overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:9999;display:flex;align-items:center;justify-content:center;cursor:zoom-out;';
+      var img = document.createElement('img');
+      img.src = url;
+      img.style.cssText = 'max-width:90vw;max-height:90vh;border-radius:8px;box-shadow:0 4px 32px rgba(0,0,0,.6);object-fit:contain;';
+      overlay.appendChild(img);
+      overlay.addEventListener('click', function () { overlay.remove(); });
+      document.body.appendChild(overlay);
+    };
 
   })();
 
