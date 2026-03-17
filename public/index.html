@@ -3265,7 +3265,7 @@
   .comm-card {
     background: var(--white); border: 1px solid #ccdde8;
     border-radius: 0.75rem; padding: 1rem; margin-bottom: 0.85rem;
-    box-shadow: 0 1px 6px rgba(13,43,62,0.06);
+    box-shadow: 0 1px 6px rgba(13,43,62,0.06); position: relative;
   }
   .comm-card-badge {
     display: inline-block; font-size: 0.62rem; padding: 0.15rem 0.55rem;
@@ -3283,6 +3283,8 @@
   .comm-card-footer { display: flex; align-items: center; justify-content: space-between; }
   .comm-cta-btn { background: var(--amber); color: #fff; border: none; padding: 0.35rem 0.9rem; border-radius: 1rem; font-size: 0.72rem; cursor: pointer; font-family: 'Lora', serif; font-weight: 600; transition: background 0.15s; }
   .comm-cta-btn:hover { background: #d47d2a; }
+  .comm-edit-btn { position: absolute; top: 0.5rem; right: 0.5rem; font-size: 0.7rem; padding: 0.15rem 0.5rem; background: transparent; border: 1px solid var(--text-mid); color: var(--text-mid); border-radius: 4px; cursor: pointer; font-family: 'Lora', serif; transition: all 0.15s; }
+  .comm-edit-btn:hover { background: var(--cream); color: var(--green-deep); }
   .comm-post-btn { width: 100%; background: transparent; border: 2px dashed var(--amber); color: var(--amber); padding: 0.65rem 1rem; border-radius: 0.65rem; font-size: 0.8rem; cursor: pointer; font-family: 'Lora', serif; font-weight: 600; margin-bottom: 1rem; transition: all 0.15s; }
   .comm-post-btn:hover { background: rgba(232,146,58,0.06); }
   .comm-section-heading { font-family: 'Playfair Display', serif; font-size: 0.72rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.1em; padding-bottom: 0.4rem; border-bottom: 1px solid #ccdde8; margin-bottom: 0.75rem; margin-top: 0.5rem; }
@@ -3297,6 +3299,8 @@
   [data-theme="dark"] .comm-card { background: #152840; border-color: #1e3c58; }
   [data-theme="dark"] .comm-card-title { color: var(--gold); }
   [data-theme="dark"] .comm-section-heading { border-color: #1e3c58; }
+  [data-theme="dark"] .comm-edit-btn { border-color: #7a8e9f; color: #7a8e9f; }
+  [data-theme="dark"] .comm-edit-btn:hover { background: #1e3c58; color: var(--cream); }
   [data-theme="dark"] .comm-modal-field input,
   [data-theme="dark"] .comm-modal-field textarea,
   [data-theme="dark"] .comm-modal-field select { background: #0d2b3e; border-color: #1e3c58; color: var(--cream); }
@@ -3769,7 +3773,12 @@
     <div class="strip-content">
       <p class="section-eyebrow">Our Fleet</p>
       <h2 class="section-title">The <em>Boats</em></h2>
-      <p class="section-lead">Our vessels are the heart of Bayou Family Fishing — donated time, long-term care, and plenty of good stories. If you love boats as much as we do, ask how you can help us keep 'em running or add your baby to the fleet. Get help with inspection and repair, and connect with other members for fun on the water.</p>
+      <p class="section-lead">Boats are magic—but they don't mean much if they're sitting dry.
+If you've got one, bring it. If you're saving for one, start here. If you're already out there, come share. We're not building a collection—we're building a crew.
+Log in, drop your plan: 'I'm heading to the cut at eight, back by two.' Someone sees it, says 'I'm free—want company?' Or 'Need a hand with the trailer?' We share fuel, gear, know-how—everything—so nobody's alone.
+And we don't stop at 'good enough.' New folks learn the basics: throttle, tides, radio. Then we climb—safety first, drills, charts—until you're running trips like you've done it forever. Some go licensed. Some just get better. Either way, every seat's open.
+Why? So families—especially the ones who serve—get real time on the water. No charts, no stress. Just sun, laughs, a kid's first bite. We file plans, check in, watch each other's backs... so you go home lighter.
+This fleet isn't about us. It's about them. And if we all pitch in? We get boats that last, captains who grow, and days that matter.</p>
     </div>
   </div>
   <div class="container">
@@ -3810,16 +3819,16 @@
           <p>I rode with them once and have been wanting to try again. It was no big haul, but watching them work — quiet, steady, no complaints — stuck with me. That kind of stubborn pride? That's Louisiana. And yeah, the old days had boat blessings, high spirits, shrimp piled high — but the Gaudets aren't chasing ghosts. They're still out there, still pushing nets, still paying bills.</p>
           <p>That's why Bayou Charity wants in. Not to save them — hell, they don't need saving. But to give them a hand: cover fuel, sort the haul, or whatever keeps the engine turning. And maybe open a door, let folks ride along. Climb off The Check Twice, step onto the Miss Carol, help pull a net, buy shrimp straight off the deck, and hear Jason or Mr. Grant talk shop. It's not a show. It's real: salt, sweat, stories. A taste of what keeps this life alive.</p>
           <p>We're not here to turn them into a museum piece. We're here because they deserve to keep going — on their terms. If you're up for it, come ride. Help us keep the Miss Carol running, help Jason build something new out of the old. No pity, no fanfare — just good people, good water, and one more day on the bayou.</p>
-          <img src="Photos/Ms%20Carol%20pic%202%20(boat).jpg" alt="The Ms. Carol — a second view of this traditional Louisiana shrimp trawler" style="width:100%;border-radius:10px;margin-top:1.25rem;object-fit:cover;max-height:480px;" loading="lazy">
+          <img src="Photos/Ms%20Carol%20pic%202%20(boat).jpg" alt="The Miss Carol — a second view of this traditional Louisiana shrimp trawler" style="width:100%;border-radius:10px;margin-top:1.25rem;object-fit:cover;max-height:480px;" loading="lazy">
         </div>
       </div>
     </div>
 
     <div class="boat-story" data-boat="03" data-scroll="fade-up">
-      <img src="Photos/Last%20Chance%20(boat).jpg" alt="Last Chance" class="boat-story-img" loading="lazy">
-      <h3>Last Chance</h3>
+      <img src="Photos/Last%20Chance%20(boat).jpg" alt="The Last Chance" class="boat-story-img" loading="lazy">
+      <h3>The Last Chance</h3>
       <p class="boat-meta">Homemade Aluminum Skiff — work boat.</p>
-      <p>We've been wanting a boat like this for a long time, and now more crab traps in the Check Twice! She's a head turner — plenty of these boats in Acadiana, but mine is unique and special in Plaquemines.</p>
+      <p>We've been wanting a boat like this for a long time, and now there will be no more crab traps in the Check Twice. She's a head turner — plenty of these boats in Acadiana, but mine is unique and special in Plaquemines.</p>
       <div class="boat-story-expand">
         <button class="boat-story-toggle" onclick="toggleBoatStory(this)" aria-expanded="false">
           Full Story
@@ -3882,20 +3891,6 @@
       <p style="margin-top:0.5rem;font-size:0.9rem;color:var(--text-mid);line-height:1.7;">In Louisiana, boat operators born after January 1, 1984 are required to complete an LDWF-approved boater education course to operate a motorboat over 10 HP or any personal watercraft. Free online courses are available at <a href="https://www.boatus.org/free-boater-education-course/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">BoatUS.org</a> and <a href="https://www.boat-ed.com/louisiana/" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">Boat-ED.com</a>. See the <a href="https://www.wlf.louisiana.gov/page/boater-education" target="_blank" rel="noopener noreferrer" style="color:var(--amber);">LDWF boater education page</a> for full details. If you are new to boating, we provide hands-on training to members who complete certification.</p>
     </div>
 
-    <!-- ─── FLEET VISION ─── -->
-    <div class="fleet-manifesto container" data-scroll="fade-up">
-      <h3>Come Aboard</h3>
-      <p>Boats are magic—but they don't mean much if they're sitting dry.</p>
-      <p>If you've got one, bring it. If you're saving for one, start here. If you're already out there, come share. We're not building a collection—we're building a crew.</p>
-      <p>Log in, drop your plan: 'I'm heading to the cut at eight, back by two.' Someone sees it, says 'I'm free—want company?' Or 'Need a hand with the trailer?' We share fuel, gear, know-how—everything—so nobody's alone.</p>
-      <p>And we don't stop at 'good enough.' New folks learn the basics: throttle, tides, radio. Then we climb—safety first, drills, charts—until you're running trips like you've done it forever. Some go licensed. Some just get better. Either way, every seat's open.</p>
-      <p>Why? So families—especially the ones who serve—get real time on the water. No charts, no stress. Just sun, laughs, a kid's first bite. We file plans, check in, watch each other's backs... so you go home lighter.</p>
-      <p>This fleet isn't about us. It's about them. And if we all pitch in? We get boats that last, captains who grow, and days that matter.</p>
-      <div class="fleet-cta">
-        <button class="btn btn-primary" onclick="showSection('members')">Join the Crew →</button>
-      </div>
-    </div>
-    <!-- ─── END FLEET VISION ─── -->
   </div>
 </section>
 
@@ -3986,8 +3981,7 @@
       <h3 style="font-family:'Playfair Display',serif;font-size:1.4rem;color:var(--green-deep);margin-bottom:0.75rem;">Bayou Charity <em>Locations</em></h3>
       <div style="display:flex;gap:1.5rem;flex-wrap:wrap;margin-bottom:1rem;font-size:0.85rem;color:var(--text-mid);">
         <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#0d2b3e;border:2px solid #c8793a;vertical-align:middle;margin-right:0.4rem;"></span>Home Base</span>
-        <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#1a4a6b;border:2px solid #c8793a;vertical-align:middle;margin-right:0.4rem;"></span>Duck Lease</span>
-        <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#c8793a;border:2px solid #0d2b3e;vertical-align:middle;margin-right:0.4rem;"></span>INNISFREE Property</span>
+        <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#c8793a;border:2px solid #0d2b3e;vertical-align:middle;margin-right:0.4rem;"></span>INNISFREE</span>
         <span><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:#e8923a;border:2px solid #0d2b3e;vertical-align:middle;margin-right:0.4rem;"></span>Sam's Bait By You</span>
       </div>
       <div id="innisfreeMap"></div>
@@ -4567,15 +4561,15 @@
     </a>
   </div>
   <div class="footer-links">
-    <a href="#" onclick="showSection('home')">Home</a>
-    <a href="#" onclick="showSection('members')">Join</a>
-    <a href="#" onclick="showSection('volunteer')">Volunteer</a>
-    <a href="#" onclick="showSection('boats')">Boats</a>
-    <a href="#" onclick="showSection('innisfree')">INNISFREE</a>
-    <a href="#" onclick="showSection('gallery')">Gallery</a>
-    <a href="#" onclick="showSection('donate')">Donate</a>
-    <a href="#" onclick="showSection('about')">About</a>
-    <a href="#" onclick="showSection('members')">Members</a>
+    <a href="#" onclick="showSection('home');return false">Home</a>
+    <a href="#" onclick="showSection('members');return false">Join</a>
+    <a href="#" onclick="showSection('volunteer');return false">Volunteer</a>
+    <a href="#" onclick="showSection('boats');return false">Boats</a>
+    <a href="#" onclick="showSection('innisfree');return false">INNISFREE</a>
+    <a href="#" onclick="showSection('gallery');return false">Gallery</a>
+    <a href="#" onclick="showSection('donate');return false">Donate</a>
+    <a href="#" onclick="showSection('about');return false">About</a>
+    <a href="#" onclick="showSection('members');return false">Members</a>
   </div>
   <div class="footer-bottom">
     © <span id="footerYear">2026</span> Bayou Charity. A registered nonprofit organization. All rights reserved.<br>
@@ -4699,11 +4693,6 @@
       html: '<div style="width:14px;height:14px;border-radius:50%;background:#0d2b3e;border:3px solid #c8793a;box-shadow:0 2px 6px rgba(0,0,0,0.4);"></div>',
       iconSize: [14, 14], iconAnchor: [7, 7], popupAnchor: [0, -10]
     });
-    const mkDuck = L.divIcon({
-      className: '',
-      html: '<div style="width:14px;height:14px;border-radius:50%;background:#1a4a6b;border:3px solid #c8793a;box-shadow:0 2px 6px rgba(0,0,0,0.4);"></div>',
-      iconSize: [14, 14], iconAnchor: [7, 7], popupAnchor: [0, -10]
-    });
     const mkProp = L.divIcon({
       className: '',
       html: '<div style="width:16px;height:16px;border-radius:50%;background:#c8793a;border:3px solid #0d2b3e;box-shadow:0 2px 8px rgba(0,0,0,0.5);"></div>',
@@ -4715,13 +4704,9 @@
       .bindPopup('<strong style="font-family:Georgia,serif;color:#0d2b3e;">Home Base</strong><br><span style="font-size:0.8rem;color:#2c5364;">Rodeo meeting point &amp; event launch site</span>')
       .openPopup();
 
-    L.marker([29.576607472348563, -89.93509250792445], { icon: mkDuck })
-      .addTo(_leafletMap)
-      .bindPopup('<strong style="font-family:Georgia,serif;color:#0d2b3e;">Duck Lease</strong><br><span style="font-size:0.8rem;color:#2c5364;">Hunting &amp; fishing grounds</span>');
-
     L.marker([29.553418886646913, -89.95388981861294], { icon: mkProp })
       .addTo(_leafletMap)
-      .bindPopup('<strong style="font-family:Georgia,serif;color:#0d2b3e;">INNISFREE Property</strong><br><span style="font-size:0.8rem;color:#2c5364;">Our marshland community hub — under development</span>');
+      .bindPopup('<strong style="font-family:Georgia,serif;color:#0d2b3e;">INNISFREE</strong><br><span style="font-size:0.8rem;color:#2c5364;">Our marshland community hub — under development</span>');
 
     const mkBait = L.divIcon({
       className: '',
@@ -4736,7 +4721,6 @@
     // Fit to show all markers on load — no panning required
     _leafletMap.fitBounds(L.latLngBounds([
       [29.595492887216214, -89.90665602961556],
-      [29.576607472348563, -89.93509250792445],
       [29.553418886646913, -89.95388981861294],
       [29.5549, -89.9545]
     ]), { padding: [40, 40] });
@@ -4777,20 +4761,20 @@
 
     L.marker([29.595492887216214, -89.90665602961556], { icon: mkSmall })
       .addTo(_homeMap).bindPopup('Home Base');
-    L.marker([29.576607472348563, -89.93509250792445], { icon: mkSmall })
-      .addTo(_homeMap).bindPopup('Duck Lease');
     L.marker([29.553418886646913, -89.95388981861294], { icon: mkPropSmall })
-      .addTo(_homeMap).bindPopup('INNISFREE Property');
+      .addTo(_homeMap).bindPopup('INNISFREE');
     L.marker([29.5549, -89.9545], { icon: mkBaitSmall })
       .addTo(_homeMap).bindPopup("Sam's Bait By You");
 
     // Fit to show all markers on load
     _homeMap.fitBounds(L.latLngBounds([
       [29.595492887216214, -89.90665602961556],
-      [29.576607472348563, -89.93509250792445],
       [29.553418886646913, -89.95388981861294],
       [29.5549, -89.9545]
     ]), { padding: [20, 20] });
+
+    // Force tile + marker redraw after layout settles
+    setTimeout(function() { _homeMap.invalidateSize(); }, 200);
   }
 
   // ─── BOAT STORY TOGGLE ───
@@ -6874,6 +6858,9 @@
     // ── Trips ─────────────────────────────────────────────────
     var _tripsLoaded = false;
 
+    // Cache RSVP data keyed by trip_id → array of { member_id, display_name }
+    var _tripRsvps = {};
+
     function loadTrips() {
       var panel = document.getElementById('commPanelTrips');
       if (!panel || _tripsLoaded) return;
@@ -6883,40 +6870,99 @@
         .eq('status','approved').order('trip_date', { ascending: true })
         .then(function(res) {
           if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load trips.</div>'; return; }
-          var club   = res.data.filter(function(t) { return t.type === 'club'; });
-          var member = res.data.filter(function(t) { return t.type === 'member'; });
-          var html = '<button class="comm-post-btn" onclick="openTripForm()">+ Post a Trip</button>' +
-            '<div class="comm-approval-note">Member-posted trips are reviewed by Kyle before appearing here.</div>';
-          if (club.length)   { html += '<div class="comm-section-heading">Club Events</div>'  + club.map(renderTripCard).join(''); }
-          if (member.length) { html += '<div class="comm-section-heading">Member Trips</div>' + member.map(renderTripCard).join(''); }
-          if (!club.length && !member.length) html += '<div class="comm-empty">No upcoming trips — be the first to post one!</div>';
-          panel.innerHTML = html;
+          // Fetch all RSVPs for approved trips
+          var tripIds = res.data.map(function(t) { return t.id; });
+          if (tripIds.length) {
+            getSB().from('trip_rsvps').select('trip_id, member_id, profiles(display_name)')
+              .in('trip_id', tripIds)
+              .then(function(rsvpRes) {
+                if (rsvpRes.data) {
+                  rsvpRes.data.forEach(function(r) {
+                    if (!_tripRsvps[r.trip_id]) _tripRsvps[r.trip_id] = [];
+                    _tripRsvps[r.trip_id].push({
+                      member_id: r.member_id,
+                      display_name: (r.profiles && r.profiles.display_name) ? r.profiles.display_name : 'Member'
+                    });
+                  });
+                }
+                renderTripsPanel(panel, res.data);
+              });
+          } else {
+            renderTripsPanel(panel, res.data);
+          }
         });
+    }
+
+    function renderTripsPanel(panel, data) {
+      var club   = data.filter(function(t) { return t.type === 'club'; });
+      var member = data.filter(function(t) { return t.type === 'member'; });
+      var html = '<button class="comm-post-btn" onclick="openTripForm()">+ Post a Trip</button>' +
+        '<div class="comm-approval-note">Member-posted trips are reviewed by Kyle before appearing here.</div>';
+      if (club.length)   { html += '<div class="comm-section-heading">Club Events</div>'  + club.map(renderTripCard).join(''); }
+      if (member.length) { html += '<div class="comm-section-heading">Member Trips</div>' + member.map(renderTripCard).join(''); }
+      if (!club.length && !member.length) html += '<div class="comm-empty">No upcoming trips — be the first to post one!</div>';
+      panel.innerHTML = html;
     }
 
     function renderTripCard(trip) {
       var name  = (trip.profiles && trip.profiles.display_name) ? escapeHTML(trip.profiles.display_name) : 'Member';
       var date  = new Date(trip.trip_date).toLocaleDateString('en-US', { weekday:'short', month:'long', day:'numeric', year:'numeric' });
       var spots = trip.max_spots ? trip.max_spots + ' spots' : 'Open';
-      return '<div class="comm-card">' +
+      var rsvps = _tripRsvps[trip.id] || [];
+      var rsvpCount = rsvps.length;
+      var rsvpNames = rsvps.map(function(r) { return escapeHTML(r.display_name); }).join(', ');
+      var alreadyRsvpd = _currentUser && rsvps.some(function(r) { return r.member_id === _currentUser.id; });
+      var isOwner = _currentUser && trip.created_by === _currentUser.id;
+
+      var rsvpBadge = rsvpCount > 0
+        ? '<span style="font-size:0.68rem;color:var(--green-water);background:rgba(26,74,107,0.08);padding:0.2rem 0.6rem;border-radius:1rem;border:1px solid rgba(26,74,107,0.2);" title="' + rsvpNames + '">' + rsvpCount + ' going</span>'
+        : '';
+
+      return '<div class="comm-card" id="trip-card-' + escapeHTML(trip.id) + '">' +
         '<span class="comm-card-badge ' + (trip.type === 'club' ? 'badge-club' : 'badge-member') + '">' + (trip.type === 'club' ? 'Club Event' : 'Member Trip') + '</span>' +
+        (isOwner ? '<button class="comm-edit-btn" onclick="editTrip(\'' + String(trip.id) + '\')">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(trip.title) + '</div>' +
         '<div class="comm-card-meta">' + date + (trip.location ? ' · ' + escapeHTML(trip.location) : '') + '<br>Posted by ' + name + '</div>' +
         (trip.description ? '<div class="comm-card-meta">' + escapeHTML(trip.description) + '</div>' : '') +
+        (rsvpCount > 0 ? '<div class="comm-rsvp-list" style="font-size:0.75rem;color:var(--text-mid);padding:0.4rem 0;border-top:1px solid #e8eef3;margin-top:0.5rem;">Going: ' + rsvpNames + '</div>' : '') +
         '<div class="comm-card-footer">' +
           '<span style="font-size:0.68rem;color:var(--text-mid);background:var(--cream);padding:0.2rem 0.6rem;border-radius:1rem;border:1px solid #ccdde8;">' + escapeHTML(spots) + '</span>' +
-          '<button class="comm-cta-btn" onclick="rsvpTrip(\'' + String(trip.id) + '\',this)">RSVP</button>' +
+          rsvpBadge +
+          (alreadyRsvpd
+            ? '<button class="comm-cta-btn" disabled>RSVP\'d ✓</button>'
+            : '<button class="comm-cta-btn" onclick="rsvpTrip(\'' + String(trip.id) + '\',this)">RSVP</button>') +
         '</div></div>';
     }
 
     function rsvpTrip(tripId, btn) {
       if (!_currentUser) { alert('Sign in to RSVP.'); return; }
       btn.disabled = true; btn.textContent = 'Sending…';
+      var userName = (_currentUser.user_metadata && _currentUser.user_metadata.display_name) || _currentUser.email || 'Member';
       getSB().from('trip_rsvps').insert({ trip_id: tripId, member_id: _currentUser.id })
         .then(function(res) {
           if (res.error && res.error.code === '23505') { btn.textContent = "Already RSVP'd"; return; }
           if (res.error) { btn.disabled = false; btn.textContent = 'RSVP'; console.error(res.error); return; }
           btn.textContent = "RSVP'd ✓";
+          // Update local RSVP cache and re-render the card
+          if (!_tripRsvps[tripId]) _tripRsvps[tripId] = [];
+          _tripRsvps[tripId].push({ member_id: _currentUser.id, display_name: userName });
+          // Refresh the trips panel to show updated RSVP list
+          _tripsLoaded = false;
+          loadTrips();
+          // Notify the trip author
+          notifyTripAuthor(tripId, userName);
+        });
+    }
+
+    function notifyTripAuthor(tripId, rsvpName) {
+      // Fetch the trip to get the author, then send email via Edge Function
+      getSB().from('trips').select('created_by, title, profiles(display_name)').eq('id', tripId).single()
+        .then(function(res) {
+          if (res.error || !res.data) return;
+          // Call Edge Function to send email notification (if configured)
+          getSB().functions.invoke('notify-rsvp', {
+            body: { trip_id: tripId, trip_title: res.data.title, author_id: res.data.created_by, rsvp_name: rsvpName }
+          }).catch(function() { /* Notification is best-effort — silently fail */ });
         });
     }
 
@@ -6953,6 +6999,52 @@
         showCommToast('Trip submitted — Kyle will review it before it goes live.');
       });
     }
+    // ── Edit Trip (member self-edit, no re-approval) ──
+    var _editingTripId = null;
+
+    function editTrip(tripId) {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      _editingTripId = tripId;
+      getSB().from('trips').select('*').eq('id', tripId).single()
+        .then(function(res) {
+          if (res.error || !res.data) { alert('Could not load trip.'); return; }
+          var t = res.data;
+          openCommModal('trip-edit', {
+            title: '✏️ Edit Trip',
+            formHtml: '<div class="comm-modal-field"><label>Trip Title *</label><input type="text" id="cfTripTitle" value="' + escapeHTML(t.title) + '"></div>' +
+              '<div class="comm-modal-field"><label>Date *</label><input type="date" id="cfTripDate" value="' + escapeHTML(t.trip_date) + '"></div>' +
+              '<div class="comm-modal-field"><label>Location</label><input type="text" id="cfTripLocation" value="' + escapeHTML(t.location || '') + '"></div>' +
+              '<div class="comm-modal-field"><label>Max Spots</label><input type="number" id="cfTripSpots" min="1" value="' + (t.max_spots || '') + '"></div>' +
+              '<div class="comm-modal-field"><label>Description</label><textarea id="cfTripDesc">' + escapeHTML(t.description || '') + '</textarea></div>' +
+              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditTrip()">Save Changes</button></div>'
+          });
+        });
+    }
+
+    function saveEditTrip() {
+      if (!_currentUser || !_editingTripId) return;
+      var title = document.getElementById('cfTripTitle');
+      var date  = document.getElementById('cfTripDate');
+      if (!title || !title.value.trim()) { alert('Trip title is required.'); return; }
+      if (!date  || !date.value)          { alert('Date is required.'); return; }
+      var spots = document.getElementById('cfTripSpots');
+      var spotsVal = spots && spots.value ? parseInt(spots.value) : null;
+      getSB().from('trips').update({
+        title: title.value.trim(),
+        trip_date: date.value,
+        location: (document.getElementById('cfTripLocation') || {}).value || '',
+        description: (document.getElementById('cfTripDesc') || {}).value || '',
+        max_spots: spotsVal
+      }).eq('id', _editingTripId).eq('created_by', _currentUser.id)
+        .then(function(res) {
+          if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+          _editingTripId = null;
+          closeCommModal();
+          showCommToast('Trip updated.');
+          _tripsLoaded = false;
+          loadTrips();
+        });
+    }
     // ── End Trips ─────────────────────────────────────────────
 
     // ── Guides ────────────────────────────────────────────────
@@ -6977,8 +7069,10 @@
 
     function renderGuideCard(g) {
       var name = (g.profiles && g.profiles.display_name) ? escapeHTML(g.profiles.display_name) : 'Member';
+      var isOwner = _currentUser && g.guide_id === _currentUser.id;
       return '<div class="comm-card">' +
         '<span class="comm-card-badge badge-guide">Guide</span>' +
+        (isOwner ? '<button class="comm-edit-btn" onclick="editGuide(\'' + String(g.id) + '\')">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(g.title) + '</div>' +
         '<div class="comm-card-meta">' +
           (g.rate ? 'Rate: ' + escapeHTML(g.rate) + '<br>' : '') +
@@ -7020,6 +7114,48 @@
         showCommToast('Guide listing submitted — Kyle will review it before it goes live.');
       });
     }
+    // ── Edit Guide (member self-edit, no re-approval) ──
+    var _editingGuideId = null;
+
+    function editGuide(guideId) {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      _editingGuideId = guideId;
+      getSB().from('guide_postings').select('*').eq('id', guideId).single()
+        .then(function(res) {
+          if (res.error || !res.data) { alert('Could not load guide.'); return; }
+          var g = res.data;
+          openCommModal('guide-edit', {
+            title: '✏️ Edit Guide Listing',
+            formHtml: '<div class="comm-modal-field"><label>Listing Title *</label><input type="text" id="cfGuideTitle" value="' + escapeHTML(g.title) + '"></div>' +
+              '<div class="comm-modal-field"><label>Rate</label><input type="text" id="cfGuideRate" value="' + escapeHTML(g.rate || '') + '"></div>' +
+              '<div class="comm-modal-field"><label>Available Dates / Schedule</label><input type="text" id="cfGuideDates" value="' + escapeHTML(g.available_dates || '') + '"></div>' +
+              '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGuideContact" value="' + escapeHTML(g.contact || '') + '"></div>' +
+              '<div class="comm-modal-field"><label>Description</label><textarea id="cfGuideDesc">' + escapeHTML(g.description || '') + '</textarea></div>' +
+              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditGuide()">Save Changes</button></div>'
+          });
+        });
+    }
+
+    function saveEditGuide() {
+      if (!_currentUser || !_editingGuideId) return;
+      var title = document.getElementById('cfGuideTitle');
+      if (!title || !title.value.trim()) { alert('Title is required.'); return; }
+      getSB().from('guide_postings').update({
+        title: title.value.trim(),
+        rate: (document.getElementById('cfGuideRate') || {}).value || '',
+        available_dates: (document.getElementById('cfGuideDates') || {}).value || '',
+        contact: (document.getElementById('cfGuideContact') || {}).value || '',
+        description: (document.getElementById('cfGuideDesc') || {}).value || ''
+      }).eq('id', _editingGuideId).eq('guide_id', _currentUser.id)
+        .then(function(res) {
+          if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+          _editingGuideId = null;
+          closeCommModal();
+          showCommToast('Guide listing updated.');
+          _guidesLoaded = false;
+          loadGuides();
+        });
+    }
     // ── End Guides ────────────────────────────────────────────
 
     // ── Gear / Classifieds ────────────────────────────────────
@@ -7044,9 +7180,11 @@
 
     function renderClassifiedCard(c) {
       var name = (c.profiles && c.profiles.display_name) ? escapeHTML(c.profiles.display_name) : 'Member';
+      var isOwner = _currentUser && c.seller_id === _currentUser.id;
       return '<div class="comm-card">' +
         '<span class="comm-card-badge badge-gear">Gear</span>' +
         (c.sold ? '<span class="comm-card-badge" style="background:#e5e7eb;color:#6b7280;margin-left:0.4rem;">SOLD</span>' : '') +
+        (isOwner ? '<button class="comm-edit-btn" onclick="editGear(\'' + String(c.id) + '\')">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(c.title) + '</div>' +
         (c.photo_url ? '<img src="' + escapeHTML(c.photo_url) + '" style="width:100%;max-height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:0.6rem;" alt="">' : '') +
         '<div class="comm-card-meta">' +
@@ -7086,6 +7224,46 @@
         showCommToast('Listing submitted — Kyle will review it before it goes live.');
       });
     }
+    // ── Edit Gear / Classified (member self-edit, no re-approval) ──
+    var _editingGearId = null;
+
+    function editGear(gearId) {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      _editingGearId = gearId;
+      getSB().from('classifieds').select('*').eq('id', gearId).single()
+        .then(function(res) {
+          if (res.error || !res.data) { alert('Could not load listing.'); return; }
+          var c = res.data;
+          openCommModal('gear-edit', {
+            title: '✏️ Edit Listing',
+            formHtml: '<div class="comm-modal-field"><label>Item Title *</label><input type="text" id="cfGearTitle" value="' + escapeHTML(c.title) + '"></div>' +
+              '<div class="comm-modal-field"><label>Price</label><input type="text" id="cfGearPrice" value="' + escapeHTML(c.price || '') + '"></div>' +
+              '<div class="comm-modal-field"><label>Description</label><textarea id="cfGearDesc">' + escapeHTML(c.description || '') + '</textarea></div>' +
+              '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGearContact" value="' + escapeHTML(c.contact || '') + '"></div>' +
+              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditGear()">Save Changes</button></div>'
+          });
+        });
+    }
+
+    function saveEditGear() {
+      if (!_currentUser || !_editingGearId) return;
+      var title = document.getElementById('cfGearTitle');
+      if (!title || !title.value.trim()) { alert('Title is required.'); return; }
+      getSB().from('classifieds').update({
+        title: title.value.trim(),
+        price: (document.getElementById('cfGearPrice') || {}).value || '',
+        description: (document.getElementById('cfGearDesc') || {}).value || '',
+        contact: (document.getElementById('cfGearContact') || {}).value || ''
+      }).eq('id', _editingGearId).eq('seller_id', _currentUser.id)
+        .then(function(res) {
+          if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+          _editingGearId = null;
+          closeCommModal();
+          showCommToast('Listing updated.');
+          _classifiedsLoaded = false;
+          loadClassifieds();
+        });
+    }
     // ── End Gear / Classifieds ────────────────────────────────
 
     // ── Forum ─────────────────────────────────────────────────
@@ -7119,8 +7297,10 @@
     function renderThreadCard(t) {
       var name = (t.profiles && t.profiles.display_name) ? escapeHTML(t.profiles.display_name) : 'Member';
       var date = new Date(t.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+      var isOwner = _currentUser && t.author_id === _currentUser.id;
       return '<div class="comm-card">' +
         '<span class="comm-card-badge badge-forum">' + escapeHTML(t.category) + '</span>' +
+        (isOwner ? '<button class="comm-edit-btn" onclick="editThread(\'' + String(t.id) + '\')">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(t.title) + '</div>' +
         '<div class="comm-card-meta">' + name + ' · ' + date + '</div>' +
         (t.body ? '<div class="comm-card-meta">' + escapeHTML(t.body).substring(0, 200) + (t.body.length > 200 ? '…' : '') + '</div>' : '') +
@@ -7195,6 +7375,44 @@
         showCommToast('Thread posted!');
       });
     }
+    // ── Edit Thread (member self-edit, no re-approval) ──
+    var _editingThreadId = null;
+
+    function editThread(threadId) {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      _editingThreadId = threadId;
+      getSB().from('forum_threads').select('*').eq('id', threadId).single()
+        .then(function(res) {
+          if (res.error || !res.data) { alert('Could not load thread.'); return; }
+          var t = res.data;
+          openCommModal('thread-edit', {
+            title: '✏️ Edit Thread',
+            formHtml: '<div class="comm-modal-field"><label>Title *</label><input type="text" id="cfForumTitle" value="' + escapeHTML(t.title) + '"></div>' +
+              '<div class="comm-modal-field"><label>Category</label><select id="cfForumCat"><option value="general" ' + (t.category === 'general' ? 'selected' : '') + '>General</option><option value="gear" ' + (t.category === 'gear' ? 'selected' : '') + '>Gear Talk</option><option value="spots" ' + (t.category === 'spots' ? 'selected' : '') + '>Fishing Spots</option><option value="recipes" ' + (t.category === 'recipes' ? 'selected' : '') + '>Recipes & Cooking</option></select></div>' +
+              '<div class="comm-modal-field"><label>Body</label><textarea id="cfForumBody">' + escapeHTML(t.body || '') + '</textarea></div>' +
+              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditThread()">Save Changes</button></div>'
+          });
+        });
+    }
+
+    function saveEditThread() {
+      if (!_currentUser || !_editingThreadId) return;
+      var title = document.getElementById('cfForumTitle');
+      if (!title || !title.value.trim()) { alert('Title is required.'); return; }
+      getSB().from('forum_threads').update({
+        title: title.value.trim(),
+        category: (document.getElementById('cfForumCat') || {}).value || 'general',
+        body: (document.getElementById('cfForumBody') || {}).value || ''
+      }).eq('id', _editingThreadId).eq('author_id', _currentUser.id)
+        .then(function(res) {
+          if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+          _editingThreadId = null;
+          closeCommModal();
+          showCommToast('Thread updated.');
+          _forumLoaded = false;
+          loadForum();
+        });
+    }
     // ── End Forum ─────────────────────────────────────────────
 
     // ── Community Leaderboard ─────────────────────────────────
@@ -7256,9 +7474,11 @@
     function renderRecipeCard(r) {
       var name = (r.profiles && r.profiles.display_name) ? escapeHTML(r.profiles.display_name) : 'Member';
       var date = new Date(r.created_at).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' });
+      var isOwner = _currentUser && r.created_by === _currentUser.id;
       return '<div class="comm-card">' +
         '<span class="comm-card-badge badge-recipe">Recipe</span>' +
         (r.species ? '<span class="comm-card-badge" style="background:rgba(26,74,107,0.1);color:var(--green-water);margin-left:0.4rem;">' + escapeHTML(r.species) + '</span>' : '') +
+        (isOwner ? '<button class="comm-edit-btn" onclick="editRecipe(\'' + String(r.id) + '\')">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(r.title) + '</div>' +
         (r.photo_url ? '<img src="' + escapeHTML(r.photo_url) + '" style="width:100%;max-height:220px;object-fit:cover;border-radius:0.5rem;margin-bottom:0.6rem;" alt="">' : '') +
         '<div class="comm-card-meta">' + name + ' · ' + date + '</div>' +
@@ -7295,6 +7515,46 @@
         showCommToast('Recipe posted! 🍳');
       });
     }
+    // ── Edit Recipe (member self-edit, no re-approval) ──
+    var _editingRecipeId = null;
+
+    function editRecipe(recipeId) {
+      if (!_currentUser) { alert('Sign in required.'); return; }
+      _editingRecipeId = recipeId;
+      getSB().from('recipes').select('*').eq('id', recipeId).single()
+        .then(function(res) {
+          if (res.error || !res.data) { alert('Could not load recipe.'); return; }
+          var r = res.data;
+          openCommModal('recipe-edit', {
+            title: '✏️ Edit Recipe',
+            formHtml: '<div class="comm-modal-field"><label>Recipe Title *</label><input type="text" id="cfRecipeTitle" value="' + escapeHTML(r.title) + '"></div>' +
+              '<div class="comm-modal-field"><label>Species</label><input type="text" id="cfRecipeSpecies" value="' + escapeHTML(r.species || '') + '"></div>' +
+              '<div class="comm-modal-field"><label>Recipe *</label><textarea id="cfRecipeBody" style="min-height:140px;">' + escapeHTML(r.body || '') + '</textarea></div>' +
+              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditRecipe()">Save Changes</button></div>'
+          });
+        });
+    }
+
+    function saveEditRecipe() {
+      if (!_currentUser || !_editingRecipeId) return;
+      var title = document.getElementById('cfRecipeTitle');
+      var body  = document.getElementById('cfRecipeBody');
+      if (!title || !title.value.trim()) { alert('Title is required.'); return; }
+      if (!body  || !body.value.trim())  { alert('Recipe body is required.'); return; }
+      getSB().from('recipes').update({
+        title: title.value.trim(),
+        species: (document.getElementById('cfRecipeSpecies') || {}).value || '',
+        body: body.value.trim()
+      }).eq('id', _editingRecipeId).eq('created_by', _currentUser.id)
+        .then(function(res) {
+          if (res.error) { console.error(res.error); alert('Error: ' + res.error.message); return; }
+          _editingRecipeId = null;
+          closeCommModal();
+          showCommToast('Recipe updated.');
+          _recipesLoaded = false;
+          loadRecipes();
+        });
+    }
     // ── End Recipes ───────────────────────────────────────────
 
     // ── Init ──────────────────────────────────────────────────
@@ -7308,15 +7568,25 @@
     window.closeCommModal = closeCommModal;
     window.openTripForm   = openTripForm;
     window.submitTrip     = submitTrip;
+    window.editTrip       = editTrip;
+    window.saveEditTrip   = saveEditTrip;
     window.rsvpTrip       = rsvpTrip;
     window.openGuideForm  = openGuideForm;
     window.submitGuide    = submitGuide;
+    window.editGuide      = editGuide;
+    window.saveEditGuide  = saveEditGuide;
     window.openGearForm   = openGearForm;
     window.submitGear     = submitGear;
+    window.editGear       = editGear;
+    window.saveEditGear   = saveEditGear;
     window.openForumForm  = openForumForm;
     window.submitThread   = submitThread;
+    window.editThread     = editThread;
+    window.saveEditThread = saveEditThread;
     window.openRecipeForm = openRecipeForm;
     window.submitRecipe   = submitRecipe;
+    window.editRecipe     = editRecipe;
+    window.saveEditRecipe = saveEditRecipe;
     window.approveContent = approveContent;
 
     // ── Full-screen photo overlay (map popups + fish pics tab) ──
