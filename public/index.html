@@ -6443,8 +6443,8 @@
             var name = (t.profiles && t.profiles.display_name) ? escapeHTML(t.profiles.display_name) : 'Member';
             return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(t.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + ' · ' + escapeHTML(t.trip_date) + '</span></div>' +
               '<div class="admin-card-actions">' +
-              '<button class="btn-approve" onclick="approveContent(\'trips\',' + JSON.stringify(String(t.id)) + ',\'approved\',this)">Approve</button>' +
-              '<button class="btn-reject"  onclick="approveContent(\'trips\',' + JSON.stringify(String(t.id)) + ',\'cancelled\',this)">Reject</button>' +
+              '<button class="btn-approve" onclick="approveContent(\'trips\',\'' + String(t.id) + '\',\'approved\',this)">Approve</button>' +
+              '<button class="btn-reject"  onclick="approveContent(\'trips\',\'' + String(t.id) + '\',\'cancelled\',this)">Reject</button>' +
               '</div></div>';
           }).join('');
         });
@@ -6462,8 +6462,8 @@
             var name = (g.profiles && g.profiles.display_name) ? escapeHTML(g.profiles.display_name) : 'Member';
             return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(g.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + '</span></div>' +
               '<div class="admin-card-actions">' +
-              '<button class="btn-approve" onclick="approveContent(\'guide_postings\',' + JSON.stringify(String(g.id)) + ',\'approved\',this)">Approve</button>' +
-              '<button class="btn-reject"  onclick="approveContent(\'guide_postings\',' + JSON.stringify(String(g.id)) + ',\'removed\',this)">Reject</button>' +
+              '<button class="btn-approve" onclick="approveContent(\'guide_postings\',\'' + String(g.id) + '\',\'approved\',this)">Approve</button>' +
+              '<button class="btn-reject"  onclick="approveContent(\'guide_postings\',\'' + String(g.id) + '\',\'removed\',this)">Reject</button>' +
               '</div></div>';
           }).join('');
         });
@@ -6481,8 +6481,8 @@
             var name = (c.profiles && c.profiles.display_name) ? escapeHTML(c.profiles.display_name) : 'Member';
             return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(c.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + (c.price ? ' · ' + escapeHTML(c.price) : '') + '</span></div>' +
               '<div class="admin-card-actions">' +
-              '<button class="btn-approve" onclick="approveContent(\'classifieds\',' + JSON.stringify(String(c.id)) + ',\'approved\',this)">Approve</button>' +
-              '<button class="btn-reject"  onclick="approveContent(\'classifieds\',' + JSON.stringify(String(c.id)) + ',\'removed\',this)">Reject</button>' +
+              '<button class="btn-approve" onclick="approveContent(\'classifieds\',\'' + String(c.id) + '\',\'approved\',this)">Approve</button>' +
+              '<button class="btn-reject"  onclick="approveContent(\'classifieds\',\'' + String(c.id) + '\',\'removed\',this)">Reject</button>' +
               '</div></div>';
           }).join('');
         });
@@ -6845,7 +6845,7 @@
         '<div class="comm-card-meta">' + name + ' · ' + date + '</div>' +
         (t.body ? '<div class="comm-card-meta">' + escapeHTML(t.body).substring(0, 200) + (t.body.length > 200 ? '…' : '') + '</div>' : '') +
         '<div class="comm-card-footer"><span></span>' +
-          '<button class="comm-cta-btn" onclick="toggleReplies(' + JSON.stringify(String(t.id)) + ',this)">💬 Replies</button>' +
+          '<button class="comm-cta-btn" onclick="toggleReplies(\'' + String(t.id) + '\',this)">💬 Replies</button>' +
         '</div>' +
         '<div id="replies-' + escapeHTML(t.id) + '" style="display:none;margin-top:0.75rem;border-top:1px solid #ccdde8;padding-top:0.75rem;"></div>' +
         '</div>';
