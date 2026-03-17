@@ -4307,8 +4307,8 @@
         <div id="emailAuthForm" style="display:none;width:100%;max-width:360px;margin:0.75rem auto 0;">
           <!-- Sign In / Sign Up tab strip -->
           <div style="display:flex;border-radius:8px;overflow:hidden;border:1px solid rgba(201,168,76,0.3);margin-bottom:1.1rem;">
-            <button id="emailTabSignIn" type="button" onclick="switchEmailTab('signin')" style="flex:1;padding:0.55rem;background:var(--amber);color:#fff;border:none;font-family:'Lora',serif;font-size:0.82rem;font-weight:600;cursor:pointer;">Sign In</button>
-            <button id="emailTabSignUp" type="button" onclick="switchEmailTab('signup')" style="flex:1;padding:0.55rem;background:transparent;color:rgba(238,246,251,0.55);border:none;font-family:'Lora',serif;font-size:0.82rem;cursor:pointer;">Create Account</button>
+            <button id="emailTabSignIn" type="button" data-action="switch-email-tab" data-tab="signin" style="flex:1;padding:0.55rem;background:var(--amber);color:#fff;border:none;font-family:'Lora',serif;font-size:0.82rem;font-weight:600;cursor:pointer;">Sign In</button>
+            <button id="emailTabSignUp" type="button" data-action="switch-email-tab" data-tab="signup" style="flex:1;padding:0.55rem;background:transparent;color:rgba(238,246,251,0.55);border:none;font-family:'Lora',serif;font-size:0.82rem;cursor:pointer;">Create Account</button>
           </div>
 
           <!-- Sign In fields -->
@@ -4361,21 +4361,21 @@
     <div id="membersMain" class="members-main-view" style="display:none;">
       <div class="members-nav">
         <nav class="member-primary-nav" role="tablist" aria-label="Member portal navigation">
-          <button class="member-primary-tab active" id="mptFeed" role="tab" aria-selected="true" aria-controls="memberTabFeed" onclick="switchPrimaryTab('Feed')">📸 Feed</button>
-          <button class="member-primary-tab" id="mptCommunity" role="tab" aria-selected="false" aria-controls="memberTabCommunity" onclick="switchPrimaryTab('Community')">🌊 Community</button>
-          <button class="member-primary-tab" id="mptMap" role="tab" aria-selected="false" aria-controls="memberTabMap" onclick="switchPrimaryTab('Map')">🗺️ Map</button>
-          <button class="member-primary-tab" id="mptAdmin" role="tab" aria-selected="false" aria-controls="memberTabAdmin" onclick="switchPrimaryTab('Admin')" style="display:none;">⚙️ Admin <span id="adminNavBadge" class="admin-nav-badge" style="display:none;"></span></button>
+          <button class="member-primary-tab active" id="mptFeed" role="tab" aria-selected="true" aria-controls="memberTabFeed" data-action="switch-primary-tab" data-tab="Feed">📸 Feed</button>
+          <button class="member-primary-tab" id="mptCommunity" role="tab" aria-selected="false" aria-controls="memberTabCommunity" data-action="switch-primary-tab" data-tab="Community">🌊 Community</button>
+          <button class="member-primary-tab" id="mptMap" role="tab" aria-selected="false" aria-controls="memberTabMap" data-action="switch-primary-tab" data-tab="Map">🗺️ Map</button>
+          <button class="member-primary-tab" id="mptAdmin" role="tab" aria-selected="false" aria-controls="memberTabAdmin" data-action="switch-primary-tab" data-tab="Admin" style="display:none;">⚙️ Admin <span id="adminNavBadge" class="admin-nav-badge" style="display:none;"></span></button>
         </nav>
         <nav class="member-secondary-nav" id="memberSecondaryNav" role="tablist" aria-label="Community sections" style="display:none;">
-          <button class="member-secondary-tab active" id="mstTrips"        role="tab" aria-selected="true"  aria-controls="commPanelTrips"       onclick="switchCommunityTab('Trips')">🎣 Trips</button>
-          <button class="member-secondary-tab"         id="mstGuides"      role="tab" aria-selected="false" aria-controls="commPanelGuides"      onclick="switchCommunityTab('Guides')">🧑‍✈️ Guides</button>
-          <button class="member-secondary-tab"         id="mstGear"        role="tab" aria-selected="false" aria-controls="commPanelGear"        onclick="switchCommunityTab('Gear')">🛒 Gear &amp; Classifieds</button>
-          <button class="member-secondary-tab"         id="mstForum"       role="tab" aria-selected="false" aria-controls="commPanelForum"       onclick="switchCommunityTab('Forum')">💬 Forum</button>
-          <button class="member-secondary-tab"         id="mstLeaderboard" role="tab" aria-selected="false" aria-controls="commPanelLeaderboard" onclick="switchCommunityTab('Leaderboard')">🏆 Leaderboard</button>
-          <button class="member-secondary-tab"         id="mstRecipes"     role="tab" aria-selected="false" aria-controls="commPanelRecipes"     onclick="switchCommunityTab('Recipes')">🍳 Recipes</button>
+          <button class="member-secondary-tab active" id="mstTrips"        role="tab" aria-selected="true"  aria-controls="commPanelTrips"       data-action="switch-community-tab" data-tab="Trips">🎣 Trips</button>
+          <button class="member-secondary-tab"         id="mstGuides"      role="tab" aria-selected="false" aria-controls="commPanelGuides"      data-action="switch-community-tab" data-tab="Guides">🧑‍✈️ Guides</button>
+          <button class="member-secondary-tab"         id="mstGear"        role="tab" aria-selected="false" aria-controls="commPanelGear"        data-action="switch-community-tab" data-tab="Gear">🛒 Gear &amp; Classifieds</button>
+          <button class="member-secondary-tab"         id="mstForum"       role="tab" aria-selected="false" aria-controls="commPanelForum"       data-action="switch-community-tab" data-tab="Forum">💬 Forum</button>
+          <button class="member-secondary-tab"         id="mstLeaderboard" role="tab" aria-selected="false" aria-controls="commPanelLeaderboard" data-action="switch-community-tab" data-tab="Leaderboard">🏆 Leaderboard</button>
+          <button class="member-secondary-tab"         id="mstRecipes"     role="tab" aria-selected="false" aria-controls="commPanelRecipes"     data-action="switch-community-tab" data-tab="Recipes">🍳 Recipes</button>
         </nav>
         <div class="member-user-info">
-          <button class="pe-open-btn" id="btnOpenProfileEditor" onclick="openProfileEditor()" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
+          <button class="pe-open-btn" id="btnOpenProfileEditor" data-action="open-profile-editor" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
             <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;" onerror="window.handleAvatarError && window.handleAvatarError(this, 'memberAvatarInitials')">
             <div id="memberAvatarInitials" class="member-avatar-initials" style="display:none;"></div>
             <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
@@ -4472,7 +4472,7 @@
         <div id="adminPendingList" class="admin-list"><p class="admin-empty">Loading…</p></div>
         <!-- Gallery Submissions (admin only) -->
         <div class="gallery-approval-section" id="galleryApprovalSection" style="margin-top:2rem;">
-          <div class="gallery-approval-header" onclick="toggleGalleryApprovalList()">
+          <div class="gallery-approval-header" data-action="toggle-gallery-approval">
             <span class="gallery-approval-label">
               📷 Gallery Submissions
               <span class="gallery-pending-count" id="galleryPendingCount" style="display:none;">0</span>
@@ -4487,7 +4487,7 @@
 
         <!-- Gallery Event Tabs (admin only) -->
         <div class="gallery-approval-section" id="galleryEventsSection" style="margin-top:1.5rem;">
-          <div class="gallery-approval-header" onclick="toggleGalleryEventsList()">
+          <div class="gallery-approval-header" data-action="toggle-gallery-events">
             <span class="gallery-approval-label">
               🗂️ Gallery Event Tabs
               <span class="gallery-pending-count" id="galleryEventsCount" style="display:none;">0</span>
@@ -4510,8 +4510,8 @@
               <input type="text" id="geFormDesc" class="form-input" placeholder="Short description (optional)" style="font-size:0.85rem;">
             </div>
             <div style="display:flex;gap:0.5rem;">
-              <button class="btn btn-primary btn-sm" onclick="saveGalleryEvent()">Save</button>
-              <button class="btn btn-outline btn-sm" onclick="cancelGalleryEventForm()">Cancel</button>
+              <button class="btn btn-primary btn-sm" data-action="save-gallery-event">Save</button>
+              <button class="btn btn-outline btn-sm" data-action="cancel-gallery-event">Cancel</button>
             </div>
             <p id="geFormStatus" style="font-size:0.8rem;color:var(--text-mid);margin-top:0.3rem;min-height:1em;"></p>
           </div>
@@ -4520,7 +4520,7 @@
 
         <!-- Pending Trips -->
         <div class="gallery-approval-section" id="tripsApprovalSection" style="margin-top:1.5rem;">
-          <div class="gallery-approval-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+          <div class="gallery-approval-header" data-action="toggle-next-sibling">
             <span class="gallery-approval-label">🎣 Pending Trips <span id="tripsPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
             <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
           </div>
@@ -4529,7 +4529,7 @@
 
         <!-- Pending Guides -->
         <div class="gallery-approval-section" id="guidesApprovalSection" style="margin-top:1rem;">
-          <div class="gallery-approval-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+          <div class="gallery-approval-header" data-action="toggle-next-sibling">
             <span class="gallery-approval-label">🧑‍✈️ Pending Guides <span id="guidesPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
             <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
           </div>
@@ -4538,7 +4538,7 @@
 
         <!-- Pending Classifieds -->
         <div class="gallery-approval-section" id="classifiedsApprovalSection" style="margin-top:1rem;">
-          <div class="gallery-approval-header" onclick="this.nextElementSibling.classList.toggle('hidden')">
+          <div class="gallery-approval-header" data-action="toggle-next-sibling">
             <span class="gallery-approval-label">🛒 Pending Classifieds <span id="classifiedsPendingCount" class="gallery-pending-count" style="display:none;"></span></span>
             <span style="font-size:0.75rem;color:var(--text-mid);">▾</span>
           </div>
@@ -4563,7 +4563,7 @@
         <div style="background:var(--white);border-radius:1rem;width:min(480px,92vw);max-height:88vh;overflow-y:auto;box-shadow:0 12px 48px rgba(13,43,62,0.32);">
           <div id="commPostModalHeader" style="background:var(--green-deep);padding:1rem 1.25rem;border-radius:1rem 1rem 0 0;display:flex;align-items:center;justify-content:space-between;">
             <span id="commPostModalTitle" style="font-family:'Playfair Display',serif;color:var(--gold);font-size:1rem;"></span>
-            <button onclick="closeCommModal()" style="background:none;border:none;color:rgba(200,220,240,0.7);font-size:1.2rem;cursor:pointer;">×</button>
+            <button data-action="close-comm-modal" style="background:none;border:none;color:rgba(200,220,240,0.7);font-size:1.2rem;cursor:pointer;">×</button>
           </div>
           <div id="commPostModalBody" style="padding:1.25rem;"></div>
         </div>
@@ -4614,7 +4614,7 @@
 </footer>
 
 <!-- SCROLL TO TOP BUTTON -->
-<button class="scroll-top" id="scrollTopBtn" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+<button class="scroll-top" id="scrollTopBtn" data-action="scroll-top" aria-label="Back to top">
   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m18 15-6-6-6 6"/></svg>
 </button>
 
@@ -5046,7 +5046,7 @@
         if (!pin.photo_url) return;
         var alt    = pin.species ? escapeHTML(pin.species) + ' caught by a BFF member' : 'Fish catch — BFF member';
         var safeUrl = escapeHTML(pin.photo_url);
-        html += '<div class="gallery-thumb" data-photo-url="' + safeUrl + '" onclick="window._bffViewPhoto(this.dataset.photoUrl)">'
+        html += '<div class="gallery-thumb" data-action="view-photo" data-url="' + safeUrl + '">'
               + '<img src="' + safeUrl + '" alt="' + alt + '" loading="lazy">'
               + (pin.species || pin.caption
                   ? '<div class="fish-thumb-caption">'
@@ -5062,7 +5062,7 @@
       fishUploads.forEach(function(sub) {
         var url     = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
         var safeUrl = escapeHTML(url);
-        html += '<div class="gallery-thumb" data-photo-url="' + safeUrl + '" onclick="window._bffViewPhoto(this.dataset.photoUrl)">'
+        html += '<div class="gallery-thumb" data-action="view-photo" data-url="' + safeUrl + '">'
               + '<img src="' + safeUrl + '" alt="' + escapeHTML(sub.caption || 'Fish photo') + '" loading="lazy">'
               + (sub.caption ? '<div class="fish-thumb-caption"><em>' + escapeHTML(sub.caption) + '</em></div>' : '')
               + '</div>';
@@ -5087,8 +5087,8 @@
       .order('sort_order', { ascending: true });
 
     if (error || !events || events.length === 0) {
-      strip.innerHTML = '<button class="gallery-tab-btn active" onclick="switchGalleryTab(\'seed\',this)">BFF 1st Event</button>'
-                      + '<button class="gallery-tab-btn" onclick="switchGalleryTab(\'fish\',this)">Fish Pics</button>';
+      strip.innerHTML = '<button class="gallery-tab-btn active" data-action="switch-gallery-tab" data-tab-id="seed">BFF 1st Event</button>'
+                      + '<button class="gallery-tab-btn" data-action="switch-gallery-tab" data-tab-id="fish">Fish Pics</button>';
       return;
     }
 
@@ -5097,7 +5097,7 @@
       var tabId  = (ev.id === BFF_FIRST_EVENT_ID) ? 'seed' : ev.id;
       var isFirst = (tabId === 'seed');
       html += '<button class="gallery-tab-btn' + (isFirst ? ' active' : '') + '" '
-            + 'onclick="switchGalleryTab(\'' + tabId + '\',this)">'
+            + 'data-action="switch-gallery-tab" data-tab-id="' + tabId + '">'
             + escapeHTML(ev.name) + '</button>';
 
       if (!isFirst) {
@@ -5110,7 +5110,7 @@
     });
 
     // Fish Pics tab always last — hardcoded, not from DB
-    html += '<button class="gallery-tab-btn" onclick="switchGalleryTab(\'fish\',this)">Fish Pics</button>';
+    html += '<button class="gallery-tab-btn" data-action="switch-gallery-tab" data-tab-id="fish">Fish Pics</button>';
     strip.innerHTML = html;
 
     updateGalleryUploadButton();
@@ -5159,7 +5159,7 @@
       var url = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
       var safeUrl = escapeHTML(url);
       var alt = escapeHTML(sub.caption || 'Member upload');
-      return '<div class="gallery-thumb" data-category="community" data-photo-url="' + safeUrl + '" onclick="window._bffViewPhoto(this.dataset.photoUrl)">'
+      return '<div class="gallery-thumb" data-category="community" data-action="view-photo" data-url="' + safeUrl + '">'
            + '<img src="' + safeUrl + '" alt="' + alt + '" loading="lazy">'
            + '</div>';
     }).join('');
@@ -5801,7 +5801,7 @@
       });
       var marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(_memberMap);
       _pinMarkers.push(marker);
-      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;cursor:pointer;" data-photo-url="' + escapeHTML(pin.photo_url) + '" onclick="window._bffViewPhoto(this.dataset.photoUrl)">' : '';
+      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;cursor:pointer;" data-action="view-photo" data-url="' + escapeHTML(pin.photo_url) + '">' : '';
       var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + escapeHTML(pin.species) + '</em>' : '';
       var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + escapeHTML(pin.caption) + '</p>' : '';
       marker.bindPopup('<div style="font-family:Lora,serif;max-width:200px;">' + img + sp + cap + '</div>');
@@ -5980,7 +5980,7 @@
           '<div class="comment-list" id="comments-' + escapeHTML(pin.id) + '"></div>' +
           '<div class="comment-input-row">' +
             '<input type="text" class="form-input comment-input" placeholder="Add a comment…" id="commentInput-' + escapeHTML(pin.id) + '">' +
-            '<button class="btn btn-primary btn-sm" onclick="window._bffPostComment(' + JSON.stringify(String(pin.id)) + ')">Post</button>' +
+            '<button class="btn btn-primary btn-sm" data-action="post-comment" data-id="' + escapeHTML(String(pin.id)) + '">Post</button>' +
           '</div>' +
         '</div>';
 
@@ -6092,7 +6092,7 @@
         }
         container.innerHTML = items.map(function(item) {
           var ago = formatTimeAgo(item.created_at);
-          return '<div onclick="switchPrimaryTab(\'Community\')" style="padding:0.4rem 0;border-bottom:1px solid var(--border,rgba(0,0,0,0.08));cursor:pointer;" title="Go to Community">' +
+          return '<div data-action="nav-community" style="padding:0.4rem 0;border-bottom:1px solid var(--border,rgba(0,0,0,0.08));cursor:pointer;" title="Go to Community">' +
             '<span style="display:inline-block;font-size:0.65rem;font-weight:700;padding:1px 6px;border-radius:10px;background:' + item.color + ';color:#fff;margin-right:6px;">' + item.label + '</span>' +
             '<span style="font-size:0.8rem;color:var(--text-dark);">' + escapeHTML(item.title) + '</span>' +
             '<div style="font-size:0.72rem;color:var(--text-mid);margin-top:2px;">' + ago + '</div>' +
@@ -6288,8 +6288,8 @@
               row.innerHTML =
                 '<span><strong>' + escapeHTML(p.display_name || 'Unknown') + '</strong>' + providerBadge + ' <span style="font-size:0.8rem;color:var(--text-mid);">joined ' + escapeHTML(date) + '</span>' + emailLine + '</span>' +
                 '<div style="display:flex;gap:0.5rem;">' +
-                  '<button class="btn btn-primary btn-sm" onclick="window._bffApproveUser(\'' + String(p.id) + '\',this.closest(\'.admin-row\'))">Approve</button>' +
-                  '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRejectUser(\'' + String(p.id) + '\',this.closest(\'.admin-row\'))">Reject</button>' +
+                  '<button class="btn btn-primary btn-sm" data-action="approve-user" data-id="' + escapeHTML(String(p.id)) + '">Approve</button>' +
+                  '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" data-action="reject-user" data-id="' + escapeHTML(String(p.id)) + '">Reject</button>' +
                 '</div>';
               pendingList.appendChild(row);
             });
@@ -6315,7 +6315,7 @@
                 '<span style="display:flex;align-items:center;gap:0.75rem;">' + img +
                   '<span>' + escapeHTML(pin.species || 'Unknown species') + (pin.caption ? ' \u2014 ' + escapeHTML(pin.caption) : '') + '</span>' +
                 '</span>' +
-                '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRemovePin(\'' + String(pin.id) + '\',this.closest(\'.admin-row\'))">Remove</button>';
+                '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" data-action="remove-pin" data-id="' + escapeHTML(String(pin.id)) + '">Remove</button>';
               flaggedList.appendChild(row);
             });
           });
@@ -6423,16 +6423,16 @@
         var sidSafe = escapeHTML(sid); // for DOM id attributes only
 
         rows.push(
-          '<div class="gallery-pending-item" id="gpi-' + sidSafe + '" onclick="toggleGalleryItemExpand(\'' + sid + '\')">' +
+          '<div class="gallery-pending-item" id="gpi-' + sidSafe + '" data-action="toggle-gallery-expand" data-id="' + sidSafe + '">' +
             (thumbUrl ? '<img class="gallery-pending-thumb" src="' + thumbUrl + '" alt="" loading="lazy">' : '<div class="gallery-pending-thumb"></div>') +
             '<div class="gallery-pending-info">' +
               '<div class="gallery-pending-member">' + memberName + '</div>' +
               '<div class="gallery-pending-meta">' + eventName + ' · ' + date + '</div>' +
               '<div class="gallery-pending-caption">' + (caption ? '"' + caption + '"' : '(no caption)') + '</div>' +
             '</div>' +
-            '<div style="display:flex;flex-direction:column;gap:0.3rem;flex-shrink:0;" onclick="event.stopPropagation()">' +
-              '<button class="gallery-approve-btn" onclick="approveGallerySubmission(\'' + sid + '\',\'' + spath + '\')">✓ Approve</button>' +
-              '<button class="gallery-reject-btn" onclick="rejectGallerySubmission(\'' + sid + '\',\'' + spath + '\')">✕ Reject</button>' +
+            '<div style="display:flex;flex-direction:column;gap:0.3rem;flex-shrink:0;" data-action="stop-propagation">' +
+              '<button class="gallery-approve-btn" data-action="approve-gallery" data-sid="' + sidSafe + '" data-spath="' + escapeHTML(spath) + '">✓ Approve</button>' +
+              '<button class="gallery-reject-btn" data-action="reject-gallery" data-sid="' + sidSafe + '" data-spath="' + escapeHTML(spath) + '">✕ Reject</button>' +
             '</div>' +
           '</div>' +
           '<div class="gallery-expand-preview" id="gpe-' + sidSafe + '">' +
@@ -6441,8 +6441,8 @@
             '<div class="gallery-expand-field" style="color:var(--text-mid);font-size:0.7rem;">' + date + '</div>' +
             (caption ? '<div class="gallery-expand-caption">"' + caption + '"</div>' : '') +
             '<div class="gallery-expand-actions">' +
-              '<button class="gallery-expand-approve" onclick="approveGallerySubmission(\'' + sid + '\',\'' + spath + '\')">✓ Approve &amp; Publish</button>' +
-              '<button class="gallery-expand-reject" onclick="rejectGallerySubmission(\'' + sid + '\',\'' + spath + '\')">✕ Reject</button>' +
+              '<button class="gallery-expand-approve" data-action="approve-gallery" data-sid="' + sidSafe + '" data-spath="' + escapeHTML(spath) + '">✓ Approve &amp; Publish</button>' +
+              '<button class="gallery-expand-reject" data-action="reject-gallery" data-sid="' + sidSafe + '" data-spath="' + escapeHTML(spath) + '">✕ Reject</button>' +
             '</div>' +
           '</div>'
         );
@@ -6550,15 +6550,15 @@
             +   '</div>'
             + '</div>'
             + '<div style="display:flex;gap:0.3rem;flex-shrink:0;">'
-            +   '<button class="btn btn-outline btn-sm" style="font-size:0.7rem;" onclick="editGalleryEvent(\'' + String(ev.id) + '\')">Edit</button>'
-            +   '<button class="btn btn-outline btn-sm" style="font-size:0.7rem;border-color:var(--orange);color:var(--orange);" onclick="deleteGalleryEvent(\'' + String(ev.id) + '\',\'' + escapeHTML(ev.name) + '\')">Delete</button>'
+            +   '<button class="btn btn-outline btn-sm" style="font-size:0.7rem;" data-action="edit-event" data-id="' + escapeHTML(String(ev.id)) + '">Edit</button>'
+            +   '<button class="btn btn-outline btn-sm" style="font-size:0.7rem;border-color:var(--orange);color:var(--orange);" data-action="delete-event" data-id="' + escapeHTML(String(ev.id)) + '" data-name="' + escapeHTML(ev.name) + '">Delete</button>'
             + '</div>'
             + '</div>';
         }).join('');
       }
 
       list.innerHTML += '<div style="padding:0.75rem;text-align:center;">'
-        + '<button class="btn btn-primary btn-sm" onclick="showGalleryEventForm()">+ Add Event Tab</button>'
+        + '<button class="btn btn-primary btn-sm" data-action="show-gallery-event-form">+ Add Event Tab</button>'
         + '</div>';
     }
 
@@ -6654,8 +6654,8 @@
             var name = (t.profiles && t.profiles.display_name) ? escapeHTML(t.profiles.display_name) : 'Member';
             return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(t.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + ' · ' + escapeHTML(t.trip_date) + '</span></div>' +
               '<div class="admin-card-actions">' +
-              '<button class="btn-approve" onclick="approveContent(\'trips\',\'' + String(t.id) + '\',\'approved\',this)">Approve</button>' +
-              '<button class="btn-reject"  onclick="approveContent(\'trips\',\'' + String(t.id) + '\',\'cancelled\',this)">Reject</button>' +
+              '<button class="btn-approve" data-action="approve-content" data-table="trips" data-id="' + escapeHTML(String(t.id)) + '" data-status="approved">Approve</button>' +
+              '<button class="btn-reject"  data-action="approve-content" data-table="trips" data-id="' + escapeHTML(String(t.id)) + '" data-status="cancelled">Reject</button>' +
               '</div></div>';
           }).join('');
         });
@@ -6673,8 +6673,8 @@
             var name = (g.profiles && g.profiles.display_name) ? escapeHTML(g.profiles.display_name) : 'Member';
             return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(g.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + '</span></div>' +
               '<div class="admin-card-actions">' +
-              '<button class="btn-approve" onclick="approveContent(\'guide_postings\',\'' + String(g.id) + '\',\'approved\',this)">Approve</button>' +
-              '<button class="btn-reject"  onclick="approveContent(\'guide_postings\',\'' + String(g.id) + '\',\'removed\',this)">Reject</button>' +
+              '<button class="btn-approve" data-action="approve-content" data-table="guide_postings" data-id="' + escapeHTML(String(g.id)) + '" data-status="approved">Approve</button>' +
+              '<button class="btn-reject"  data-action="approve-content" data-table="guide_postings" data-id="' + escapeHTML(String(g.id)) + '" data-status="removed">Reject</button>' +
               '</div></div>';
           }).join('');
         });
@@ -6692,8 +6692,8 @@
             var name = (c.profiles && c.profiles.display_name) ? escapeHTML(c.profiles.display_name) : 'Member';
             return '<div class="admin-card"><div class="admin-card-info"><strong>' + escapeHTML(c.title) + '</strong><br><span style="font-size:0.8rem;color:var(--text-mid);">' + name + (c.price ? ' · ' + escapeHTML(c.price) : '') + '</span></div>' +
               '<div class="admin-card-actions">' +
-              '<button class="btn-approve" onclick="approveContent(\'classifieds\',\'' + String(c.id) + '\',\'approved\',this)">Approve</button>' +
-              '<button class="btn-reject"  onclick="approveContent(\'classifieds\',\'' + String(c.id) + '\',\'removed\',this)">Reject</button>' +
+              '<button class="btn-approve" data-action="approve-content" data-table="classifieds" data-id="' + escapeHTML(String(c.id)) + '" data-status="approved">Approve</button>' +
+              '<button class="btn-reject"  data-action="approve-content" data-table="classifieds" data-id="' + escapeHTML(String(c.id)) + '" data-status="removed">Reject</button>' +
               '</div></div>';
           }).join('');
         });
@@ -6843,7 +6843,7 @@
     function renderTripsPanel(panel, data) {
       var club   = data.filter(function(t) { return t.type === 'club'; });
       var member = data.filter(function(t) { return t.type === 'member'; });
-      var html = '<button class="comm-post-btn" onclick="openTripForm()">+ Post a Trip</button>' +
+      var html = '<button class="comm-post-btn" data-action="open-trip-form">+ Post a Trip</button>' +
         '<div class="comm-approval-note">Member-posted trips are reviewed by Kyle before appearing here.</div>';
       if (club.length)   { html += '<div class="comm-section-heading">Club Events</div>'  + club.map(renderTripCard).join(''); }
       if (member.length) { html += '<div class="comm-section-heading">Member Trips</div>' + member.map(renderTripCard).join(''); }
@@ -6867,7 +6867,7 @@
 
       return '<div class="comm-card" id="trip-card-' + escapeHTML(trip.id) + '">' +
         '<span class="comm-card-badge ' + (trip.type === 'club' ? 'badge-club' : 'badge-member') + '">' + (trip.type === 'club' ? 'Club Event' : 'Member Trip') + '</span>' +
-        (isOwner ? '<button class="comm-edit-btn" onclick="editTrip(\'' + String(trip.id) + '\')">Edit</button>' : '') +
+        (isOwner ? '<button class="comm-edit-btn" data-action="edit-trip" data-id="' + escapeHTML(String(trip.id)) + '">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(trip.title) + '</div>' +
         '<div class="comm-card-meta">' + date + (trip.location ? ' · ' + escapeHTML(trip.location) : '') + '<br>Posted by ' + name + '</div>' +
         (trip.description ? '<div class="comm-card-meta">' + escapeHTML(trip.description) + '</div>' : '') +
@@ -6877,7 +6877,7 @@
           rsvpBadge +
           (alreadyRsvpd
             ? '<button class="comm-cta-btn" disabled>RSVP\'d ✓</button>'
-            : '<button class="comm-cta-btn" onclick="rsvpTrip(\'' + String(trip.id) + '\',this)">RSVP</button>') +
+            : '<button class="comm-cta-btn" data-action="rsvp-trip" data-id="' + escapeHTML(String(trip.id)) + '">RSVP</button>') +
         '</div></div>';
     }
 
@@ -6921,7 +6921,7 @@
           '<div class="comm-modal-field"><label>Location</label><input type="text" id="cfTripLocation" placeholder="e.g. Breton Sound"></div>' +
           '<div class="comm-modal-field"><label>Max Spots</label><input type="number" id="cfTripSpots" min="1" placeholder="Leave blank for open"></div>' +
           '<div class="comm-modal-field"><label>Description</label><textarea id="cfTripDesc" placeholder="Details about the trip…"></textarea></div>' +
-          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitTrip()">Submit for Approval</button></div>'
+          '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="submit-trip">Submit for Approval</button></div>'
       });
     }
 
@@ -6963,7 +6963,7 @@
               '<div class="comm-modal-field"><label>Location</label><input type="text" id="cfTripLocation" value="' + escapeHTML(t.location || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Max Spots</label><input type="number" id="cfTripSpots" min="1" value="' + (t.max_spots || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Description</label><textarea id="cfTripDesc">' + escapeHTML(t.description || '') + '</textarea></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditTrip()">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="save-edit-trip">Save Changes</button></div>'
           });
         });
     }
@@ -7006,7 +7006,7 @@
         .eq('status','approved').order('created_at', { ascending: false })
         .then(function(res) {
           if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load guide listings.</div>'; return; }
-          var html = '<button class="comm-post-btn" onclick="openGuideForm()">+ List Your Guide Services</button>' +
+          var html = '<button class="comm-post-btn" data-action="open-guide-form">+ List Your Guide Services</button>' +
             '<div class="comm-approval-note">Guide listings are reviewed by Kyle before appearing here.</div>';
           if (!res.data.length) html += '<div class="comm-empty">No guide listings yet.</div>';
           else html += res.data.map(renderGuideCard).join('');
@@ -7019,7 +7019,7 @@
       var isOwner = _currentUser && g.guide_id === _currentUser.id;
       return '<div class="comm-card">' +
         '<span class="comm-card-badge badge-guide">Guide</span>' +
-        (isOwner ? '<button class="comm-edit-btn" onclick="editGuide(\'' + String(g.id) + '\')">Edit</button>' : '') +
+        (isOwner ? '<button class="comm-edit-btn" data-action="edit-guide" data-id="' + escapeHTML(String(g.id)) + '">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(g.title) + '</div>' +
         '<div class="comm-card-meta">' +
           (g.rate ? 'Rate: ' + escapeHTML(g.rate) + '<br>' : '') +
@@ -7040,7 +7040,7 @@
           '<div class="comm-modal-field"><label>Available Dates / Schedule</label><input type="text" id="cfGuideDates" placeholder="e.g. Weekends Apr–Oct"></div>' +
           '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGuideContact"></div>' +
           '<div class="comm-modal-field"><label>Description</label><textarea id="cfGuideDesc" placeholder="Tell members about your experience and what you offer…"></textarea></div>' +
-          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitGuide()">Submit for Approval</button></div>'
+          '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="submit-guide">Submit for Approval</button></div>'
       });
     }
 
@@ -7078,7 +7078,7 @@
               '<div class="comm-modal-field"><label>Available Dates / Schedule</label><input type="text" id="cfGuideDates" value="' + escapeHTML(g.available_dates || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGuideContact" value="' + escapeHTML(g.contact || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Description</label><textarea id="cfGuideDesc">' + escapeHTML(g.description || '') + '</textarea></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditGuide()">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="save-edit-guide">Save Changes</button></div>'
           });
         });
     }
@@ -7117,7 +7117,7 @@
         .eq('status','approved').order('created_at', { ascending: false })
         .then(function(res) {
           if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load listings.</div>'; return; }
-          var html = '<button class="comm-post-btn" onclick="openGearForm()">+ Post a Listing</button>' +
+          var html = '<button class="comm-post-btn" data-action="open-gear-form">+ Post a Listing</button>' +
             '<div class="comm-approval-note">Listings are reviewed by Kyle before appearing here.</div>';
           if (!res.data.length) html += '<div class="comm-empty">No listings yet.</div>';
           else html += res.data.map(renderClassifiedCard).join('');
@@ -7131,7 +7131,7 @@
       return '<div class="comm-card">' +
         '<span class="comm-card-badge badge-gear">Gear</span>' +
         (c.sold ? '<span class="comm-card-badge" style="background:#e5e7eb;color:#6b7280;margin-left:0.4rem;">SOLD</span>' : '') +
-        (isOwner ? '<button class="comm-edit-btn" onclick="editGear(\'' + String(c.id) + '\')">Edit</button>' : '') +
+        (isOwner ? '<button class="comm-edit-btn" data-action="edit-gear" data-id="' + escapeHTML(String(c.id)) + '">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(c.title) + '</div>' +
         (c.photo_url ? '<img src="' + escapeHTML(c.photo_url) + '" style="width:100%;max-height:200px;object-fit:cover;border-radius:0.5rem;margin-bottom:0.6rem;" alt="">' : '') +
         '<div class="comm-card-meta">' +
@@ -7151,7 +7151,7 @@
           '<div class="comm-modal-field"><label>Price</label><input type="text" id="cfGearPrice" placeholder="e.g. $650 OBO"></div>' +
           '<div class="comm-modal-field"><label>Description</label><textarea id="cfGearDesc" placeholder="Condition, specs, any defects…"></textarea></div>' +
           '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGearContact"></div>' +
-          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitGear()">Submit for Approval</button></div>'
+          '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="submit-gear">Submit for Approval</button></div>'
       });
     }
 
@@ -7187,7 +7187,7 @@
               '<div class="comm-modal-field"><label>Price</label><input type="text" id="cfGearPrice" value="' + escapeHTML(c.price || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Description</label><textarea id="cfGearDesc">' + escapeHTML(c.description || '') + '</textarea></div>' +
               '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGearContact" value="' + escapeHTML(c.contact || '') + '"></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditGear()">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="save-edit-gear">Save Changes</button></div>'
           });
         });
     }
@@ -7229,7 +7229,7 @@
           var byCategory = {};
           categories.forEach(function(c) { byCategory[c] = []; });
           res.data.forEach(function(t) { if (byCategory[t.category]) byCategory[t.category].push(t); });
-          var html = '<button class="comm-post-btn" onclick="openForumForm()">+ Start a Thread</button>';
+          var html = '<button class="comm-post-btn" data-action="open-forum-form">+ Start a Thread</button>';
           var labels = { general:'General', gear:'Gear Talk', spots:'Fishing Spots', recipes:'Recipes & Cooking' };
           categories.forEach(function(cat) {
             if (!byCategory[cat].length) return;
@@ -7247,12 +7247,12 @@
       var isOwner = _currentUser && t.author_id === _currentUser.id;
       return '<div class="comm-card">' +
         '<span class="comm-card-badge badge-forum">' + escapeHTML(t.category) + '</span>' +
-        (isOwner ? '<button class="comm-edit-btn" onclick="editThread(\'' + String(t.id) + '\')">Edit</button>' : '') +
+        (isOwner ? '<button class="comm-edit-btn" data-action="edit-thread" data-id="' + escapeHTML(String(t.id)) + '">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(t.title) + '</div>' +
         '<div class="comm-card-meta">' + name + ' · ' + date + '</div>' +
         (t.body ? '<div class="comm-card-meta">' + escapeHTML(t.body).substring(0, 200) + (t.body.length > 200 ? '…' : '') + '</div>' : '') +
         '<div class="comm-card-footer"><span></span>' +
-          '<button class="comm-cta-btn" onclick="toggleReplies(\'' + String(t.id) + '\',this)">💬 Replies</button>' +
+          '<button class="comm-cta-btn" data-action="toggle-replies" data-thread-id="' + escapeHTML(String(t.id)) + '">💬 Replies</button>' +
         '</div>' +
         '<div id="replies-' + escapeHTML(t.id) + '" style="display:none;margin-top:0.75rem;border-top:1px solid #ccdde8;padding-top:0.75rem;"></div>' +
         '</div>';
@@ -7277,7 +7277,7 @@
           }
           html += '<div style="display:flex;gap:0.5rem;margin-top:0.5rem;">' +
             '<input type="text" class="form-input" id="replyInput-' + escapeHTML(threadId) + '" placeholder="Add a reply…" style="flex:1;font-size:0.78rem;">' +
-            '<button class="comm-cta-btn" onclick="postReply(\'' + String(threadId) + '\')">Post</button></div>';
+            '<button class="comm-cta-btn" data-action="post-reply" data-thread-id="' + escapeHTML(String(threadId)) + '">Post</button></div>';
           container.innerHTML = html;
         });
     }
@@ -7301,7 +7301,7 @@
         formHtml: '<div class="comm-modal-field"><label>Title *</label><input type="text" id="cfForumTitle" placeholder="What\'s on your mind?"></div>' +
           '<div class="comm-modal-field"><label>Category</label><select id="cfForumCat"><option value="general">General</option><option value="gear">Gear Talk</option><option value="spots">Fishing Spots</option><option value="recipes">Recipes & Cooking</option></select></div>' +
           '<div class="comm-modal-field"><label>Body</label><textarea id="cfForumBody" placeholder="Share details, ask a question…"></textarea></div>' +
-          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitThread()">Post Thread</button></div>'
+          '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="submit-thread">Post Thread</button></div>'
       });
     }
 
@@ -7337,7 +7337,7 @@
             formHtml: '<div class="comm-modal-field"><label>Title *</label><input type="text" id="cfForumTitle" value="' + escapeHTML(t.title) + '"></div>' +
               '<div class="comm-modal-field"><label>Category</label><select id="cfForumCat"><option value="general" ' + (t.category === 'general' ? 'selected' : '') + '>General</option><option value="gear" ' + (t.category === 'gear' ? 'selected' : '') + '>Gear Talk</option><option value="spots" ' + (t.category === 'spots' ? 'selected' : '') + '>Fishing Spots</option><option value="recipes" ' + (t.category === 'recipes' ? 'selected' : '') + '>Recipes & Cooking</option></select></div>' +
               '<div class="comm-modal-field"><label>Body</label><textarea id="cfForumBody">' + escapeHTML(t.body || '') + '</textarea></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditThread()">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="save-edit-thread">Save Changes</button></div>'
           });
         });
     }
@@ -7411,7 +7411,7 @@
         .eq('status','approved').order('created_at', { ascending: false })
         .then(function(res) {
           if (res.error || !res.data) { panel.innerHTML = '<div class="comm-empty">Could not load recipes.</div>'; return; }
-          var html = '<button class="comm-post-btn" onclick="openRecipeForm()">+ Share a Recipe</button>';
+          var html = '<button class="comm-post-btn" data-action="open-recipe-form">+ Share a Recipe</button>';
           if (!res.data.length) html += '<div class="comm-empty">No recipes yet — share your best catch-and-cook!</div>';
           else html += res.data.map(renderRecipeCard).join('');
           panel.innerHTML = html;
@@ -7425,7 +7425,7 @@
       return '<div class="comm-card">' +
         '<span class="comm-card-badge badge-recipe">Recipe</span>' +
         (r.species ? '<span class="comm-card-badge" style="background:rgba(26,74,107,0.1);color:var(--green-water);margin-left:0.4rem;">' + escapeHTML(r.species) + '</span>' : '') +
-        (isOwner ? '<button class="comm-edit-btn" onclick="editRecipe(\'' + String(r.id) + '\')">Edit</button>' : '') +
+        (isOwner ? '<button class="comm-edit-btn" data-action="edit-recipe" data-id="' + escapeHTML(String(r.id)) + '">Edit</button>' : '') +
         '<div class="comm-card-title">' + escapeHTML(r.title) + '</div>' +
         (r.photo_url ? '<img src="' + escapeHTML(r.photo_url) + '" style="width:100%;max-height:220px;object-fit:cover;border-radius:0.5rem;margin-bottom:0.6rem;" alt="">' : '') +
         '<div class="comm-card-meta">' + name + ' · ' + date + '</div>' +
@@ -7439,7 +7439,7 @@
         formHtml: '<div class="comm-modal-field"><label>Recipe Title *</label><input type="text" id="cfRecipeTitle" placeholder="e.g. Blackened Speckled Trout with Cajun Butter"></div>' +
           '<div class="comm-modal-field"><label>Species</label><input type="text" id="cfRecipeSpecies" placeholder="e.g. Speckled Trout"></div>' +
           '<div class="comm-modal-field"><label>Recipe *</label><textarea id="cfRecipeBody" style="min-height:140px;" placeholder="Ingredients and instructions…"></textarea></div>' +
-          '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="submitRecipe()">Post Recipe</button></div>'
+          '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="submit-recipe">Post Recipe</button></div>'
       });
     }
 
@@ -7477,7 +7477,7 @@
             formHtml: '<div class="comm-modal-field"><label>Recipe Title *</label><input type="text" id="cfRecipeTitle" value="' + escapeHTML(r.title) + '"></div>' +
               '<div class="comm-modal-field"><label>Species</label><input type="text" id="cfRecipeSpecies" value="' + escapeHTML(r.species || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Recipe *</label><textarea id="cfRecipeBody" style="min-height:140px;">' + escapeHTML(r.body || '') + '</textarea></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" onclick="closeCommModal()">Cancel</button><button class="btn btn-primary" onclick="saveEditRecipe()">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-primary" data-action="save-edit-recipe">Save Changes</button></div>'
           });
         });
     }
@@ -7738,7 +7738,7 @@ function initEventDelegation() {
       case 'reject-user':             if (window._bffRejectUser) window._bffRejectUser(d.id, el.closest('.admin-row')); break;
       case 'remove-pin':              if (window._bffRemovePin) window._bffRemovePin(d.id, el.closest('.admin-row')); break;
       case 'post-comment':            if (window._bffPostComment) window._bffPostComment(d.id); break;
-      case 'approve-content':         if (window.approveContent) window.approveContent(d.table, d.id, d.status, el.closest('.admin-row')); break;
+      case 'approve-content':         if (window.approveContent) window.approveContent(d.table, d.id, d.status, el); break;
       // Community modal
       case 'close-comm-modal':    if (window.closeCommModal) window.closeCommModal(); break;
       // Community forms
@@ -7795,14 +7795,14 @@ window.addEventListener('DOMContentLoaded', initEventDelegation);
 </script>
 
 <!-- Profile Editor Drawer — lives at body level so position:fixed works regardless of which section is visible -->
-<div id="profileEditorOverlay" class="profile-editor-overlay" onclick="closeProfileEditorOnOverlay(event)" role="dialog" aria-modal="true" aria-label="Edit profile">
+<div id="profileEditorOverlay" class="profile-editor-overlay" data-action="close-profile-overlay" role="dialog" aria-modal="true" aria-label="Edit profile">
   <div class="profile-editor-drawer">
     <div class="pe-handle"></div>
-    <button onclick="closeProfileEditor()" aria-label="Close" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-mid);line-height:1;">&times;</button>
+    <button data-action="close-profile-editor" aria-label="Close" style="position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.4rem;cursor:pointer;color:var(--text-mid);line-height:1;">&times;</button>
     <div class="pe-title">Edit Your Profile</div>
 
     <div class="pe-avatar-row">
-      <button class="pe-avatar-btn" id="peAvatarBtn" onclick="document.getElementById('peAvatarFileInput').click()" aria-label="Upload profile photo">
+      <button class="pe-avatar-btn" id="peAvatarBtn" data-action="profile-avatar-trigger" aria-label="Upload profile photo">
         <img id="peAvatarPreview" src="" alt="" style="display:none;width:100%;height:100%;object-fit:cover;border-radius:50%;">
         <div id="peAvatarInitials" style="font-size:1.4rem;color:#fff;font-weight:700;font-family:'Lora',serif;"></div>
         <div class="pe-avatar-edit-badge">&#9999;</div>
@@ -7839,8 +7839,8 @@ window.addEventListener('DOMContentLoaded', initEventDelegation);
     </div>
 
     <div class="pe-footer">
-      <button class="pe-cancel-btn" onclick="closeProfileEditor()">Cancel</button>
-      <button class="pe-save-btn" id="peSaveBtn" onclick="saveProfile()">Save Profile</button>
+      <button class="pe-cancel-btn" data-action="close-profile-editor">Cancel</button>
+      <button class="pe-save-btn" id="peSaveBtn" data-action="save-profile">Save Profile</button>
     </div>
   </div>
 </div>
