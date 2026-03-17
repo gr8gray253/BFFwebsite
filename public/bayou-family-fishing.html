@@ -4570,6 +4570,17 @@
     return _sbShared;
   }
 
+  // ── Global XSS utility — available to ALL script code (gallery, members, etc.) ──
+  // The member IIFE has its own local escapeHTML for internal use. This global
+  // version is needed by loadFishPics() and other functions defined in global scope.
+  // DO NOT remove — loadFishPics crashes without this (ReferenceError: escapeHTML).
+  function escapeHTML(s) {
+    if (s == null) return '';
+    var d = document.createElement('div');
+    d.textContent = String(s);
+    return d.innerHTML;
+  }
+
   function showSection(id, noPush) {
     if (!VALID_SECTIONS.includes(id)) { id = 'home'; }
     document.body.style.overflow = '';
@@ -6395,12 +6406,21 @@
         var eventName  = escapeHTML((sub.gallery_events && sub.gallery_events.name) || (sub.event_id ? 'Event upload' : 'Fish Pics'));
         var caption    = escapeHTML(sub.caption || '');
         var date = new Date(sub.submitted_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
-        var sid = escapeHTML(String(sub.id));
-        var pathJson = JSON.stringify(String(sub.storage_path));
-        var idJson   = JSON.stringify(String(sub.id));
+        // ── ADMIN APPROVAL ONCLICK QUOTING RULE ─────────────────────────────────
+        // NEVER use JSON.stringify() for onclick attribute values — it produces
+        // double-quoted strings ("value") which break double-quoted HTML attributes,
+        // causing the browser to terminate the attribute at the first inner ".
+        // ALWAYS use single-quote wrapping: '\'' + String(val) + '\''
+        // This produces: onclick="fn('uuid','path/file.jpg')" — valid HTML.
+        // Supabase UUIDs and storage paths never contain single quotes, so this is safe.
+        // This same bug has hit: rsvpTrip, postReply, approve/reject (x3 here).
+        // ────────────────────────────────────────────────────────────────────────
+        var sid   = String(sub.id);
+        var spath = String(sub.storage_path);
+        var sidSafe = escapeHTML(sid); // for DOM id attributes only
 
         rows.push(
-          '<div class="gallery-pending-item" id="gpi-' + sid + '" onclick="toggleGalleryItemExpand(' + idJson + ')">' +
+          '<div class="gallery-pending-item" id="gpi-' + sidSafe + '" onclick="toggleGalleryItemExpand(\'' + sid + '\')">' +
             (thumbUrl ? '<img class="gallery-pending-thumb" src="' + thumbUrl + '" alt="" loading="lazy">' : '<div class="gallery-pending-thumb"></div>') +
             '<div class="gallery-pending-info">' +
               '<div class="gallery-pending-member">' + memberName + '</div>' +
@@ -6408,18 +6428,18 @@
               '<div class="gallery-pending-caption">' + (caption ? '"' + caption + '"' : '(no caption)') + '</div>' +
             '</div>' +
             '<div style="display:flex;flex-direction:column;gap:0.3rem;flex-shrink:0;" onclick="event.stopPropagation()">' +
-              '<button class="gallery-approve-btn" onclick="approveGallerySubmission(' + idJson + ',' + pathJson + ')">✓ Approve</button>' +
-              '<button class="gallery-reject-btn" onclick="rejectGallerySubmission(' + idJson + ',' + pathJson + ')">✕ Reject</button>' +
+              '<button class="gallery-approve-btn" onclick="approveGallerySubmission(\'' + sid + '\',\'' + spath + '\')">✓ Approve</button>' +
+              '<button class="gallery-reject-btn" onclick="rejectGallerySubmission(\'' + sid + '\',\'' + spath + '\')">✕ Reject</button>' +
             '</div>' +
           '</div>' +
-          '<div class="gallery-expand-preview" id="gpe-' + sid + '">' +
+          '<div class="gallery-expand-preview" id="gpe-' + sidSafe + '">' +
             (thumbUrl ? '<img class="gallery-expand-img" src="' + thumbUrl + '" alt="">' : '') +
             '<div class="gallery-expand-field"><strong>' + memberName + '</strong> · ' + eventName + '</div>' +
             '<div class="gallery-expand-field" style="color:var(--text-mid);font-size:0.7rem;">' + date + '</div>' +
             (caption ? '<div class="gallery-expand-caption">"' + caption + '"</div>' : '') +
             '<div class="gallery-expand-actions">' +
-              '<button class="gallery-expand-approve" onclick="approveGallerySubmission(' + idJson + ',' + pathJson + ')">✓ Approve &amp; Publish</button>' +
-              '<button class="gallery-expand-reject" onclick="rejectGallerySubmission(' + idJson + ',' + pathJson + ')">✕ Reject</button>' +
+              '<button class="gallery-expand-approve" onclick="approveGallerySubmission(\'' + sid + '\',\'' + spath + '\')">✓ Approve &amp; Publish</button>' +
+              '<button class="gallery-expand-reject" onclick="rejectGallerySubmission(\'' + sid + '\',\'' + spath + '\')">✕ Reject</button>' +
             '</div>' +
           '</div>'
         );
