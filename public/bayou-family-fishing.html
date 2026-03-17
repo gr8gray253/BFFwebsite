@@ -5137,6 +5137,10 @@
     strip.innerHTML = html;
 
     updateGalleryUploadButton();
+
+    // Auto-load seed tab's dynamic content (approved member submissions)
+    // Without this, dynamic photos only load when user clicks the already-active tab button.
+    loadEventSubmissions(BFF_FIRST_EVENT_ID, 'galleryDynamic-seed');
   }
 
   function switchGalleryTab(tabId, btn) {
@@ -5176,7 +5180,11 @@
 
     container.innerHTML = data.map(function(sub) {
       var url = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
-      return '<div class="gallery-thumb"><img src="' + url + '" alt="' + (sub.caption || 'Member upload') + '" loading="lazy"></div>';
+      var safeUrl = escapeHTML(url);
+      var alt = escapeHTML(sub.caption || 'Member upload');
+      return '<div class="gallery-thumb" data-category="community" onclick="window._bffViewPhoto(\'' + safeUrl + '\')">'
+           + '<img src="' + safeUrl + '" alt="' + alt + '" loading="lazy">'
+           + '</div>';
     }).join('');
   }
 
