@@ -3606,15 +3606,15 @@
       <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="19"><img src="Photos/Gallery20.jpg" width="1000" height="667" alt="Child in HUK Performance Fishing shirt learning to tie a knot with a crimping tool" loading="lazy"></div>
       <div class="gallery-thumb" data-category="kids" data-action="lightbox" data-index="20"><img src="Photos/Gallery21.jpg" width="1000" height="667" alt="Teen practicing a fishing knot with green line and guidance from an adult volunteer" loading="lazy"></div>
       <div class="gallery-video-thumb" data-category="fishing">
-        <video autoplay loop muted playsinline preload="metadata" aria-label="Club member casting on the Louisiana bayou">
-          <source src="Photos/club%20member%20casting%20video%20(gallery).mp4" type="video/mp4">
+        <video autoplay loop muted playsinline preload="none" data-lazy="true" aria-label="Club member casting on the Louisiana bayou">
+          <source data-src="Photos/club%20member%20casting%20video%20(gallery).mp4" type="video/mp4">
         </video>
         <span class="gallery-video-badge">&#9654; VIDEO</span>
         <button class="gallery-video-fs-btn" data-action="video-fullscreen" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
       </div>
       <div class="gallery-video-thumb" data-category="kids">
-        <video autoplay loop muted playsinline preload="metadata" aria-label="BFF fishing knots class instructional video">
-          <source src="Photos/fishing%20knots%20class%20video%20(gallery).mp4" type="video/mp4">
+        <video autoplay loop muted playsinline preload="none" data-lazy="true" aria-label="BFF fishing knots class instructional video">
+          <source data-src="Photos/fishing%20knots%20class%20video%20(gallery).mp4" type="video/mp4">
         </video>
         <span class="gallery-video-badge">&#9654; VIDEO</span>
         <button class="gallery-video-fs-btn" data-action="video-fullscreen" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
@@ -3877,8 +3877,8 @@
     </div>
 
     <div class="boat-story" data-boat="04" data-scroll="fade-up">
-      <video class="boat-card-video-bg" autoplay loop muted playsinline preload="metadata" aria-label="Video of The Check Twice boat on the bayou">
-        <source src="Photos/check%20twice%20video%20(boat).mp4" type="video/mp4">
+      <video class="boat-card-video-bg" autoplay loop muted playsinline preload="none" data-lazy="true" aria-label="Video of The Check Twice boat on the bayou">
+        <source data-src="Photos/check%20twice%20video%20(boat).mp4" type="video/mp4">
       </video>
       <img src="Photos/The%20Check%20Twice%20(boat).jpg" width="2500" height="1155" alt="The Check Twice" class="boat-story-img" loading="lazy">
       <h3>The Check Twice</h3>
@@ -7770,12 +7770,26 @@ function initEventDelegation() {
 }
 window.addEventListener('DOMContentLoaded', initEventDelegation);
 
-// ── Video IntersectionObserver — pause off-screen autoplay videos ──
+// ── Video IntersectionObserver — lazy-load + pause off-screen autoplay videos ──
 (function() {
   var videoObserver = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
-      if (entry.isIntersecting) entry.target.play().catch(function() {});
-      else entry.target.pause();
+      var v = entry.target;
+      if (entry.isIntersecting) {
+        // Lazy-load: swap data-src → src on first intersection
+        if (v.dataset.lazy) {
+          var src = v.querySelector('source[data-src]');
+          if (src) {
+            src.src = src.dataset.src;
+            delete src.dataset.src;
+            v.load();
+          }
+          delete v.dataset.lazy;
+        }
+        v.play().catch(function() {});
+      } else {
+        v.pause();
+      }
     });
   }, { threshold: 0 });
   document.querySelectorAll('video[autoplay]').forEach(function(v) {
