@@ -15,7 +15,8 @@
 <meta name="twitter:description" content="We are a nonprofit dedicated to bringing families together through fishing, boat safety, and the preservation of Louisiana's bayou culture.">
 <meta name="twitter:image" content="https://bayoucharity.org/Photos/skyline.jpg">
 <link rel="canonical" href="https://bayoucharity.org">
-<link rel="icon" href="Photos/BFF+Logo.jpg" type="image/jpeg">
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<link rel="icon" href="Photos/BFF+Logo.jpg" type="image/jpeg" sizes="any">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0d2b3e">
 <meta name="mobile-web-app-capable" content="yes">
@@ -4869,102 +4870,6 @@
     document.getElementById('donateAmount').value = isOther ? 'Other' : el.textContent;
   }
 
-  // ─── FISHING RODEO RSVP ───
-  let gearChoice = 'own';
-  // Pre-fill today's date on the signature line
-  (function() {
-    const el = document.getElementById('rsvpSigDate');
-    if (el) el.value = new Date().toISOString().split('T')[0];
-  })();
-
-  function setGear(type) {
-    gearChoice = type;
-    document.getElementById('gearOwn').classList.toggle('active', type === 'own');
-    document.getElementById('gearLoaner').classList.toggle('active', type === 'loaner');
-    document.getElementById('rsvpGear').value = type === 'own' ? 'Bringing my own' : 'Need loaner gear';
-  }
-
-  // Wire gear toggle buttons — only present on fishing-rodeo.html, not the main page
-  (function() {
-    var gearOwnEl    = document.getElementById('gearOwn');
-    var gearLoanerEl = document.getElementById('gearLoaner');
-    if (gearOwnEl)    gearOwnEl.addEventListener('click',    function() { setGear('own'); });
-    if (gearLoanerEl) gearLoanerEl.addEventListener('click', function() { setGear('loaner'); });
-  })();
-
-  function toggleOtherInput(cb) {
-    document.getElementById('contactOtherText').style.display = cb.checked ? 'block' : 'none';
-  }
-
-  async function submitRSVP(event) {
-    event.preventDefault();
-    const form = event.target;
-
-    // Validation
-    const nameEl = document.getElementById('rsvpName');
-    if (!nameEl.value.trim()) {
-      nameEl.focus();
-      nameEl.style.borderColor = 'var(--amber)';
-      return;
-    }
-    nameEl.style.borderColor = '';
-
-    if (!document.querySelector('input[name="photo_consent"]:checked')) {
-      alert('Please select your photo & video consent preference.');
-      return;
-    }
-
-    if (!document.getElementById('liabilityAgree').checked) {
-      document.getElementById('liabilityAgree').closest('.rsvp-consent-block').style.outline = '1px solid var(--amber)';
-      alert('Please read and agree to the liability release to continue.');
-      return;
-    }
-    document.getElementById('liabilityAgree').closest('.rsvp-consent-block').style.outline = '';
-
-    const sigEl = document.getElementById('rsvpSignature');
-    if (!sigEl.value.trim()) {
-      sigEl.focus();
-      sigEl.style.borderColor = 'var(--amber)';
-      return;
-    }
-    sigEl.style.borderColor = '';
-
-    // Submit to Formspree
-    const btn = form.querySelector('[type="submit"]');
-    const original = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-
-    try {
-      const res = await fetch(FORMSPREE, {
-        method: 'POST',
-        body: new FormData(form),
-        headers: { 'Accept': 'application/json' }
-      });
-
-      if (res.ok) {
-        form.reset();
-        setGear('own');
-        document.getElementById('contactOtherText').style.display = 'none';
-        document.getElementById('rsvpSigDate').value = new Date().toISOString().split('T')[0];
-        incrementRSVPCounter();
-        const successEl = document.getElementById('rsvpSuccess');
-        successEl.style.display = 'block';
-        setTimeout(() => { successEl.style.display = 'none'; }, 6000);
-      } else {
-        showToast('Error', 'Something went wrong — please email kyle.rockefeller@bayoucharity.org');
-      }
-    } catch (e) {
-      showToast('Error', 'Could not connect — please email kyle.rockefeller@bayoucharity.org');
-    }
-
-    btn.disabled = false;
-    btn.textContent = original;
-  }
-
-  function toggleCheck(el) {
-    el.closest('.checklist-item').classList.toggle('checked', el.checked);
-  }
 
   // ─── TOAST ───
   function showToast(title, msg) {
@@ -5001,21 +4906,6 @@
     _scrollTopBtn.classList.toggle('visible', window.scrollY > 300);
   }, { passive: true });
 
-  // ─── RSVP COUNTER (localStorage persistence) ───
-  function initRSVPCounter() {
-    const count = parseInt(localStorage.getItem('bff_rsvp_count') || '0', 10);
-    updateRSVPDisplay(count);
-  }
-  function updateRSVPDisplay(count) {
-    const numEl = document.getElementById('rsvpCountNum');
-    if (numEl) numEl.textContent = count;
-  }
-  function incrementRSVPCounter() {
-    const count = parseInt(localStorage.getItem('bff_rsvp_count') || '0', 10) + 1;
-    localStorage.setItem('bff_rsvp_count', String(count));
-    updateRSVPDisplay(count);
-  }
-  initRSVPCounter();
 
   // ─── GALLERY FUNCTION STUBS (overwritten by Tasks 9 + 10) ───────────────────
   // Prevent ReferenceError if gallery tab opened before Tasks 9/10 run.
