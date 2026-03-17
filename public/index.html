@@ -4376,7 +4376,7 @@
         </nav>
         <div class="member-user-info">
           <button class="pe-open-btn" id="btnOpenProfileEditor" onclick="openProfileEditor()" aria-label="Edit your profile" title="Edit profile" style="background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:0.5rem;padding:0.2rem 0.4rem;border-radius:1rem;transition:background 0.15s;" onmouseover="this.style.background='rgba(255,255,255,0.1)'" onmouseout="this.style.background='none'">
-            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;" onerror="handleAvatarError(this, 'memberAvatarInitials')">
+            <img id="memberAvatar" src="" alt="" class="member-avatar" style="display:none;" onerror="window.handleAvatarError && window.handleAvatarError(this, 'memberAvatarInitials')">
             <div id="memberAvatarInitials" class="member-avatar-initials" style="display:none;"></div>
             <span id="memberName" style="font-family:'Lora',serif;font-size:0.9rem;color:var(--text-mid);"></span>
             <span style="font-size:0.65rem;color:var(--gold);font-family:'Lora',serif;">&#9999;</span>
