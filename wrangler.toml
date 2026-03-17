@@ -18,7 +18,7 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
 
     # Disables access to sensitive browser features not used by this site
-    Permissions-Policy = "camera=(), microphone=(), geolocation=(self), payment=()"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(self), payment=(self \"https://www.zeffy.com\")"
 
     # Legacy XSS filter (belt-and-suspenders for older browsers)
     X-XSS-Protection = "1; mode=block"

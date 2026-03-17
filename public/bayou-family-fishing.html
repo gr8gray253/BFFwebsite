@@ -44,7 +44,10 @@
   }
 }
 </script>
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://unpkg.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Caveat:wght@400;600;700&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -156,6 +159,8 @@
     gap: 5px;
     cursor: pointer;
     padding: 4px;
+    background: none;
+    border: none;
   }
   .hamburger span {
     display: block;
@@ -3398,6 +3403,25 @@
     font-size: 0.78rem; cursor: pointer; font-family: 'Lora', serif;
   }
   /* ── End Gallery approval ──────────────────────── */
+
+  /* ── Focus indicators ──────────────────────────── */
+  button:focus-visible,
+  a:focus-visible,
+  [role="button"]:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+  }
+
+  /* ── prefers-reduced-motion ─────────────────────── */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
 </style>
 <!-- Supabase JS SDK -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.99.0/dist/umd/supabase.js" integrity="sha384-XEXe97+HNh6W7E6opXLb8siV2SnDVO4xnfBIm77tH+Tl6xMs9mY3zBIl5t2QFwf2" crossorigin="anonymous"></script>
@@ -3407,7 +3431,7 @@
 
 <!-- PRELOADER -->
 <div class="preloader" id="preloader">
-  <img src="Photos/BFF+Logo.jpg" alt="" class="preloader-logo">
+  <img src="Photos/BFF+Logo.jpg" width="1300" height="1000" alt="" class="preloader-logo">
   <span class="preloader-text">Loading the bayou...</span>
 </div>
 
@@ -3428,13 +3452,14 @@
   </ul>
   <div style="display:flex;align-items:center;gap:0.3rem;">
     <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" onclick="toggleTheme()">🌙</button>
-    <div class="hamburger" id="hamburger" onclick="toggleMenu()">
+    <button class="hamburger" id="hamburger" aria-label="Toggle navigation menu" onclick="toggleMenu()">
       <span></span><span></span><span></span>
-    </div>
+    </button>
   </div>
 </nav>
 
 <!-- ════════════════════════════ HOME ════════════════════════════ -->
+<main>
 <section id="home" class="active">
   <div class="hero">
     <h1 class="hero-title hero-title--bff">
@@ -3465,27 +3490,27 @@
       <p class="section-eyebrow" data-scroll="fade-up">Get Started</p>
       <h2 class="section-title" data-scroll="fade-up">Everything we <em>offer</em></h2>
       <div class="quick-links-grid">
-        <div class="quick-card" onclick="showSection('members')">
+        <div class="quick-card" role="button" tabindex="0" onclick="showSection('members')" onkeydown="if(event.key==='Enter'||event.key===' '){showSection('members');event.preventDefault()}">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><rect x="6" y="2" width="12" height="13" rx="2"/></svg></div>
           <h3>Become a Member</h3>
           <p>BFF members can access boats, attend events, get discounts on charters, and support our community.</p>
         </div>
-        <div class="quick-card" onclick="showSection('volunteer')">
+        <div class="quick-card" role="button" tabindex="0" onclick="showSection('volunteer')" onkeydown="if(event.key==='Enter'||event.key===' '){showSection('volunteer');event.preventDefault()}">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg></div>
           <h3>Volunteer</h3>
           <p>Join the crew. There's a lot of work, but we love doing it together. Help us host events, teach a boating or fishing lesson, or join an offshore construction project.</p>
         </div>
-        <div class="quick-card" onclick="showSection('boats')">
+        <div class="quick-card" role="button" tabindex="0" onclick="showSection('boats')" onkeydown="if(event.key==='Enter'||event.key===' '){showSection('boats');event.preventDefault()}">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 21c.6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1 .6.5 1.2 1 2.5 1 2.5 0 2.5-2 5-2 1.3 0 1.9.5 2.5 1"/><path d="M19.38 20A11.6 11.6 0 0 0 21 14l-9-4-9 4c0 2.9.94 5.34 2.81 7.76"/><path d="M19 13V7a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v6"/><path d="M12 10v4"/><path d="M12 2v3"/></svg></div>
           <h3>Boating Experiences</h3>
           <p>Do you love boats? Learn what it takes to keep these boats available for our members and help us grow the BFF fleet!</p>
         </div>
-        <div class="quick-card" onclick="showSection('innisfree')">
+        <div class="quick-card" role="button" tabindex="0" onclick="showSection('innisfree')" onkeydown="if(event.key==='Enter'||event.key===' '){showSection('innisfree');event.preventDefault()}">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.48 19 2c1 2 2 4.18 2 8 0 5.5-4.78 10-10 10z"/><path d="M2 21c0-3 1.85-5.36 5.08-6C9.5 14.52 12 13 13 12"/></svg></div>
           <h3>Innisfree</h3>
           <p>Innisfree will be the spiritual home at Bayou Charity. Help us build it, and it's yours forever. Ask how you can become a plank owner.</p>
         </div>
-        <div class="quick-card" onclick="showSection('donate')">
+        <div class="quick-card" role="button" tabindex="0" onclick="showSection('donate')" onkeydown="if(event.key==='Enter'||event.key===' '){showSection('donate');event.preventDefault()}">
           <div class="ql-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
           <h3>Donate</h3>
           <p>Support us or one of our partner local businesses with a direct contribution.</p>
@@ -3553,66 +3578,66 @@
     <!-- Tab Panel: BFF 1st Event (static seed content) -->
     <div id="galleryPanel-seed" class="gallery-panel active">
       <div class="gallery-grid" id="galleryGrid">
-      <div class="gallery-thumb" data-category="cookout" onclick="openLightbox(0)"><img src="Photos/Gallery1.jpg" alt="Club member tending a smoky charcoal grill at a BFF cookout event" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="cookout" onclick="openLightbox(1)"><img src="Photos/Gallery2.jpg" alt="Close-up of chicken and vegetables being grilled with tongs at a club gathering" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(2)"><img src="Photos/Gallery3.jpg" alt="Kids gathered at a picnic table with snacks at a Bayou Family Fishing club event" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(3)"><img src="Photos/Gallery4.jpg" alt="Club member in BFF shirt standing near stacked crab traps at the bayou dock" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="community" onclick="openLightbox(4)"><img src="Photos/Gallery5.jpg" alt="Club leader addressing a group of families outdoors near bayou homes" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(5)"><img src="Photos/Gallery6.jpg" alt="Adult crouching down to show a young girl something small at the waterfront" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(6)"><img src="Photos/Gallery7.jpg" alt="Young girl learning to tie a fishing knot with help from an adult volunteer" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="community" onclick="openLightbox(7)"><img src="Photos/Gallery8.jpg" alt="Club leader addressing a large group of families under Spanish moss trees at the bayou" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(8)"><img src="Photos/Gallery9.jpg" alt="Three men posing at the dock, one holding a Humminbird fish finder" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="community" onclick="openLightbox(9)"><img src="Photos/Gallery10.jpg" alt="Group of girls and women posing together on a raised porch at the club property" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="community" onclick="openLightbox(10)"><img src="Photos/Gallery11.jpg" alt="Three club members reviewing something on a phone together near the water" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(11)"><img src="Photos/Gallery12.jpg" alt="Families boarding a white center console boat at the bayou dock" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(12)"><img src="Photos/Gallery13.jpg" alt="Close-up of a child's hands tying a fishing knot using a crimping needle" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(13)"><img src="Photos/Gallery14.jpg" alt="Whiteboard reading Basic Training Safety with Fishing Knots at Kids Fishing Club" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(14)"><img src="Photos/Gallery15.jpg" alt="Instructor's hands demonstrating a fishing knot technique with green line" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(15)"><img src="Photos/Gallery16.jpg" alt="Instructor teaching two girls fishing knots at the Kids Fishing Club whiteboard session" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(16)"><img src="Photos/Gallery17.jpg" alt="Multiple participants practicing fishing knots with green line at a workbench" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(17)"><img src="Photos/Gallery18.jpg" alt="Adults and children working together on fishing knot skills at the club workshop" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="community" onclick="openLightbox(18)"><img src="Photos/Gallery19.jpg" alt="Families and volunteers practicing fishing knots together at an outdoor workshop table" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(19)"><img src="Photos/Gallery20.jpg" alt="Child in HUK Performance Fishing shirt learning to tie a knot with a crimping tool" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(20)"><img src="Photos/Gallery21.jpg" alt="Teen practicing a fishing knot with green line and guidance from an adult volunteer" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="cookout" onclick="openLightbox(0)"><img src="Photos/Gallery1.jpg" width="1000" height="667" alt="Club member tending a smoky charcoal grill at a BFF cookout event" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="cookout" onclick="openLightbox(1)"><img src="Photos/Gallery2.jpg" width="1000" height="667" alt="Close-up of chicken and vegetables being grilled with tongs at a club gathering" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(2)"><img src="Photos/Gallery3.jpg" width="1000" height="667" alt="Kids gathered at a picnic table with snacks at a Bayou Family Fishing club event" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(3)"><img src="Photos/Gallery4.jpg" width="750" height="1125" alt="Club member in BFF shirt standing near stacked crab traps at the bayou dock" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(4)"><img src="Photos/Gallery5.jpg" width="1000" height="667" alt="Club leader addressing a group of families outdoors near bayou homes" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(5)"><img src="Photos/Gallery6.jpg" width="1000" height="667" alt="Adult crouching down to show a young girl something small at the waterfront" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(6)"><img src="Photos/Gallery7.jpg" width="1000" height="667" alt="Young girl learning to tie a fishing knot with help from an adult volunteer" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(7)"><img src="Photos/Gallery8.jpg" width="1000" height="667" alt="Club leader addressing a large group of families under Spanish moss trees at the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(8)"><img src="Photos/Gallery9.jpg" width="1000" height="667" alt="Three men posing at the dock, one holding a Humminbird fish finder" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(9)"><img src="Photos/Gallery10.jpg" width="1000" height="666" alt="Group of girls and women posing together on a raised porch at the club property" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(10)"><img src="Photos/Gallery11.jpg" width="1000" height="667" alt="Three club members reviewing something on a phone together near the water" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(11)"><img src="Photos/Gallery12.jpg" width="1000" height="667" alt="Families boarding a white center console boat at the bayou dock" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(12)"><img src="Photos/Gallery13.jpg" width="1000" height="667" alt="Close-up of a child's hands tying a fishing knot using a crimping needle" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(13)"><img src="Photos/Gallery14.jpg" width="1000" height="667" alt="Whiteboard reading Basic Training Safety with Fishing Knots at Kids Fishing Club" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(14)"><img src="Photos/Gallery15.jpg" width="1000" height="667" alt="Instructor's hands demonstrating a fishing knot technique with green line" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(15)"><img src="Photos/Gallery16.jpg" width="1000" height="667" alt="Instructor teaching two girls fishing knots at the Kids Fishing Club whiteboard session" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(16)"><img src="Photos/Gallery17.jpg" width="1000" height="667" alt="Multiple participants practicing fishing knots with green line at a workbench" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(17)"><img src="Photos/Gallery18.jpg" width="1000" height="667" alt="Adults and children working together on fishing knot skills at the club workshop" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(18)"><img src="Photos/Gallery19.jpg" width="1000" height="667" alt="Families and volunteers practicing fishing knots together at an outdoor workshop table" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(19)"><img src="Photos/Gallery20.jpg" width="1000" height="667" alt="Child in HUK Performance Fishing shirt learning to tie a knot with a crimping tool" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(20)"><img src="Photos/Gallery21.jpg" width="1000" height="667" alt="Teen practicing a fishing knot with green line and guidance from an adult volunteer" loading="lazy"></div>
       <div class="gallery-video-thumb" data-category="fishing">
-        <video autoplay loop muted playsinline>
+        <video autoplay loop muted playsinline preload="metadata" aria-label="Club member casting on the Louisiana bayou">
           <source src="Photos/club%20member%20casting%20video%20(gallery).mp4" type="video/mp4">
         </video>
         <span class="gallery-video-badge">&#9654; VIDEO</span>
         <button class="gallery-video-fs-btn" onclick="openGalleryVideoFullscreen(this)" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
       </div>
       <div class="gallery-video-thumb" data-category="kids">
-        <video autoplay loop muted playsinline>
+        <video autoplay loop muted playsinline preload="metadata" aria-label="BFF fishing knots class instructional video">
           <source src="Photos/fishing%20knots%20class%20video%20(gallery).mp4" type="video/mp4">
         </video>
         <span class="gallery-video-badge">&#9654; VIDEO</span>
         <button class="gallery-video-fs-btn" onclick="openGalleryVideoFullscreen(this)" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
       </div>
       <div class="gallery-video-thumb" data-category="community">
-        <video autoplay loop muted playsinline>
+        <video autoplay loop muted playsinline preload="metadata" aria-label="Bayou Family Fishing community gathering video">
           <source src="Photos/BFF%20club%20page%20header%20video.mp4" type="video/mp4">
         </video>
         <span class="gallery-video-badge">&#9654; VIDEO</span>
         <button class="gallery-video-fs-btn" onclick="openGalleryVideoFullscreen(this)" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
       </div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(21)"><img src="Photos/Gallery22.jpg" alt="Two young BFF members proudly holding up a fish they caught together, landing net in hand" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(22)"><img src="Photos/Gallery23.jpg" alt="Young BFF member in life jacket reacting with excitement after a surprise catch on the bayou" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(23)"><img src="Photos/Gallery24.jpg" alt="Two BFF members showing off their large redfish catches out on the water" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(24)"><img src="Photos/Gallery25.jpg" alt="Kids and a BFF volunteer posing on the dock after a successful fishing outing" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(25)"><img src="Photos/Gallery26.jpg" alt="BFF member crouching on the shoreline, proudly showing off a large drum fish" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(26)"><img src="Photos/Gallery27.jpg" alt="Three young BFF members grinning together out on the water for a club fishing day" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="boats" onclick="openLightbox(27)"><img src="Photos/Gallery28.jpg" alt="BFF member bundled up on the boat during a cool-weather day out on the bayou" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(28)"><img src="Photos/Gallery29.jpg" alt="Two BFF members on the boat holding up a trophy-sized redfish catch" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(29)"><img src="Photos/Gallery30.jpg" alt="BFF member at the dock crouching next to a large black drum fish after a successful trip" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="cookouts" onclick="openLightbox(30)"><img src="Photos/Gallery31.jpg" alt="A heaping tray of fresh Louisiana crawfish laid out for a BFF cookout gathering" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(31)"><img src="Photos/Gallery32.jpg" alt="BFF member hauling a crab trap from the boat during a crabbing trip on the bayou" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(32)"><img src="Photos/Gallery33.jpg" alt="Two young BFF members proudly showing off a trophy redfish they caught together" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="boats" onclick="openLightbox(33)"><img src="Photos/Gallery34.jpg" alt="BFF members out on the bayou together, lines in the water on a clear day" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(34)"><img src="Photos/Gallery35.jpg" alt="The day's haul — a spread of speckled trout and redfish from a BFF fishing trip" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="community" onclick="openLightbox(35)"><img src="Photos/Gallery36.jpg" alt="Two BFF members catching up at the marina after a day out on the water" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(36)"><img src="Photos/Gallery37.jpg" alt="Young BFF member holding up a beautiful speckled trout caught on the Louisiana bayou" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="community" onclick="openLightbox(37)"><img src="Photos/Skyline%20golden%202.jpg" alt="Golden hour over the Louisiana bayou skyline" loading="lazy"></div>
-      <div class="gallery-thumb" data-category="community" onclick="openLightbox(38)"><img src="Photos/Skyline%20golden%20hue%20.jpg" alt="Warm golden hue over the Louisiana marsh at dusk" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(21)"><img src="Photos/Gallery22.jpg" width="1920" height="1920" alt="Two young BFF members proudly holding up a fish they caught together, landing net in hand" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(22)"><img src="Photos/Gallery23.jpg" width="739" height="1600" alt="Young BFF member in life jacket reacting with excitement after a surprise catch on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(23)"><img src="Photos/Gallery24.jpg" width="1920" height="1440" alt="Two BFF members showing off their large redfish catches out on the water" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(24)"><img src="Photos/Gallery25.jpg" width="1200" height="1600" alt="Kids and a BFF volunteer posing on the dock after a successful fishing outing" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(25)"><img src="Photos/Gallery26.jpg" width="1200" height="1600" alt="BFF member crouching on the shoreline, proudly showing off a large drum fish" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(26)"><img src="Photos/Gallery27.jpg" width="481" height="640" alt="Three young BFF members grinning together out on the water for a club fishing day" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="boats" onclick="openLightbox(27)"><img src="Photos/Gallery28.jpg" width="887" height="1920" alt="BFF member bundled up on the boat during a cool-weather day out on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(28)"><img src="Photos/Gallery29.jpg" width="1920" height="887" alt="Two BFF members on the boat holding up a trophy-sized redfish catch" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(29)"><img src="Photos/Gallery30.jpg" width="887" height="1920" alt="BFF member at the dock crouching next to a large black drum fish after a successful trip" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="cookouts" onclick="openLightbox(30)"><img src="Photos/Gallery31.jpg" width="1920" height="887" alt="A heaping tray of fresh Louisiana crawfish laid out for a BFF cookout gathering" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(31)"><img src="Photos/Gallery32.jpg" width="1920" height="887" alt="BFF member hauling a crab trap from the boat during a crabbing trip on the bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="kids" onclick="openLightbox(32)"><img src="Photos/Gallery33.jpg" width="1920" height="887" alt="Two young BFF members proudly showing off a trophy redfish they caught together" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="boats" onclick="openLightbox(33)"><img src="Photos/Gallery34.jpg" width="1920" height="887" alt="BFF members out on the bayou together, lines in the water on a clear day" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(34)"><img src="Photos/Gallery35.jpg" width="1920" height="887" alt="The day's haul — a spread of speckled trout and redfish from a BFF fishing trip" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(35)"><img src="Photos/Gallery36.jpg" width="1920" height="1440" alt="Two BFF members catching up at the marina after a day out on the water" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(36)"><img src="Photos/Gallery37.jpg" width="1280" height="720" alt="Young BFF member holding up a beautiful speckled trout caught on the Louisiana bayou" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(37)"><img src="Photos/Skyline%20golden%202.jpg" width="1920" height="887" alt="Golden hour over the Louisiana bayou skyline" loading="lazy"></div>
+      <div class="gallery-thumb" data-category="community" onclick="openLightbox(38)"><img src="Photos/Skyline%20golden%20hue.jpg" width="1920" height="887" alt="Warm golden hue over the Louisiana marsh at dusk" loading="lazy"></div>
       <!-- Dynamic approved submissions flow inline after static thumbs -->
       <div id="galleryDynamic-seed" class="gallery-dynamic"></div>
       </div>
@@ -3766,7 +3791,7 @@
 <!-- ════════════════════════════ BOATS ════════════════════════════ -->
 <section id="boats">
   <div class="video-hero-strip">
-    <video class="strip-video" autoplay muted loop playsinline>
+    <video class="strip-video" autoplay muted loop playsinline preload="metadata" aria-label="Aerial footage of the Bayou Family Fishing fleet on Louisiana waterways">
       <source src="Photos/bff video 2.mp4" type="video/mp4">
     </video>
     <div class="strip-overlay"></div>
@@ -3786,7 +3811,7 @@
     </div>
 
     <div class="boat-story" data-boat="01" data-scroll="fade-up">
-      <img src="Photos/Uncle%20Johns%20Campagna%20Skiff%20(boat).jpg" alt="Uncle John's Campagna Skiff" class="boat-story-img" loading="lazy">
+      <img src="Photos/Uncle%20Johns%20Campagna%20Skiff%20(boat).jpg" width="2500" height="1155" alt="Uncle John's Campagna Skiff" class="boat-story-img" loading="lazy">
       <h3>Uncle John's Campagna Skiff</h3>
       <p class="boat-meta">Classic Fiberglass Skiff · Shallow-Draft · Family Vessel</p>
       <p>A true bayou classic. Uncle John's Campagna Skiff is a shallow-draft family vessel built for the tight canals and open marsh alike. She's perfect for beginner fishing days and youth outings — the kind of boat that builds memories and first catches.</p>
@@ -3797,7 +3822,7 @@
         </button>
         <div class="boat-story-body" hidden>
           <h4>A Nod to Gulf Coast Boatbuilding Tradition</h4>
-          <img src="Photos/Uncle%20Johns%20Campagna%20Skiff%20First%20Crabbing%20Trip%20(boat).jpg" alt="Uncle John's Campagna Skiff on its first crabbing trip with BFF" style="width:100%;border-radius:8px;margin-bottom:1.25rem;" loading="lazy">
+          <img src="Photos/Uncle%20Johns%20Campagna%20Skiff%20First%20Crabbing%20Trip%20(boat).jpg" width="1046" height="333" alt="Uncle John's Campagna Skiff on its first crabbing trip with BFF" style="width:100%;border-radius:8px;margin-bottom:1.25rem;" loading="lazy">
           <p>The Campagna Skiff is a classic example of the enduring Lafitte skiff design, a staple of Louisiana's maritime heritage. Emerging in the 1930s in the town of Lafitte, Louisiana, thanks to pioneering builders like Emile Dufrene, the Lafitte skiff was engineered for the demanding shallow waters of the Gulf Coast's bays, marshes, and bayous. With its semi-V hull transitioning to a flat stern, it offers unmatched stability and agility — perfect for commercial fishing like shrimping and crabbing, or simply navigating tricky coastal terrain.</p>
           <p>Crafted in Meraux, Louisiana (just outside New Orleans), by the respected Campagna boat builders, these skiffs evolved from wooden cypress constructions to more modern fiberglass models while retaining their rugged reliability. Our featured 16-footer, equipped with a trusty 25 HP Yamaha outboard, exemplifies this blend of tradition and functionality, making it ideal for light-duty adventures in calm, shallow waters.</p>
           <p>In our first year down here the bay boat was having problems and this skiff did it all. We made our first crabbing trip, and had some great days fishing in nearby waters. On calm days this boat would take us out as far as we wanted to go. Thank you Uncle John for letting us use your boat! I hope we see you and your boat here again soon!</p>
@@ -3806,7 +3831,7 @@
     </div>
 
     <div class="boat-story" data-boat="02" data-scroll="fade-up">
-      <img src="Photos/The%20Ms%20Carrol%20(boat).jpg" alt="The Ms. Carol" class="boat-story-img" loading="lazy">
+      <img src="Photos/The%20Ms%20Carrol%20(boat).jpg" width="2500" height="1155" alt="The Ms. Carol" class="boat-story-img" loading="lazy">
       <h3>The Ms. Carol</h3>
       <p class="boat-meta">Louisiana Shrimp Trawler · Working Heritage Vessel</p>
       <p>The Ms. Carol is a traditional Louisiana shrimp trawler and one of our most storied boats. She's a living connection to the commercial fishing heritage that defines this coast. We use her for special cultural outings and to remind members where bayou tradition comes from.</p>
@@ -3821,13 +3846,13 @@
           <p>I rode with them once and have been wanting to try again. It was no big haul, but watching them work — quiet, steady, no complaints — stuck with me. That kind of stubborn pride? That's Louisiana. And yeah, the old days had boat blessings, high spirits, shrimp piled high — but the Gaudets aren't chasing ghosts. They're still out there, still pushing nets, still paying bills.</p>
           <p>That's why Bayou Charity wants in. Not to save them — hell, they don't need saving. But to give them a hand: cover fuel, sort the haul, or whatever keeps the engine turning. And maybe open a door, let folks ride along. Climb off The Check Twice, step onto the Miss Carol, help pull a net, buy shrimp straight off the deck, and hear Jason or Mr. Grant talk shop. It's not a show. It's real: salt, sweat, stories. A taste of what keeps this life alive.</p>
           <p>We're not here to turn them into a museum piece. We're here because they deserve to keep going — on their terms. If you're up for it, come ride. Help us keep the Miss Carol running, help Jason build something new out of the old. No pity, no fanfare — just good people, good water, and one more day on the bayou.</p>
-          <img src="Photos/Ms%20Carol%20pic%202%20(boat).jpg" alt="The Miss Carol — a second view of this traditional Louisiana shrimp trawler" style="width:100%;border-radius:10px;margin-top:1.25rem;object-fit:cover;max-height:480px;" loading="lazy">
+          <img src="Photos/Ms%20Carol%20pic%202%20(boat).jpg" width="1920" height="1440" alt="The Miss Carol — a second view of this traditional Louisiana shrimp trawler" style="width:100%;border-radius:10px;margin-top:1.25rem;object-fit:cover;max-height:480px;" loading="lazy">
         </div>
       </div>
     </div>
 
     <div class="boat-story" data-boat="03" data-scroll="fade-up">
-      <img src="Photos/Last%20Chance%20(boat).jpg" alt="The Last Chance" class="boat-story-img" loading="lazy">
+      <img src="Photos/Last%20Chance%20(boat).jpg" width="2500" height="1677" alt="The Last Chance" class="boat-story-img" loading="lazy">
       <h3>The Last Chance</h3>
       <p class="boat-meta">Homemade Aluminum Skiff — work boat.</p>
       <p>We've been wanting a boat like this for a long time, and now there will be no more crab traps in the Check Twice. She's a head turner — plenty of these boats in Acadiana, but mine is unique and special in Plaquemines.</p>
@@ -3846,10 +3871,10 @@
     </div>
 
     <div class="boat-story" data-boat="04" data-scroll="fade-up">
-      <video class="boat-card-video-bg" autoplay loop muted playsinline>
+      <video class="boat-card-video-bg" autoplay loop muted playsinline preload="metadata" aria-label="Video of The Check Twice boat on the bayou">
         <source src="Photos/check%20twice%20video%20(boat).mp4" type="video/mp4">
       </video>
-      <img src="Photos/The%20Check%20Twice%20(boat).jpg" alt="The Check Twice" class="boat-story-img" loading="lazy">
+      <img src="Photos/The%20Check%20Twice%20(boat).jpg" width="2500" height="1155" alt="The Check Twice" class="boat-story-img" loading="lazy">
       <h3>The Check Twice</h3>
       <p class="boat-meta">VIP Baystealth — Suzuki — Minn Kota</p>
       <p>I'm not sure what's easier on the eyes, this boat or my 2001 Jeep Wrangler. When having a fishing camp was still just a dream, the second dream was picturing this boat sitting in its slip, ready to go.</p>
@@ -3864,13 +3889,13 @@
           <p>VIP peaked as a hometown hero, employing hundreds at one point. But by two thousand eight, they filed bankruptcy—economy hit hard, competition from bigger yards. Assets got scooped up by new folks like Caddo Manufacturing, but the original magic faded. No more new hulls off that line. Today, those old Bay Stealths? Rare survivors—tough, undervalued, still running strong if you treat 'em right.</p>
           <p>Mine's one of 'em: The Check Twice, a 2004 twenty-foot center console on that classic VIP Bay Stealth hull. Repowered with a brand-new 200 hp Suzuki outboard, barely fifty hours on it. Up front, Minn Kota Terrova with i-Pilot Link—GPS spot-lock, auto-pilot, all synced to my Humminbird navigation and fish finder so I can steer from the console without touching a thing. (Honestly, it's smarter than me—I'm still figuring it out.) And aft? Dual Minn Kota Talons—ten-foot shallow water anchors that drop straight into mud, lock us dead-still in current or wind.</p>
           <p>This boat's no toy. It's the backbone of our future—the ride that'll haul us to hidden ponds for reds, or blast out on trout runs and waters unknown still chasing those Louisiana dreams.</p>
-          <img src="Photos/Check%20twice%20Kyle%20(president%20Posing)%20(boat).jpg" alt="Kyle Rockefeller, President of Bayou Family Fishing, posing aboard The Check Twice" style="width:100%;border-radius:10px;margin-top:1.25rem;object-fit:cover;max-height:480px;" loading="lazy">
+          <img src="Photos/Check%20twice%20Kyle%20(president%20Posing)%20(boat).jpg" width="1920" height="2560" alt="Kyle Rockefeller, President of Bayou Family Fishing, posing aboard The Check Twice" style="width:100%;border-radius:10px;margin-top:1.25rem;object-fit:cover;max-height:480px;" loading="lazy">
         </div>
       </div>
     </div>
 
     <div class="boat-story" data-boat="05" data-scroll="fade-up">
-      <img src="Photos/Bait%20By%20You%20Hook%20it%20or%20Cook%20it%20(boat).jpg" alt="Bait By You Hook it or Cook it" class="boat-story-img" loading="lazy">
+      <img src="Photos/Bait%20By%20You%20Hook%20it%20or%20Cook%20it%20(boat).jpg" width="2500" height="1677" alt="Bait By You Hook it or Cook it" class="boat-story-img" loading="lazy">
       <h3>Bait By You — Hook it or Cook it</h3>
       <p class="boat-meta">Louisiana Trawler · Deep Bayou Roots</p>
       <p>The name says everything about who we are. "Bait By You — Hook it or Cook it" is a working Louisiana trawler with deep bayou character and community roots. She represents the spirit of self-reliance and celebration that makes fishing culture here unlike anywhere else in the world. Capt. Sam Ronquille invites you to the tackle box where you can get live shrimp and visit him and his dog Bayou.</p>
@@ -4139,7 +4164,7 @@
 
     <div class="about-layout" data-scroll="fade-up">
       <div class="about-photo">
-        <img src="Photos/Kyle%20Rockefeller%2C%20President%20and%20Secretary.jpg" alt="Kyle Rockefeller" loading="lazy">
+        <img src="Photos/Kyle%20Rockefeller%2C%20President%20and%20Secretary.jpg" width="848" height="832" alt="Kyle Rockefeller" loading="lazy">
         <div class="about-photo-caption">
           <h3>Kyle Rockefeller</h3>
           <p>President & Secretary</p>
@@ -4184,7 +4209,7 @@
     </div>
 
     <div style="margin-top:3rem;">
-      <img src="Photos/who we are.jpg" alt="Who We Are — Bayou Family Fishing community" loading="lazy" style="width:100%;border-radius:12px;max-height:440px;object-fit:cover;object-position:center;display:block;">
+      <img src="Photos/who we are.jpg" width="2500" height="1677" alt="Who We Are — Bayou Family Fishing community" loading="lazy" style="width:100%;border-radius:12px;max-height:440px;object-fit:cover;object-position:center;display:block;">
     </div>
 
     <div style="margin-top:3.5rem;">
@@ -4192,7 +4217,7 @@
       <h3 style="font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--green-deep);margin-bottom:1.5rem;">Meet the <em>Team</em></h3>
       <div class="team-grid">
         <div class="team-card">
-          <img src="Photos/Doug%20Rockefeller%2C%20Big%20Papa.jpg" alt="Doug Rockefeller" style="object-position:center;" loading="lazy">
+          <img src="Photos/Doug%20Rockefeller%2C%20Big%20Papa.jpg" width="1118" height="1677" alt="Doug Rockefeller" style="object-position:center;" loading="lazy">
           <div class="team-card-body">
             <h3>Doug Rockefeller</h3>
             <p class="team-title">Big Papa</p>
@@ -4200,7 +4225,7 @@
           </div>
         </div>
         <div class="team-card">
-          <img src="Photos/Max%20Juge%2C%20Vice%20President.jpg" alt="Max Juge" style="object-position:center;" loading="lazy">
+          <img src="Photos/Max%20Juge%2C%20Vice%20President.jpg" width="1920" height="2560" alt="Max Juge" style="object-position:center;" loading="lazy">
           <div class="team-card-body">
             <h3>Max Juge</h3>
             <p class="team-title">Vice President</p>
@@ -4208,7 +4233,7 @@
           </div>
         </div>
         <div class="team-card">
-          <img src="Photos/Ashley%20Toshimitsu%20Oiterong%2C%20Treasurer.jpg" alt="Ashley Toshimitsu Oiterong" loading="lazy">
+          <img src="Photos/Ashley%20Toshimitsu%20Oiterong%2C%20Treasurer.jpg" width="2500" height="1667" alt="Ashley Toshimitsu Oiterong" loading="lazy">
           <div class="team-card-body">
             <h3>Ashley Toshimitsu Oiterong</h3>
             <p class="team-title">Treasurer</p>
@@ -4539,6 +4564,7 @@
   </div>
 
 </section>
+</main>
 
 <!-- FOOTER -->
 <footer>
@@ -5044,6 +5070,11 @@
       status.textContent = 'Please select a file.'; status.style.color = 'var(--orange)'; return;
     }
     var file = fileInput.files[0];
+    var validMimes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/quicktime'];
+    if (!validMimes.includes(file.type)) {
+      status.textContent = 'Invalid file type. Please upload a JPEG, PNG, WebP, GIF, or MP4 file.';
+      status.style.color = 'var(--orange)'; return;
+    }
     if (file.size > 50 * 1024 * 1024) {
       status.textContent = 'File too large (max 50MB).'; status.style.color = 'var(--orange)'; return;
     }
@@ -5117,7 +5148,8 @@
         if (!pin.photo_url) return;
         var alt    = pin.species ? escapeHTML(pin.species) + ' caught by a BFF member' : 'Fish catch — BFF member';
         var safeUrl = escapeHTML(pin.photo_url);
-        html += '<div class="gallery-thumb" onclick="window._bffViewPhoto(\'' + safeUrl + '\')">'
+        var jsonUrl = escapeHTML(JSON.stringify(pin.photo_url));
+        html += '<div class="gallery-thumb" onclick="window._bffViewPhoto(' + jsonUrl + ')">'
               + '<img src="' + safeUrl + '" alt="' + alt + '" loading="lazy">'
               + (pin.species || pin.caption
                   ? '<div class="fish-thumb-caption">'
@@ -5133,7 +5165,8 @@
       fishUploads.forEach(function(sub) {
         var url     = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
         var safeUrl = escapeHTML(url);
-        html += '<div class="gallery-thumb" onclick="window._bffViewPhoto(\'' + safeUrl + '\')">'
+        var jsonUrl = escapeHTML(JSON.stringify(url));
+        html += '<div class="gallery-thumb" onclick="window._bffViewPhoto(' + jsonUrl + ')">'
               + '<img src="' + safeUrl + '" alt="' + escapeHTML(sub.caption || 'Fish photo') + '" loading="lazy">'
               + (sub.caption ? '<div class="fish-thumb-caption"><em>' + escapeHTML(sub.caption) + '</em></div>' : '')
               + '</div>';
@@ -5169,7 +5202,7 @@
       var isFirst = (tabId === 'seed');
       html += '<button class="gallery-tab-btn' + (isFirst ? ' active' : '') + '" '
             + 'onclick="switchGalleryTab(\'' + tabId + '\',this)">'
-            + ev.name + '</button>';
+            + escapeHTML(ev.name) + '</button>';
 
       if (!isFirst) {
         var panel = document.createElement('div');
@@ -5229,8 +5262,9 @@
     container.innerHTML = data.map(function(sub) {
       var url = getSB().storage.from('gallery-public').getPublicUrl(sub.storage_path).data.publicUrl;
       var safeUrl = escapeHTML(url);
+      var jsonUrl = escapeHTML(JSON.stringify(url));
       var alt = escapeHTML(sub.caption || 'Member upload');
-      return '<div class="gallery-thumb" data-category="community" onclick="window._bffViewPhoto(\'' + safeUrl + '\')">'
+      return '<div class="gallery-thumb" data-category="community" onclick="window._bffViewPhoto(' + jsonUrl + ')">'
            + '<img src="' + safeUrl + '" alt="' + alt + '" loading="lazy">'
            + '</div>';
     }).join('');
@@ -5252,7 +5286,7 @@
     'Photos/Gallery34.jpg','Photos/Gallery35.jpg','Photos/Gallery36.jpg',
     'Photos/Gallery37.jpg',
     'Photos/Skyline%20golden%202.jpg',
-    'Photos/Skyline%20golden%20hue%20.jpg'
+    'Photos/Skyline%20golden%20hue.jpg'
   ];
   let currentLightboxIndex = 0;
 
@@ -5857,7 +5891,7 @@
       });
       var marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(_memberMap);
       _pinMarkers.push(marker);
-      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;cursor:pointer;" onclick="window._bffViewPhoto(\'' + escapeHTML(pin.photo_url) + '\')">' : '';
+      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;cursor:pointer;" onclick="window._bffViewPhoto(' + escapeHTML(JSON.stringify(pin.photo_url)) + ')">' : '';
       var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + escapeHTML(pin.species) + '</em>' : '';
       var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + escapeHTML(pin.caption) + '</p>' : '';
       marker.bindPopup('<div style="font-family:Lora,serif;max-width:200px;">' + img + sp + cap + '</div>');
@@ -7733,6 +7767,19 @@ function saveProfile() {
   }
 }
 // ── End Profile Editor ────────────────────────────────────────
+
+// ── Video IntersectionObserver — pause off-screen autoplay videos ──
+(function() {
+  var videoObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.play().catch(function() {});
+      else entry.target.pause();
+    });
+  }, { threshold: 0 });
+  document.querySelectorAll('video[autoplay]').forEach(function(v) {
+    videoObserver.observe(v);
+  });
+})();
 
 </script>
 <script>
