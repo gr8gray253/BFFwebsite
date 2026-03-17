@@ -11,3 +11,10 @@ CODEBASE-REVIEW.md
 README.md
 NEXT_STEPS.md
 docs/
+
+# Skills and plugin files — local dev tools, not deployed
+skills/
+bayou-patterns.plugin
+
+# Supabase local dev directory
+supabase/
