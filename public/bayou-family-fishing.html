@@ -6288,8 +6288,8 @@
               row.innerHTML =
                 '<span><strong>' + escapeHTML(p.display_name || 'Unknown') + '</strong>' + providerBadge + ' <span style="font-size:0.8rem;color:var(--text-mid);">joined ' + escapeHTML(date) + '</span>' + emailLine + '</span>' +
                 '<div style="display:flex;gap:0.5rem;">' +
-                  '<button class="btn btn-primary btn-sm" onclick="window._bffApproveUser(' + JSON.stringify(String(p.id)) + ',this.closest(\'.admin-row\'))">Approve</button>' +
-                  '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRejectUser(' + JSON.stringify(String(p.id)) + ',this.closest(\'.admin-row\'))">Reject</button>' +
+                  '<button class="btn btn-primary btn-sm" onclick="window._bffApproveUser(\'' + String(p.id) + '\',this.closest(\'.admin-row\'))">Approve</button>' +
+                  '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRejectUser(\'' + String(p.id) + '\',this.closest(\'.admin-row\'))">Reject</button>' +
                 '</div>';
               pendingList.appendChild(row);
             });
@@ -6315,7 +6315,7 @@
                 '<span style="display:flex;align-items:center;gap:0.75rem;">' + img +
                   '<span>' + escapeHTML(pin.species || 'Unknown species') + (pin.caption ? ' \u2014 ' + escapeHTML(pin.caption) : '') + '</span>' +
                 '</span>' +
-                '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRemovePin(' + JSON.stringify(String(pin.id)) + ',this.closest(\'.admin-row\'))">Remove</button>';
+                '<button class="btn btn-outline btn-sm" style="border-color:var(--orange);color:var(--orange);" onclick="window._bffRemovePin(\'' + String(pin.id) + '\',this.closest(\'.admin-row\'))">Remove</button>';
               flaggedList.appendChild(row);
             });
           });
