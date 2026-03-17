@@ -2533,6 +2533,7 @@
   .gallery-panel { display: none; }
   .gallery-panel.active { display: block; }
   .gallery-dynamic { margin-top: 1rem; }
+  #galleryDynamic-seed { display: contents; margin-top: 0; }
   .gallery-upload-bar { margin-bottom: 1rem; }
   .gallery-upload-hint { font-size: 0.85rem; color: rgba(238,246,251,0.55); font-style: italic; margin-bottom: 1rem; }
   .gallery-upload-modal { position: fixed; inset: 0; z-index: 2000; background: rgba(0,0,0,0.7); display: flex; align-items: center; justify-content: center; padding: 1rem; }
@@ -3606,9 +3607,9 @@
       <div class="gallery-thumb" data-category="fishing" onclick="openLightbox(36)"><img src="Photos/Gallery37.jpg" alt="Young BFF member holding up a beautiful speckled trout caught on the Louisiana bayou" loading="lazy"></div>
       <div class="gallery-thumb" data-category="community" onclick="openLightbox(37)"><img src="Photos/Skyline%20golden%202.jpg" alt="Golden hour over the Louisiana bayou skyline" loading="lazy"></div>
       <div class="gallery-thumb" data-category="community" onclick="openLightbox(38)"><img src="Photos/Skyline%20golden%20hue%20.jpg" alt="Warm golden hue over the Louisiana marsh at dusk" loading="lazy"></div>
+      <!-- Dynamic approved submissions flow inline after static thumbs -->
+      <div id="galleryDynamic-seed" class="gallery-dynamic"></div>
       </div>
-      <!-- Dynamic approved submissions for this event load below the seed content -->
-      <div id="galleryDynamic-seed" class="gallery-grid gallery-dynamic"></div>
     </div>
 
     <!-- Tab Panel: Fish Pics (dynamic) -->
