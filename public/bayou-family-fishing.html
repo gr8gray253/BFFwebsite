@@ -17,6 +17,7 @@
 <link rel="canonical" href="https://bayoucharity.org">
 <link rel="icon" href="favicon.ico" type="image/x-icon">
 <link rel="icon" href="Photos/BFF+Logo.jpg" type="image/jpeg" sizes="any">
+<link rel="preload" as="image" href="Photos/skyline.jpg">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#0d2b3e">
 <meta name="mobile-web-app-capable" content="yes">
@@ -3620,8 +3621,8 @@
         <button class="gallery-video-fs-btn" data-action="video-fullscreen" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
       </div>
       <div class="gallery-video-thumb" data-category="community">
-        <video autoplay loop muted playsinline preload="metadata" aria-label="Bayou Family Fishing community gathering video">
-          <source src="Photos/BFF%20club%20page%20header%20video.mp4" type="video/mp4">
+        <video autoplay loop muted playsinline preload="none" data-lazy="true" aria-label="Bayou Family Fishing community gathering video">
+          <source data-src="Photos/BFF%20club%20page%20header%20video.mp4" type="video/mp4">
         </video>
         <span class="gallery-video-badge">&#9654; VIDEO</span>
         <button class="gallery-video-fs-btn" data-action="video-fullscreen" aria-label="Fullscreen">&#x26F6; Fullscreen</button>
@@ -3797,8 +3798,8 @@
 <!-- ════════════════════════════ BOATS ════════════════════════════ -->
 <section id="boats">
   <div class="video-hero-strip">
-    <video class="strip-video" autoplay muted loop playsinline preload="metadata" aria-label="Aerial footage of the Bayou Family Fishing fleet on Louisiana waterways">
-      <source src="Photos/bff video 2.mp4" type="video/mp4">
+    <video class="strip-video" autoplay muted loop playsinline preload="none" data-lazy="true" aria-label="Aerial footage of the Bayou Family Fishing fleet on Louisiana waterways">
+      <source data-src="Photos/bff video 2.mp4" type="video/mp4">
     </video>
     <div class="strip-overlay"></div>
     <div class="strip-content">
@@ -4624,7 +4625,7 @@
   <span id="toastMsg"></span>
 </div>
 
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
 <script>
   // ─── SECTION NAVIGATION ───
   const VALID_SECTIONS = ['home','gallery','volunteer','boats','innisfree','donate','about','members'];
