@@ -1095,9 +1095,9 @@
         attribution: 'Tiles &copy; Esri &mdash; Earthstar Geographics'
       }).addTo(_memberMap);
 
-      var _nauticalLayer = L.tileLayer('https://tileservice.charts.noaa.gov/tiles/50000_1/{z}/{y}/{x}.png', {
-        maxZoom: 18,
-        attribution: 'NOAA'
+      var _nauticalLayer = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/World_Navigation_Charts/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 10,
+        attribution: 'Esri, NOAA ENC'
       });
 
       var _activeBaseLayer = _satelliteLayer;
@@ -1287,11 +1287,25 @@
       _pinMarkers = [];
       if (_heatLayer) { _memberMap.removeLayer(_heatLayer); _heatLayer = null; }
 
-      if (_viewMode === 'heat' && window.L && L.heatLayer) {
+      if (_viewMode === 'heat') {
+        if (!(window.L && L.heatLayer)) {
+          console.warn('[BFF] leaflet-heat not loaded — falling back to pins');
+          _viewMode = 'pins';
+          _lastPinData.forEach(function (pin) { addPinMarker(pin); });
+          return;
+        }
+        if (!_lastPinData.length) {
+          showToast('No data', 'No catches found for this date range.');
+          return;
+        }
         var heatData = _lastPinData.map(function (pin) { return [pin.lat, pin.lng, 1]; });
+        // Scale radius up when data is sparse so individual points are visible
+        var r = _lastPinData.length < 10 ? 40 : 25;
         _heatLayer = L.heatLayer(heatData, {
-          radius: 25,
-          blur: 15,
+          radius: r,
+          blur: 18,
+          max: 1.0,
+          minOpacity: 0.45,
           maxZoom: 15,
           gradient: { 0.2: '#ffffb2', 0.4: '#fecc5c', 0.6: '#fd8d3c', 0.8: '#f03b20', 1.0: '#bd0026' }
         }).addTo(_memberMap);
