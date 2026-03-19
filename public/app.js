@@ -1301,17 +1301,34 @@
     }
 
     function addPinMarker(pin) {
+      var avatarUrl   = (pin.profiles && pin.profiles.avatar_url)   ? pin.profiles.avatar_url   : '';
+      var displayName = (pin.profiles && pin.profiles.display_name) ? pin.profiles.display_name : 'Member';
+      var iconHtml;
+
+      if (avatarUrl) {
+        iconHtml = '<div style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);overflow:hidden;background:#f0c040;">'
+          + '<img src="' + escapeHTML(avatarUrl) + '" style="width:100%;height:100%;object-fit:cover;" alt="">'
+          + '</div>';
+      } else {
+        var initials = displayName.trim().split(' ').map(function (w) { return w[0]; }).join('').slice(0, 2).toUpperCase() || '?';
+        iconHtml = '<div style="width:32px;height:32px;border-radius:50%;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);background:#1a4a6b;display:flex;align-items:center;justify-content:center;color:#fff;font-size:12px;font-weight:700;font-family:Lora,serif;">'
+          + escapeHTML(initials)
+          + '</div>';
+      }
+
       var icon = L.divIcon({
         className: '',
-        html: '<div style="width:28px;height:28px;border-radius:50%;background:#f0c040;border:2px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.4);display:flex;align-items:center;justify-content:center;font-size:16px;">\uD83C\uDFA3</div>',
-        iconSize: [28, 28], iconAnchor: [14, 14]
+        html: iconHtml,
+        iconSize: [32, 32], iconAnchor: [16, 16]
       });
       var marker = L.marker([pin.lat, pin.lng], { icon: icon }).addTo(_memberMap);
       _pinMarkers.push(marker);
-      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin-bottom:6px;cursor:pointer;" data-action="view-photo" data-url="' + escapeHTML(pin.photo_url) + '">' : '';
+
+      var nameHdr = '<strong style="font-size:0.85rem;color:#0d2b3e;">' + escapeHTML(displayName) + '</strong><br>';
+      var img  = pin.photo_url ? '<img src="' + escapeHTML(pin.photo_url) + '" style="width:100%;border-radius:6px;margin:4px 0;cursor:pointer;" data-action="view-photo" data-url="' + escapeHTML(pin.photo_url) + '">' : '';
       var sp   = pin.species  ? '<em style="font-size:0.85rem;color:#555;">' + escapeHTML(pin.species) + '</em>' : '';
       var cap  = pin.caption  ? '<p style="margin:4px 0 0;">' + escapeHTML(pin.caption) + '</p>' : '';
-      marker.bindPopup('<div style="font-family:Lora,serif;max-width:200px;">' + img + sp + cap + '</div>');
+      marker.bindPopup('<div style="font-family:Lora,serif;max-width:200px;">' + nameHdr + img + sp + cap + '</div>');
     }
 
     // ── Submit new pin ────────────────────────────────────────
