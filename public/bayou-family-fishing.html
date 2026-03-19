@@ -3118,9 +3118,11 @@
     padding: 1.5rem 2rem;
     background: var(--cream);
     min-height: 480px;
+    align-items: start;
   }
   @media (max-width: 768px) {
     .feed-layout { grid-template-columns: 1fr; padding: 1rem; }
+    .feed-sidebar { position: static; }
   }
   .feed-list { display: flex; flex-direction: column; gap: 0.85rem; }
 
@@ -3214,12 +3216,9 @@
   /* Year picker */
   .map-year-select { font-size: 0.8rem; padding: 0.25rem 0.4rem; border: 1px solid #ccdde8; border-radius: 4px; font-family: 'Lora', serif; color: var(--text-dark); background: #fff; min-height: 32px; }
 
-  /* Toggles (base layer + view) */
-  .map-toggle { display: flex; border: 1px solid #ccdde8; border-radius: 6px; overflow: hidden; margin-left: auto; }
-  .map-toggle-btn { padding: 0.25rem 0.6rem; background: #fff; color: var(--text-mid); border: none; cursor: pointer; font-family: 'Lora', serif; font-size: 0.75rem; font-weight: 600; transition: all 0.15s; white-space: nowrap; min-height: 32px; }
-  .map-toggle-btn + .map-toggle-btn { border-left: 1px solid #ccdde8; }
-  .map-toggle-btn:hover { color: var(--amber); }
-  .map-toggle-btn.active { background: var(--amber); color: #fff; }
+  /* FisherMap link in filter bar */
+  .fishermap-link { margin-left: auto; font-size: 0.78rem; color: var(--amber); font-family: 'Lora', serif; text-decoration: none; font-weight: 600; white-space: nowrap; opacity: 0.85; transition: opacity 0.15s; }
+  .fishermap-link:hover { opacity: 1; text-decoration: underline; }
 
   /* Date range (row 2) */
   .map-date-filter { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
@@ -3240,7 +3239,7 @@
   .comment-input-row input { flex: 1; }
 
   /* ── Sidebar widgets ──────────────────────────── */
-  .feed-sidebar { display: flex; flex-direction: column; gap: 1rem; }
+  .feed-sidebar { display: flex; flex-direction: column; gap: 1rem; position: sticky; top: 5rem; }
   .sidebar-widget {
     background: var(--white);
     border: 1px solid #ccdde8;
@@ -3384,11 +3383,7 @@
   [data-theme="dark"] .season-tab:hover { border-color: var(--amber); color: var(--amber); }
   [data-theme="dark"] .season-tab.active { background: var(--amber); color: #fff; border-color: var(--amber); }
   [data-theme="dark"] .map-year-select { background: #0d2b3e; border-color: #1e3c58; color: #eef6fb; }
-  [data-theme="dark"] .map-toggle { border-color: #1e3c58; }
-  [data-theme="dark"] .map-toggle-btn { background: #0d2b3e; color: #9bb0c2; }
-  [data-theme="dark"] .map-toggle-btn + .map-toggle-btn { border-color: #1e3c58; }
-  [data-theme="dark"] .map-toggle-btn:hover { color: var(--amber); }
-  [data-theme="dark"] .map-toggle-btn.active { background: var(--amber); color: #fff; }
+  [data-theme="dark"] .fishermap-link { color: var(--amber); }
 
   /* ── Map filter bar — mobile ─────────────────────────── */
   @media (max-width: 768px) {
@@ -3396,8 +3391,7 @@
     .season-tabs { justify-content: center; }
     .season-tab { min-height: 44px; padding: 0.4rem 0.8rem; font-size: 0.82rem; }
     .map-year-select { width: 100%; min-height: 44px; }
-    .map-toggle { align-self: stretch; justify-content: center; margin-left: 0; }
-    .map-toggle-btn { flex: 1; text-align: center; min-height: 44px; }
+    .fishermap-link { margin-left: 0; margin-top: 0.3rem; text-align: center; display: block; }
     .map-date-filter { flex-wrap: wrap; }
     .map-date-filter input[type="date"] { min-height: 44px; }
   }
@@ -4479,10 +4473,7 @@
             <select class="map-year-select" id="mapYearSelect">
               <option value="">Any Year</option>
             </select>
-            <div class="map-toggle" id="baseLayerToggle">
-              <button class="map-toggle-btn active" data-layer="satellite">Satellite</button>
-              <button class="map-toggle-btn" data-layer="nautical">Depth Chart</button>
-            </div>
+            <a href="#" id="openFisherMapLink" target="_blank" rel="noopener" class="fishermap-link">View Depth Chart on FisherMap ↗</a>
           </div>
           <div class="map-filter-row">
             <div class="map-date-filter">
@@ -4491,17 +4482,10 @@
               <label>To</label>
               <input type="date" id="mapToDate">
             </div>
-            <div class="map-toggle" id="viewToggle">
-              <button class="map-toggle-btn active" data-view="pins">Pins</button>
-              <button class="map-toggle-btn" data-view="heat">Heat Map</button>
-            </div>
           </div>
         </div>
         <div id="memberMap"></div>
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
-          <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>
-          <a href="#" id="openFisherMapLink" target="_blank" rel="noopener" style="font-size:0.78rem;color:var(--amber);font-family:'Lora',serif;text-decoration:none;opacity:0.8;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Open FisherMap ↗</a>
-        </div>
+        <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>
         <div class="pin-post-form" id="pinPostForm" style="display:none;">
           <h4>📍 Post Your Catch</h4>
           <div class="form-group">
@@ -4767,7 +4751,7 @@
 </div>
 
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin="" defer></script>
-<script src="https://unpkg.com/leaflet.heat@0.2.0/dist/leaflet-heat.js" crossorigin="" defer></script>
+
 <script src="/app.js"></script>
 
 <script src="/sw-register.js"></script>

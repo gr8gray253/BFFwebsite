@@ -860,8 +860,6 @@
     var _pendingMarker = null;
     var _pinMarkers  = [];
     var _pendingLatLng = null;
-    var _heatLayer   = null;
-    var _viewMode    = 'pins';
     var _lastPinData = [];
 
     // ── Show one members view, hide others ────────────────────
@@ -1096,64 +1094,13 @@
         attribution: 'Tiles &copy; Esri &mdash; Earthstar Geographics'
       }).addTo(_memberMap);
 
-      // Nautical: Esri Ocean Basemap (bathymetric depth shading) + Ocean Reference (labels) + OpenSeaMap (buoys/markers)
-      var _oceanBaseLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 16,
-        attribution: 'Esri, GEBCO, NOAA, Garmin, HERE, UNEP-WCMC'
-      });
-      var _oceanRefLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 16,
-        attribution: ''
-      });
-      var _seamarkLayer = L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
-        maxZoom: 16,
-        attribution: '<a href="https://www.openseamap.org">OpenSeaMap</a>',
-        opacity: 0.8
-      });
-
-      var _activeBaseLayer = _satelliteLayer;
-      var _nauticalOverlays = [];
-
-      // Base layer toggle (Satellite / Depth Chart)
-      document.getElementById('baseLayerToggle').addEventListener('click', function (e) {
-        var btn = e.target.closest('.map-toggle-btn');
-        if (!btn || btn.classList.contains('active')) return;
-        document.querySelectorAll('#baseLayerToggle .map-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        var layer = btn.getAttribute('data-layer');
-        _memberMap.removeLayer(_activeBaseLayer);
-        _nauticalOverlays.forEach(function (ol) { _memberMap.removeLayer(ol); });
-        _nauticalOverlays = [];
-        if (layer === 'nautical') {
-          _activeBaseLayer = _oceanBaseLayer;
-          _activeBaseLayer.addTo(_memberMap);
-          _oceanRefLayer.addTo(_memberMap);
-          _seamarkLayer.addTo(_memberMap);
-          _nauticalOverlays = [_oceanRefLayer, _seamarkLayer];
-        } else {
-          _activeBaseLayer = _satelliteLayer;
-          _activeBaseLayer.addTo(_memberMap);
-        }
-      });
-
-      // View toggle (Pins / Heat Map)
-      document.getElementById('viewToggle').addEventListener('click', function (e) {
-        var btn = e.target.closest('.map-toggle-btn');
-        if (!btn || btn.classList.contains('active')) return;
-        document.querySelectorAll('#viewToggle .map-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        _viewMode = btn.getAttribute('data-view') === 'heat' ? 'heat' : 'pins';
-        renderMapView();
-      });
-
-      // "Open FisherMap" link — passes current map center/zoom so Kyle lands at the same spot
+      // "Open FisherMap" link — dynamically set href with current map center/zoom
       var fisherLink = document.getElementById('openFisherMapLink');
       if (fisherLink) {
-        fisherLink.addEventListener('click', function (e) {
-          e.preventDefault();
+        fisherLink.addEventListener('click', function () {
           var c = _memberMap.getCenter();
           var z = _memberMap.getZoom();
-          window.open('https://usa.fishermap.org/depth-map/#' + Math.round(z) + '/' + c.lat.toFixed(5) + '/' + c.lng.toFixed(5), '_blank');
+          fisherLink.href = 'https://usa.fishermap.org/depth-map/#' + Math.round(z) + '/' + c.lat.toFixed(5) + '/' + c.lng.toFixed(5);
         });
       }
 
@@ -1311,40 +1258,11 @@
           }
           if (!res.data) return;
           _lastPinData = res.data;
-          renderMapView();
-        });
-    }
-
-    function renderMapView() {
-      _pinMarkers.forEach(function (m) { if (_memberMap) _memberMap.removeLayer(m); });
-      _pinMarkers = [];
-      if (_heatLayer) { _memberMap.removeLayer(_heatLayer); _heatLayer = null; }
-
-      if (_viewMode === 'heat') {
-        if (!(window.L && L.heatLayer)) {
-          console.warn('[BFF] leaflet-heat not loaded — falling back to pins');
-          _viewMode = 'pins';
+          // Clear old markers and render fresh pins
+          _pinMarkers.forEach(function (m) { if (_memberMap) _memberMap.removeLayer(m); });
+          _pinMarkers = [];
           _lastPinData.forEach(function (pin) { addPinMarker(pin); });
-          return;
-        }
-        if (!_lastPinData.length) {
-          showToast('No data', 'No catches found for this date range.');
-          return;
-        }
-        var heatData = _lastPinData.map(function (pin) { return [pin.lat, pin.lng, 1]; });
-        // Scale radius up when data is sparse so individual points are visible
-        var r = _lastPinData.length < 10 ? 40 : 25;
-        _heatLayer = L.heatLayer(heatData, {
-          radius: r,
-          blur: 18,
-          max: 1.0,
-          minOpacity: 0.45,
-          maxZoom: 15,
-          gradient: { 0.2: '#ffffb2', 0.4: '#fecc5c', 0.6: '#fd8d3c', 0.8: '#f03b20', 1.0: '#bd0026' }
-        }).addTo(_memberMap);
-      } else {
-        _lastPinData.forEach(function (pin) { addPinMarker(pin); });
-      }
+        });
     }
 
     function addPinMarker(pin) {
@@ -1661,8 +1579,11 @@
       var date = new Date(pin.created_at).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
       var rx = _feedReactions[pin.id] || { like: 0, same_spot: 0, userLiked: false, userSameSpot: false };
       var canEdit = _currentUser && (pin.user_id === _currentUser.id || (_peCurrentProfile && _peCurrentProfile.role === 'admin'));
-      var shareUrl = 'https://bayoucharity.org/#members';
-      var shareText = (pin.species ? pin.species + ' catch' : 'Check out this catch') + ' on Bayou Charity!';
+      var shareUrl = 'https://bayoucharity.org';
+      var speciesTag = pin.species ? pin.species : 'a nice one';
+      var fbQuote = 'Look what I just caught! ' + speciesTag + ' out on the bayou. Come fish with us at bayoucharity.org';
+      var xText = 'Just pulled in ' + speciesTag + ' out on the bayou! Come fish with us @CharityBayou';
+      var tikTokText = 'Just pulled in ' + speciesTag + ' out on the bayou! Come fish with us at bayoucharity.org #BayouCharity #Louisiana #Fishing #CatchOfTheDay';
 
       card.innerHTML =
         (canEdit ? '<div class="feed-edit-bar"><button class="comm-edit-btn" data-action="edit-pin" data-id="' + escapeHTML(String(pin.id)) + '">✏️ Edit</button></div>' : '') +
@@ -1687,9 +1608,10 @@
           '<button class="feed-action feed-action-spacer' + (rx.userSameSpot ? ' active' : '') + '" data-type="same_spot" data-pin="' + escapeHTML(pin.id) + '" style="margin-left:auto;color:var(--amber);">🎣 Same spot!</button>' +
         '</div>' +
         '<div class="feed-share">' +
-          '<button class="feed-share-btn" data-action="share-fb" data-url="' + escapeHTML(shareUrl) + '" title="Share on Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook</button>' +
-          '<button class="feed-share-btn" data-action="share-x" data-url="' + escapeHTML(shareUrl) + '" data-text="' + escapeHTML(shareText) + '" title="Share on X/Twitter"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X</button>' +
-          '<button class="feed-share-btn" data-action="share-copy" data-url="' + escapeHTML(shareUrl) + '" title="Copy link">🔗 Copy link</button>' +
+          '<button class="feed-share-btn" data-action="share-fb" data-url="' + escapeHTML(shareUrl) + '" data-quote="' + escapeHTML(fbQuote) + '" title="Share on Facebook"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook</button>' +
+          '<button class="feed-share-btn" data-action="share-x" data-url="' + escapeHTML(shareUrl) + '" data-text="' + escapeHTML(xText) + '" title="Share on X"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X</button>' +
+          '<button class="feed-share-btn" data-action="share-tiktok" data-text="' + escapeHTML(tikTokText) + '" title="Copy for TikTok/Instagram"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1v-3.5a6.37 6.37 0 0 0-.79-.05A6.34 6.34 0 0 0 3.15 15a6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.34-6.34V8.75a8.16 8.16 0 0 0 4.76 1.5v-3.4a4.85 4.85 0 0 1-1-.16z"/></svg> TikTok</button>' +
+          '<button class="feed-share-btn" data-action="share-copy" data-url="' + escapeHTML(shareUrl) + '" title="Copy link">🔗 Link</button>' +
         '</div>' +
         '<div class="feed-card-comments" id="commentsSection-' + escapeHTML(pin.id) + '">' +
           '<div class="comment-list" id="comments-' + escapeHTML(pin.id) + '"></div>' +
@@ -3494,10 +3416,20 @@ function initEventDelegation() {
       case 'admin-batch-archive':         if (window.adminBatchArchive)        window.adminBatchArchive();        break;
       case 'admin-batch-archive-confirm': if (window.adminBatchArchiveConfirm) window.adminBatchArchiveConfirm(); break;
       case 'share-fb':
-        window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(d.url || 'https://bayoucharity.org/#members'), '_blank', 'width=600,height=400');
+        window.open('https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(d.url || 'https://bayoucharity.org') + '&quote=' + encodeURIComponent(d.quote || ''), '_blank', 'width=600,height=400');
         break;
       case 'share-x':
-        window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(d.url || 'https://bayoucharity.org/#members') + '&text=' + encodeURIComponent(d.text || ''), '_blank', 'width=600,height=400');
+        window.open('https://twitter.com/intent/tweet?url=' + encodeURIComponent(d.url || 'https://bayoucharity.org') + '&text=' + encodeURIComponent(d.text || '') + '&hashtags=BayouCharity,Louisiana,Fishing', '_blank', 'width=600,height=400');
+        break;
+      case 'share-tiktok':
+        (function() {
+          var txt = d.text || '';
+          if (navigator.clipboard) {
+            navigator.clipboard.writeText(txt).then(function() { if (window.showCommToast) showCommToast('Caption copied! Paste it in your TikTok or Instagram post.'); });
+          } else {
+            if (window.showCommToast) showCommToast('Caption: ' + txt);
+          }
+        })();
         break;
       case 'share-copy':
         (function() {
