@@ -1096,14 +1096,25 @@
         attribution: 'Tiles &copy; Esri &mdash; Earthstar Geographics'
       }).addTo(_memberMap);
 
-      var _nauticalLayer = L.tileLayer('https://services.arcgisonline.com/ArcGIS/rest/services/Specialty/World_Navigation_Charts/MapServer/tile/{z}/{y}/{x}', {
-        maxZoom: 10,
-        attribution: 'Esri, NOAA ENC'
+      // Nautical: Esri Ocean Basemap (bathymetric depth shading) + Ocean Reference (labels) + OpenSeaMap (buoys/markers)
+      var _oceanBaseLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 16,
+        attribution: 'Esri, GEBCO, NOAA, Garmin, HERE, UNEP-WCMC'
+      });
+      var _oceanRefLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Reference/MapServer/tile/{z}/{y}/{x}', {
+        maxZoom: 16,
+        attribution: ''
+      });
+      var _seamarkLayer = L.tileLayer('https://tiles.openseamap.org/seamark/{z}/{x}/{y}.png', {
+        maxZoom: 16,
+        attribution: '<a href="https://www.openseamap.org">OpenSeaMap</a>',
+        opacity: 0.8
       });
 
       var _activeBaseLayer = _satelliteLayer;
+      var _nauticalOverlays = [];
 
-      // Base layer toggle (Satellite / Nautical)
+      // Base layer toggle (Satellite / Depth Chart)
       document.getElementById('baseLayerToggle').addEventListener('click', function (e) {
         var btn = e.target.closest('.map-toggle-btn');
         if (!btn || btn.classList.contains('active')) return;
@@ -1111,8 +1122,18 @@
         btn.classList.add('active');
         var layer = btn.getAttribute('data-layer');
         _memberMap.removeLayer(_activeBaseLayer);
-        _activeBaseLayer = (layer === 'nautical') ? _nauticalLayer : _satelliteLayer;
-        _activeBaseLayer.addTo(_memberMap);
+        _nauticalOverlays.forEach(function (ol) { _memberMap.removeLayer(ol); });
+        _nauticalOverlays = [];
+        if (layer === 'nautical') {
+          _activeBaseLayer = _oceanBaseLayer;
+          _activeBaseLayer.addTo(_memberMap);
+          _oceanRefLayer.addTo(_memberMap);
+          _seamarkLayer.addTo(_memberMap);
+          _nauticalOverlays = [_oceanRefLayer, _seamarkLayer];
+        } else {
+          _activeBaseLayer = _satelliteLayer;
+          _activeBaseLayer.addTo(_memberMap);
+        }
       });
 
       // View toggle (Pins / Heat Map)
@@ -1124,6 +1145,17 @@
         _viewMode = btn.getAttribute('data-view') === 'heat' ? 'heat' : 'pins';
         renderMapView();
       });
+
+      // "Open FisherMap" link — passes current map center/zoom so Kyle lands at the same spot
+      var fisherLink = document.getElementById('openFisherMapLink');
+      if (fisherLink) {
+        fisherLink.addEventListener('click', function (e) {
+          e.preventDefault();
+          var c = _memberMap.getCenter();
+          var z = _memberMap.getZoom();
+          window.open('https://usa.fishermap.org/depth-map/#' + Math.round(z) + '/' + c.lat.toFixed(5) + '/' + c.lng.toFixed(5), '_blank');
+        });
+      }
 
       loadMapPins();
 

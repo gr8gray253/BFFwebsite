@@ -4481,7 +4481,7 @@
             </select>
             <div class="map-toggle" id="baseLayerToggle">
               <button class="map-toggle-btn active" data-layer="satellite">Satellite</button>
-              <button class="map-toggle-btn" data-layer="nautical">Nautical</button>
+              <button class="map-toggle-btn" data-layer="nautical">Depth Chart</button>
             </div>
           </div>
           <div class="map-filter-row">
@@ -4498,7 +4498,10 @@
           </div>
         </div>
         <div id="memberMap"></div>
-        <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:0.5rem;">
+          <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>
+          <a href="#" id="openFisherMapLink" target="_blank" rel="noopener" style="font-size:0.78rem;color:var(--amber);font-family:'Lora',serif;text-decoration:none;opacity:0.8;" onmouseover="this.style.opacity='1'" onmouseout="this.style.opacity='0.8'">Open FisherMap ↗</a>
+        </div>
         <div class="pin-post-form" id="pinPostForm" style="display:none;">
           <h4>📍 Post Your Catch</h4>
           <div class="form-group">
