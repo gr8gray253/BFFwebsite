@@ -3390,6 +3390,18 @@
   [data-theme="dark"] .map-toggle-btn:hover { color: var(--amber); }
   [data-theme="dark"] .map-toggle-btn.active { background: var(--amber); color: #fff; }
 
+  /* ── Map filter bar — mobile ─────────────────────────── */
+  @media (max-width: 768px) {
+    .map-filter-row { flex-direction: column; align-items: stretch; }
+    .season-tabs { justify-content: center; }
+    .season-tab { min-height: 44px; padding: 0.4rem 0.8rem; font-size: 0.82rem; }
+    .map-year-select { width: 100%; min-height: 44px; }
+    .map-toggle { align-self: stretch; justify-content: center; margin-left: 0; }
+    .map-toggle-btn { flex: 1; text-align: center; min-height: 44px; }
+    .map-date-filter { flex-wrap: wrap; }
+    .map-date-filter input[type="date"] { min-height: 44px; }
+  }
+
   /* ── DARK MODE POLISH: Gallery admin approval panel hover states ── */
   [data-theme="dark"] .gallery-approval-header { background: #0f2438; border-color: #1e3c58; }
   [data-theme="dark"] .gallery-approval-header:hover { background: #152840; }
