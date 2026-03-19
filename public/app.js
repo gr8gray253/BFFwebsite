@@ -1107,6 +1107,8 @@
           coordsEl.textContent = 'Click the map to place your pin.';
           _pendingLatLng = null;
           if (_pendingMarker) { _memberMap.removeLayer(_pendingMarker); _pendingMarker = null; }
+          var cdEl = document.getElementById('pinCatchDate');
+          if (cdEl) cdEl.value = new Date().toISOString().slice(0, 10);
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(function (pos) {
               placePendingMarker(pos.coords.latitude, pos.coords.longitude, coordsEl);
@@ -1207,6 +1209,11 @@
       var species      = document.getElementById('pinSpecies').value.trim();
       var caption      = document.getElementById('pinCaption').value.trim();
       var locationName = document.getElementById('pinLocationName').value.trim();
+      var catchDateEl  = document.getElementById('pinCatchDate');
+      var catchDate    = catchDateEl ? catchDateEl.value : '';
+      if (catchDate && catchDate > new Date().toISOString().slice(0, 10)) {
+        showToast('Invalid date', 'Catch date cannot be in the future.'); return;
+      }
       if (!photoFile) { showToast('Photo required', 'Please select a photo to post.'); return; }
 
       var btn = document.getElementById('btnSubmitPin');
@@ -1226,7 +1233,8 @@
               user_id: userId, photo_url: photoUrl,
               lat: _pendingLatLng.lat, lng: _pendingLatLng.lng,
               location_name: locationName || null,
-              caption: caption || null, species: species || null
+              caption: caption || null, species: species || null,
+              catch_date: catchDate || new Date().toISOString().slice(0, 10)
             });
           })
           .then(function (insRes) {
@@ -1237,7 +1245,7 @@
             showToast('Posted! \uD83C\uDFA3', 'Your catch is on the map.');
             document.getElementById('pinPostForm').style.display = 'none';
             document.getElementById('btnDropPin').style.display = '';
-            ['pinPhoto','pinSpecies','pinCaption','pinLocationName'].forEach(function (id) {
+            ['pinPhoto','pinSpecies','pinCaption','pinLocationName','pinCatchDate'].forEach(function (id) {
               var el = document.getElementById(id); if (el) el.value = '';
             });
             btn.disabled = false; btn.textContent = 'Post Pin';
