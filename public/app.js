@@ -1087,10 +1087,29 @@
       if (!container || _memberMap) return;
 
       _memberMap = L.map('memberMap', { center: [29.35, -89.8], zoom: 10 });
-      L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      var _satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
         maxZoom: 18,
         attribution: 'Tiles &copy; Esri &mdash; Earthstar Geographics'
       }).addTo(_memberMap);
+
+      var _nauticalLayer = L.tileLayer('https://tileservice.charts.noaa.gov/tiles/50000_1/{z}/{y}/{x}.png', {
+        maxZoom: 18,
+        attribution: 'NOAA'
+      });
+
+      var _activeBaseLayer = _satelliteLayer;
+
+      // Base layer toggle (Satellite / Nautical)
+      document.getElementById('baseLayerToggle').addEventListener('click', function (e) {
+        var btn = e.target.closest('.map-toggle-btn');
+        if (!btn || btn.classList.contains('active')) return;
+        document.querySelectorAll('#baseLayerToggle .map-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        var layer = btn.getAttribute('data-layer');
+        _memberMap.removeLayer(_activeBaseLayer);
+        _activeBaseLayer = (layer === 'nautical') ? _nauticalLayer : _satelliteLayer;
+        _activeBaseLayer.addTo(_memberMap);
+      });
 
       loadMapPins();
 
