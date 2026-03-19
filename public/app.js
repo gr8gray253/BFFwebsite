@@ -860,6 +860,9 @@
     var _pendingMarker = null;
     var _pinMarkers  = [];
     var _pendingLatLng = null;
+    var _heatLayer   = null;
+    var _viewMode    = 'pins';
+    var _lastPinData = [];
 
     // ── Show one members view, hide others ────────────────────
     function showMembersView(view) {
@@ -1111,6 +1114,16 @@
         _activeBaseLayer.addTo(_memberMap);
       });
 
+      // View toggle (Pins / Heat Map)
+      document.getElementById('viewToggle').addEventListener('click', function (e) {
+        var btn = e.target.closest('.map-toggle-btn');
+        if (!btn || btn.classList.contains('active')) return;
+        document.querySelectorAll('#viewToggle .map-toggle-btn').forEach(function (b) { b.classList.remove('active'); });
+        btn.classList.add('active');
+        _viewMode = btn.getAttribute('data-view') === 'heat' ? 'heat' : 'pins';
+        renderMapView();
+      });
+
       loadMapPins();
 
       var dropBtn  = document.getElementById('btnDropPin');
@@ -1267,6 +1280,24 @@
           _lastPinData = res.data;
           renderMapView();
         });
+    }
+
+    function renderMapView() {
+      _pinMarkers.forEach(function (m) { if (_memberMap) _memberMap.removeLayer(m); });
+      _pinMarkers = [];
+      if (_heatLayer) { _memberMap.removeLayer(_heatLayer); _heatLayer = null; }
+
+      if (_viewMode === 'heat' && window.L && L.heatLayer) {
+        var heatData = _lastPinData.map(function (pin) { return [pin.lat, pin.lng, 1]; });
+        _heatLayer = L.heatLayer(heatData, {
+          radius: 25,
+          blur: 15,
+          maxZoom: 15,
+          gradient: { 0.2: '#ffffb2', 0.4: '#fecc5c', 0.6: '#fd8d3c', 0.8: '#f03b20', 1.0: '#bd0026' }
+        }).addTo(_memberMap);
+      } else {
+        _lastPinData.forEach(function (pin) { addPinMarker(pin); });
+      }
     }
 
     function addPinMarker(pin) {
