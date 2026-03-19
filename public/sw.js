@@ -3,7 +3,7 @@
 // Cross-origin CDN resources (Supabase JS, Leaflet, Google Fonts) are never
 // intercepted — the browser fetches them directly, respecting CSP.
 
-var CACHE_NAME = 'bayou-charity-v3';
+var CACHE_NAME = 'bayou-charity-v4';
 var SHELL_ASSETS = [
   '/',
   '/index.html',
@@ -37,8 +37,9 @@ self.addEventListener('fetch', function(e) {
   if (e.request.method !== 'GET') return;
   if (!e.request.url.startsWith(self.location.origin)) return;
 
-  // HTML requests: network-first (always get fresh content, fall back to cache)
-  if (e.request.mode === 'navigate' || e.request.url.endsWith('.html')) {
+  // HTML + JS requests: network-first (always get fresh content, fall back to cache)
+  // app.js changes with every feature deploy and must not be served stale from cache.
+  if (e.request.mode === 'navigate' || e.request.url.endsWith('.html') || e.request.url.endsWith('.js')) {
     e.respondWith(
       fetch(e.request).then(function(response) {
         // Update cache with fresh response

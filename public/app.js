@@ -1088,6 +1088,7 @@
     function initMemberMap() {
       var container = document.getElementById('memberMap');
       if (!container || _memberMap) return;
+      if (!window.L) { setTimeout(initMemberMap, 100); return; }
 
       _memberMap = L.map('memberMap', { center: [29.35, -89.8], zoom: 10 });
       var _satelliteLayer = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
