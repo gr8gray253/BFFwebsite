@@ -3200,10 +3200,31 @@
   .feed-share { display: flex; gap: 0.5rem; align-items: center; padding: 0.3rem 0 0; border-top: 1px solid #ccdde8; margin-top: 0.1rem; }
   .feed-share-btn { font-size: 0.7rem; color: var(--text-mid); cursor: pointer; border: none; background: none; padding: 0.15rem 0.4rem; border-radius: 0.25rem; font-family: 'Lora', serif; transition: color 0.15s, background 0.15s; display: flex; align-items: center; gap: 0.2rem; }
   .feed-share-btn:hover { color: var(--amber); background: rgba(232,146,58,0.08); }
-  /* ── Map date filter bar ─────────────────────────── */
-  .map-date-filter { display: flex; gap: 0.5rem; align-items: center; padding: 0.5rem 0.75rem; background: var(--cream); border-bottom: 1px solid #ccdde8; flex-wrap: wrap; font-family: 'Lora', serif; font-size: 0.8rem; color: var(--text-mid); }
+  /* ── Map filter bar ─────────────────────────── */
+  .map-filter-bar { padding: 0.5rem 0.75rem; background: var(--cream); border-bottom: 1px solid #ccdde8; font-family: 'Lora', serif; font-size: 0.8rem; color: var(--text-mid); }
+  .map-filter-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+  .map-filter-row + .map-filter-row { margin-top: 0.4rem; }
+
+  /* Season pill tabs */
+  .season-tabs { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+  .season-tab { padding: 0.3rem 0.7rem; border: 1px solid #ccdde8; border-radius: 1rem; background: #fff; color: var(--text-dark); cursor: pointer; font-family: 'Lora', serif; font-size: 0.78rem; font-weight: 600; transition: all 0.15s; white-space: nowrap; min-height: 32px; display: flex; align-items: center; }
+  .season-tab:hover { border-color: var(--amber); color: var(--amber); }
+  .season-tab.active { background: var(--amber); color: #fff; border-color: var(--amber); }
+
+  /* Year picker */
+  .map-year-select { font-size: 0.8rem; padding: 0.25rem 0.4rem; border: 1px solid #ccdde8; border-radius: 4px; font-family: 'Lora', serif; color: var(--text-dark); background: #fff; min-height: 32px; }
+
+  /* Toggles (base layer + view) */
+  .map-toggle { display: flex; border: 1px solid #ccdde8; border-radius: 6px; overflow: hidden; margin-left: auto; }
+  .map-toggle-btn { padding: 0.25rem 0.6rem; background: #fff; color: var(--text-mid); border: none; cursor: pointer; font-family: 'Lora', serif; font-size: 0.75rem; font-weight: 600; transition: all 0.15s; white-space: nowrap; min-height: 32px; }
+  .map-toggle-btn + .map-toggle-btn { border-left: 1px solid #ccdde8; }
+  .map-toggle-btn:hover { color: var(--amber); }
+  .map-toggle-btn.active { background: var(--amber); color: #fff; }
+
+  /* Date range (row 2) */
+  .map-date-filter { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
   .map-date-filter label { font-weight: 600; white-space: nowrap; }
-  .map-date-filter input[type="date"] { font-size: 0.8rem; padding: 0.2rem 0.4rem; border: 1px solid #ccdde8; border-radius: 4px; font-family: 'Lora', serif; color: var(--text-dark); background: #fff; }
+  .map-date-filter input[type="date"] { font-size: 0.8rem; padding: 0.2rem 0.4rem; border: 1px solid #ccdde8; border-radius: 4px; font-family: 'Lora', serif; color: var(--text-dark); background: #fff; min-height: 32px; }
 
   /* ── Comments (collapsed by default) ──────────── */
   .feed-card-comments {
@@ -3356,8 +3377,18 @@
   [data-theme="dark"] .feed-share { border-color: #1e3c58; }
   [data-theme="dark"] .feed-share-btn { color: #7a8e9f; }
   [data-theme="dark"] .feed-share-btn:hover { color: var(--amber); background: rgba(232,146,58,0.08); }
-  [data-theme="dark"] .map-date-filter { background: #152840; border-color: #1e3c58; color: #9bb0c2; }
+  [data-theme="dark"] .map-filter-bar { background: #152840; border-color: #1e3c58; color: #9bb0c2; }
+  [data-theme="dark"] .map-date-filter { color: #9bb0c2; }
   [data-theme="dark"] .map-date-filter input[type="date"] { background: #0d2b3e; border-color: #1e3c58; color: #eef6fb; }
+  [data-theme="dark"] .season-tab { background: #0d2b3e; border-color: #1e3c58; color: #9bb0c2; }
+  [data-theme="dark"] .season-tab:hover { border-color: var(--amber); color: var(--amber); }
+  [data-theme="dark"] .season-tab.active { background: var(--amber); color: #fff; border-color: var(--amber); }
+  [data-theme="dark"] .map-year-select { background: #0d2b3e; border-color: #1e3c58; color: #eef6fb; }
+  [data-theme="dark"] .map-toggle { border-color: #1e3c58; }
+  [data-theme="dark"] .map-toggle-btn { background: #0d2b3e; color: #9bb0c2; }
+  [data-theme="dark"] .map-toggle-btn + .map-toggle-btn { border-color: #1e3c58; }
+  [data-theme="dark"] .map-toggle-btn:hover { color: var(--amber); }
+  [data-theme="dark"] .map-toggle-btn.active { background: var(--amber); color: #fff; }
 
   /* ── DARK MODE POLISH: Gallery admin approval panel hover states ── */
   [data-theme="dark"] .gallery-approval-header { background: #0f2438; border-color: #1e3c58; }
@@ -4424,11 +4455,35 @@
 
       <!-- MAP TAB -->
       <div id="memberTabMap" class="member-tab-content" role="tabpanel" aria-labelledby="mptMap" style="display:none;">
-        <div class="map-date-filter">
-          <label>From</label>
-          <input type="date" id="mapFromDate">
-          <label>To</label>
-          <input type="date" id="mapToDate">
+        <div class="map-filter-bar">
+          <div class="map-filter-row">
+            <div class="season-tabs" id="seasonTabs">
+              <button class="season-tab active" data-season="all">All</button>
+              <button class="season-tab" data-season="spring">Spring</button>
+              <button class="season-tab" data-season="summer">Summer</button>
+              <button class="season-tab" data-season="fall">Fall</button>
+              <button class="season-tab" data-season="winter">Winter</button>
+            </div>
+            <select class="map-year-select" id="mapYearSelect">
+              <option value="">Any Year</option>
+            </select>
+            <div class="map-toggle" id="baseLayerToggle">
+              <button class="map-toggle-btn active" data-layer="satellite">Satellite</button>
+              <button class="map-toggle-btn" data-layer="nautical">Nautical</button>
+            </div>
+          </div>
+          <div class="map-filter-row">
+            <div class="map-date-filter">
+              <label>From</label>
+              <input type="date" id="mapFromDate">
+              <label>To</label>
+              <input type="date" id="mapToDate">
+            </div>
+            <div class="map-toggle" id="viewToggle">
+              <button class="map-toggle-btn active" data-view="pins">Pins</button>
+              <button class="map-toggle-btn" data-view="heat">Heat Map</button>
+            </div>
+          </div>
         </div>
         <div id="memberMap"></div>
         <button class="btn btn-primary" id="btnDropPin">+ Drop a Pin &amp; Post a Catch</button>

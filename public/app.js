@@ -1136,19 +1136,82 @@
 
       if (submitBtn) submitBtn.addEventListener('click', submitPin);
 
-      // Map date filter defaults (last 90 days → today) + change listeners
-      var today = new Date();
-      var ninetyAgo = new Date(today); ninetyAgo.setDate(ninetyAgo.getDate() - 90);
-      var fromEl = document.getElementById('mapFromDate');
-      var toEl   = document.getElementById('mapToDate');
-      if (fromEl) {
-        fromEl.value = ninetyAgo.toISOString().slice(0, 10);
-        fromEl.addEventListener('change', function () { loadMapPins(); });
+      // ── Season tabs + year picker + toggles ──────────────
+      var SEASONS = {
+        spring: { startM: 3, startD: 1, endM: 5, endD: 31 },
+        summer: { startM: 6, startD: 1, endM: 8, endD: 31 },
+        fall:   { startM: 9, startD: 1, endM: 11, endD: 30 },
+        winter: { startM: 12, startD: 1, endM: 2, endD: 28 }
+      };
+
+      var fromEl  = document.getElementById('mapFromDate');
+      var toEl    = document.getElementById('mapToDate');
+      var yearSel = document.getElementById('mapYearSelect');
+
+      // Populate year dropdown from earliest catch_date
+      getSB().from('pins').select('catch_date').order('catch_date', { ascending: true }).limit(1)
+        .then(function (res) {
+          var startYear = new Date().getFullYear();
+          if (res.data && res.data.length && res.data[0].catch_date) {
+            startYear = parseInt(res.data[0].catch_date.slice(0, 4), 10);
+          }
+          var thisYear = new Date().getFullYear();
+          for (var y = thisYear; y >= startYear; y--) {
+            var opt = document.createElement('option');
+            opt.value = String(y); opt.textContent = String(y);
+            yearSel.appendChild(opt);
+          }
+        });
+
+      function applySeasonFilter() {
+        var activeTab = document.querySelector('#seasonTabs .season-tab.active');
+        var season = activeTab ? activeTab.getAttribute('data-season') : 'all';
+        var year = yearSel ? yearSel.value : '';
+
+        if (season === 'all' && !year) {
+          if (fromEl) fromEl.value = '';
+          if (toEl) toEl.value = '';
+        } else if (season === 'all' && year) {
+          if (fromEl) fromEl.value = year + '-01-01';
+          if (toEl) toEl.value = year + '-12-31';
+        } else if (season && year) {
+          var s = SEASONS[season];
+          if (season === 'winter') {
+            if (fromEl) fromEl.value = year + '-12-01';
+            var nextYear = parseInt(year, 10) + 1;
+            var febEnd = (nextYear % 4 === 0 && (nextYear % 100 !== 0 || nextYear % 400 === 0)) ? 29 : 28;
+            if (toEl) toEl.value = nextYear + '-02-' + String(febEnd).padStart(2, '0');
+          } else {
+            if (fromEl) fromEl.value = year + '-' + String(s.startM).padStart(2, '0') + '-' + String(s.startD).padStart(2, '0');
+            if (toEl) toEl.value = year + '-' + String(s.endM).padStart(2, '0') + '-' + String(s.endD).padStart(2, '0');
+          }
+        } else {
+          var cy = String(new Date().getFullYear());
+          yearSel.value = cy;
+          applySeasonFilter();
+          return;
+        }
+        loadMapPins();
       }
-      if (toEl) {
-        toEl.value = today.toISOString().slice(0, 10);
-        toEl.addEventListener('change', function () { loadMapPins(); });
-      }
+
+      // Season tab clicks
+      document.getElementById('seasonTabs').addEventListener('click', function (e) {
+        var tab = e.target.closest('.season-tab');
+        if (!tab) return;
+        document.querySelectorAll('#seasonTabs .season-tab').forEach(function (t) { t.classList.remove('active'); });
+        tab.classList.add('active');
+        applySeasonFilter();
+      });
+
+      // Year picker change
+      if (yearSel) yearSel.addEventListener('change', applySeasonFilter);
+
+      // Date range manual changes
+      if (fromEl) fromEl.addEventListener('change', function () { loadMapPins(); });
+      if (toEl) toEl.addEventListener('change', function () { loadMapPins(); });
+
+      // Default: "All" season, no year (show all pins)
+      applySeasonFilter();
     }
 
     function placePendingMarker(lat, lng, coordsEl) {
@@ -1171,20 +1234,19 @@
       var toD    = toEl   ? toEl.value   : null;
       var q = getSB()
         .from('pins')
-        .select('id, lat, lng, caption, species, photo_url')
+        .select('id, lat, lng, caption, species, photo_url, catch_date, user_id, profiles(avatar_url, display_name)')
         .eq('flagged', false)
         .is('archived_at', null);
-      if (fromD) q = q.gte('created_at', fromD);
-      if (toD)   q = q.lte('created_at', toD + 'T23:59:59');
+      if (fromD) q = q.gte('catch_date', fromD);
+      if (toD)   q = q.lte('catch_date', toD);
       q.then(function (res) {
           if (res.error) {
             console.error('[BFF] loadMapPins error:', res.error);
             return;
           }
           if (!res.data) return;
-          _pinMarkers.forEach(function(m) { if (_memberMap) _memberMap.removeLayer(m); });
-          _pinMarkers = [];
-          res.data.forEach(function (pin) { addPinMarker(pin); });
+          _lastPinData = res.data;
+          renderMapView();
         });
     }
 
