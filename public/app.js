@@ -1371,6 +1371,7 @@
               '<div class="comm-modal-field"><label>Location name</label><input type="text" id="cfPinLocation" value="' + escapeHTML(p.location_name || '') + '"></div>' +
               '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button>' +
               '<button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="pins" data-owner="user_id" data-id="' + escapeHTML(String(p.id)) + '">Archive</button>' +
+              '<button class="btn btn-outline" style="border-color:#c0392b;color:#c0392b;" data-action="delete-post" data-table="pins" data-owner="user_id" data-id="' + escapeHTML(String(p.id)) + '">Delete</button>' +
               '<button class="btn btn-primary" data-action="save-edit-pin">Save Changes</button></div>'
           });
         });
@@ -1404,7 +1405,31 @@
       q.then(function(res) {
         if (res.error) { alert('Error: ' + res.error.message); return; }
         closeCommModal();
+        // Remove card from DOM immediately so user sees it disappear
+        var card = document.querySelector('.feed-card[data-pin-id="' + id + '"]');
+        if (card) card.remove();
         showCommToast('Post archived.');
+        // Then refresh data in the background
+        if (table === 'pins')          { _feedLoading = false; loadFeed(); loadMapPins(); }
+        if (table === 'trips')         { _tripsLoaded = false; loadTrips(); }
+        if (table === 'guide_postings'){ _guidesLoaded = false; loadGuides(); }
+        if (table === 'classifieds')   { _classifiedsLoaded = false; loadGear(); }
+        if (table === 'forum_threads') { _forumLoaded = false; loadForum(); }
+        if (table === 'recipes')       { _recipesLoaded = false; loadRecipes(); }
+      });
+    }
+
+    function deletePost(table, id, ownerField) {
+      if (!_currentUser) return;
+      if (!confirm('Delete this post permanently? This cannot be undone.')) return;
+      var q = getSB().from(table).delete().eq('id', id);
+      if (!(_peCurrentProfile && _peCurrentProfile.role === 'admin') && ownerField) q = q.eq(ownerField, _currentUser.id);
+      q.then(function(res) {
+        if (res.error) { alert('Error: ' + res.error.message); return; }
+        closeCommModal();
+        var card = document.querySelector('.feed-card[data-pin-id="' + id + '"]');
+        if (card) card.remove();
+        showCommToast('Post deleted.');
         if (table === 'pins')          { _feedLoading = false; loadFeed(); loadMapPins(); }
         if (table === 'trips')         { _tripsLoaded = false; loadTrips(); }
         if (table === 'guide_postings'){ _guidesLoaded = false; loadGuides(); }
@@ -2600,7 +2625,7 @@
               '<div class="comm-modal-field"><label>Location</label><input type="text" id="cfTripLocation" value="' + escapeHTML(t.location || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Max Spots</label><input type="number" id="cfTripSpots" min="1" value="' + (t.max_spots || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Description</label><textarea id="cfTripDesc">' + escapeHTML(t.description || '') + '</textarea></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="trips" data-owner="created_by" data-id="' + escapeHTML(String(t.id)) + '">Archive</button><button class="btn btn-primary" data-action="save-edit-trip">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="trips" data-owner="created_by" data-id="' + escapeHTML(String(t.id)) + '">Archive</button><button class="btn btn-outline" style="border-color:#c0392b;color:#c0392b;" data-action="delete-post" data-table="trips" data-owner="created_by" data-id="' + escapeHTML(String(t.id)) + '">Delete</button><button class="btn btn-primary" data-action="save-edit-trip">Save Changes</button></div>'
           });
         });
     }
@@ -2715,7 +2740,7 @@
               '<div class="comm-modal-field"><label>Available Dates / Schedule</label><input type="text" id="cfGuideDates" value="' + escapeHTML(g.available_dates || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGuideContact" value="' + escapeHTML(g.contact || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Description</label><textarea id="cfGuideDesc">' + escapeHTML(g.description || '') + '</textarea></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="guide_postings" data-owner="guide_id" data-id="' + escapeHTML(String(g.id)) + '">Archive</button><button class="btn btn-primary" data-action="save-edit-guide">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="guide_postings" data-owner="guide_id" data-id="' + escapeHTML(String(g.id)) + '">Archive</button><button class="btn btn-outline" style="border-color:#c0392b;color:#c0392b;" data-action="delete-post" data-table="guide_postings" data-owner="guide_id" data-id="' + escapeHTML(String(g.id)) + '">Delete</button><button class="btn btn-primary" data-action="save-edit-guide">Save Changes</button></div>'
           });
         });
     }
@@ -2824,7 +2849,7 @@
               '<div class="comm-modal-field"><label>Price</label><input type="text" id="cfGearPrice" value="' + escapeHTML(c.price || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Description</label><textarea id="cfGearDesc">' + escapeHTML(c.description || '') + '</textarea></div>' +
               '<div class="comm-modal-field"><label>Contact (email or phone)</label><input type="text" id="cfGearContact" value="' + escapeHTML(c.contact || '') + '"></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="classifieds" data-owner="seller_id" data-id="' + escapeHTML(String(c.id)) + '">Archive</button><button class="btn btn-primary" data-action="save-edit-gear">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="classifieds" data-owner="seller_id" data-id="' + escapeHTML(String(c.id)) + '">Archive</button><button class="btn btn-outline" style="border-color:#c0392b;color:#c0392b;" data-action="delete-post" data-table="classifieds" data-owner="seller_id" data-id="' + escapeHTML(String(c.id)) + '">Delete</button><button class="btn btn-primary" data-action="save-edit-gear">Save Changes</button></div>'
           });
         });
     }
@@ -2974,7 +2999,7 @@
             formHtml: '<div class="comm-modal-field"><label>Title *</label><input type="text" id="cfForumTitle" value="' + escapeHTML(t.title) + '"></div>' +
               '<div class="comm-modal-field"><label>Category</label><select id="cfForumCat"><option value="general" ' + (t.category === 'general' ? 'selected' : '') + '>General</option><option value="gear" ' + (t.category === 'gear' ? 'selected' : '') + '>Gear Talk</option><option value="spots" ' + (t.category === 'spots' ? 'selected' : '') + '>Fishing Spots</option><option value="recipes" ' + (t.category === 'recipes' ? 'selected' : '') + '>Recipes & Cooking</option></select></div>' +
               '<div class="comm-modal-field"><label>Body</label><textarea id="cfForumBody">' + escapeHTML(t.body || '') + '</textarea></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="forum_threads" data-owner="author_id" data-id="' + escapeHTML(String(t.id)) + '">Archive</button><button class="btn btn-primary" data-action="save-edit-thread">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="forum_threads" data-owner="author_id" data-id="' + escapeHTML(String(t.id)) + '">Archive</button><button class="btn btn-outline" style="border-color:#c0392b;color:#c0392b;" data-action="delete-post" data-table="forum_threads" data-owner="author_id" data-id="' + escapeHTML(String(t.id)) + '">Delete</button><button class="btn btn-primary" data-action="save-edit-thread">Save Changes</button></div>'
           });
         });
     }
@@ -3114,7 +3139,7 @@
             formHtml: '<div class="comm-modal-field"><label>Recipe Title *</label><input type="text" id="cfRecipeTitle" value="' + escapeHTML(r.title) + '"></div>' +
               '<div class="comm-modal-field"><label>Species</label><input type="text" id="cfRecipeSpecies" value="' + escapeHTML(r.species || '') + '"></div>' +
               '<div class="comm-modal-field"><label>Recipe *</label><textarea id="cfRecipeBody" style="min-height:140px;">' + escapeHTML(r.body || '') + '</textarea></div>' +
-              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="recipes" data-owner="created_by" data-id="' + escapeHTML(String(r.id)) + '">Archive</button><button class="btn btn-primary" data-action="save-edit-recipe">Save Changes</button></div>'
+              '<div class="comm-modal-actions"><button class="btn btn-outline" data-action="close-comm-modal">Cancel</button><button class="btn btn-outline" style="border-color:var(--orange);color:var(--orange);" data-action="archive-post" data-table="recipes" data-owner="created_by" data-id="' + escapeHTML(String(r.id)) + '">Archive</button><button class="btn btn-outline" style="border-color:#c0392b;color:#c0392b;" data-action="delete-post" data-table="recipes" data-owner="created_by" data-id="' + escapeHTML(String(r.id)) + '">Delete</button><button class="btn btn-primary" data-action="save-edit-recipe">Save Changes</button></div>'
           });
         });
     }
@@ -3178,6 +3203,7 @@
     window.editPin                  = editPin;
     window.saveEditPin              = saveEditPin;
     window.archivePost              = archivePost;
+    window.deletePost               = deletePost;
     window.restorePost              = restorePost;
     window.adminBatchArchive        = adminBatchArchive;
     window.adminBatchArchiveConfirm = adminBatchArchiveConfirm;
@@ -3409,6 +3435,9 @@ function initEventDelegation() {
       case 'save-edit-pin':       if (window.saveEditPin)     window.saveEditPin();     break;
       case 'archive-post':
         if (window.archivePost) window.archivePost(d.table, d.id, d.owner);
+        break;
+      case 'delete-post':
+        if (window.deletePost) window.deletePost(d.table, d.id, d.owner);
         break;
       case 'restore-post':
         if (window.restorePost) window.restorePost(d.table, d.id, el.closest('.admin-row'));
